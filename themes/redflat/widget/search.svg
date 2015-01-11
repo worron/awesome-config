@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="search.svg">
+  <metadata
+     id="metadata11">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1912"
+     inkscape:window-height="1022"
+     id="namedview9"
+     showgrid="true"
+     inkscape:zoom="4.9166667"
+     inkscape:cx="-17.288136"
+     inkscape:cy="24"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2988" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4">
+    <defs
+       id="defs3" />
+    <path
+       id="path-main"
+       d="m 28.417332,2.3030281 c -9.711053,0 -17.61212,7.8820939 -17.61212,17.5698269 0,4.31388 1.586616,8.25685 4.182142,11.311678 l -4.182142,1.292764 -8.2464781,7.668436 c -0.5864158,0.546007 -1.0897131,3.290669 0.5595824,4.936005 1.9437135,1.939046 4.4173942,1.125259 4.9478866,0.558239 l 7.6868951,-8.226675 1.295875,-4.1721 c 3.072454,2.596703 7.031164,4.1721 11.368359,4.1721 C 38.128384,37.413303 46,29.560588 46,19.872855 45.999999,10.185122 38.128384,2.3030281 28.417332,2.3030281 z m 0,4.4071474 c 7.283289,0 13.194364,5.8968805 13.194364,13.1626795 0,7.2658 -5.911076,13.162679 -13.194364,13.16268 -7.283289,0 -13.194364,-5.89688 -13.194364,-13.16268 0,-7.265799 5.911074,-13.1626794 13.194364,-13.1626795 z" />
+  </defs>
+  <use
+     id="1"
+     style="fill:#a0a0a0;fill-opacity:1"
+     xlink:href="#path-main"
+     transform="matrix(1.0909091,0,0,1.0909091,-2.1818184,-2.5123943)"
+     x="0"
+     y="0"
+     width="48"
+     height="48" />
+</svg>
