@@ -79,7 +79,7 @@ theme.icon = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop = { common = {} }
 
-theme.wallpaper = theme.path .. "/wallpaper/1-desktop.png"
+theme.wallpaper = theme.path .. "/wallpaper/4.png"
 
 -- Common
 --------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ theme.desktop.speedmeter = {
 -- CPU and memory
 ------------------------------------------------------------
 theme.desktop.multim = {
-	corner       = { width = 34, corner = { height = 17, num = 10, line = 5 } },
+	corner       = { width = 36, corner = { height = 17, num = 10, line = 5 } },
 	state_height = 60,
 	prog_height  = 98,
 	image_gap    = 0,
