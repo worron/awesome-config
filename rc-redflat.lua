@@ -417,35 +417,15 @@ do
 	local workarea = screen[mouse.screen].workarea
 
 	-- placement grid
---[[
 	local grid = {
 		width  = { 500, 500, 500 },
 		height = { 180, 182, 102, 144 },
-		edge   = { width = 80, height = 60 }
-	}
---]]
-	local grid = {
-		width  = { 520, 520, 520 },
-		height = { 182, 182, 102, 180 },
-		--edge   = { width = 40, height = 80 }
-		edge   = { width = { 40, 40 } , height = { 80, 80 } }
-	}
-
-	local main_grid = {
-		width  = { 520, 520, 520 },
-		height = { 182, 102, 144 },
-		edge   = { width = { 60, 60 } , height = { 50, 334 } }
-	}
-
-	local grid_for_speed = {
-		width  = main_grid.width,
-		height = { 180 },
-		edge   = { width = main_grid.edge.width , height = { 800, 100 } }
+		edge   = { width = { 80, 80 }, height = { 60, 60 } }
 	}
 
 	-- Network speed
 	--------------------------------------------------------------------------------
-	local netspeed = { geometry = wgeometry(grid_for_speed, { 3, 1 }, workarea) }
+	local netspeed = { geometry = wgeometry(grid, { 1, 1 }, workarea) }
 
 	netspeed.args = {
 		interface    = "wlan0",
@@ -459,7 +439,7 @@ do
 
 	-- SSD speed
 	--------------------------------------------------------------------------------
-	local ssdspeed = { geometry = wgeometry(grid_for_speed, { 1, 1 }, workarea) }
+	local ssdspeed = { geometry = wgeometry(grid, { 2, 1 }, workarea) }
 
 	ssdspeed.args = {
 		interface = "sdb",
@@ -472,7 +452,7 @@ do
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
-	local hddspeed = { geometry = wgeometry(grid_for_speed, { 2, 1 }, workarea) }
+	local hddspeed = { geometry = wgeometry(grid, { 3, 1 }, workarea) }
 
 	hddspeed.args = {
 		interface = "sdc",
@@ -486,7 +466,7 @@ do
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
 	local cpu_storage = { cpu_total = {}, cpu_active = {} }
-	local cpumem = { geometry = wgeometry(main_grid, { 1, 1 }, workarea) }
+	local cpumem = { geometry = wgeometry(grid, { 1, 2 }, workarea) }
 
 	cpumem.args = {
 		corners = { num = 8, maxm = 100, crit = 90 },
@@ -499,7 +479,7 @@ do
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
-	local transm = { geometry = wgeometry(main_grid, { 2, 1 }, workarea) }
+	local transm = { geometry = wgeometry(grid, { 2, 2 }, workarea) }
 
 	transm.args = {
 		corners    = { num = 8, maxm = 100 },
@@ -517,7 +497,7 @@ do
 
 	-- Disks
 	--------------------------------------------------------------------------------
-	local disks = { geometry = wgeometry(main_grid, { 1, 3 }, workarea) }
+	local disks = { geometry = wgeometry(grid, { 1, 4 }, workarea) }
 
 	disks.args = {
 		sensors  = {
@@ -537,7 +517,7 @@ do
 
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
-	local thermal = { geometry = wgeometry(main_grid, { 1, 2 }, workarea) }
+	local thermal = { geometry = wgeometry(grid, { 1, 3 }, workarea) }
 
 	thermal.args = {
 		sensors = {
