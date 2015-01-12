@@ -420,7 +420,7 @@ do
 	local grid = {
 		width  = { 500, 500, 500 },
 		height = { 180, 182, 102, 144 },
-		edge   = { width = 80, height = 60 }
+		edge   = { width = { 80, 80 }, height = { 60, 60 } }
 	}
 
 	-- Network speed

@@ -149,10 +149,11 @@ end
 
 local function wposition(grid, n, workarea, dir)
 	local total = util.table.sum(grid[dir])
-	local gap = #grid[dir] > 1 and (workarea[dir] - total - 2 * grid.edge[dir]) / (#grid[dir] - 1) or 0
+	local full_gap = util.table.sum(grid.edge[dir])
+	local gap = #grid[dir] > 1 and (workarea[dir] - total - full_gap) / (#grid[dir] - 1) or 0
 
 	local current = util.table.sum(grid[dir], n - 1)
-	local pos = grid.edge[dir] + (n - 1) * gap + current
+	local pos = grid.edge[dir][1] + (n - 1) * gap + current
 
 	return pos
 end

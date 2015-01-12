@@ -79,7 +79,7 @@ theme.icon = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop = { common = {} }
 
-theme.wallpaper = theme.path .. "/wallpaper/1-desktop.png"
+theme.wallpaper = theme.path .. "/wallpaper/forwidgets.png"
 
 -- Common
 --------------------------------------------------------------------------------
