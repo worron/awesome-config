@@ -31,6 +31,8 @@ local redutil = require("redflat.util")
 -----------------------------------------------------------------------------------------------------------------------
 local pulse = { widgets = {}, mt = {} }
 
+pulse.startup_time = 4
+
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
@@ -136,6 +138,7 @@ function pulse.new(args)
 	local style = redutil.table.merge(default_style(), style or {})
 	pulse.notify_icon = style.notify_icon
 
+	local counter = 0
 	local args = args or {}
 	local timeout = args.timeout or 30
 
@@ -159,6 +162,19 @@ function pulse.new(args)
 	t:connect_signal("timeout", function() pulse:update_volume() end)
 	t:start()
 	--]]
+
+	-- Set startup timer
+	-- This is workaround if widget created bofore pulseaudio servise start
+	--------------------------------------------------------------------------------
+	pulse.startup_updater = timer({ timeout = 1 })
+	pulse.startup_updater:connect_signal("timeout",
+		function()
+			counter = counter + 1
+			pulse:update_volume()
+			if counter > pulse.startup_time then pulse.startup_updater:stop() end
+		end
+	)
+	pulse.startup_updater:start()
 
 	--------------------------------------------------------------------------------
 	pulse:update_volume()
