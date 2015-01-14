@@ -23,7 +23,8 @@ local asyncshell = require("redflat.asyncshell")
 -----------------------------------------------------------------------------------------------------------------------
 local exaile = {}
 
-local command = "qdbus org.exaile.Exaile /org/exaile/Exaile org.exaile.Exaile."
+local command = "dbus-send --type=method_call --session --print-reply=literaly "
+                .. "--dest=org.exaile.Exaile /org/exaile/Exaile org.exaile.Exaile."
 local actions = { "PlayPause", "Next", "Prev" }
 
 -- Generate default theme vars
@@ -64,7 +65,7 @@ end
 -- Get line from output
 --------------------------------------------------------------------------------
 local function get_line(s)
-	local line = string.match(s, "[^\n]+")
+	local line = string.match(s, "%s+(.+)")
 	return line or "Unknown"
 end
 
@@ -185,13 +186,13 @@ function exaile:init()
 	------------------------------------------------------------
 	local function show_artist_or_album_info(show_album)
 		if show_album then
-			asyncshell.request(tr_command .. " album",
+			asyncshell.request(tr_command .. " string:album",
 				function(o)
 					artistbox:set_markup('<span color="' .. style.color.gray .. '">From </span>' .. get_line(o))
 				end
 			)
 		else
-			asyncshell.request(tr_command .. " artist",
+			asyncshell.request(tr_command .. " string:artist",
 				function(o)
 					artistbox:set_markup('<span color="' .. style.color.gray .. '">By </span>' .. get_line(o))
 				end
@@ -203,10 +204,10 @@ function exaile:init()
 	------------------------------------------------------------
 	local function check_if_playing(output)
 		if get_line(output) == "playing" then
-			asyncshell.request(tr_command .. " title", function(o) titlebox:set_text(get_line(o)) end)
+			asyncshell.request(tr_command .. " string:title", function(o) titlebox:set_text(get_line(o)) end)
 			asyncshell.request(command .. "CurrentPosition", function(o) timebox:set_text(get_line(o)) end)
 			asyncshell.request(command .. "GetVolume", function(o) self.volume:set_value(get_line(o) /100) end)
-			asyncshell.request(command .. "CurrentProgress", function(o) bar:set_value(get_line(o) /100) end)
+			asyncshell.request(command .. "CurrentProgress", function(o) bar:set_value(get_line(o) / 100) end)
 
 			show_artist_or_album_info(show_album)
 			self.play_button:set_image(style.icon.pause)
@@ -255,8 +256,8 @@ function exaile:change_volume(down)
 		local down = down or false
 		local step = down and "-5" or "5"
 
-		awful.util.spawn_with_shell(command .. "ChangeVolume " .. step)
-		self.volume:set_value(get_line(awful.util.pread(command .. "GetVolume")) / 100)
+		awful.util.spawn_with_shell(command .. "ChangeVolume int32:" .. step)
+		self.volume:set_value(awful.util.pread(command .. "GetVolume") / 100)
 	end
 end
 
