@@ -480,6 +480,7 @@ theme.float.exaile = {
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
 	border_width = 0,
+	timeout      = 1,
 	color        = theme.color
 }
 

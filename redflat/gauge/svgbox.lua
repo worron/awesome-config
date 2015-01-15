@@ -100,12 +100,12 @@ function svgbox.new(image, svg_scale)
 	function widg:set_image(newimage, service_call)
 
 		local image
-		if not newimage or newimage == data.iname then return false end
+		--if not newimage or newimage == data.iname then return false end
 
 		if type(newimage) == "string" then
 			local success, result = pcall(surface.load, newimage)
 			if not success then
-				print("Error while reading '" .. image .. "': " .. result)
+				print("Error while reading '" .. newimage .. "': " .. result)
 				return false
 			end
 			image = result
@@ -165,19 +165,16 @@ function svgbox.new(image, svg_scale)
 		if width == 0 or height == 0 then return end
 
 		-- convert svg to png with wanted size if need
-		if is_svg(data.iname) and need_scale(width, height, self._image, data) then
-			--naughty.notify({ text = "requested " .. width .. " x " .. height })
-
-			-- save last parametres
-			-- this need to prevent looping rsvg-convert requests
-			data.last = { width = width, height = height, image = data.iname }
-
-			-- new convert or cached one
-			if is_cached(cache, data.iname, width, height) then
-				self._image = cache[data.iname]
-			else
+		if is_svg(data.iname) then
+			if is_cached(cache, data.iname, width, height) then self._image = cache[data.iname] end
+			if need_scale(width, height, self._image, data) then
 				--naughty.notify({ text = "converted " .. width .. " x " .. height })
-				resize_and_set_svg(self, width, height, data) -- convert and set new image
+				-- save last parametres
+				-- this need to prevent looping rsvg-convert requests
+				data.last = { width = width, height = height, image = data.iname }
+
+				-- convert and set new image
+				resize_and_set_svg(self, width, height, data)
 				return
 			end
 		end
