@@ -147,6 +147,24 @@ theme.desktop.dashpack = {
 	color = theme.desktop.color
 }
 
+-- Widgets placement
+--------------------------------------------------------------------------------
+theme.desktop.grid = {
+	width  = { 500, 500, 500 },
+	height = { 180, 182, 102, 144 },
+	edge   = { width = { 80, 80 }, height = { 60, 60 } }
+}
+
+theme.desktop.places = {
+	netspeed = { 1, 1 },
+	ssdspeed = { 2, 1 },
+	hddspeed = { 3, 1 },
+	cpumem   = { 1, 2 },
+	transm   = { 2, 2 },
+	disks    = { 1, 4 },
+	thermal  = { 1, 3 }
+}
+
 -- Naughty config
 -----------------------------------------------------------------------------------------------------------------------
 theme.naughty_preset = {}

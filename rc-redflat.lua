@@ -416,16 +416,13 @@ do
 	local wgeometry = redutil.desktop.wgeometry
 	local workarea = screen[mouse.screen].workarea
 
-	-- placement grid
-	local grid = {
-		width  = { 500, 500, 500 },
-		height = { 180, 182, 102, 144 },
-		edge   = { width = { 80, 80 }, height = { 60, 60 } }
-	}
+	-- placement
+	local grid = beautiful.desktop.grid
+	local places = beautiful.desktop.places
 
 	-- Network speed
 	--------------------------------------------------------------------------------
-	local netspeed = { geometry = wgeometry(grid, { 1, 1 }, workarea) }
+	local netspeed = { geometry = wgeometry(grid, places.netspeed, workarea) }
 
 	netspeed.args = {
 		interface    = "wlan0",
@@ -439,7 +436,7 @@ do
 
 	-- SSD speed
 	--------------------------------------------------------------------------------
-	local ssdspeed = { geometry = wgeometry(grid, { 2, 1 }, workarea) }
+	local ssdspeed = { geometry = wgeometry(grid, places.ssdspeed, workarea) }
 
 	ssdspeed.args = {
 		interface = "sdb",
@@ -452,7 +449,7 @@ do
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
-	local hddspeed = { geometry = wgeometry(grid, { 3, 1 }, workarea) }
+	local hddspeed = { geometry = wgeometry(grid, places.hddspeed, workarea) }
 
 	hddspeed.args = {
 		interface = "sdc",
@@ -466,7 +463,7 @@ do
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
 	local cpu_storage = { cpu_total = {}, cpu_active = {} }
-	local cpumem = { geometry = wgeometry(grid, { 1, 2 }, workarea) }
+	local cpumem = { geometry = wgeometry(grid, places.cpumem, workarea) }
 
 	cpumem.args = {
 		corners = { num = 8, maxm = 100, crit = 90 },
@@ -479,7 +476,7 @@ do
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
-	local transm = { geometry = wgeometry(grid, { 2, 2 }, workarea) }
+	local transm = { geometry = wgeometry(grid, places.transm, workarea) }
 
 	transm.args = {
 		corners    = { num = 8, maxm = 100 },
@@ -497,7 +494,7 @@ do
 
 	-- Disks
 	--------------------------------------------------------------------------------
-	local disks = { geometry = wgeometry(grid, { 1, 4 }, workarea) }
+	local disks = { geometry = wgeometry(grid, places.disks, workarea) }
 
 	disks.args = {
 		sensors  = {
@@ -517,7 +514,7 @@ do
 
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
-	local thermal = { geometry = wgeometry(grid, { 1, 3 }, workarea) }
+	local thermal = { geometry = wgeometry(grid, places.thermal, workarea) }
 
 	thermal.args = {
 		sensors = {
