@@ -83,7 +83,7 @@ end
 
 -- Get info about client group
 --------------------------------------------------------------------------------
-local function get_state(c_group, style)
+local function get_state(c_group, chars)
 
 	local state = { focus = false, urgent = false, minimized = true }
 
@@ -94,7 +94,7 @@ local function get_state(c_group, style)
 	end
 
 	local class = c_group[1].class or "Untitled"
-	state.text = beautiful.appnames[class] or string.upper(string.sub(class, 1, style.char_digit))
+	state.text = beautiful.appnames[class] or string.upper(string.sub(class, 1, chars))
 	state.num = #c_group
 
 	return state
@@ -334,7 +334,7 @@ local function tasklist_construct(client_groups, layout, data, buttons, style)
 		end
 
 		-- set info and buttons to widget
-		local state = get_state(c_group, style)
+		local state = get_state(c_group, style.char_digit)
 		task.widg:set_state(state)
 		task.widg:buttons(redutil.create_buttons(buttons, { group = c_group }))
 
