@@ -50,6 +50,7 @@ local function default_style()
 		layout_icon = {},
 		width       = 40,
 		char_digit  = 3,
+		need_group  = true,
 		task_margin = { 5, 5, 0, 0 }
 	}
 	style.winmenu = {
@@ -220,16 +221,20 @@ end
 
 -- Split tasks into groups by class
 --------------------------------------------------------------------------------
-local function group_task(clients)
+local function group_task(clients, need_group)
 	local client_groups = {}
 	local classes = {}
 
 	for _, c in ipairs(clients) do
-		local index = awful.util.table.hasitem(classes, c.class)
-		if index then
-			table.insert(client_groups[index], c)
+		if need_group then
+			local index = awful.util.table.hasitem(classes, c.class)
+			if index then
+				table.insert(client_groups[index], c)
+			else
+				table.insert(classes, c.class)
+				table.insert(client_groups, { c })
+			end
 		else
-			table.insert(classes, c.class)
 			table.insert(client_groups, { c })
 		end
 	end
@@ -622,7 +627,7 @@ function redtasklist.new(screen, filter, buttons, style)
 	------------------------------------------------------------
 	local function tasklist_update()
 		local clients = visible_clients(filter, screen)
-		local client_groups = group_task(clients)
+		local client_groups = group_task(clients, style.need_group)
 
 		last.sorted_list = sort_list(client_groups)
 
