@@ -86,10 +86,10 @@ local function get_state(c_group, style)
 
 	local state = { focus = false, urgent = false, minimized = true }
 
-	for _, v in pairs(c_group) do
-		state.focus     = state.focus or client.focus == v
-		state.urgent    = state.urgent or v.urgent
-		state.minimized = state.minimized and v.minimized
+	for _, c in pairs(c_group) do
+		state.focus     = state.focus or client.focus == c
+		state.urgent    = state.urgent or c.urgent
+		state.minimized = state.minimized and c.minimized
 	end
 
 	local class = c_group[1].class or "Untitled"

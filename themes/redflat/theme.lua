@@ -284,10 +284,12 @@ theme.gauge.monitor = {
 -- Tag
 ------------------------------------------------------------
 theme.gauge.tag = {
-	width    = 100,
-	font     = theme.gauge.monitor.font,
-	text_gap = theme.gauge.monitor.text_gap,
-	color    = theme.color
+	width        = 100,
+	font         = theme.gauge.monitor.font,
+	text_gap     = theme.gauge.monitor.text_gap,
+	counter      = { size = 13, gap = 3, coord = { 50, 38 } },
+	show_counter = false,
+	color        = theme.color
 }
 
 -- geometry for state marks
@@ -305,7 +307,7 @@ theme.gauge.task = {
 	font     = theme.gauge.monitor.font,
 	text_gap = theme.gauge.monitor.text_gap,
 	line     = { width = 4, v_gap = 36 },
-	counter  = { size = 13, margin = 3 },
+	counter  = { size = 13, gap = 3 },
 	color    = theme.color
 }
 
