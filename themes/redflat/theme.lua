@@ -295,7 +295,7 @@ theme.gauge.tag = {
 -- geometry for state marks
 theme.gauge.tag.geometry = {
 	active   = {         y = 36,             height = 4  },
-	focus    = { x = 4,  y = 14, width = 14, height = 10 },
+	focus    = { x = 4,  y = 14, width = 13, height = 13 },
 	occupied = { x = 85, y = 8,  width = 9,  height = 15 }
 }
 

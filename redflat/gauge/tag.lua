@@ -63,14 +63,15 @@ function cairo_draw.active(cr, width, height, geometry)
 	cr:fill()
 end
 
--- Tag focus mark (triangle)
+-- Tag focus mark (rhombus)
 ------------------------------------------------------------
 function cairo_draw.focus(cr, width, height, geometry)
 	geometry = fill_geometry(width, height, geometry)
 
-	cr:move_to(geometry.x, geometry.y)
-	cr:rel_line_to(geometry.width / 2, geometry.height)
-	cr:rel_line_to(geometry.width / 2, - geometry.height)
+	cr:move_to(geometry.x + geometry.width / 2, geometry.y)
+	cr:rel_line_to(geometry.width / 2, geometry.height / 2)
+	cr:rel_line_to(- geometry.width / 2, geometry.height / 2)
+	cr:rel_line_to(- geometry.width / 2, - geometry.height / 2)
 	cr:close_path()
 	cr:fill()
 end
