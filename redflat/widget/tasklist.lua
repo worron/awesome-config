@@ -49,6 +49,7 @@ local function default_style()
 	local style = {
 		layout_icon = {},
 		width       = 40,
+		char_digit  = 3,
 		task_margin = { 5, 5, 0, 0 }
 	}
 	style.winmenu = {
@@ -81,7 +82,7 @@ end
 
 -- Get info about client group
 --------------------------------------------------------------------------------
-local function get_state(c_group)
+local function get_state(c_group, style)
 
 	local state = { focus = false, urgent = false, minimized = true }
 
@@ -92,7 +93,7 @@ local function get_state(c_group)
 	end
 
 	local class = c_group[1].class or "Untitled"
-	state.text = beautiful.appnames[class] or string.upper(string.sub(class, 1, 3))
+	state.text = beautiful.appnames[class] or string.upper(string.sub(class, 1, style.char_digit))
 	state.num = #c_group
 
 	return state
@@ -328,7 +329,7 @@ local function tasklist_construct(client_groups, layout, data, buttons, style)
 		end
 
 		-- set info and buttons to widget
-		local state = get_state(c_group)
+		local state = get_state(c_group, style)
 		task.widg:set_state(state)
 		task.widg:buttons(redutil.create_buttons(buttons, { group = c_group }))
 
