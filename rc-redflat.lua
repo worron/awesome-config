@@ -201,17 +201,17 @@ end
 
 -- Separators
 --------------------------------------------------------------------------------
-local single_sep = separator.vertical({ margin = { 12, 12, 5, 5 } })
+local single_sep = separator.vertical({ margin = beautiful.widget.margin.single_sep })
 
 local double_sep = wibox.layout.fixed.horizontal()
-double_sep:add(separator.vertical({ margin = { 12, 7, 5, 5 } }))
-double_sep:add(separator.vertical({ margin = { 7, 12, 5, 5 } }))
+double_sep:add(separator.vertical({ margin = beautiful.widget.margin.double_sep[1] }))
+double_sep:add(separator.vertical({ margin = beautiful.widget.margin.double_sep[2] }))
 
 -- Taglist configure
 --------------------------------------------------------------------------------
 local taglist = {}
 taglist.style  = { separator = single_sep }
-taglist.margin = { 10, 0, 0, 0 }
+taglist.margin = beautiful.widget.margin.taglist
 
 taglist.buttons = awful.util.table.join(
 	awful.button({ modkey    }, 1, awful.client.movetotag),
@@ -228,7 +228,7 @@ taglist.buttons = awful.util.table.join(
 --------------------------------------------------------------------------------
 local upgrades = {}
 upgrades.widget = redwidget.upgrades()
-upgrades.layout = wibox.layout.margin(upgrades.widget, 7, 7, 7, 7)
+upgrades.layout = wibox.layout.margin(upgrades.widget, unpack(beautiful.widget.margin.upgrades))
 
 upgrades.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () mainmenu:toggle()           end),
@@ -239,7 +239,7 @@ upgrades.widget:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local kbindicator = {}
 kbindicator.widget = redwidget.keyboard({ layouts = { "English", "Russian" } })
-kbindicator.layout = wibox.layout.margin(kbindicator.widget, 5, 5, 5, 5)
+kbindicator.layout = wibox.layout.margin(kbindicator.widget, unpack(beautiful.widget.margin.kbindicator))
 
 kbindicator.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () redwidget.keyboard:toggle_menu() end),
@@ -253,7 +253,7 @@ kbindicator.widget:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local volume = {}
 volume.widget = redwidget.pulse()
-volume.layout = wibox.layout.margin(volume.widget, 3, 3, 3, 3)
+volume.layout = wibox.layout.margin(volume.widget, unpack(beautiful.widget.margin.volume))
 
 volume.widget:buttons(awful.util.table.join(
 	awful.button({}, 4, function() redwidget.pulse:change_volume()                end),
@@ -272,7 +272,7 @@ local mail_scripts_path = "/home/vorron/Documents/scripts/"
 
 local mail = {}
 mail.widget = redwidget.mail({ path = mail_scripts_path, scripts = mail_scripts })
-mail.layout = wibox.layout.margin(mail.widget, 5, 5, 5, 5)
+mail.layout = wibox.layout.margin(mail.widget, unpack(beautiful.widget.margin.mail))
 
 -- buttons
 mail.widget:buttons(awful.util.table.join(
@@ -283,7 +283,7 @@ mail.widget:buttons(awful.util.table.join(
 -- Layoutbox configure
 --------------------------------------------------------------------------------
 local layoutbox = {}
-layoutbox.margin = { 8, 8, 8, 8 }
+layoutbox.margin = beautiful.widget.margin.layoutbox
 
 layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () awful.layout.inc(layouts, 1)  end),
@@ -335,7 +335,7 @@ monitor.mem:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local textclock = {}
 textclock.widget = redwidget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
-textclock.layout = wibox.layout.margin(textclock.widget, 5, 15)
+textclock.layout = wibox.layout.margin(textclock.widget, unpack(beautiful.widget.margin.textclock))
 
 -- Panel wibox
 -----------------------------------------------------------------------------------------------------------------------
