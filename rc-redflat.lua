@@ -201,17 +201,17 @@ end
 
 -- Separators
 --------------------------------------------------------------------------------
-local single_sep = separator.vertical({ margin = { 12, 12, 5, 5 } })
+local single_sep = separator.vertical({ margin = beautiful.widget.margin.single_sep })
 
 local double_sep = wibox.layout.fixed.horizontal()
-double_sep:add(separator.vertical({ margin = { 12, 7, 5, 5 } }))
-double_sep:add(separator.vertical({ margin = { 7, 12, 5, 5 } }))
+double_sep:add(separator.vertical({ margin = beautiful.widget.margin.double_sep[1] }))
+double_sep:add(separator.vertical({ margin = beautiful.widget.margin.double_sep[2] }))
 
 -- Taglist configure
 --------------------------------------------------------------------------------
 local taglist = {}
 taglist.style  = { separator = single_sep }
-taglist.margin = { 10, 0, 0, 0 }
+taglist.margin = beautiful.widget.margin.taglist
 
 taglist.buttons = awful.util.table.join(
 	awful.button({ modkey    }, 1, awful.client.movetotag),
@@ -228,7 +228,7 @@ taglist.buttons = awful.util.table.join(
 --------------------------------------------------------------------------------
 local upgrades = {}
 upgrades.widget = redwidget.upgrades()
-upgrades.layout = wibox.layout.margin(upgrades.widget, 7, 7, 7, 7)
+upgrades.layout = wibox.layout.margin(upgrades.widget, unpack(beautiful.widget.margin.upgrades))
 
 upgrades.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () mainmenu:toggle()           end),
@@ -239,7 +239,7 @@ upgrades.widget:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local kbindicator = {}
 kbindicator.widget = redwidget.keyboard({ layouts = { "English", "Russian" } })
-kbindicator.layout = wibox.layout.margin(kbindicator.widget, 5, 5, 5, 5)
+kbindicator.layout = wibox.layout.margin(kbindicator.widget, unpack(beautiful.widget.margin.kbindicator))
 
 kbindicator.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () redwidget.keyboard:toggle_menu() end),
@@ -253,7 +253,7 @@ kbindicator.widget:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local volume = {}
 volume.widget = redwidget.pulse()
-volume.layout = wibox.layout.margin(volume.widget, 3, 3, 3, 3)
+volume.layout = wibox.layout.margin(volume.widget, unpack(beautiful.widget.margin.volume))
 
 volume.widget:buttons(awful.util.table.join(
 	awful.button({}, 4, function() redwidget.pulse:change_volume()                end),
@@ -272,7 +272,7 @@ local mail_scripts_path = "/home/vorron/Documents/scripts/"
 
 local mail = {}
 mail.widget = redwidget.mail({ path = mail_scripts_path, scripts = mail_scripts })
-mail.layout = wibox.layout.margin(mail.widget, 5, 5, 5, 5)
+mail.layout = wibox.layout.margin(mail.widget, unpack(beautiful.widget.margin.mail))
 
 -- buttons
 mail.widget:buttons(awful.util.table.join(
@@ -283,7 +283,7 @@ mail.widget:buttons(awful.util.table.join(
 -- Layoutbox configure
 --------------------------------------------------------------------------------
 local layoutbox = {}
-layoutbox.margin = { 8, 8, 8, 8 }
+layoutbox.margin = beautiful.widget.margin.layoutbox
 
 layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () awful.layout.inc(layouts, 1)  end),
@@ -335,7 +335,7 @@ monitor.mem:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local textclock = {}
 textclock.widget = redwidget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
-textclock.layout = wibox.layout.margin(textclock.widget, 5, 15)
+textclock.layout = wibox.layout.margin(textclock.widget, unpack(beautiful.widget.margin.textclock))
 
 -- Panel wibox
 -----------------------------------------------------------------------------------------------------------------------
@@ -416,16 +416,13 @@ do
 	local wgeometry = redutil.desktop.wgeometry
 	local workarea = screen[mouse.screen].workarea
 
-	-- placement grid
-	local grid = {
-		width  = { 500, 500, 500 },
-		height = { 180, 182, 102, 144 },
-		edge   = { width = { 80, 80 }, height = { 60, 60 } }
-	}
+	-- placement
+	local grid = beautiful.desktop.grid
+	local places = beautiful.desktop.places
 
 	-- Network speed
 	--------------------------------------------------------------------------------
-	local netspeed = { geometry = wgeometry(grid, { 1, 1 }, workarea) }
+	local netspeed = { geometry = wgeometry(grid, places.netspeed, workarea) }
 
 	netspeed.args = {
 		interface    = "wlan0",
@@ -439,7 +436,7 @@ do
 
 	-- SSD speed
 	--------------------------------------------------------------------------------
-	local ssdspeed = { geometry = wgeometry(grid, { 2, 1 }, workarea) }
+	local ssdspeed = { geometry = wgeometry(grid, places.ssdspeed, workarea) }
 
 	ssdspeed.args = {
 		interface = "sdb",
@@ -452,7 +449,7 @@ do
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
-	local hddspeed = { geometry = wgeometry(grid, { 3, 1 }, workarea) }
+	local hddspeed = { geometry = wgeometry(grid, places.hddspeed, workarea) }
 
 	hddspeed.args = {
 		interface = "sdc",
@@ -466,7 +463,7 @@ do
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
 	local cpu_storage = { cpu_total = {}, cpu_active = {} }
-	local cpumem = { geometry = wgeometry(grid, { 1, 2 }, workarea) }
+	local cpumem = { geometry = wgeometry(grid, places.cpumem, workarea) }
 
 	cpumem.args = {
 		corners = { num = 8, maxm = 100, crit = 90 },
@@ -479,7 +476,7 @@ do
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
-	local transm = { geometry = wgeometry(grid, { 2, 2 }, workarea) }
+	local transm = { geometry = wgeometry(grid, places.transm, workarea) }
 
 	transm.args = {
 		corners    = { num = 8, maxm = 100 },
@@ -497,7 +494,7 @@ do
 
 	-- Disks
 	--------------------------------------------------------------------------------
-	local disks = { geometry = wgeometry(grid, { 1, 4 }, workarea) }
+	local disks = { geometry = wgeometry(grid, places.disks, workarea) }
 
 	disks.args = {
 		sensors  = {
@@ -517,7 +514,7 @@ do
 
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
-	local thermal = { geometry = wgeometry(grid, { 1, 3 }, workarea) }
+	local thermal = { geometry = wgeometry(grid, places.thermal, workarea) }
 
 	thermal.args = {
 		sensors = {

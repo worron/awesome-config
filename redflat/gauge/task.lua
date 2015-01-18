@@ -25,7 +25,7 @@ local function default_style()
 		line     = { width = 4, v_gap = 30 },
 		font     = { font = "Sans", size = 16, face = 0, slant = 0 },
 		text_gap = 22,
-		counter  = { size = 12, margin = 2 },
+		counter  = { size = 12, gap = 2 },
 		color    = { main = "#b1222b", gray = "#575757", icon = "#a0a0a0",
 		            urgent = "#32882d", wibox = "#202020" }
 	}
@@ -96,8 +96,8 @@ function redtask.new(style)
 			local ext = cr:text_extents(tostring(data.state.num))
 			cr:set_source(color(style.color.wibox))
 			cr:rectangle(
-				(width - ext.width) / 2 - style.counter.margin, style.line.v_gap,
-				ext.width + 2 * style.counter.margin, style.counter.size
+				(width - ext.width) / 2 - style.counter.gap, style.line.v_gap,
+				ext.width + 2 * style.counter.gap, style.counter.size
 			)
 			cr:fill()
 

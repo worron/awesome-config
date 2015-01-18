@@ -59,18 +59,6 @@ end
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
 
--- Place wibox on center of sceen
---------------------------------------------------------------------------------
-local function placement_center(wbx)
-	local c_geometry = wbx:geometry()
-	local s_geometry = screen[mouse.screen].workarea
-
-	return wbx:geometry({
-		x = s_geometry.x + (s_geometry.width - c_geometry.width) / 2 - wbx.border_width,
-		y = s_geometry.y + (s_geometry.height - c_geometry.height) / 2 - wbx.border_width
-	})
-end
-
 -- Find all clients to be shown
 --------------------------------------------------------------------------------
 local function clients_find(filter)
@@ -196,8 +184,8 @@ function appswitcher:init()
 		end
 
 		-- set wibox size and placement
-		self.wibox:geometry({width = w, height = h})
-		placement_center(self.wibox)
+		self.wibox:geometry({ width = w, height = h })
+		awful.placement.centered(self.wibox)
 	end
 
 	-- Create custom widget to draw previews

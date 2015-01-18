@@ -147,13 +147,31 @@ theme.desktop.dashpack = {
 	color = theme.desktop.color
 }
 
+-- Widgets placement
+--------------------------------------------------------------------------------
+theme.desktop.grid = {
+	width  = { 500, 500, 500 },
+	height = { 180, 182, 102, 144 },
+	edge   = { width = { 60, 60 }, height = { 60, 60 } }
+}
+
+theme.desktop.places = {
+	netspeed = { 1, 1 },
+	ssdspeed = { 2, 1 },
+	hddspeed = { 3, 1 },
+	cpumem   = { 1, 2 },
+	transm   = { 2, 2 },
+	disks    = { 1, 4 },
+	thermal  = { 1, 3 }
+}
+
 -- Naughty config
 -----------------------------------------------------------------------------------------------------------------------
 theme.naughty_preset = {}
 
 theme.naughty_preset.normal = {
 	timeout      = 5,
-	margin       = 16,
+	margin       = 12,
 	icon_size    = 80,
 	font         = theme.font,
 	bg           = theme.color.wibox,
@@ -166,7 +184,7 @@ theme.naughty_preset.normal = {
 
 theme.naughty_preset.critical = {
 	timeout      = 15,
-	margin       = 16,
+	margin       = 12,
 	icon_size    = 80,
 	font         = theme.font,
 	bg           = theme.color.wibox,
@@ -266,16 +284,18 @@ theme.gauge.monitor = {
 -- Tag
 ------------------------------------------------------------
 theme.gauge.tag = {
-	width    = 100,
-	font     = theme.gauge.monitor.font,
-	text_gap = theme.gauge.monitor.text_gap,
-	color    = theme.color
+	width        = 100,
+	font         = theme.gauge.monitor.font,
+	text_gap     = theme.gauge.monitor.text_gap,
+	counter      = { size = 13, gap = 3, coord = { 50, 38 } },
+	show_counter = false,
+	color        = theme.color
 }
 
 -- geometry for state marks
 theme.gauge.tag.geometry = {
 	active   = {         y = 36,             height = 4  },
-	focus    = { x = 4,  y = 14, width = 14, height = 10 },
+	focus    = { x = 4,  y = 14, width = 13, height = 13 },
 	occupied = { x = 85, y = 8,  width = 9,  height = 15 }
 }
 
@@ -287,7 +307,7 @@ theme.gauge.task = {
 	font     = theme.gauge.monitor.font,
 	text_gap = theme.gauge.monitor.text_gap,
 	line     = { width = 4, v_gap = 36 },
-	counter  = { size = 13, margin = 3 },
+	counter  = { size = 13, gap = 3 },
 	color    = theme.color
 }
 
@@ -300,6 +320,23 @@ theme.gauge.separator = {
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 theme.widget = {}
+
+-- Widgets placement
+--------------------------------------------------------------------------------
+theme.widget.margin = {
+	single_sep  = { 12, 12, 5, 5 },
+	double_sep  = { { 12, 7, 5, 5 }, { 7, 12, 5, 5 } },
+	taglist     = { 10, 0, 0, 0 },
+	upgrades    = { 7, 7, 7, 7 },
+	kbindicator = { 5, 5, 5, 5 },
+	volume      = { 3, 3, 3, 3 },
+	mail        = { 5, 5, 5, 5 },
+	layoutbox   = { 8, 8, 8, 8 },
+	textclock   = { 5, 15, 0, 0 }
+}
+
+-- Widgets
+--------------------------------------------------------------------------------
 
 -- Upgrades
 ------------------------------------------------------------
@@ -476,6 +513,7 @@ theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "
 -- Exaile music player
 ------------------------------------------------------------
 theme.float.exaile = {
+	geometry     = { width = 520, height = 150, x = 580, y = 868},
 	titlefont    = theme.font_exaile_main,
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
@@ -517,7 +555,7 @@ theme.float.prompt = {
 -- Top processes
 ------------------------------------------------------------
 theme.float.top = {
-	geometry      = { width = 460, height = 400, x =1444, y = 614 },
+	geometry      = { width = 460, height = 400, x =1448, y = 618 },
 	border_margin = { 20, 20, 10, 0 },
 	button_margin = { 140, 140, 18, 18 },
 	title_height  = 40,

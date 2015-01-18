@@ -41,35 +41,21 @@ end
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
 
--- Check if any client in given list have urgent mark
---------------------------------------------------------------------------------
-local function is_urgent(client_list)
-	local urgent = false
-	for _, c in pairs(client_list) do
-		if c.urgent then
-			urgent = true
-			break
-		end
-	end
-	return urgent
-end
-
 -- Get info about tag
 --------------------------------------------------------------------------------
 local function get_state(t)
-	local state = {}
+	local state = { focus = false, urgent = false, list = {} }
 	local focused_client = client.focus
 	local client_list = t:clients()
 
-	-- check if tag active
+	for _, c in pairs(client_list) do
+		state.focus     = state.focus or client.focus == c
+		state.urgent    = state.urgent or c.urgent
+		table.insert(state.list, { focus = client.focus == c, urgent = c.urgent, minimized = c.minimized })
+	end
+
 	state.active = t.selected
-	-- check if tag has focused window
-	state.focus = focused_client and awful.util.table.hasitem(focused_client:tags(), t) ~= nil or false
-	-- check if tag has any non focused windows
 	state.occupied = #client_list > 0 and not (#client_list == 1 and state.focus)
-	-- check if tag has urgent client
-	state.urgent = state.occupied and is_urgent(client_list)
-	-- read tag name
 	state.text = string.upper(t.name)
 
 	return state

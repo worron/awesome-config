@@ -49,6 +49,8 @@ local function default_style()
 	local style = {
 		layout_icon = {},
 		width       = 40,
+		char_digit  = 3,
+		need_group  = true,
 		task_margin = { 5, 5, 0, 0 }
 	}
 	style.winmenu = {
@@ -81,18 +83,18 @@ end
 
 -- Get info about client group
 --------------------------------------------------------------------------------
-local function get_state(c_group)
+local function get_state(c_group, chars)
 
 	local state = { focus = false, urgent = false, minimized = true }
 
-	for _, v in pairs(c_group) do
-		state.focus     = state.focus or client.focus == v
-		state.urgent    = state.urgent or v.urgent
-		state.minimized = state.minimized and v.minimized
+	for _, c in pairs(c_group) do
+		state.focus     = state.focus or client.focus == c
+		state.urgent    = state.urgent or c.urgent
+		state.minimized = state.minimized and c.minimized
 	end
 
 	local class = c_group[1].class or "Untitled"
-	state.text = beautiful.appnames[class] or string.upper(string.sub(class, 1, 3))
+	state.text = beautiful.appnames[class] or string.upper(string.sub(class, 1, chars))
 	state.num = #c_group
 
 	return state
@@ -219,16 +221,20 @@ end
 
 -- Split tasks into groups by class
 --------------------------------------------------------------------------------
-local function group_task(clients)
+local function group_task(clients, need_group)
 	local client_groups = {}
 	local classes = {}
 
 	for _, c in ipairs(clients) do
-		local index = awful.util.table.hasitem(classes, c.class)
-		if index then
-			table.insert(client_groups[index], c)
+		if need_group then
+			local index = awful.util.table.hasitem(classes, c.class)
+			if index then
+				table.insert(client_groups[index], c)
+			else
+				table.insert(classes, c.class)
+				table.insert(client_groups, { c })
+			end
 		else
-			table.insert(classes, c.class)
 			table.insert(client_groups, { c })
 		end
 	end
@@ -328,7 +334,7 @@ local function tasklist_construct(client_groups, layout, data, buttons, style)
 		end
 
 		-- set info and buttons to widget
-		local state = get_state(c_group)
+		local state = get_state(c_group, style.char_digit)
 		task.widg:set_state(state)
 		task.widg:buttons(redutil.create_buttons(buttons, { group = c_group }))
 
@@ -621,7 +627,7 @@ function redtasklist.new(screen, filter, buttons, style)
 	------------------------------------------------------------
 	local function tasklist_update()
 		local clients = visible_clients(filter, screen)
-		local client_groups = group_task(clients)
+		local client_groups = group_task(clients, style.need_group)
 
 		last.sorted_list = sort_list(client_groups)
 

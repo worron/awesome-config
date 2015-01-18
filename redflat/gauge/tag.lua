@@ -9,6 +9,7 @@
 local setmetatable = setmetatable
 local math = math
 
+local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local color = require("gears.color")
@@ -23,10 +24,12 @@ local redtag = { mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		width    = 80,
-		font     = { font = "Sans", size = 16, face = 0, slant = 0 },
-		text_gap = 22,
-		color    = { main   = "#b1222b", gray = "#575757", icon = "#a0a0a0", urgent = "#32882d" }
+		width        = 80,
+		font         = { font = "Sans", size = 16, face = 0, slant = 0 },
+		text_gap     = 22,
+		counter      = { size = 12, gap = 2, coord = { 40, 20 } },
+		show_counter = true,
+		color        = { main   = "#b1222b", gray = "#575757", icon = "#a0a0a0", urgent = "#32882d" }
 	}
 
 	-- geometry for state marks
@@ -60,14 +63,15 @@ function cairo_draw.active(cr, width, height, geometry)
 	cr:fill()
 end
 
--- Tag focus mark (triangle)
+-- Tag focus mark (rhombus)
 ------------------------------------------------------------
 function cairo_draw.focus(cr, width, height, geometry)
 	geometry = fill_geometry(width, height, geometry)
 
-	cr:move_to(geometry.x, geometry.y)
-	cr:rel_line_to(geometry.width / 2, geometry.height)
-	cr:rel_line_to(geometry.width / 2, - geometry.height)
+	cr:move_to(geometry.x + geometry.width / 2, geometry.y)
+	cr:rel_line_to(geometry.width / 2, geometry.height / 2)
+	cr:rel_line_to(- geometry.width / 2, geometry.height / 2)
+	cr:rel_line_to(- geometry.width / 2, - geometry.height / 2)
 	cr:close_path()
 	cr:fill()
 end
@@ -109,7 +113,7 @@ function redtag.new(style)
 	-- User functions
 	------------------------------------------------------------
 	function widg:set_state(state)
-		data.state = redutil.table.merge(data.state, state)
+		data.state = awful.util.table.clone(state)
 		self:emit_signal("widget::updated")
 	end
 
@@ -152,6 +156,23 @@ function redtag.new(style)
 		if data.state.focus then
 			cr:set_source(color(style.color.main))
 			cairo_draw.focus(cr, width, height, style.geometry.focus)
+		end
+
+		-- counter
+		if style.show_counter and #data.state.list > 0 then
+			cr:set_font_size(style.counter.size)
+			local ext = cr:text_extents(tostring(#data.state.list))
+			cr:set_source(color(style.color.wibox))
+			cr:rectangle(
+				style.counter.coord[1] - ext.width / 2 - style.counter.gap,
+				style.counter.coord[2] - ext.height / 2 - style.counter.gap,
+				ext.width + 2 * style.counter.gap,
+				ext.height + 2 * style.counter.gap
+			)
+			cr:fill()
+
+			cr:set_source(color(style.color.icon))
+			redutil.cairo.tcenter(cr, style.counter.coord, tostring(#data.state.list))
 		end
 	end
 
