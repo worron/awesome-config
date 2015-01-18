@@ -171,7 +171,7 @@ theme.naughty_preset = {}
 
 theme.naughty_preset.normal = {
 	timeout      = 5,
-	margin       = 16,
+	margin       = 12,
 	icon_size    = 80,
 	font         = theme.font,
 	bg           = theme.color.wibox,
@@ -184,7 +184,7 @@ theme.naughty_preset.normal = {
 
 theme.naughty_preset.critical = {
 	timeout      = 15,
-	margin       = 16,
+	margin       = 12,
 	icon_size    = 80,
 	font         = theme.font,
 	bg           = theme.color.wibox,
@@ -513,6 +513,7 @@ theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "
 -- Exaile music player
 ------------------------------------------------------------
 theme.float.exaile = {
+	geometry     = { width = 520, height = 150, x = 580, y = 868},
 	titlefont    = theme.font_exaile_main,
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
@@ -554,7 +555,7 @@ theme.float.prompt = {
 -- Top processes
 ------------------------------------------------------------
 theme.float.top = {
-	geometry      = { width = 460, height = 400, x =1444, y = 614 },
+	geometry      = { width = 460, height = 400, x =1448, y = 618 },
 	border_margin = { 20, 20, 10, 0 },
 	button_margin = { 140, 140, 18, 18 },
 	title_height  = 40,
