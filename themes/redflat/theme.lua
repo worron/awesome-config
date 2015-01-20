@@ -65,7 +65,7 @@ theme.cf_monitor     = { font = "Play", size = 20, face = 1 } -- monitoring widg
 theme.panel_heigh         = 50 -- window border width
 theme.border_width        = 4  -- window border width
 theme.useless_gap_width   = 12 -- Lain useless gap
---theme.global_border_width = 8  -- Lain global border gap
+theme.global_border_width = 0  -- Lain global border gap
 
 -- Shared icons
 --------------------------------------------------------------------------------
@@ -198,6 +198,7 @@ theme.naughty_preset.critical = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.menu = {
 	border_width = 4,
+	screen_gap   = theme.useless_gap_width + theme.global_border_width,
 	height       = 35,
 	width        = 300,
 	icon_margin  = { 10, 10, 10, 10 },
@@ -533,7 +534,7 @@ theme.float.exaile.icon = {
 -- Notify
 ------------------------------------------------------------
 theme.float.notify = {
-	geometry     = { width = 484, height = 106, x =1420, y = 16 },
+	geometry     = { width = 484, height = 106, x =1424, y = 12 },
 	font         = theme.font_notify,
 	border_width = 0,
 	color        = theme.color

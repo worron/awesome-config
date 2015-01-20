@@ -18,7 +18,7 @@ local beautiful = require("beautiful")
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
-local util = { text = {}, cairo = {}, table = {}, desktop = {} }
+local util = { text = {}, cairo = {}, table = {}, desktop = {}, placement = {} }
 
 
 -- Read from file
@@ -192,6 +192,17 @@ function util.desktop.edge(direction, zone)
 	end
 
 	return edge
+end
+
+-- Placement utilits
+-----------------------------------------------------------------------------------------------------------------------
+function util.placement.add_gap(geometry, gap)
+	return {
+		x = geometry.x + gap,
+		y = geometry.y + gap,
+		width = geometry.width - 2 * gap,
+		height = geometry.height - 2 * gap
+	}
 end
 
 -----------------------------------------------------------------------------------------------------------------------

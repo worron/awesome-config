@@ -47,6 +47,7 @@ local menu = { mt = {} }
 local function default_theme()
 	local style = {
 		border_width = 2,
+		screen_gap   = 0,
 		submenu_icon = nil,
 		height       = 20,
 		width        = 200,
@@ -110,23 +111,26 @@ end
 -- Function to set menu or submenu in position
 -----------------------------------------------------------------------------------------------------------------------
 local function set_coords(_menu, screen_idx, m_coords)
-	local s_geometry = screen[screen_idx].workarea
+	local s_geometry = redutil.placement.add_gap(screen[screen_idx].workarea, _menu.theme.screen_gap)
+
 	local screen_w = s_geometry.x + s_geometry.width
 	local screen_h = s_geometry.y + s_geometry.height
 
 	local x = _menu.wibox.x
 	local y = _menu.wibox.y
+	local b = _menu.wibox.border_width
+	local w = _menu.wibox.width + 2 * _menu.wibox.border_width
+	local h = _menu.wibox.height + 2 * _menu.wibox.border_width
 
 	if _menu.parent then
-		local w = _menu.parent.wibox.width + _menu.parent.theme.border_width
+		local pw = _menu.parent.wibox.width + 2 * _menu.parent.theme.border_width
+		local piy = _menu.parent.wibox.y + _menu.position + _menu.parent.theme.border_width
 
-		y = _menu.parent.wibox.y + _menu.position + _menu.wibox.height > screen_h
-		    and screen_h - _menu.wibox.height
-		    or _menu.parent.wibox.y + _menu.position
+		y = piy - b
+		x = _menu.parent.wibox.x + pw
 
-		x = _menu.parent.wibox.x + w + _menu.wibox.width > screen_w
-		    and _menu.parent.wibox.x - _menu.wibox.width
-		    or _menu.parent.wibox.x + w
+		if y + h > screen_h then y = screen_h - h end
+		if x + w > screen_w then x = _menu.parent.wibox.x - w end
 	else
 		if m_coords == nil then
 			m_coords = mouse.coords()
@@ -137,8 +141,8 @@ local function set_coords(_menu, screen_idx, m_coords)
 		y = m_coords.y < s_geometry.y and s_geometry.y or m_coords.y
 		x = m_coords.x < s_geometry.x and s_geometry.x or m_coords.x
 
-		y = y + _menu.wibox.height > screen_h and screen_h - _menu.wibox.height or y
-		x = x + _menu.wibox.width  > screen_w and screen_w - _menu.wibox.width  or x
+		if y + h > screen_h then y = screen_h - h end
+		if x + w > screen_w then x = screen_w - w end
 	end
 
 	_menu.wibox.x = x
@@ -252,10 +256,9 @@ end
 --------------------------------------------------------------------------------
 function menu:show(args)
 	local args = args or {}
-	local coords = args.coords or nil
 	local screen_index = mouse.screen
 
-	set_coords(self, screen_index, coords)
+	set_coords(self, screen_index, args.coords)
 	awful.keygrabber.run(self._keygrabber)
 	self.wibox.visible = true
 	self:item_enter(1)

@@ -166,7 +166,8 @@ local function state_line_construct(state_icons, setup_layout, style)
 end
 
 -- Calculate menu position
--- TODO: make variant when panel place on top of screen
+-- !!! Bad code is here !!!
+-- !!! TODO: make variant when panel place on top of screen !!!
 --------------------------------------------------------------------------------
 local function coords_calc(menu, tip_wibox, gap)
 	local coords = {}
@@ -175,11 +176,8 @@ local function coords_calc(menu, tip_wibox, gap)
 		coords.x = tip_wibox.x + (tip_wibox.width - menu.wibox.width) / 2
 		coords.y = tip_wibox.y - menu.wibox.height - 2 * menu.wibox.border_width + tip_wibox.border_width + gap
 	else
-		menu.wibox.visible = false
-		awful.placement.under_mouse(menu.wibox)
-		awful.placement.no_offscreen(menu.wibox)
-		coords.x = menu.wibox.x
-		coords.y = menu.wibox.y
+		coords = mouse.coords()
+		coords.x = coords.x - menu.wibox.width / 2 - menu.wibox.border_width
 	end
 
 	return coords
