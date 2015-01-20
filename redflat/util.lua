@@ -196,6 +196,8 @@ end
 
 -- Placement utilits
 -----------------------------------------------------------------------------------------------------------------------
+local direction = { x = "width", y = "height" }
+
 function util.placement.add_gap(geometry, gap)
 	return {
 		x = geometry.x + gap,
@@ -203,6 +205,25 @@ function util.placement.add_gap(geometry, gap)
 		width = geometry.width - 2 * gap,
 		height = geometry.height - 2 * gap
 	}
+end
+
+function util.placement.no_offscreen(object, gap, area)
+	local geometry = object:geometry()
+	local border = object.border_width
+
+	local screen_idx = object.screen or awful.screen.getbycoord(geometry.x, geometry.y)
+	local area = area or screen[screen_idx].workarea
+	if gap then area = util.placement.add_gap(area, gap) end
+
+	for coord, dim in pairs(direction) do
+		if geometry[coord] + geometry[dim] + 2 * border > area[coord] + area[dim] then
+			geometry[coord] = area[coord] + area[dim] - geometry[dim] - 2*border
+		elseif geometry[coord] < area[coord] then
+			geometry[coord] = area[coord]
+		end
+	end
+
+	object:geometry(geometry)
 end
 
 -----------------------------------------------------------------------------------------------------------------------

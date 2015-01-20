@@ -28,6 +28,7 @@ local top = {}
 local function default_style()
 	local style = {
 		timeout       = 2,
+		screen_gap    = 0,
 		geometry      = { width = 460, height = 380, x =1440, y = 630 },
 		border_margin = { 10, 10, 10, 10 },
 		labels_width  = { 30, 70, 120 },
@@ -274,7 +275,7 @@ function top:init()
 
 	self.wibox:set_widget(list_layout)
 	self.wibox:geometry(style.geometry)
-	awful.placement.no_offscreen(self.wibox)
+	redutil.placement.no_offscreen(self.wibox, style.screen_gap)
 
 	-- Update timer
 	--------------------------------------------------------------------------------

@@ -515,6 +515,7 @@ theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "
 ------------------------------------------------------------
 theme.float.exaile = {
 	geometry     = { width = 520, height = 150, x = 580, y = 868},
+	screen_gap   = theme.useless_gap_width + theme.global_border_width,
 	titlefont    = theme.font_exaile_main,
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
@@ -535,6 +536,7 @@ theme.float.exaile.icon = {
 ------------------------------------------------------------
 theme.float.notify = {
 	geometry     = { width = 484, height = 106, x =1424, y = 12 },
+	screen_gap   = theme.useless_gap_width + theme.global_border_width,
 	font         = theme.font_notify,
 	border_width = 0,
 	color        = theme.color
@@ -557,6 +559,7 @@ theme.float.prompt = {
 ------------------------------------------------------------
 theme.float.top = {
 	geometry      = { width = 460, height = 400, x =1448, y = 618 },
+	screen_gap    = theme.useless_gap_width + theme.global_border_width,
 	border_margin = { 20, 20, 10, 0 },
 	button_margin = { 140, 140, 18, 18 },
 	title_height  = 40,
