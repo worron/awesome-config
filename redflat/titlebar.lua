@@ -186,7 +186,8 @@ function titlebar.show_all(list, position)
 	local cls = list or client.get()
 
 	for k, c in pairs(cls) do
-		titlebar.show(c, position)
+		-- work with user client list is a pain, so pcall used here
+		pcall(titlebar.show, c, position)
 	end
 end
 

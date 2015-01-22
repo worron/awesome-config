@@ -288,6 +288,16 @@ function appswitcher:init()
 	self.update_timer = timer({ timeout = style.update_timeout })
 	self.update_timer:connect_signal("timeout", function() self.widget:emit_signal("widget::updated") end)
 
+	-- Restart switcher if any client was closed
+	--------------------------------------------------------------------------------
+	client.connect_signal("unmanage",
+		function(c)
+			if self.wibox.visible and awful.util.table.hasitem(self.clients_list, c) then
+				self:hide(true)
+				self:show(cache.args)
+			end
+		end
+	)
 end
 
 -- Show appswitcher widget
@@ -308,6 +318,7 @@ function appswitcher:show(args)
 
 	self.clients_list = clients
 	cache.titlebar = redtitlebar.hide_all(clients)
+	cache.args = args
 	self.size_correction(#clients)
 	self.wibox.visible = not self.wibox.visible
 	self.update_timer:start()
@@ -321,7 +332,7 @@ end
 
 -- Hide appswitcher widget
 -----------------------------------------------------------------------------------------------------------------------
-function appswitcher:hide()
+function appswitcher:hide(is_empty_call)
 
 	if not self.wibox then self:init() end
 	if not self.wibox.visible then return end
@@ -331,7 +342,7 @@ function appswitcher:hide()
 	awful.keygrabber.stop(self.keygrabber)
 
 	self.winmark(self.clients_list[self.index], false)
-	focus_and_raise(self.clients_list[self.index])
+	if not is_empty_call then focus_and_raise(self.clients_list[self.index]) end
 end
 
 -- Toggle appswitcher widget
