@@ -12,6 +12,7 @@ local ipairs = ipairs
 local pairs = pairs
 local math = math
 local string = string
+local setmetatable = setmetatable
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
@@ -225,6 +226,28 @@ function util.placement.no_offscreen(object, gap, area)
 
 	object:geometry(geometry)
 end
+
+local function centered_base(is_h, is_v)
+	return function(object, gap, area)
+		local geometry = object:geometry()
+		local new_geometry = {}
+
+		local screen_idx = object.screen or awful.screen.getbycoord(geometry.x, geometry.y)
+		local area = area or screen[screen_idx].geometry
+		if gap then area = util.placement.add_gap(area, gap) end
+
+		if is_h then new_geometry.x = area.x + (area.width - geometry.width) / 2 - object.border_width end
+		if is_v then new_geometry.y = area.y + (area.height - geometry.height) / 2 - object.border_width end
+
+		return object:geometry(new_geometry)
+	end
+end
+
+util.placement.centered = setmetatable({}, {
+	__call = function(_, ...) return centered_base(true, true)(...) end
+})
+util.placement.centered.horizontal = centered_base(true, false)
+util.placement.centered.vertical = centered_base(false, true)
 
 -----------------------------------------------------------------------------------------------------------------------
 return util

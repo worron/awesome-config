@@ -185,7 +185,7 @@ function appswitcher:init()
 
 		-- set wibox size and placement
 		self.wibox:geometry({ width = w, height = h })
-		awful.placement.centered(self.wibox)
+		redutil.placement.centered(self.wibox)
 	end
 
 	-- Create custom widget to draw previews

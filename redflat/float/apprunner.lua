@@ -277,7 +277,7 @@ function apprunner:init()
 
 	self.wibox:set_widget(area_layout)
 	self.wibox:geometry(style.geometry)
-	awful.placement.centered(self.wibox)
+	redutil.placement.centered(self.wibox)
 end
 
 -- Show apprunner widget

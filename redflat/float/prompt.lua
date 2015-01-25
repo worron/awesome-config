@@ -64,7 +64,7 @@ function floatprompt:init()
 
 	self.wibox:set_widget(wibox.layout.margin(self.decorated_widget, unpack(style.margin)))
 	self.wibox:geometry(style.geometry)
-	awful.placement.centered (self.wibox)
+	redutil.placement.centered(self.wibox)
 end
 
 -- Run method for prompt widget
