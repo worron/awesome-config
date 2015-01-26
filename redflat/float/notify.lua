@@ -26,6 +26,7 @@ local notify = {}
 local function default_style()
 	local style = {
 		geometry        = { width = 480, height = 100, x =1424, y = 16 },
+		screen_gap      = 0,
 		border_margin   = { 20, 20, 20, 20 },
 		elements_margin = { 20, 0, 2, 10 },
 		bar_width       = 8,
@@ -73,7 +74,7 @@ function notify:init()
 
 	self.wibox:set_widget(wibox.layout.margin(area, unpack(style.border_margin)))
 	self.wibox:geometry(style.geometry)
-	awful.placement.no_offscreen(self.wibox)
+	redutil.placement.no_offscreen(self.wibox, style.screen_gap)
 
 	-- Set info function
 	--------------------------------------------------------------------------------

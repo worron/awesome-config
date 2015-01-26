@@ -26,7 +26,7 @@ local exaile = { box = {} }
 local last = { status = "Stopped" }
 
 local command = "dbus-send --type=method_call --session --print-reply=literaly "
-				.. "--dest=org.exaile.Exaile /org/exaile/Exaile org.exaile.Exaile."
+                .. "--dest=org.exaile.Exaile /org/exaile/Exaile org.exaile.Exaile."
 local actions = { "PlayPause", "Next", "Prev" }
 
 -- Generate default theme vars
@@ -34,6 +34,7 @@ local actions = { "PlayPause", "Next", "Prev" }
 local function default_style()
 	local style = {
 		geometry       = { width = 520, height = 150, x = 580, y = 864},
+		screen_gap     = 0,
 		border_gap     = { 20, 20, 20, 20 },
 		elements_gap   = { 20, 0, 0, 0 },
 		volume_gap     = { 0, 0, 0, 3 },
@@ -179,7 +180,7 @@ function exaile:init()
 
 	self.wibox:set_widget(wibox.layout.margin(area, unpack(style.border_gap)))
 	self.wibox:geometry(style.geometry)
-	awful.placement.no_offscreen(self.wibox)
+	redutil.placement.no_offscreen(self.wibox, style.screen_gap)
 
 	-- Update info functions
 	--------------------------------------------------------------------------------
