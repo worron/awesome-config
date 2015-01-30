@@ -639,6 +639,12 @@ do
 	local volume_lower = function() redwidget.pulse:change_volume({ show_notify = true, down = true }) end
 	local volume_mute  = function() redwidget.pulse:mute() end
 
+	-- Custom widget keys
+	--------------------------------------------------------------------------------
+	floatwidget.appswitcher.keys.next  = { "a", "A", "Tab" }
+	floatwidget.appswitcher.keys.prev  = { "q", "Q", }
+	floatwidget.appswitcher.keys.close = { "Super_L" }
+
 	-- Global keys
 	--------------------------------------------------------------------------------
 	globalkeys = awful.util.table.join(

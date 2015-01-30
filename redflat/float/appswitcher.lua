@@ -31,6 +31,14 @@ local appswitcher = { clients_list = {}, index = 1, hotkeys = {} }
 
 local cache = { titlebar = {}, border_cololr = nil }
 
+-- key bindings
+appswitcher.keys = {
+	next  = { "a", "A" },
+	prev  = { "q", "Q" },
+	close = { "Super_L" },
+}
+
+
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
@@ -117,16 +125,18 @@ function appswitcher:init()
 
 	-- Keygrabber
 	--------------------------------------------------------------------------------
+	local function focus_by_key(key)
+		self:switch({ index = awful.util.table.hasitem(style.hotkeys, key) })
+	end
+
 	self.keygrabber = function(mod, key, event)
-		if event ~= "press" then
-			if key == "Tab" then self:switch()
-			elseif key == "a" or key == "A" then self:switch()
-			elseif key == "q" or key == "Q" then self:switch({reverse = true})
-			elseif awful.util.table.hasitem(style.hotkeys, key) then
-				self:switch({index = awful.util.table.hasitem(style.hotkeys, key)})
-			elseif awful.util.table.hasitem(mod, "Control") then -- ignoge Ctrl
-			elseif awful.util.table.hasitem(mod, "Shift") then -- ignoge Shift
-			else self:hide() end
+		if event == "press" then return false
+		elseif awful.util.table.hasitem(self.keys.close, key) then self:hide()
+		elseif awful.util.table.hasitem(self.keys.next,  key) then self:switch()
+		elseif awful.util.table.hasitem(self.keys.prev,  key) then self:switch({ reverse = true })
+		elseif awful.util.table.hasitem(style.hotkeys,   key) then focus_by_key(key)
+		else
+			return false
 		end
 	end
 
