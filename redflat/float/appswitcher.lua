@@ -59,7 +59,7 @@ local function default_style()
 		hotkeys         = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" },
 		font            = { font = "Sans", size = 16, face = 0, slant = 0 },
 		color           = { border = "#575757", text = "#aaaaaa", main = "#b1222b", preview_bg = "#b1222b80",
-		                    wibox  = "#202020", icon = "#a0a0a0", bg   = "#161616" }
+		                    wibox  = "#202020", icon = "#a0a0a0", bg   = "#161616", gray = "#575757" }
 	}
 	return redutil.table.merge(style, beautiful.float.appswitcher or {})
 end
