@@ -503,6 +503,21 @@ theme.float.appswitcher = {
 	color          = theme.color
 }
 
+-- Hotkeys helper
+------------------------------------------------------------
+theme.float.hotkeys = {
+	geometry      = { width = 1540, height = 1000 },
+	border_margin = { 0, 0, 20, 20 },
+	sep_margin    = { 19, 29, 10, 10 },
+	border_width  = 0,
+	colnum        = 2,
+	keyf_width    = 300,
+	font          = theme.font,
+	keysfont      = theme.font_title,
+	titlefont     = "Play bold 16",
+	color         = theme.color
+}
+
 -- additional color
 theme.float.appswitcher.color.preview_bg = theme.color.main .. "12"
 
