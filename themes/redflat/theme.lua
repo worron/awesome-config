@@ -136,8 +136,8 @@ theme.desktop.multim = {
 	corner       = { width = 34, corner = { height = 17, num = 10, line = 5 } },
 	state_height = 60,
 	prog_height  = 98,
-	image_gap    = 0,
-	image        = theme.path .. "/desktop/cpu.svg",
+	image_gap    = 20,
+	image        = theme.path .. "/desktop/ed2.svg",
 	color        = theme.desktop.color
 }
 
@@ -150,7 +150,7 @@ theme.desktop.dashpack = {
 -- Widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
-	width  = { 500, 500, 500 },
+	width  = { 520, 520, 520 },
 	height = { 180, 182, 102, 144 },
 	edge   = { width = { 60, 60 }, height = { 60, 60 } }
 }
