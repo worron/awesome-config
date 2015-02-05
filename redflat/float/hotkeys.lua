@@ -39,6 +39,7 @@ local function default_style()
 		border_width  = 2,
 		keyf_width    = 200,
 		colnum        = 1,
+		ltimeout      = 0.05,
 		font          = "Sans 12",
 		keysfont      = "Sans bold 12",
 		titlefont     = "Sans bold 14",
@@ -52,6 +53,54 @@ end
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
 
+-- Get system keycode table
+--------------------------------------------------------------------------------
+local function keycode_table()
+	local output = awful.util.pread("xmodmap -pk")
+	local codes = {}
+
+	for line in string.gmatch(output, "[^\n]+") do
+		local index = tonumber(string.match(line, "%d+"))
+
+		if index then
+			codes[index] = {}
+			for key in string.gmatch(line , "%x+%s%(([%a%d_]+)%)") do
+				table.insert(codes[index], key)
+			end
+		end
+	end
+
+	return codes
+end
+
+-- Find keycode for symbol
+--------------------------------------------------------------------------------
+local function keycode(key, codetable)
+	for code, symbols in pairs(codetable) do
+		if awful.util.table.hasitem(symbols, key) then return code end
+	end
+
+	return nil
+end
+
+-- Highlight key tip
+--------------------------------------------------------------------------------
+local function highlight(list, codetable, key, last, style)
+	local key = key == " " and "space" or key -- !!! fix this !!!
+
+	if key == last.key then return end
+	local code = keycode(key, codetable)
+
+	for _, line in ipairs(list) do
+		if line.codes and awful.util.table.hasitem(line.codes, code) then
+			line.bg:set_fg(style.color.main)
+
+			last.key = key
+			table.insert(last.lines, line)
+		end
+	end
+end
+
 -- Parse raw key table
 --------------------------------------------------------------------------------
 local function parse_raw_keys(raw_keys)
@@ -59,7 +108,7 @@ local function parse_raw_keys(raw_keys)
 	for _, v in ipairs(raw_keys) do
 		if v.comment then
 			local args = v.args or {}
-			table.insert(keys, { mod = args[1], key = args[2], comment = v.comment })
+			table.insert(keys, { mod = args[1], key = args[2], comment = v.comment, codes = v.codes })
 		end
 	end
 	return keys
@@ -85,7 +134,7 @@ end
 
 -- Construct single column with key tips
 --------------------------------------------------------------------------------
-local function construct_column(keys, style)
+local function construct_column(keys, codetable, style)
 	local column = { line = {} }
 	column.layout = wibox.layout.flex.vertical()
 
@@ -102,6 +151,15 @@ local function construct_column(keys, style)
 
 			line.layout:add(wibox.layout.constraint(line.keybox, "exact", style.keyf_width))
 			line.layout:add(line.commentbox)
+
+			line.bg = wibox.widget.background(line.layout)
+			line.bg:set_fg(style.color.text)
+
+			if v.codes then
+				line.codes = v.codes
+			else
+				line.codes = { keycode(v.key, codetable) }
+			end
 		else
 			line.layout = wibox.layout.flex.horizontal()
 			line.titletbox = wibox.widget.textbox()
@@ -113,7 +171,7 @@ local function construct_column(keys, style)
 		end
 
 		column.line[i] = line
-		column.layout:add(line.layout)
+		column.layout:add(line.bg or line.layout)
 	end
 
 	return column
@@ -145,6 +203,9 @@ function hotkeys:init()
 	local style = default_style()
 	local keys = parse_raw_keys(self.raw_keys)
 	local key_group = split_to_group(keys, style.colnum)
+	local codetable = keycode_table()
+	local fulllist = {}
+	local last = { lines = {} }
 
 	-- Construct widget layouts
 	-- !!! Bad code here. Need more clear conctruction !!!
@@ -158,8 +219,10 @@ function hotkeys:init()
 	area:add(fake_sep)
 
 	for i, keys in ipairs(key_group) do
-		local column = construct_column(keys, style)
+		local column = construct_column(keys, codetable, style)
 		local column_with_sep = wibox.layout.align.horizontal()
+
+		for _, v in ipairs(column.line) do table.insert(fulllist, v) end
 
 		column_with_sep:set_right(i == #key_group and fake_sep or sep)
 		column_with_sep:set_middle(column.layout)
@@ -183,11 +246,32 @@ function hotkeys:init()
 	self.wibox:geometry(style.geometry)
 	redutil.placement.centered(self.wibox, nil, screen[mouse.screen].workarea)
 
+	-- Highlight timer
+	--------------------------------------------------------------------------------
+	local ltimer = timer({ timeout = style.ltimeout })
+	ltimer:connect_signal("timeout",
+		function()
+			ltimer:stop()
+			for _, l in ipairs(last.lines) do l.bg:set_fg(style.color.text) end
+
+			last.key = nil
+			last.lines = {}
+		end
+	)
+
 	-- Keygrabber
 	--------------------------------------------------------------------------------
 	self.keygrabber = function(mod, key, event)
-		if awful.util.table.hasitem(self.keys.close, key) then self:hide()
-		else return false
+		if event == "press" then
+			highlight(fulllist, codetable, key, last, style)
+		else
+			ltimer:again()
+		end
+
+		if awful.util.table.hasitem(self.keys.close, key) then
+			self:hide()
+		else
+			return false
 		end
 	end
 

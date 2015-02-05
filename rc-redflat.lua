@@ -723,7 +723,7 @@ do
 			args = { { modkey,           }, "Escape", awful.tag.history.restore },
 			comment = "View previously selected tag set"
 		},
-		{ comment = "Floating widgets" },
+		{ comment = "Widgets" },
 		{
 			args = { { modkey,           }, "x", function() floatwidget.top:show() end },
 			comment = "Show top widget"
@@ -756,6 +756,14 @@ do
 			args = { { modkey,           }, "z", function() floatwidget.hotkeys:show() end },
 			comment = "Show hotkeys helper"
 		},
+		{
+			args = { { modkey, "Control" }, "u", function () redwidget.upgrades:update() end },
+			comment = "Check available upgrades"
+		},
+		{
+			args = { { modkey, "Control" }, "m", function () redwidget.mail:update() end },
+			comment = "Check new mail"
+		},
 		{ comment = "Application switcher" },
 		{
 			args = { { modkey            }, "a", nil, function() sw:show({ filter = current }) end },
@@ -786,6 +794,15 @@ do
 			args = { {                   }, "XF86AudioPrev", function() floatwidget.exaile:action("Prev") end },
 			comment = "Previous track"
 		},
+		{ comment = "Brightness control" },
+		{
+			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
+			comment = "Increase brightness"
+		},
+		{
+			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
+			comment = "Reduce brightness"
+		},
 		{ comment = "Volume control" },
 		{
 			args = { {                   }, "XF86AudioRaiseVolume", volume_raise },
@@ -798,15 +815,6 @@ do
 		{
 			args = { { modkey,            }, "v", volume_mute },
 			comment = "Toggle mute"
-		},
-		{ comment = "Brightness control" },
-		{
-			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
-			comment = "Increase brightness"
-		},
-		{
-			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
-			comment = "Reduce brightness"
 		},
 		{ comment = "Window manipulation" },
 		{
@@ -941,11 +949,12 @@ do
 	}
 
 	-- bind
-	for _, v in ipairs(num_bindings) do
+	for k, v in ipairs(num_bindings) do
 		-- add fake key to tip table
-		table.insert(num_tips, { args = { v.mod, "1 .. 9" }, comment = v.comment })
-		-- add numerical key objects to global
+		num_tips[k + 1] = { args = { v.mod, "1 .. 9" }, comment = v.comment, codes = {} }
 		for i = 1, 9 do
+			table.insert(num_tips[k + 1].codes, i + 9)
+			-- add numerical key objects to global
 			globalkeys = awful.util.table.join(globalkeys, awful.key(v.mod, "#" .. i + 9, naction(i, unpack(v.args))))
 		end
 	end
