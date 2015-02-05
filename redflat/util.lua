@@ -145,6 +145,18 @@ function util.table.sum(t, n)
 	return s
 end
 
+-- Apply handler on every raw table element and join result
+------------------------------------------------------------
+function util.table.join_raw(t, handler)
+	local temp = {}
+
+	for _, v in ipairs(t) do
+		if v.args then table.insert(temp, handler(unpack(v.args))) end
+	end
+
+	return awful.util.table.join(unpack(temp))
+end
+
 -- Desktop utilits
 -----------------------------------------------------------------------------------------------------------------------
 

@@ -64,9 +64,7 @@ function decor.button(textbox, action, style)
 		action()
 	end
 
-	button_widget:buttons(awful.util.table.join(
-		awful.button({}, 1, press_func, release_func)
-	))
+	button_widget:buttons(awful.button({}, 1, press_func, release_func))
 
 	-- Signals
 	--------------------------------------------------------------------------------

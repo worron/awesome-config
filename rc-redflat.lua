@@ -616,13 +616,14 @@ root.buttons(awful.util.table.join(
 local globalkeys, clientkeys
 
 do
-	-- edge aliases
+	-- key aliases
 	local sw = floatwidget.appswitcher
-	local currenttags = redwidget.tasklist.filter.currenttags
+	local current = redwidget.tasklist.filter.currenttags
 	local allscreen = redwidget.tasklist.filter.allscreen
 	local br = floatwidget.brightness
 	local laybox = redwidget.layoutbox
 
+	-- key functions
 	local focus_switch = function(i)
 		return function ()
 			awful.client.focus.byidx(i)
@@ -635,134 +636,333 @@ do
 		if client.focus then client.focus:raise() end
 	end
 
+	local swap_with_master = function()
+		if client.focus then client.focus:swap(awful.client.getmaster()) end
+	end
+
+	-- !!! Filters from tasklist used in 'all' functions !!!
+	-- !!! It's need a custom filter to best performance !!!
+	local function minimize_all()
+		for _, c in ipairs(client.get()) do
+			if current(c, mouse.screen) then c.minimized = true end
+		end
+	end
+
+	local function restore_all()
+		for _, c in ipairs(client.get()) do
+			if current(c, mouse.screen) and c.minimized then c.minimized = false end
+		end
+	end
+
+	local function kill_all()
+		for _, c in ipairs(client.get()) do
+			if current(c, mouse.screen) then c:kill() end
+		end
+	end
+
+	-- numeric key function
+	local function naction(i, handler, is_tag)
+		return function ()
+			if is_tag or client.focus then
+				local tag = awful.tag.gettags(is_tag and mouse.screen or client.focus.screen)[i]
+				if tag then handler(tag) end
+			end
+		end
+	end
+
+	-- volume functions
 	local volume_raise = function() redwidget.pulse:change_volume({ show_notify = true })              end
 	local volume_lower = function() redwidget.pulse:change_volume({ show_notify = true, down = true }) end
 	local volume_mute  = function() redwidget.pulse:mute() end
 
+	-- Custom widget keys
+	--------------------------------------------------------------------------------
+	floatwidget.appswitcher.keys.next  = { "a", "A", "Tab" }
+	floatwidget.appswitcher.keys.prev  = { "q", "Q", }
+	floatwidget.appswitcher.keys.close = { "Super_L" }
+
 	-- Global keys
 	--------------------------------------------------------------------------------
-	globalkeys = awful.util.table.join(
-		-- alt tab switcher
-		awful.key({ modkey, "Shift"   }, "a", nil, function() sw:show({ filter = allscreen })                   end),
-		awful.key({ modkey, "Shift"   }, "q", nil, function() sw:show({ filter = allscreen, reverse = true })   end),
-		awful.key({ modkey            }, "a", nil, function() sw:show({ filter = currenttags })                 end),
-		awful.key({ modkey            }, "q", nil, function() sw:show({ filter = currenttags, reverse = true }) end),
-		-- volume control
-		awful.key({                   }, "XF86AudioRaiseVolume", volume_raise),
-		awful.key({                   }, "XF86AudioLowerVolume", volume_lower),
-		awful.key({ modkey, "Control" }, "m",                    volume_mute ),
-		-- brightness control
-		awful.key({                   }, "XF86MonBrightnessUp",   function() br:change({ step = 0 })              end),
-		awful.key({                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = true }) end),
-		-- exaile control
-		awful.key({                   }, "XF86AudioPlay", function() floatwidget.exaile:action("PlayPause") end),
-		awful.key({                   }, "XF86AudioNext", function() floatwidget.exaile:action("Next")      end),
-		awful.key({                   }, "XF86AudioPrev", function() floatwidget.exaile:action("Prev")      end),
-		awful.key({ modkey            }, "e",             function() floatwidget.exaile:show()              end),
-		-- show top widget
-		awful.key({ modkey,           }, "x", function() floatwidget.top:show() end),
-		-- awesome menu
-		awful.key({ modkey,           }, "w", function() mainmenu:toggle() end),
-		-- layouts menu
-		awful.key({ modkey,           }, "y", function () laybox:toggle_menu(awful.tag.selected(mouse.screen)) end),
-		-- terminal
-		awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-		-- prompt
-		awful.key({ modkey            }, "p", function () floatwidget.prompt:run() end),
-		-- application runner
-		awful.key({ modkey            }, "r", function() floatwidget.apprunner:show() end),
-		-- show minitray window
-		awful.key({ modkey,           }, "i", function() redwidget.minitray:toggle() end ),
-		-- tag switch
-		awful.key({ modkey,           }, "Left",   awful.tag.viewprev),
-		awful.key({ modkey,           }, "Right",  awful.tag.viewnext),
-		awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-		-- focus switch
-		awful.key({ modkey,           }, "j",   focus_switch( 1)),
-		awful.key({ modkey,           }, "k",   focus_switch(-1)),
-		awful.key({ modkey,           }, "u",   awful.client.urgent.jumpto),
-		awful.key({ modkey,           }, "Tab", focus_previous),
-		-- client swap
-		awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1) end),
-		awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1) end),
-		-- sceen switch
-		awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-		awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-		-- awesome command
-		awful.key({ modkey, "Control" }, "r", awesome.restart),
-		--awful.key({ modkey, "Shift"   }, "q", awesome.quit   ),
-		-- layout manipulation
-		awful.key({ modkey,           }, "l", function () awful.tag.incmwfact( 0.05) end),
-		awful.key({ modkey,           }, "h", function () awful.tag.incmwfact(-0.05) end),
-		awful.key({ modkey, "Shift"   }, "h", function () awful.tag.incnmaster( 1)   end),
-		awful.key({ modkey, "Shift"   }, "l", function () awful.tag.incnmaster(-1)   end),
-		awful.key({ modkey, "Control" }, "h", function () awful.tag.incncol( 1)      end),
-		awful.key({ modkey, "Control" }, "l", function () awful.tag.incncol(-1)      end),
-		-- layout switch
-		awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-		awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
-		-- client manipulation
-		awful.key({ modkey, "Control" }, "n", awful.client.restore)
-	)
+	local raw_globalkeys = {
+		{ comment = "Global keys" },
+		{
+			args = { { modkey,           }, "Return", function () awful.util.spawn(terminal) end },
+			comment = "Spawn terminal emulator"
+		},
+		{
+			args = { { modkey, "Control" }, "r", awesome.restart },
+			comment = "Restart awesome"
+		},
+		{ comment = "Window focus" },
+		{
+			args = { { modkey,           }, "j", focus_switch( 1), },
+			comment = "Focus next client"
+		},
+		{
+			args = { { modkey,           }, "k", focus_switch(-1), },
+			comment = "Focus previous client"
+		},
+		{
+			args = { { modkey,           }, "u", awful.client.urgent.jumpto, },
+			comment = "Focus first urgent client"
+		},
+		{
+			args = { { modkey,           }, "Tab", focus_previous, },
+			comment = "Return to previously focused client"
+		},
+		{ comment = "Tag navigation" },
+		{
+			args = { { modkey,           }, "Left", awful.tag.viewprev },
+			comment = "View previous tag"
+		},
+		{
+			args = { { modkey,           }, "Right", awful.tag.viewnext },
+			comment = "View next tag"
+		},
+		{
+			args = { { modkey,           }, "Escape", awful.tag.history.restore },
+			comment = "View previously selected tag set"
+		},
+		{ comment = "Widgets" },
+		{
+			args = { { modkey,           }, "x", function() floatwidget.top:show() end },
+			comment = "Show top widget"
+		},
+		{
+			args = { { modkey,           }, "w", function() mainmenu:toggle() end },
+			comment = "Open main menu"
+		},
+		{
+			args = { { modkey,           }, "y", function () laybox:toggle_menu(awful.tag.selected(mouse.screen)) end},
+			comment = "Open layout menu"
+		},
+		{
+			args = { { modkey            }, "p", function () floatwidget.prompt:run() end },
+			comment = "Run prompt"
+		},
+		{
+			args = { { modkey            }, "r", function() floatwidget.apprunner:show() end },
+			comment = "Allication launcher"
+		},
+		{
+			args = { { modkey,           }, "i", function() redwidget.minitray:toggle() end },
+			comment = "Show minitray"
+		},
+		{
+			args = { { modkey            }, "e", function() floatwidget.exaile:show() end },
+			comment = "Show exaile widget"
+		},
+		{
+			args = { { modkey,           }, "z", function() floatwidget.hotkeys:show() end },
+			comment = "Show hotkeys helper"
+		},
+		{
+			args = { { modkey, "Control" }, "u", function () redwidget.upgrades:update() end },
+			comment = "Check available upgrades"
+		},
+		{
+			args = { { modkey, "Control" }, "m", function () redwidget.mail:update() end },
+			comment = "Check new mail"
+		},
+		{ comment = "Application switcher" },
+		{
+			args = { { modkey            }, "a", nil, function() sw:show({ filter = current }) end },
+			comment = "Switch to next with current tag"
+		},
+		{
+			args = { { modkey            }, "q", nil, function() sw:show({ filter = current, reverse = true }) end },
+			comment = "Switch to previous with current tag"
+		},
+		{
+			args = { { modkey, "Shift"   }, "a", nil, function() sw:show({ filter = allscreen }) end },
+			comment = "Switch to next through all tags"
+		},
+		{
+			args = { { modkey, "Shift"   }, "q", nil, function() sw:show({ filter = allscreen, reverse = true }) end },
+			comment = "Switch to previous through all tags"
+		},
+		{ comment = "Exaile music player" },
+		{
+			args = { {                   }, "XF86AudioPlay", function() floatwidget.exaile:action("PlayPause") end },
+			comment = "Play/Pause"
+		},
+		{
+			args = { {                   }, "XF86AudioNext", function() floatwidget.exaile:action("Next") end },
+			comment = "Next track"
+		},
+		{
+			args = { {                   }, "XF86AudioPrev", function() floatwidget.exaile:action("Prev") end },
+			comment = "Previous track"
+		},
+		{ comment = "Brightness control" },
+		{
+			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
+			comment = "Increase brightness"
+		},
+		{
+			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
+			comment = "Reduce brightness"
+		},
+		{ comment = "Volume control" },
+		{
+			args = { {                   }, "XF86AudioRaiseVolume", volume_raise },
+			comment = "Increase volume"
+		},
+		{
+			args = { {                   }, "XF86AudioLowerVolume", volume_lower },
+			comment = "Reduce volume"
+		},
+		{
+			args = { { modkey,            }, "v", volume_mute },
+			comment = "Toggle mute"
+		},
+		{ comment = "Window manipulation" },
+		{
+			args = { { modkey, "Shift"   }, "j", function () awful.client.swap.byidx(1) end },
+			comment = "Switch client with next client"
+		},
+		{
+			args = { { modkey, "Shift"   }, "k", function () awful.client.swap.byidx(-1) end },
+			comment = "Switch client with previous client"
+		},
+		{
+			args = { { modkey, "Control" }, "Return", swap_with_master },
+			comment = "Swap focused client with master"
+		},
+		{
+			args = { { modkey, "Control" }, "n", awful.client.restore },
+			comment = "Restore first minmized client"
+		},
+		{
+			args = { { modkey, "Shift" }, "n", minimize_all },
+			comment = "Minmize all with current tag"
+		},
+		{
+			args = { { modkey, "Control", "Shift" }, "n", restore_all },
+			comment = "Restore all with current tag"
+		},
+		{
+			args = { { modkey, "Shift"   }, "F4", kill_all },
+			comment = "Kill all with current tag"
+		},
+		{ comment = "Layouts" },
+		{
+			args = { { modkey,           }, "space", function () awful.layout.inc(layouts, 1) end },
+			comment = "Switch to next layout"
+		},
+		{
+			args = { { modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, - 1) end },
+			comment = "Switch to previous layout"
+		},
+		{ comment = "Tile control" },
+		{
+			args = { { modkey,           }, "l", function () awful.tag.incmwfact(0.05) end },
+			comment = "Increase master width factor by 5%"
+		},
+		{
+			args = { { modkey,           }, "h", function () awful.tag.incmwfact(-0.05) end },
+			comment = "Decrease master width factor by 5%"
+		},
+		{
+			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
+			comment = "Increase number of master windows by 1"
+		},
+		{
+			args = { { modkey, "Shift"   }, "l", function () awful.tag.incnmaster(-1) end },
+			comment = "Decrease number of master windows by 1"
+		},
+		{
+			args = { { modkey, "Control" }, "h", function () awful.tag.incncol(1) end },
+			comment = "Increase number of non-master columns by 1"
+		},
+		{
+			args = { { modkey, "Control" }, "l", function () awful.tag.incncol(-1) end },
+			comment = "Decrease number of non-master columns by 1"
+		}
+	}
+
+	-- format raw keys to key objects
+	globalkeys = redutil.table.join_raw(raw_globalkeys, awful.key)
 
 	-- Client keys
 	--------------------------------------------------------------------------------
-	clientkeys = awful.util.table.join(
-		awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-		awful.key({ modkey,           }, "s",      function (c) c.sticky = not c.sticky          end),
-		awful.key({ modkey,           }, "F4",     function (c) c:kill()                         end),
-		awful.key({ modkey, "Control" }, "f",      awful.client.floating.toggle                     ),
-		awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-		awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-		awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-		awful.key({ modkey,           }, "n",      function (c) c.minimized = true               end),
-		awful.key({ modkey,           }, "m",      function (c) c.maximized = not c.maximized    end)
-	)
+	local raw_clientkeys = {
+		{ comment = "Client keys" }, -- fake element special for hotkeys helper
+		{
+			args = { { modkey,           }, "f", function (c) c.fullscreen = not c.fullscreen end },
+			comment = "Set client fullscreen"
+		},
+		{
+			args = { { modkey,           }, "s", function (c) c.sticky = not c.sticky end },
+			comment = "Toogle client sticky status"
+		},
+		{
+			args = { { modkey,           }, "F4", function (c) c:kill() end },
+			comment = "Kill focused client"
+		},
+		{
+			args = { { modkey, "Control" }, "f", awful.client.floating.toggle },
+			comment = "Toggle client floating status"
+		},
+		{
+			args = { { modkey,           }, "t", function (c) c.ontop = not c.ontop end },
+			comment = "Toggle client ontop status"
+		},
+		{
+			args = { { modkey,           }, "n", function (c) c.minimized = true end },
+			comment = "Minimize client"
+		},
+		{
+			args = { { modkey,           }, "m",      function (c) c.maximized = not c.maximized    end },
+			comment = "Maximize client"
+		}
+	}
+
+	-- format raw keys to key objects
+	clientkeys = redutil.table.join_raw(raw_clientkeys, awful.key)
 
 	-- Bind all key numbers to tags
 	--------------------------------------------------------------------------------
-	for i = 1, 9 do
-		globalkeys = awful.util.table.join(globalkeys,
-			awful.key({ modkey }, "#" .. i + 9,
-				function ()
-					local screen = mouse.screen
-					local tag = awful.tag.gettags(screen)[i]
-					if tag then
-						awful.tag.viewonly(tag)
-					end
-				end
-			),
-			awful.key({ modkey, "Control" }, "#" .. i + 9,
-				function ()
-					local screen = mouse.screen
-					local tag = awful.tag.gettags(screen)[i]
-					if tag then
-						awful.tag.viewtoggle(tag)
-					end
-				end
-			),
-			awful.key({ modkey, "Shift" }, "#" .. i + 9,
-				function ()
-					if client.focus then
-						local tag = awful.tag.gettags(client.focus.screen)[i]
-						if tag then
-							awful.client.movetotag(tag)
-						end
-					end
-				end
-			),
-			awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-				function ()
-					if client.focus then
-						local tag = awful.tag.gettags(client.focus.screen)[i]
-						if tag then
-							awful.client.toggletag(tag)
-						end
-					end
-				end
-			)
-		)
+	local num_tips = { { comment = "Numeric keys" } } -- this is special for hotkey helper
+
+	local num_bindings = {
+		{
+			mod     = { modkey },
+			args    = { awful.tag.viewonly, true },
+			comment = "Switch to tag"
+		},
+		{
+			mod     = { modkey, "Control" },
+			args    = { awful.tag.viewtoggle, true },
+			comment = "Toggle tag view"
+		},
+		{
+			mod     = { modkey, "Shift" },
+			args    = { awful.client.movetotag },
+			comment = "Tag client with tag"
+		},
+		{
+			mod     = { modkey, "Control", "Shift" },
+			args    = { awful.client.toggletag },
+			comment = "Toggle tag on client"
+		}
+	}
+
+	-- bind
+	for k, v in ipairs(num_bindings) do
+		-- add fake key to tip table
+		num_tips[k + 1] = { args = { v.mod, "1 .. 9" }, comment = v.comment, codes = {} }
+		for i = 1, 9 do
+			table.insert(num_tips[k + 1].codes, i + 9)
+			-- add numerical key objects to global
+			globalkeys = awful.util.table.join(globalkeys, awful.key(v.mod, "#" .. i + 9, naction(i, unpack(v.args))))
+		end
 	end
+
+	-- Hotkeys helper setup
+	--------------------------------------------------------------------------------
+	floatwidget.hotkeys.raw_keys = awful.util.table.join(raw_globalkeys, raw_clientkeys, num_tips)
+
 end
 
 -- set global keys

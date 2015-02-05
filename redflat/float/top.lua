@@ -22,6 +22,13 @@ local decoration = require("redflat.float.decoration")
 -----------------------------------------------------------------------------------------------------------------------
 local top = {}
 
+-- key bindings
+top.keys = {
+	cpu   = { "c" },
+	mem   = { "m" },
+	kill  = { "k" },
+	close = { "Escape" }
+}
 
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
@@ -180,19 +187,24 @@ function top:init()
 		end
 	end
 
+	-- Kill selected process
+	--------------------------------------------------------------------------------
+	function self.kill_selected()
+		if selected.number then awful.util.spawn_with_shell("kill " .. selected.pid) end
+		self:update_list()
+	end
+
 	-- Widget keygrabber
 	--------------------------------------------------------------------------------
 	self.keygrabber = function(mod, key, event)
-		if event ~= "press" then return
-		elseif key == "Escape" then self:hide()
-		elseif key == "c" then self:set_sort("cpu")
-		elseif key == "m" then self:set_sort("mem")
-		elseif key == "k" then
-			if selected.number then awful.util.spawn_with_shell("kill " .. selected.pid) end
-			self:update_list()
-		elseif string.match(key, "%d") then
-			local i = tonumber(key)
-			select_item(i)
+		if     event ~= "press" then return false
+		elseif awful.util.table.hasitem(self.keys.close, key) then self:hide()
+		elseif awful.util.table.hasitem(self.keys.cpu,   key) then self:set_sort("cpu")
+		elseif awful.util.table.hasitem(self.keys.mem,   key) then self:set_sort("mem")
+		elseif awful.util.table.hasitem(self.keys.kill,  key) then self.kill_selected()
+		elseif string.match(key, "%d") then select_item(tonumber(key))
+		else
+			return false
 		end
 	end
 
@@ -248,12 +260,7 @@ function top:init()
 	--------------------------------------------------------------------------------
 	local buttonbox = wibox.widget.textbox("Kill")
 
-	local function button_action()
-		if selected.number then awful.util.spawn_with_shell("kill " .. selected.pid) end
-		self:update_list()
-	end
-
-	local button_widget = decoration.button(buttonbox, button_action)
+	local button_widget = decoration.button(buttonbox, self.kill_selected)
 
 	local button_layout = wibox.layout.margin(button_widget, unpack(style.button_margin))
 	local bottom_area = wibox.layout.constraint(button_layout, "exact", nil, style.bottom_height)

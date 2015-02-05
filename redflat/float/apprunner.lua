@@ -30,6 +30,12 @@ local apprunner = { applist = {} }
 local programs = {}
 local lastquery = nil
 
+-- key bindings
+apprunner.keys = {
+	up    = { "Up" },
+	down  = { "Down" }
+}
+
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
@@ -217,8 +223,11 @@ end
 -- Keypress handler
 -----------------------------------------------------------------------------------------------------------------------
 local function keypressed_callback(mod, key, comm)
-	if key == "Down" then switch_down()
-	elseif key == "Up" then switch_up() end
+	if     awful.util.table.hasitem(apprunner.keys.down, key) then switch_down()
+	elseif awful.util.table.hasitem(apprunner.keys.up,   key) then switch_up()
+	else
+		return false
+	end
 end
 
 -- Initialize apprunner widget
