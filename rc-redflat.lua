@@ -68,6 +68,7 @@ beautiful.init(theme_path .. "/theme.lua")
 local terminal = "x-terminal-emulator"
 local editor   = os.getenv("EDITOR") or "geany"
 local editor_cmd = terminal .. " -e " .. editor
+local fm = "nemo"
 
 local modkey = "Mod4"
 
@@ -78,7 +79,6 @@ local layouts = {
 	lain.layout.uselesstile,
 	lain.layout.uselesstile.left,
 	lain.layout.uselesstile.bottom,
-	lain.layout.uselesstile.top,
 	lain.layout.uselessfair,
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
@@ -96,7 +96,7 @@ local layouts = {
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
 	names  = { "Main", "Full", "Edit", "Read", "Free" },
-	layout = { layouts[6], layouts[7], layouts[7], layouts[6], layouts[1] },
+	layout = { layouts[5], layouts[6], layouts[6], layouts[5], layouts[1] },
 }
 
 for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
@@ -167,13 +167,13 @@ do
 	-- Places submenu
 	------------------------------------------------------------
 	local placesmenu = {
-		{ "Documents",   "nemo Documents", micon("folder-documents") },
-		{ "Downloads",   "nemo Downloads", micon("folder-download")  },
-		{ "Music",       "nemo Music",     micon("folder-music")     },
-		{ "Pictures",    "nemo Pictures",  micon("folder-pictures")  },
-		{ "Videos",      "nemo Videos",    micon("folder-videos")    },
+		{ "Documents",   fm .. " Documents", micon("folder-documents") },
+		{ "Downloads",   fm .. " Downloads", micon("folder-download")  },
+		{ "Music",       fm .. " Music",     micon("folder-music")     },
+		{ "Pictures",    fm .. " Pictures",  micon("folder-pictures")  },
+		{ "Videos",      fm .. " Videos",    micon("folder-videos")    },
 		menu_sep,
-		{ "AMV",         "nemo /mnt/media/video/AMV", micon("folder-bookmarks") }
+		{ "AMV",         fm .. " /mnt/media/video/AMV", micon("folder-bookmarks") }
 	}
 
 	-- Main menu
@@ -185,8 +185,9 @@ do
 			{ "Places",          placesmenu,             micon("folder_home"), key = "c"  },
 			menu_sep,
 			{ "Firefox",         "firefox",              micon("firefox")                 },
-			{ "Terminal",        terminal_command,       micon("gnome-terminal")          },
+			--{ "Terminal",        terminal_command,       micon("gnome-terminal")          },
 			{ "Nemo",            "nemo",                 micon("folder")                  },
+			{ "Ranger",          "uxterm -e ranger",     micon("folder")                  },
 			{ "Geany",           "geany",                micon("geany")                   },
 			{ "Exaile",          "exaile",               micon("exaile")                  },
 			menu_sep,
@@ -488,8 +489,7 @@ do
 
 	transm.style = {
 		digit_num = 1,
-		image     = theme_path .. "/desktop/transmission.svg",
-		image_gap = 0
+		image     = theme_path .. "/desktop/ed1.svg"
 	}
 
 	-- Disks
