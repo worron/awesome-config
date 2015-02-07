@@ -32,6 +32,7 @@ local function default_style()
 		bar_width       = 8,
 		font            = "Sans 14",
 		border_width    = 2,
+		timeout         = 5,
 		icon            = nil,
 		color           = { border = "#575757", icon = "#aaaaaa", wibox = "#202020" }
 	}
@@ -43,7 +44,6 @@ end
 function notify:init()
 
 	local style = default_style()
-	local hide_timeout = beautiful.notify_timeout or 5
 	local icon = style.icon
 
 	-- Construct layouts
@@ -92,7 +92,7 @@ function notify:init()
 
 	-- Set autohide timer
 	--------------------------------------------------------------------------------
-	self.hidetimer = timer({ timeout = hide_timeout })
+	self.hidetimer = timer({ timeout = style.timeout })
 	self.hidetimer:connect_signal("timeout", function() self:hide() end)
 
 	-- Signals setup
