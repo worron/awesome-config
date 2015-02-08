@@ -1150,7 +1150,8 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awesome.connect_signal("exit",
 	function()
 		redtitlebar.hide_all()
-	end)
+	end
+)
 
 -----------------------------------------------------------------------------------------------------------------------
 

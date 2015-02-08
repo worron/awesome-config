@@ -25,8 +25,9 @@ local upgrades = { objects = {}, mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		icon  = nil,
-		color = { main = "#b1222b", icon = "#a0a0a0" }
+		icon     = nil,
+		firstrun = false,
+		color    = { main = "#b1222b", icon = "#a0a0a0" }
 	}
 	return redutil.table.merge(style, beautiful.widget.upgrades or {})
 end
@@ -69,7 +70,8 @@ function upgrades.new(update_timeout, style)
 	local t = timer({ timeout = update_timeout })
 	t:connect_signal("timeout", object.update)
 	t:start()
-	--t:emit_signal("timeout")
+
+	if style.firstrun then t:emit_signal("timeout") end
 
 	--------------------------------------------------------------------------------
 	return object.widget
