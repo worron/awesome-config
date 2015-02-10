@@ -27,9 +27,7 @@ local redutil = require("redflat.util")
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
-local system = { thermal = {} }
---local network = {}
-
+local system = { thermal = {}, dformatted = {}, pformatted = {} }
 
 -- Disk usage
 -----------------------------------------------------------------------------------------------------------------------
@@ -495,9 +493,12 @@ function system.proc_info(cpu_storage)
 	return process
 end
 
--- CPU and memory usage formatted special for desktop widget
+-- Output format functions
 -----------------------------------------------------------------------------------------------------------------------
-function system.cpu_mem_dformatted(storage)
+
+-- CPU and memory usage formatted special for desktop widget
+--------------------------------------------------------------------------------
+function system.dformatted.cpumem(storage)
 	local mem   = system.memory_info()
 	local cores = system.cpu_usage(storage).core
 
@@ -505,6 +506,52 @@ function system.cpu_mem_dformatted(storage)
 		corners = cores,
 		lines = { { mem.usep, mem.inuse }, { mem.swp.usep, mem.swp.inuse } }
 	}
+end
+
+-- CPU usage formatted special for panel widget
+--------------------------------------------------------------------------------
+function system.pformatted.cpu(crit)
+	local crit = crit or 75
+	local storage = { cpu_total = {}, cpu_active = {} }
+
+	return function()
+		local usage = system.cpu_usage(storage).total
+		return {
+			value = usage / 100,
+			text  = usage .. "%",
+			alert = usage > crit
+		}
+	end
+end
+
+-- Memory usage formatted special for panel widget
+--------------------------------------------------------------------------------
+function system.pformatted.mem(crit)
+	local crit = crit or 75
+
+	return function()
+		local usage = system.memory_info().usep
+		return {
+			value = usage / 100,
+			text  = usage .. "%",
+			alert = usage > crit
+		}
+	end
+end
+
+-- Battery state formatted special for panel widget
+--------------------------------------------------------------------------------
+function system.pformatted.bat(crit)
+	local crit = crit or 15
+
+	return function(arg)
+		local state = system.battery(arg)
+		return {
+			value = state[2] / 100,
+			text  = state[1] .. "  " .. state[2] .. "%  " .. state[3],
+			alert = state[2] < crit
+		}
+	end
 end
 
 -- End

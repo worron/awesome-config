@@ -44,7 +44,7 @@ local default_geometry = { width = 200, height = 100, x = 100, y = 100 }
 local default_args = {
 	corners = { num = 1, maxm = 1},
 	lines   = { maxm = 1 },
-	meter   = { func = system.cpu_mem_dformatted },
+	meter   = { func = system.dformatted.cpumem },
 	timeout = 60,
 }
 
