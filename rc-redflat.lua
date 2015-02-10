@@ -358,7 +358,7 @@ for s = 1, screen.count() do
 	tasklist[s] = redwidget.tasklist(s, redwidget.tasklist.filter.currenttags, tasklist.buttons)
 
 	-- Create the wibox
-	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = 50})
+	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh})
 
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
