@@ -76,10 +76,10 @@ local modkey = "Mod4"
 -----------------------------------------------------------------------------------------------------------------------
 local layouts = {
 	awful.layout.suit.floating,
-	lain.layout.uselesstile,
-	lain.layout.uselesstile.left,
-	lain.layout.uselesstile.bottom,
-	lain.layout.uselessfair,
+	--lain.layout.uselesstile,
+	--lain.layout.uselesstile.left,
+	--lain.layout.uselesstile.bottom,
+	--lain.layout.uselessfair,
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
 
@@ -96,7 +96,7 @@ local layouts = {
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
 	names  = { "Main", "Full", "Edit", "Read", "Free" },
-	layout = { layouts[5], layouts[6], layouts[6], layouts[5], layouts[1] },
+	layout = { layouts[1], layouts[1], layouts[1], layouts[1], layouts[1] },
 }
 
 for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
@@ -236,6 +236,7 @@ upgrades.widget:buttons(awful.util.table.join(
 	awful.button({}, 2, function () redwidget.upgrades:update() end)
 ))
 
+--[[
 -- Keyboard widget
 --------------------------------------------------------------------------------
 local kbindicator = {}
@@ -280,6 +281,7 @@ mail.widget:buttons(awful.util.table.join(
 	awful.button({ }, 1, function () awful.util.spawn_with_shell("claws-mail") end),
 	awful.button({ }, 2, function () redwidget.mail:update()                   end)
 ))
+--]]
 
 -- Layoutbox configure
 --------------------------------------------------------------------------------
@@ -315,13 +317,13 @@ tray:buttons(awful.util.table.join(
 
 -- System resource monitoring widgets
 --------------------------------------------------------------------------------
-local netspeed  = { up   = 60 * 1024, down = 650 * 1024 }
+--local netspeed  = { up   = 60 * 1024, down = 650 * 1024 }
 
 local monitor = {
 	cpu = redwidget.cpu({ timeout = 2 }),
 	mem = redwidget.mem({ timeout = 10 }),
-	bat = redwidget.bat({ timeout = 10, batt = "BAT1" }),
-	net = redwidget.net({ timeout = 2, interface = "wlan0", speed  = netspeed, autoscale = false })
+	--bat = redwidget.bat({ timeout = 10, batt = "BAT1" }),
+	--net = redwidget.net({ timeout = 2, interface = "wlan0", speed  = netspeed, autoscale = false })
 }
 
 monitor.cpu:buttons(awful.util.table.join(
@@ -365,9 +367,9 @@ for s = 1, screen.count() do
 	local left_elements = {
 		taglist[s].layout,   double_sep,
 		upgrades.layout,     single_sep,
-		kbindicator.layout,  single_sep,
-		volume.layout,       single_sep,
-		mail.layout,         single_sep,
+		--kbindicator.layout,  single_sep,
+		--volume.layout,       single_sep,
+		--mail.layout,         single_sep,
 		layoutbox[s].layout, double_sep
 	}
 	for _, element in ipairs(left_elements) do
@@ -378,10 +380,10 @@ for s = 1, screen.count() do
 	local right_layout = wibox.layout.fixed.horizontal()
 	local right_elements = {
 		double_sep, tray,
-		single_sep, monitor.bat,
+		--single_sep, monitor.bat,
 		single_sep, monitor.mem,
 		single_sep, monitor.cpu,
-		single_sep, monitor.net,
+		--single_sep, monitor.net,
 		single_sep, textclock.layout
 	}
 	for _, element in ipairs(right_elements) do
@@ -404,12 +406,17 @@ end
 
 -- Wallpaper setup
 -----------------------------------------------------------------------------------------------------------------------
+--[[
 if beautiful.wallpaper then
 	for s = 1, screen.count() do
 		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
 	end
 end
+--]]
 
+gears.wallpaper.set(beautiful.color.bg)
+
+--[[
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
 do
@@ -543,7 +550,7 @@ do
 	disks.widget   = reddesktop.dashpack(disks.args, disks.geometry, disks.style)
 	thermal.widget = reddesktop.dashpack(thermal.args, thermal.geometry, thermal.style)
 end
-
+--]]
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
@@ -781,6 +788,7 @@ do
 			args = { { modkey, "Shift"   }, "q", nil, function() sw:show({ filter = allscreen, reverse = true }) end },
 			comment = "Switch to previous through all tags"
 		},
+		--[[
 		{ comment = "Exaile music player" },
 		{
 			args = { {                   }, "XF86AudioPlay", function() floatwidget.exaile:action("PlayPause") end },
@@ -803,6 +811,7 @@ do
 			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
 			comment = "Reduce brightness"
 		},
+		--]]
 		{ comment = "Volume control" },
 		{
 			args = { {                   }, "XF86AudioRaiseVolume", volume_raise },
@@ -1155,7 +1164,7 @@ awesome.connect_signal("exit",
 
 -----------------------------------------------------------------------------------------------------------------------
 
----[[
+--[[
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
 local stamp = timestamp.get()

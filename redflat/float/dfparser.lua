@@ -145,7 +145,7 @@ function dfparser.lookup_icon(icon_file, style)
 		end
 	end
 
-	return style.df_icon
+	return awful.util.file_readable(style.df_icon) and style.df_icon or nil
 end
 
 -- Main parsing functions
