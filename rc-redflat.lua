@@ -318,9 +318,9 @@ tray:buttons(awful.util.table.join(
 local netspeed  = { up   = 60 * 1024, down = 650 * 1024 }
 
 local monitor = {
-	cpu = redwidget.cpu({ timeout = 2 }),
-	mem = redwidget.mem({ timeout = 10 }),
-	bat = redwidget.bat({ timeout = 10, batt = "BAT1" }),
+	cpu = redwidget.sysmon({ label = "CPU", func = system.pformatted.cpu(80) }, { timeout = 2 }),
+	mem = redwidget.sysmon({ label = "RAM", func = system.pformatted.mem(80) }, { timeout = 10 }),
+	bat = redwidget.sysmon({ label = "BAT", func = system.pformatted.bat(15), arg = "BAT1" }, { timeout = 60 }),
 	net = redwidget.net({ timeout = 2, interface = "wlan0", speed  = netspeed, autoscale = false })
 }
 
@@ -358,7 +358,7 @@ for s = 1, screen.count() do
 	tasklist[s] = redwidget.tasklist(s, redwidget.tasklist.filter.currenttags, tasklist.buttons)
 
 	-- Create the wibox
-	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = 50})
+	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh})
 
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
@@ -794,15 +794,6 @@ do
 			args = { {                   }, "XF86AudioPrev", function() floatwidget.exaile:action("Prev") end },
 			comment = "Previous track"
 		},
-		{ comment = "Brightness control" },
-		{
-			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
-			comment = "Increase brightness"
-		},
-		{
-			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
-			comment = "Reduce brightness"
-		},
 		{ comment = "Volume control" },
 		{
 			args = { {                   }, "XF86AudioRaiseVolume", volume_raise },
@@ -815,6 +806,15 @@ do
 		{
 			args = { { modkey,            }, "v", volume_mute },
 			comment = "Toggle mute"
+		},
+		{ comment = "Brightness control" },
+		{
+			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
+			comment = "Increase brightness"
+		},
+		{
+			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
+			comment = "Reduce brightness"
 		},
 		{ comment = "Window manipulation" },
 		{
@@ -862,6 +862,14 @@ do
 		{
 			args = { { modkey,           }, "h", function () awful.tag.incmwfact(-0.05) end },
 			comment = "Decrease master width factor by 5%"
+		},
+		{
+			args = { { modkey, "Control" }, "j", function () awful.client.incwfact(0.05) end },
+			comment = "Increase window height factor by 5%"
+		},
+		{
+			args = { { modkey, "Control" }, "k", function () awful.client.incwfact(-0.05) end },
+			comment = "Decrease window height factor by 5%"
 		},
 		{
 			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
