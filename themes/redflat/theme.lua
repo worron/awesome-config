@@ -57,6 +57,8 @@ theme.font_notify = "Play bold 16" -- font for notify widget
 theme.font_exaile_main = "Play bold 14" -- main font for exaile widget
 theme.font_exaile_time = "Play bold 16" -- time status font for exaile widget
 
+theme.font_helper_title = "Play bold 16" -- hotkeys helper title font
+
 -- cairo formated fonts
 theme.cf_appswitcher = { font = "Play", size = 22, face = 1 } -- application switcher font
 theme.cf_monitor     = { font = "Play", size = 20, face = 1 } -- monitoring widget font
@@ -514,7 +516,7 @@ theme.float.hotkeys = {
 	keyf_width    = 300,
 	font          = theme.font,
 	keysfont      = theme.font_title,
-	titlefont     = "Play bold 16",
+	titlefont     = theme.font_helper_title,
 	color         = theme.color
 }
 

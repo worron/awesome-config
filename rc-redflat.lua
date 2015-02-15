@@ -794,15 +794,6 @@ do
 			args = { {                   }, "XF86AudioPrev", function() floatwidget.exaile:action("Prev") end },
 			comment = "Previous track"
 		},
-		{ comment = "Brightness control" },
-		{
-			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
-			comment = "Increase brightness"
-		},
-		{
-			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
-			comment = "Reduce brightness"
-		},
 		{ comment = "Volume control" },
 		{
 			args = { {                   }, "XF86AudioRaiseVolume", volume_raise },
@@ -815,6 +806,15 @@ do
 		{
 			args = { { modkey,            }, "v", volume_mute },
 			comment = "Toggle mute"
+		},
+		{ comment = "Brightness control" },
+		{
+			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
+			comment = "Increase brightness"
+		},
+		{
+			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
+			comment = "Reduce brightness"
 		},
 		{ comment = "Window manipulation" },
 		{
@@ -862,6 +862,14 @@ do
 		{
 			args = { { modkey,           }, "h", function () awful.tag.incmwfact(-0.05) end },
 			comment = "Decrease master width factor by 5%"
+		},
+		{
+			args = { { modkey, "Control" }, "j", function () awful.client.incwfact(0.05) end },
+			comment = "Increase window height factor by 5%"
+		},
+		{
+			args = { { modkey, "Control" }, "k", function () awful.client.incwfact(-0.05) end },
+			comment = "Decrease window height factor by 5%"
 		},
 		{
 			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
