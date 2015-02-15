@@ -12,6 +12,7 @@ local tonumber = tonumber
 
 local beautiful = require("beautiful")
 
+local rednotify = require("redflat.float.notify")
 local tooltip = require("redflat.float.tooltip")
 local redutil = require("redflat.util")
 local svgbox = require("redflat.gauge.svgbox")
@@ -25,9 +26,11 @@ local mail = { objects = {}, mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		icon     = nil,
-		firstrun = false,
-		color    = { main = "#b1222b", icon = "#a0a0a0" }
+		icon        = nil,
+		notify_icon = nil,
+		need_notify = true,
+		firstrun    = false,
+		color       = { main = "#b1222b", icon = "#a0a0a0" }
 	}
 	return redutil.table.merge(style, beautiful.widget.mail or {})
 end
@@ -66,10 +69,16 @@ function mail.new(args, style)
 	local function mail_count(output)
 		local c = tonumber(output)
 		if not c then return end
+
 		count = count + c
 		object.tp:set_text(count .. " new messages")
+
 		local color = count > 0 and style.color.main or style.color.icon
 		object.widget:set_color(color)
+
+		if style.need_notify and count > 0 then
+			rednotify:show({ text = count .. " new messages", icon = style.notify_icon })
+		end
 	end
 
 	function object.update()

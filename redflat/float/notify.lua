@@ -28,7 +28,7 @@ local function default_style()
 		geometry        = { width = 480, height = 100, x =1424, y = 16 },
 		screen_gap      = 0,
 		border_margin   = { 20, 20, 20, 20 },
-		elements_margin = { 20, 0, 2, 10 },
+		elements_margin = { 20, 0, 10, 10 },
 		bar_width       = 8,
 		font            = "Sans 14",
 		border_width    = 2,
@@ -48,7 +48,7 @@ function notify:init()
 
 	-- Construct layouts
 	--------------------------------------------------------------------------------
-	local area = wibox.layout.fixed.horizontal()
+	local area = wibox.layout.align.horizontal()
 
 	local bar = progressbar(style.progressbar)
 	local image = svgbox()
@@ -57,11 +57,10 @@ function notify:init()
 	text:set_font(style.font)
 
 	local align_vertical = wibox.layout.align.vertical()
-	align_vertical:set_top(text)
-	align_vertical:set_bottom(wibox.layout.constraint(bar, "exact", nil, style.bar_width))
+	local bar_area = wibox.layout.constraint(bar, "exact", nil, style.bar_width)
 
-	area:add(image)
-	area:add(wibox.layout.margin(align_vertical, unpack(style.elements_margin)))
+	area:set_left(image)
+	area:set_middle(wibox.layout.margin(align_vertical, unpack(style.elements_margin)))
 
 	-- Create floating wibox for notify widget
 	--------------------------------------------------------------------------------
@@ -80,8 +79,16 @@ function notify:init()
 	--------------------------------------------------------------------------------
 	function self:set(args)
 		local args = args or {}
+		align_vertical:reset()
 
-		if args.value then bar:set_value(args.value) end
+		if args.value then
+			bar:set_value(args.value)
+			align_vertical:set_top(text)
+			align_vertical:set_bottom(bar_area)
+		else
+			align_vertical:set_middle(text)
+		end
+
 		if args.text then text:set_text(args.text) end
 
 		if args.icon then
