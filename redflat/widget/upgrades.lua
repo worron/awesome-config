@@ -12,10 +12,12 @@ local string = string
 
 local beautiful = require("beautiful")
 
+local rednotify = require("redflat.float.notify")
 local tooltip = require("redflat.float.tooltip")
 local redutil = require("redflat.util")
 local svgbox = require("redflat.gauge.svgbox")
 local asyncshell = require("redflat.asyncshell")
+
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -25,9 +27,11 @@ local upgrades = { objects = {}, mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		icon     = nil,
-		firstrun = false,
-		color    = { main = "#b1222b", icon = "#a0a0a0" }
+		icon        = nil,
+		notify_icon = nil,
+		firstrun    = false,
+		need_notify = true,
+		color       = { main = "#b1222b", icon = "#a0a0a0" }
 	}
 	return redutil.table.merge(style, beautiful.widget.upgrades or {})
 end
@@ -57,8 +61,13 @@ function upgrades.new(update_timeout, style)
 	local function update_count(output)
 		local c = string.match(output, "(%d+)%supgraded")
 		object.tp:set_text(c .. " updates")
+
 		local color = tonumber(c) > 0 and style.color.main or style.color.icon
 		object.widget:set_color(color)
+
+		if style.need_notify and tonumber(c) > 0 then
+			rednotify:show({ text = c .. " updates available", icon = style.notify_icon })
+		end
 	end
 
 	function object.update()

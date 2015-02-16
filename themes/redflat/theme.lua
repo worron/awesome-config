@@ -344,8 +344,9 @@ theme.widget.margin = {
 -- Upgrades
 ------------------------------------------------------------
 theme.widget.upgrades = {
-	icon  = theme.path .. "/widget/fav.svg",
-	color = theme.color
+	icon        = theme.path .. "/widget/fav.svg",
+	notify_icon = theme.path .. "/widget/upgrades.svg",
+	color       = theme.color
 }
 
 -- Pulseaudio volume control
@@ -357,8 +358,9 @@ theme.widget.pulse = {
 -- Mail
 ------------------------------------------------------------
 theme.widget.mail = {
-	icon  = theme.path .. "/widget/mail.svg",
-	color = theme.color,
+	icon        = theme.path .. "/widget/mail.svg",
+	notify_icon = theme.path .. "/widget/mail.svg",
+	color       = theme.color,
 }
 
 -- Keyboard

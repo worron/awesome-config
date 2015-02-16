@@ -31,7 +31,7 @@ local redtitlebar = require("redflat.titlebar")
 local reddesktop = require("redflat.desktop")
 local system = require("redflat.system")
 
-local lain = require("lain")
+--local lain = require("lain")
 
 -- Error handling
 -----------------------------------------------------------------------------------------------------------------------
@@ -320,9 +320,9 @@ tray:buttons(awful.util.table.join(
 --local netspeed  = { up   = 60 * 1024, down = 650 * 1024 }
 
 local monitor = {
-	cpu = redwidget.cpu({ timeout = 2 }),
-	mem = redwidget.mem({ timeout = 10 }),
-	--bat = redwidget.bat({ timeout = 10, batt = "BAT1" }),
+	cpu = redwidget.sysmon({ label = "CPU", func = system.pformatted.cpu(80) }, { timeout = 2 }),
+	mem = redwidget.sysmon({ label = "RAM", func = system.pformatted.mem(80) }, { timeout = 10 }),
+	--bat = redwidget.sysmon({ label = "BAT", func = system.pformatted.bat(15), arg = "BAT1" }, { timeout = 60 }),
 	--net = redwidget.net({ timeout = 2, interface = "wlan0", speed  = netspeed, autoscale = false })
 }
 
