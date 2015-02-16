@@ -27,7 +27,13 @@ end
 
 -- remove given request
 function asyncshell.clear(id)
-	if asyncshell.request_table[id] then asyncshell.request_table[id] = nil end
+	if asyncshell.request_table[id] then
+		if asyncshell.request_table[id].timer then
+			asyncshell.request_table[id].timer:stop()
+			asyncshell.request_table[id].timer = nil
+		end
+		asyncshell.request_table[id] = nil
+	end
 end
 
 -- Sends an asynchronous request for an output of the shell command
@@ -50,10 +56,9 @@ function asyncshell.request(command, callback, timeout)
 	awful.util.spawn_with_shell(req)
 
 	if timeout then
-		awful.util.spawn_with_shell(string.format(
-			"sleep %s && echo \"asyncshell.clear(%s)\" | awesome-client &",
-			timeout, id
-		))
+		asyncshell.request_table[id].timer = timer({ timeout = timeout })
+		asyncshell.request_table[id].timer:connect_signal("timeout", function() asyncshell.clear(id) end)
+		asyncshell.request_table[id].timer:start()
 	end
 end
 
@@ -64,7 +69,7 @@ end
 function asyncshell.deliver(id, output)
 	if asyncshell.request_table[id] then
 		asyncshell.request_table[id].callback(output)
-		asyncshell.request_table[id] = nil
+		asyncshell.clear(id)
 	end
 end
 
