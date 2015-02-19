@@ -119,6 +119,8 @@ function layoutbox.new(args)
 	local screen = args.screen or 1
 	local style = redutil.table.merge(default_style(), style or {})
 	local w = svgbox()
+	w:set_color(style.color.icon)
+
 	if not layoutbox.menu then layoutbox:init(args.layouts, style) end
 
 	-- Set tooltip

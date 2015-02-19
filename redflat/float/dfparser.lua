@@ -34,11 +34,12 @@ local all_icon_sizes   = { '128x128' , '96x96', '72x72', '64x64', '48x48',
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		icons             = {},
+		icons             = { custom_only = false, scalable_only = false },
 		desktop_file_dirs = { "/usr/share/applications/" },
 		wm_name           = nil,
 	}
-	return redutil.table.merge(style, beautiful.float.dfparser or {})
+
+	return redutil.table.merge(style, beautiful.float and beautiful.float.dfparser or {})
 end
 
 -- Support functions
@@ -100,9 +101,13 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 function dfparser.lookup_icon(icon_file, style)
 
-	--local style = redutil.table.merge(default_icon_style(), style or {})
-	local style = redutil.table.merge(beautiful.float.dfparser.icons or {}, style or {})
+	local style = redutil.table.merge(default_style().icons, style or {})
 	local icon_formats = style.scalable_only and { "svg" } or { "svg", "png", "gif" }
+
+	local df_icon
+	if style.df_icon and awful.util.file_readable(style.df_icon) then
+		df_icon = style.df_icon
+	end
 
 	-- No icon name
 	if not icon_file or icon_file == "" then return style.default_icon end
@@ -145,7 +150,7 @@ function dfparser.lookup_icon(icon_file, style)
 		end
 	end
 
-	return awful.util.file_readable(style.df_icon) and style.df_icon or nil
+	return df_icon
 end
 
 -- Main parsing functions

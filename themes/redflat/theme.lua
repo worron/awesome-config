@@ -507,6 +507,14 @@ theme.float.appswitcher = {
 	color          = theme.color
 }
 
+-- additional color
+theme.float.appswitcher.color.preview_bg = theme.color.main .. "12"
+
+-- hotkeys
+theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9",  "0",
+                                    "F1",  "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
+                                    "F11", "F12" }
+
 -- Hotkeys helper
 ------------------------------------------------------------
 theme.float.hotkeys = {
@@ -521,14 +529,6 @@ theme.float.hotkeys = {
 	titlefont     = theme.font_helper_title,
 	color         = theme.color
 }
-
--- additional color
-theme.float.appswitcher.color.preview_bg = theme.color.main .. "12"
-
--- hotkeys
-theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9",  "0",
-                                    "F1",  "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
-                                    "F11", "F12" }
 
 -- Exaile music player
 ------------------------------------------------------------
