@@ -61,7 +61,8 @@ local function default_style()
 		color           = { border = "#575757", text = "#aaaaaa", main = "#b1222b", preview_bg = "#b1222b80",
 		                    wibox  = "#202020", icon = "#a0a0a0", bg   = "#161616", gray = "#575757" }
 	}
-	return redutil.table.merge(style, beautiful.float.appswitcher or {})
+
+	return redutil.table.merge(style, beautiful.float and beautiful.float.appswitcher or {})
 end
 
 -- Support functions
