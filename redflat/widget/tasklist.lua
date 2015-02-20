@@ -47,7 +47,7 @@ local last = {
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		layout_icon = {},
+		appnames    = {},
 		width       = 40,
 		char_digit  = 3,
 		need_group  = true,
@@ -55,6 +55,8 @@ local function default_style()
 	}
 	style.winmenu = {
 		icon           = {},
+		micon          = {},
+		layout_icon    = {},
 		titleline      = { font = "Sans 16 bold", height = 35},
 		state_iconsize = { 20, 20 },
 		sep_margin     = { 3, 3, 5, 5 },
@@ -75,7 +77,7 @@ local function default_style()
 		nohide       = true
 	}
 
-	return redutil.table.merge(style, beautiful.widget.tasklist or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.tasklist") or {})
 end
 
 -- Support functions
@@ -83,8 +85,9 @@ end
 
 -- Get info about client group
 --------------------------------------------------------------------------------
-local function get_state(c_group, chars)
+local function get_state(c_group, chars, names)
 
+	local names = names or {}
 	local state = { focus = false, urgent = false, minimized = true }
 
 	for _, c in pairs(c_group) do
@@ -94,7 +97,7 @@ local function get_state(c_group, chars)
 	end
 
 	local class = c_group[1].class or "Untitled"
-	state.text = beautiful.appnames[class] or string.upper(string.sub(class, 1, chars))
+	state.text = names[class] or string.upper(string.sub(class, 1, chars))
 	state.num = #c_group
 
 	return state
@@ -102,13 +105,13 @@ end
 
 -- Function to build item list for submenu
 --------------------------------------------------------------------------------
-local function tagmenu_items(action)
+local function tagmenu_items(action, style)
 	local items = {}
 	for _, t in ipairs(awful.tag.gettags(last.screen)) do
 		if not awful.tag.getproperty(t, "hide") then
 			table.insert(
 				items,
-				{ t.name, function() action(t, last.client) end, beautiful.icon.blank, beautiful.icon.blank }
+				{ t.name, function() action(t, last.client) end, style.micon.blank, style.micon.blank }
 			)
 		end
 	end
@@ -125,18 +128,22 @@ local function tagmenu_update(c, menu, submenu_index, style)
 			local l = awful.layout.getname(awful.tag.getproperty(t, "layout"))
 
 			for _, index in ipairs(submenu_index) do
-				menu.items[index].child.items[k].icon:set_image(style.layout_icon[l] or style.layout_icon.unknown)
+				if menu.items[index].child.items[k].icon then
+					menu.items[index].child.items[k].icon:set_image(style.layout_icon[l] or style.layout_icon.unknown)
+				end
 			end
 
 			-- set "checked" icon if tag active for given client
 			-- otherwise set empty icon
 			if c then
 				local client_tags = c:tags()
-				local check_icon = awful.util.table.hasitem(client_tags, t) and beautiful.icon.check
-				                   or beautiful.icon.blank
+				local check_icon = awful.util.table.hasitem(client_tags, t) and style.micon.check
+				                   or style.micon.blank
 
 				for _, index in ipairs(submenu_index) do
-					menu.items[index].child.items[k].right_icon:set_image(check_icon)
+					if menu.items[index].child.items[k].right_icon then
+						menu.items[index].child.items[k].right_icon:set_image(check_icon)
+					end
 				end
 			end
 		end
@@ -332,7 +339,7 @@ local function tasklist_construct(client_groups, layout, data, buttons, style)
 		end
 
 		-- set info and buttons to widget
-		local state = get_state(c_group, style.char_digit)
+		local state = get_state(c_group, style.char_digit, style.appnames)
 		task.widg:set_state(state)
 		task.widg:buttons(redutil.create_buttons(buttons, { group = c_group }))
 
@@ -461,8 +468,8 @@ function redtasklist.winmenu:init(style)
 
 	-- Construct tag submenus ("move" and "add")
 	------------------------------------------------------------
-	local movemenu_items = tagmenu_items(awful.client.movetotag)
-	local addmenu_items  = tagmenu_items(awful.client.toggletag)
+	local movemenu_items = tagmenu_items(awful.client.movetotag, style)
+	local addmenu_items  = tagmenu_items(awful.client.toggletag, style)
 
 	-- Create menu
 	------------------------------------------------------------

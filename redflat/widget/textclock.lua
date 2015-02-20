@@ -25,9 +25,9 @@ local textclock = { mt = {} }
 local function default_style()
 	local style = {
 		font  = "Sans 12",
-		color = { text = "#aaaaaa"}
+		color = { text = "#aaaaaa" }
 	}
-	return redutil.table.merge(style, beautiful.widget.textclock or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.textclock") or {})
 end
 
 -- Create a textclock widget. It draws the time it is in a textbox.

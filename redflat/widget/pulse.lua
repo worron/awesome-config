@@ -40,7 +40,7 @@ local function default_style()
 		notify_icon = nil,
 		audio       = {}
 	}
-	return redutil.table.merge(style, beautiful.widget.pulse or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.pulse") or {})
 end
 
 local change_volume_default_args = {
