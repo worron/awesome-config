@@ -22,6 +22,7 @@ local redtask = { mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
+		width    = 40,
 		line     = { width = 4, v_gap = 30 },
 		font     = { font = "Sans", size = 16, face = 0, slant = 0 },
 		text_gap = 22,
@@ -29,7 +30,7 @@ local function default_style()
 		color    = { main = "#b1222b", gray = "#575757", icon = "#a0a0a0",
 		            urgent = "#32882d", wibox = "#202020" }
 	}
-	return redutil.table.merge(style, beautiful.gauge.task or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.task") or {})
 end
 
 -- Create a new redtask widget

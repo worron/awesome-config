@@ -28,7 +28,7 @@ local function default_style()
 		icon  = {},
 		color = { main = "#b1222b", icon = "#a0a0a0", mute = "#404040" }
 	}
-	return redutil.table.merge(style, beautiful.gauge.audio or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.audio") or {})
 end
 
 -- Support functions
@@ -63,8 +63,10 @@ function audio.new(style)
 	function widg:set_value(x)
 		if x > 1 then x = 1 end
 
-		local h = self.widget._image.height
-		icon.ready:set_color(pattern_string(h, x, style.color.main, style.color.icon))
+		if self.widget._image then
+			local h = self.widget._image.height
+			icon.ready:set_color(pattern_string(h, x, style.color.main, style.color.icon))
+		end
 	end
 
 	function widg:set_mute(mute)

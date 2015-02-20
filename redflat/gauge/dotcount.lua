@@ -30,7 +30,7 @@ local function default_style()
 		dot_gap_h    = 5,
 		color        = { main = "#b1222b", gray = "#575757" }
 	}
-	return redutil.table.merge(style, beautiful.gauge.dotcount or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.dotcount") or {})
 end
 
 -- Support functions

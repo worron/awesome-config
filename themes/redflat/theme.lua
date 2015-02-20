@@ -276,7 +276,7 @@ theme.gauge.doublebar = {
 }
 
 -- Monitor
-------------------------------------------------------------
+--------------------------------------------------------------
 theme.gauge.monitor = {
 	font     = theme.cf_monitor,
 	text_gap = 28,
@@ -301,7 +301,6 @@ theme.gauge.tag.geometry = {
 	focus    = { x = 4,  y = 14, width = 13, height = 13 },
 	occupied = { x = 85, y = 8,  width = 9,  height = 15 }
 }
-
 
 -- Task
 ------------------------------------------------------------
