@@ -53,7 +53,7 @@ local function default_style()
 		color          = { border = "#575757", text = "#aaaaaa", main = "#b1222b",
 						   wibox = "#202020", gray = "#575757" }
 	}
-	return redutil.table.merge(style, beautiful.float.exaile or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "float.exaile") or {})
 end
 
 -- Support functions

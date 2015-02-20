@@ -34,7 +34,7 @@ local function default_style()
 		border_width = 2,
 		color        = { border = "#575757", wibox = "#202020" }
 	}
-	return redutil.table.merge(style, beautiful.float.prompt or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "float.prompt") or {})
 end
 
 -- Initialize prompt widget

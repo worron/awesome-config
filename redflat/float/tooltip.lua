@@ -34,7 +34,7 @@ local function default_style()
 		border_width = 2,
 		color        = { border = "#404040", text = "#aaaaaa", wibox = "#202020" }
 	}
-	return redutil.table.merge(style, beautiful.float.tooltip or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "float.tooltip") or {})
 end
 
 -- Create a new tooltip

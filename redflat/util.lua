@@ -37,6 +37,22 @@ function util.read_ffile(path)
 	return output
 end
 
+-- Check if deep key exists
+-----------------------------------------------------------------------------------------------------------------------
+function util.check(t, s)
+    local v = t
+
+    for key in string.gmatch(s, "([^%.]+)(%.?)") do
+        if v[key] then
+            v = v[key]
+        else
+            return nil
+        end
+    end
+
+    return v
+end
+
 -- Format text
 -----------------------------------------------------------------------------------------------------------------------
 

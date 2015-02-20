@@ -39,7 +39,7 @@ local function default_style()
 		wm_name           = nil,
 	}
 
-	return redutil.table.merge(style, beautiful.float and beautiful.float.dfparser or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "float.dfparser") or {})
 end
 
 -- Support functions
