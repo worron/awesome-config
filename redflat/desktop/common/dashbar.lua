@@ -31,7 +31,7 @@ local function default_style()
 		color       = { main = "#b1222b", gray = "#404040" }
 	}
 
-	return redutil.table.merge(style, beautiful.desktop.common.dashbar or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "desktop.common.dashbar") or {})
 end
 
 -- Cairo drawing functions

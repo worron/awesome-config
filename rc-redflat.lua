@@ -358,7 +358,7 @@ for s = 1, screen.count() do
 	tasklist[s] = redwidget.tasklist(s, redwidget.tasklist.filter.currenttags, tasklist.buttons)
 
 	-- Create the wibox
-	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh})
+	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh or 50 })
 
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
@@ -404,10 +404,12 @@ end
 
 -- Wallpaper setup
 -----------------------------------------------------------------------------------------------------------------------
-if beautiful.wallpaper then
+if beautiful.wallpaper and awful.util.file_readable(beautiful.wallpaper) then
 	for s = 1, screen.count() do
 		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
 	end
+else
+	gears.wallpaper.set("#161616")
 end
 
 -- Desktop widgets
