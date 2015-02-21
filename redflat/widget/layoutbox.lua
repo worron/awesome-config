@@ -35,10 +35,12 @@ local last_tag = nil
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
+		icon       = {},
+		micon      = {},
 		name_alias = {},
 		color      = { icon = "#a0a0a0" }
 	}
-	return redutil.table.merge(style, beautiful.widget.layoutbox or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.layoutbox") or {})
 end
 
 -- Initialize layoutbox
@@ -56,7 +58,7 @@ function layoutbox:init(layouts, style)
 		local layout_name = layout.getname(l)
 		local icon = style.icon[layout_name] or style.icon.unknown
 		local text = style.name_alias[layout_name] or layout_name
-		table.insert(items, {text, function() layout.set (l, last_tag) end, icon, beautiful.icon.blank})
+		table.insert(items, { text, function() layout.set (l, last_tag) end, icon, style.micon.blank })
 	end
 
 	-- Update tooltip function
@@ -70,8 +72,10 @@ function layoutbox:init(layouts, style)
 	function self:update_menu(t)
 		cl = awful.tag.getproperty(t, "layout")
 		for i, l in ipairs(layouts) do
-			local mark = cl == l and beautiful.icon.check or beautiful.icon.blank
-			self.menu.items[i].right_icon:set_image(mark)
+			local mark = cl == l and style.micon.check or style.micon.blank
+			if self.menu.items[i].right_icon then
+				self.menu.items[i].right_icon:set_image(mark)
+			end
 		end
 	end
 

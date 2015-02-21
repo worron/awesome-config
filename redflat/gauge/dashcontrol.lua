@@ -25,7 +25,7 @@ local function default_style()
 		bar   = { width = 4, num = 10 },
 		color = { main = "#b1222b", gray = "#404040" }
 	}
-	return redutil.table.merge(style, beautiful.gauge.dashcontrol or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.dashcontrol") or {})
 end
 
 -- Create a new dashcontrol widget

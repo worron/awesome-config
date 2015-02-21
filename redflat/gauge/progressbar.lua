@@ -23,7 +23,7 @@ local function default_style()
 	local style = {
 		color = { main = "#b1222b", gray = "#404040" }
 	}
-	return redutil.table.merge(style, beautiful.gauge.progressbar or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.progressbar") or {})
 end
 
 -- Create a new progressbar widget

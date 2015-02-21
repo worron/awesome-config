@@ -103,12 +103,13 @@ for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
 
 -- Naughty config
 -----------------------------------------------------------------------------------------------------------------------
-naughty.config.padding = beautiful.useless_gap_width
+naughty.config.padding = beautiful.useless_gap_width or 0
 
-naughty.config.presets.normal   = beautiful.naughty_preset.normal
-naughty.config.presets.critical = beautiful.naughty_preset.critical
-
-naughty.config.presets.low = redutil.table.merge(naughty.config.presets.normal, { timeout = 3 })
+if beautiful.naughty_preset then
+	naughty.config.presets.normal = beautiful.naughty_preset.normal
+	naughty.config.presets.critical = beautiful.naughty_preset.critical
+	naughty.config.presets.low = redutil.table.merge(naughty.config.presets.normal, { timeout = 3 })
+end
 
 -- Main menu configuration
 -----------------------------------------------------------------------------------------------------------------------
@@ -180,7 +181,7 @@ do
 	------------------------------------------------------------
 	mainmenu = redmenu({ hide_timeout = 1, theme = menu_theme,
 		items = {
-			{ "Awesome",         awesomemenu,            beautiful.path .. "/awesome.svg" },
+			{ "Awesome",         awesomemenu,            beautiful.icon.awesome },
 			{ "Applications",    appmenu,                micon("distributor-logo")        },
 			{ "Places",          placesmenu,             micon("folder_home"), key = "c"  },
 			menu_sep,
@@ -200,19 +201,28 @@ end
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 
+-- check theme
+local pmargin
+
+if beautiful.widget and beautiful.widget.margin then
+	pmargin = beautiful.widget.margin
+else
+	pmargin = { double_sep = {} }
+end
+
 -- Separators
 --------------------------------------------------------------------------------
-local single_sep = separator.vertical({ margin = beautiful.widget.margin.single_sep })
+local single_sep = separator.vertical({ margin = pmargin.single_sep })
 
 local double_sep = wibox.layout.fixed.horizontal()
-double_sep:add(separator.vertical({ margin = beautiful.widget.margin.double_sep[1] }))
-double_sep:add(separator.vertical({ margin = beautiful.widget.margin.double_sep[2] }))
+double_sep:add(separator.vertical({ margin = pmargin.double_sep[1] }))
+double_sep:add(separator.vertical({ margin = pmargin.double_sep[2] }))
 
 -- Taglist configure
 --------------------------------------------------------------------------------
 local taglist = {}
 taglist.style  = { separator = single_sep }
-taglist.margin = beautiful.widget.margin.taglist
+taglist.margin = pmargin.taglist
 
 taglist.buttons = awful.util.table.join(
 	awful.button({ modkey    }, 1, awful.client.movetotag),
@@ -229,7 +239,7 @@ taglist.buttons = awful.util.table.join(
 --------------------------------------------------------------------------------
 local upgrades = {}
 upgrades.widget = redwidget.upgrades()
-upgrades.layout = wibox.layout.margin(upgrades.widget, unpack(beautiful.widget.margin.upgrades))
+upgrades.layout = wibox.layout.margin(upgrades.widget, unpack(pmargin.upgrades or {}))
 
 upgrades.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () mainmenu:toggle()           end),
@@ -240,7 +250,7 @@ upgrades.widget:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local kbindicator = {}
 kbindicator.widget = redwidget.keyboard({ layouts = { "English", "Russian" } })
-kbindicator.layout = wibox.layout.margin(kbindicator.widget, unpack(beautiful.widget.margin.kbindicator))
+kbindicator.layout = wibox.layout.margin(kbindicator.widget, unpack(pmargin.kbindicator or {}))
 
 kbindicator.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () redwidget.keyboard:toggle_menu() end),
@@ -254,7 +264,7 @@ kbindicator.widget:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local volume = {}
 volume.widget = redwidget.pulse()
-volume.layout = wibox.layout.margin(volume.widget, unpack(beautiful.widget.margin.volume))
+volume.layout = wibox.layout.margin(volume.widget, unpack(pmargin.volume or {}))
 
 volume.widget:buttons(awful.util.table.join(
 	awful.button({}, 4, function() redwidget.pulse:change_volume()                end),
@@ -273,7 +283,7 @@ local mail_scripts_path = "/home/vorron/Documents/scripts/"
 
 local mail = {}
 mail.widget = redwidget.mail({ path = mail_scripts_path, scripts = mail_scripts })
-mail.layout = wibox.layout.margin(mail.widget, unpack(beautiful.widget.margin.mail))
+mail.layout = wibox.layout.margin(mail.widget, unpack(pmargin.mail or {}))
 
 -- buttons
 mail.widget:buttons(awful.util.table.join(
@@ -284,7 +294,7 @@ mail.widget:buttons(awful.util.table.join(
 -- Layoutbox configure
 --------------------------------------------------------------------------------
 local layoutbox = {}
-layoutbox.margin = beautiful.widget.margin.layoutbox
+layoutbox.margin = pmargin.layoutbox
 
 layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () awful.layout.inc(layouts, 1)  end),
@@ -336,7 +346,7 @@ monitor.mem:buttons(awful.util.table.join(
 --------------------------------------------------------------------------------
 local textclock = {}
 textclock.widget = redwidget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
-textclock.layout = wibox.layout.margin(textclock.widget, unpack(beautiful.widget.margin.textclock))
+textclock.layout = wibox.layout.margin(textclock.widget, unpack(pmargin.textclock or {}))
 
 -- Panel wibox
 -----------------------------------------------------------------------------------------------------------------------
@@ -346,19 +356,19 @@ for s = 1, screen.count() do
 	-- Create widget which will contains an icon indicating which layout we're using.
 	layoutbox[s] = {}
 	layoutbox[s].widget = redwidget.layoutbox({ screen = s, layouts = layouts })
-	layoutbox[s].layout = wibox.layout.margin(layoutbox[s].widget, unpack(layoutbox.margin))
+	layoutbox[s].layout = wibox.layout.margin(layoutbox[s].widget, unpack(layoutbox.margin or {}))
 	layoutbox[s].widget:buttons(layoutbox.buttons)
 
 	-- Create a taglist widget
 	taglist[s] = {}
 	taglist[s].widget = redwidget.taglist(s, redwidget.taglist.filter.all, taglist.buttons, taglist.style)
-	taglist[s].layout = wibox.layout.margin(taglist[s].widget, unpack(taglist.margin))
+	taglist[s].layout = wibox.layout.margin(taglist[s].widget, unpack(taglist.margin or {}))
 
 	-- Create a tasklist widget
 	tasklist[s] = redwidget.tasklist(s, redwidget.tasklist.filter.currenttags, tasklist.buttons)
 
 	-- Create the wibox
-	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh})
+	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh or 50 })
 
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
@@ -404,10 +414,12 @@ end
 
 -- Wallpaper setup
 -----------------------------------------------------------------------------------------------------------------------
-if beautiful.wallpaper then
+if beautiful.wallpaper and awful.util.file_readable(beautiful.wallpaper) then
 	for s = 1, screen.count() do
 		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
 	end
+else
+	gears.wallpaper.set("#161616")
 end
 
 -- Desktop widgets

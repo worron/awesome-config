@@ -72,10 +72,10 @@ theme.global_border_width = 0  -- Lain global border gap
 -- Shared icons
 --------------------------------------------------------------------------------
 theme.icon = {
-	check = theme.path .. "/common/check.svg",
-	blank = theme.path .. "/common/blank.svg"
+	check   = theme.path .. "/common/check.svg",
+	blank   = theme.path .. "/common/blank.svg",
+	awesome = theme.path .. "/awesome.svg",
 }
-
 
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
@@ -276,7 +276,7 @@ theme.gauge.doublebar = {
 }
 
 -- Monitor
-------------------------------------------------------------
+--------------------------------------------------------------
 theme.gauge.monitor = {
 	font     = theme.cf_monitor,
 	text_gap = 28,
@@ -301,7 +301,6 @@ theme.gauge.tag.geometry = {
 	focus    = { x = 4,  y = 14, width = 13, height = 13 },
 	occupied = { x = 85, y = 8,  width = 9,  height = 15 }
 }
-
 
 -- Task
 ------------------------------------------------------------
@@ -367,6 +366,7 @@ theme.widget.mail = {
 ------------------------------------------------------------
 theme.widget.keyboard = {
 	icon         = theme.path .. "/widget/keyboard.svg",
+	micon        = theme.icon,
 	layout_color = { theme.color.icon, theme.color.main }
 }
 
@@ -379,6 +379,7 @@ theme.widget.keyboard.menu = {
 -- Layoutbox
 ------------------------------------------------------------
 theme.widget.layoutbox = {
+	micon = theme.icon,
 	color = theme.color
 }
 
@@ -419,17 +420,22 @@ theme.widget.tasklist = {
 	width = 50
 }
 
+-- main
 theme.widget.tasklist.winmenu = {
+	micon       = theme.icon,
 	titleline   = { font = theme.font_title, height = 35 },
 	menu        = { width = 280, color = { right_icon = theme.color.icon } },
 	tagmenu     = { width = 200, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
 	layout_icon = theme.widget.layoutbox.icon,
 	color       = theme.color
 }
+
+-- tasktip
 theme.widget.tasklist.tasktip = {
 	color = theme.color
 }
 
+-- menu
 theme.widget.tasklist.winmenu.icon = {
 	floating             = theme.path .. "/common/window_control/floating.svg",
 	sticky               = theme.path .. "/common/window_control/pin.svg",
@@ -441,6 +447,22 @@ theme.widget.tasklist.winmenu.icon = {
 	maximized_horizontal = theme.path .. "/common/window_control/maxh.svg",
 	maximized_vertical   = theme.path .. "/common/window_control/maxv.svg",
 }
+
+-- task aliases
+theme.widget.tasklist.appnames = {}
+theme.widget.tasklist.appnames["Nemo"                ] = "NFM"
+theme.widget.tasklist.appnames["Terminator"          ] = "TRM"
+theme.widget.tasklist.appnames["Firefox"             ] = "FFX"
+theme.widget.tasklist.appnames["Gnome-terminal"      ] = "TER"
+theme.widget.tasklist.appnames["Gnome-system-monitor"] = "GSM"
+theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GMP"
+theme.widget.tasklist.appnames["Gimp"                ] = "GMP"
+theme.widget.tasklist.appnames["Goldendict"          ] = "DIC"
+theme.widget.tasklist.appnames["Transmission-gtk"    ] = "TMN"
+theme.widget.tasklist.appnames["Steam"               ] = "STM"
+theme.widget.tasklist.appnames["Easytag"             ] = "TAG"
+theme.widget.tasklist.appnames["Mcomix"              ] = "CMX"
+theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
 
 -- Minitray
 ------------------------------------------------------------
@@ -619,25 +641,6 @@ theme.float.dfparser.icons = {
 	custom_only   = false,
 	scalable_only = false
 }
-
-
--- Tasklist names
------------------------------------------------------------------------------------------------------------------------
-theme.appnames = {}
-theme.appnames["Nemo"                ] = "NFM"
-theme.appnames["Terminator"          ] = "TRM"
-theme.appnames["Firefox"             ] = "FFX"
-theme.appnames["Gnome-terminal"      ] = "TER"
-theme.appnames["Gnome-system-monitor"] = "GSM"
-theme.appnames["Gimp-2.8"            ] = "GMP"
-theme.appnames["Gimp"                ] = "GMP"
-theme.appnames["Goldendict"          ] = "DIC"
-theme.appnames["Transmission-gtk"    ] = "TMN"
-theme.appnames["Steam"               ] = "STM"
-theme.appnames["Easytag"             ] = "TAG"
-theme.appnames["Mcomix"              ] = "CMX"
-theme.appnames["Claws-mail"          ] = "CML"
-
 
 -----------------------------------------------------------------------------------------------------------------------
 return theme

@@ -50,7 +50,7 @@ local function default_style()
 		                  bg = "#161616", bg_second = "#181818", wibox = "#202020" }
 
 	}
-	return redutil.table.merge(style, beautiful.float.top or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "float.top") or {})
 end
 
 -- Support functions

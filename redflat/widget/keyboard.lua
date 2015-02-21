@@ -33,9 +33,10 @@ local pre_command = "dbus-send --dest=ru.gentoo.KbddService /ru/gentoo/KbddServi
 local function default_style()
 	local style = {
 		icon         = nil,
+		micon        = {},
 		layout_color = {}
 	}
-	return redutil.table.merge(style, beautiful.widget.keyboard or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.keyboard") or {})
 end
 
 -- Initialize layout menu
@@ -46,12 +47,14 @@ function keybd:init(layouts, style)
 	local menu_items = {}
 	for i = 1, #layouts do
 		local command = pre_command .. "ru.gentoo.kbdd.set_layout uint32:" .. tostring(i - 1)
-		table.insert(menu_items, {layouts[i], command, nil, beautiful.icon.blank})
+		table.insert(menu_items, {layouts[i], command, nil, style.micon.blank})
 	end
 
 	-- initialize menu
 	self.menu = redmenu({ hide_timeout = 1, theme = style.menu, items = menu_items })
-	self.menu.items[1].right_icon:set_image(beautiful.icon.check)
+	if self.menu.items[1].right_icon then
+		self.menu.items[1].right_icon:set_image(beautiful.icon.check)
+	end
 end
 
 -- Show layout menu
@@ -117,7 +120,7 @@ function keybd.new(args, style)
 			tp:set_text(args.layouts[layout])
 			-- update menu
 			for i = 1, #args.layouts do
-				local mark = layout == i and beautiful.icon.check or beautiful.icon.blank
+				local mark = layout == i and style.micon.check or style.micon.blank
 				keybd.menu.items[i].right_icon:set_image(mark)
 			end
 		end)

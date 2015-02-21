@@ -27,7 +27,7 @@ local function default_style()
 		text_gap = 22,
 		color    = { main = "#b1222b", gray = "#575757", icon = "#a0a0a0" }
 	}
-	return redutil.table.merge(style, beautiful.gauge.monitor or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.monitor") or {})
 end
 
 -- Create a new monitor widget

@@ -38,7 +38,7 @@ local function default_style()
 		border_width = 2,
 		color        = { wibox = "#202020", border = "#575757" }
 	}
-	return redutil.table.merge(style, beautiful.widget.minitray or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.minitray") or {})
 end
 
 -- Initialize minitray floating window

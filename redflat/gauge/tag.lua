@@ -27,19 +27,20 @@ local function default_style()
 		width        = 80,
 		font         = { font = "Sans", size = 16, face = 0, slant = 0 },
 		text_gap     = 22,
-		counter      = { size = 12, gap = 2, coord = { 40, 20 } },
+		counter      = { size = 12, gap = 2, coord = { 40, 35 } },
 		show_counter = true,
-		color        = { main   = "#b1222b", gray = "#575757", icon = "#a0a0a0", urgent = "#32882d" }
+		color        = { main   = "#b1222b", gray = "#575757", icon = "#a0a0a0", urgent = "#32882d",
+		                 wibox = "#202020" }
 	}
 
 	-- geometry for state marks
 	style.geometry = {
-		active    = { height = 5 },
-		focus     = { x = 10, y = 10, width = 10, height = 15 },
-		occupied  = { x = 10, y = 30, width = 10, height = 15 }
+		active    = { height = 5, y = 45 },
+		focus     = { x = 5, y = 10, width = 10, height = 15 },
+		occupied  = { x = 65, y = 10, width = 10, height = 15 }
 	}
 
-	return redutil.table.merge(style, beautiful.gauge.tag or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.tag") or {})
 end
 
 local function fill_geometry(width, height, geometry)

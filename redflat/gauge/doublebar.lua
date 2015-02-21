@@ -25,7 +25,7 @@ local function default_style()
 		v_gap = 8,
 		color = { main = "#b1222b", gray = "#575757" }
 	}
-	return redutil.table.merge(style, beautiful.gauge.doublebar or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.doublebar") or {})
 end
 
 -- Create a new doublebar widget

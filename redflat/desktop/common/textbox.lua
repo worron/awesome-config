@@ -29,7 +29,7 @@ local function default_style()
 		font   = { font = "Sans", size = 20, face = 0, slant = 0 }
 	}
 
-	return redutil.table.merge(style, beautiful.desktop.common.textbox or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "desktop.common.textbox") or {})
 end
 
 -- Text alignment functions

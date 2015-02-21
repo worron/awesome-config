@@ -32,7 +32,7 @@ local function default_style()
 		firstrun    = false,
 		color       = { main = "#b1222b", icon = "#a0a0a0" }
 	}
-	return redutil.table.merge(style, beautiful.widget.mail or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.mail") or {})
 end
 
 -- Create a new mail widget

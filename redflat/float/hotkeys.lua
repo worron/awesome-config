@@ -47,7 +47,7 @@ local function default_style()
 		                  gray = "#575757" }
 	}
 
-	return redutil.table.merge(style, beautiful.float.hotkeys or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "float.hotkeys") or {})
 end
 
 -- Support functions

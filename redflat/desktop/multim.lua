@@ -29,7 +29,7 @@ local multim = { mt = {} }
 local function default_style()
 	local style = {
 		barpack      = {},
-		corner       = {},
+		corner       = { width = 40 },
 		state_height = 60,
 		digit_num    = 3,
 		prog_height  = 100,
@@ -37,7 +37,7 @@ local function default_style()
 		unit         = { { "MB", - 1 }, { "GB", 1024 } },
 		color        = { main = "#b1222b", wibox = "#161616", gray = "#404040" }
 	}
-	return redutil.table.merge(style, beautiful.desktop.multim or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "desktop.multim") or {})
 end
 
 local default_geometry = { width = 200, height = 100, x = 100, y = 100 }
