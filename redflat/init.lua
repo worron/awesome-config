@@ -10,6 +10,6 @@ return {
 	widget = require("redflat.widget"),
 	gauge = require("redflat.gauge"),
 	desktop = require("redflat.desktop"),
-	floatwid = require("redflat.float"),
+	float = require("redflat.float"),
 	asyncshell = require("redflat.asyncshell")
 }
