@@ -25,8 +25,9 @@ local notify = {}
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		geometry        = { width = 480, height = 100, x =1424, y = 16 },
+		geometry        = { width = 480, height = 100 },
 		screen_gap      = 0,
+		screen_pos      = {},
 		border_margin   = { 20, 20, 20, 20 },
 		elements_margin = { 20, 0, 10, 10 },
 		bar_width       = 8,
@@ -45,6 +46,8 @@ function notify:init()
 
 	local style = default_style()
 	local icon = style.icon
+
+	self.style = style
 
 	-- Construct layouts
 	--------------------------------------------------------------------------------
@@ -73,7 +76,6 @@ function notify:init()
 
 	self.wibox:set_widget(wibox.layout.margin(area, unpack(style.border_margin)))
 	self.wibox:geometry(style.geometry)
-	redutil.placement.no_offscreen(self.wibox, style.screen_gap)
 
 	-- Set info function
 	--------------------------------------------------------------------------------
@@ -119,7 +121,11 @@ end
 function notify:show(args)
 	if not self.wibox then self:init() end
 	self:set(args)
+
+	if self.style.screen_pos[mouse.screen] then self.wibox:geometry(self.style.screen_pos[mouse.screen]) end
+	redutil.placement.no_offscreen(self.wibox, self.style.screen_gap, screen[mouse.screen].workarea)
 	if not self.wibox.visible then self.wibox.visible = true end
+
 	self.hidetimer:stop()
 	self.hidetimer:start()
 end

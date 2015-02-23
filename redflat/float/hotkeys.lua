@@ -244,7 +244,6 @@ function hotkeys:init()
 
 	self.wibox:set_widget(wibox_layout)
 	self.wibox:geometry(style.geometry)
-	redutil.placement.centered(self.wibox, nil, screen[mouse.screen].workarea)
 
 	-- Highlight timer
 	--------------------------------------------------------------------------------
@@ -282,6 +281,7 @@ end
 function hotkeys:show()
 	if not self.wibox then self:init() end
 	if not self.wibox.visible then
+		redutil.placement.centered(self.wibox, nil, screen[mouse.screen].workarea)
 		self.wibox.visible = true
 		awful.keygrabber.run(self.keygrabber)
 	else

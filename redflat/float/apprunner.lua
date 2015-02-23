@@ -286,7 +286,6 @@ function apprunner:init()
 
 	self.wibox:set_widget(area_layout)
 	self.wibox:geometry(style.geometry)
-	redutil.placement.centered(self.wibox)
 end
 
 -- Show apprunner widget
@@ -300,6 +299,7 @@ function apprunner:show()
 		self.applist:set_select(1)
 	end
 
+	redutil.placement.centered(self.wibox, nil, screen[mouse.screen].workarea)
 	self.wibox.visible = true
 	return awful.prompt.run(
 		{ prompt = "" },
