@@ -21,14 +21,10 @@ require("awful.autofocus")
 timestamp = require("redflat.timestamp")
 asyncshell = require("redflat.asyncshell")
 
-local redwidget = require("redflat.widget")
-local floatwidget = require("redflat.float")
-local redutil = require("redflat.util")
-local separator = require("redflat.gauge.separator")
-local redmenu = require("redflat.menu")
-local redtitlebar = require("redflat.titlebar")
-
+local redflat = require("redflat")
 --local lain = require("lain")
+
+local separator = redflat.gauge.separator
 
 -- Error handling
 -----------------------------------------------------------------------------------------------------------------------
@@ -97,7 +93,7 @@ naughty.config.padding = beautiful.useless_gap_width or 0
 if beautiful.naughty_preset then
 	naughty.config.presets.normal = beautiful.naughty_preset.normal
 	naughty.config.presets.critical = beautiful.naughty_preset.critical
-	naughty.config.presets.low = redutil.table.merge(naughty.config.presets.normal, { timeout = 3 })
+	naughty.config.presets.low = redflat.util.table.merge(naughty.config.presets.normal, { timeout = 3 })
 end
 
 -- Main menu configuration
@@ -111,7 +107,7 @@ do
 
 	-- icon finder
 	local function micon(name)
-		return floatwidget.dfparser.lookup_icon(name, icon_style)
+		return redflat.float.dfparser.lookup_icon(name, icon_style)
 	end
 
 	-- menu separator
@@ -131,7 +127,7 @@ do
 
 	-- Application submenu
 	------------------------------------------------------------
-	local appmenu = floatwidget.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
+	local appmenu = redflat.float.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
 
 	-- Awesome submenu
 	------------------------------------------------------------
@@ -144,7 +140,7 @@ do
 
 	-- Main menu
 	------------------------------------------------------------
-	mainmenu = redmenu({ hide_timeout = 1, theme = menu_theme,
+	mainmenu = redflat.menu({ hide_timeout = 1, theme = menu_theme,
 		items = {
 			{ "Awesome",       awesomemenu, beautiful.icon.awesome },
 			{ "Applications",  appmenu,     micon("distributor-logo") },
@@ -185,7 +181,7 @@ taglist.buttons = awful.util.table.join(
 	awful.button({           }, 1, awful.tag.viewonly    ),
 	awful.button({           }, 2, awful.tag.viewtoggle  ),
 	awful.button({ modkey    }, 3, awful.client.toggletag),
-	awful.button({           }, 3, function(t) redwidget.layoutbox:toggle_menu(t)         end),
+	awful.button({           }, 3, function(t) redflat.widget.layoutbox:toggle_menu(t)         end),
 	awful.button({           }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
 	awful.button({           }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
 )
@@ -194,12 +190,12 @@ taglist.buttons = awful.util.table.join(
 -- this widget used as icon for main menu
 --------------------------------------------------------------------------------
 local upgrades = {}
-upgrades.widget = redwidget.upgrades()
+upgrades.widget = redflat.widget.upgrades()
 upgrades.layout = wibox.layout.margin(upgrades.widget, unpack(pmargin.upgrades or {}))
 
 upgrades.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () mainmenu:toggle()           end),
-	awful.button({}, 2, function () redwidget.upgrades:update() end)
+	awful.button({}, 2, function () redflat.widget.upgrades:update() end)
 ))
 
 -- Layoutbox configure
@@ -209,7 +205,7 @@ layoutbox.margin = pmargin.layoutbox
 
 layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () awful.layout.inc(layouts, 1)  end),
-	awful.button({ }, 3, function () redwidget.layoutbox:toggle_menu(awful.tag.selected(mouse.screen)) end),
+	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(awful.tag.selected(mouse.screen)) end),
 	awful.button({ }, 4, function () awful.layout.inc(layouts, 1)  end),
 	awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
 )
@@ -219,25 +215,25 @@ layoutbox.buttons = awful.util.table.join(
 local tasklist = {}
 
 tasklist.buttons = awful.util.table.join(
-	awful.button({}, 1, redwidget.tasklist.action.select),
-	awful.button({}, 2, redwidget.tasklist.action.close),
-	awful.button({}, 3, redwidget.tasklist.action.menu),
-	awful.button({}, 4, redwidget.tasklist.action.switch_next),
-	awful.button({}, 5, redwidget.tasklist.action.switch_prev)
+	awful.button({}, 1, redflat.widget.tasklist.action.select),
+	awful.button({}, 2, redflat.widget.tasklist.action.close),
+	awful.button({}, 3, redflat.widget.tasklist.action.menu),
+	awful.button({}, 4, redflat.widget.tasklist.action.switch_next),
+	awful.button({}, 5, redflat.widget.tasklist.action.switch_prev)
 )
 
 -- Tray widget
 --------------------------------------------------------------------------------
-local tray = redwidget.minitray({ timeout = 10 })
+local tray = redflat.widget.minitray({ timeout = 10 })
 
 tray:buttons(awful.util.table.join(
-	awful.button({}, 1, function() redwidget.minitray:toggle() end)
+	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)
 ))
 
 -- Textclock widget
 --------------------------------------------------------------------------------
 local textclock = {}
-textclock.widget = redwidget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
+textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
 textclock.layout = wibox.layout.margin(textclock.widget, unpack(pmargin.textclock or {}))
 
 -- Panel wibox
@@ -247,17 +243,17 @@ for s = 1, screen.count() do
 
 	-- Create widget which will contains an icon indicating which layout we're using.
 	layoutbox[s] = {}
-	layoutbox[s].widget = redwidget.layoutbox({ screen = s, layouts = layouts })
+	layoutbox[s].widget = redflat.widget.layoutbox({ screen = s, layouts = layouts })
 	layoutbox[s].layout = wibox.layout.margin(layoutbox[s].widget, unpack(layoutbox.margin or {}))
 	layoutbox[s].widget:buttons(layoutbox.buttons)
 
 	-- Create a taglist widget
 	taglist[s] = {}
-	taglist[s].widget = redwidget.taglist(s, redwidget.taglist.filter.all, taglist.buttons, taglist.style)
+	taglist[s].widget = redflat.widget.taglist(s, redflat.widget.taglist.filter.all, taglist.buttons, taglist.style)
 	taglist[s].layout = wibox.layout.margin(taglist[s].widget, unpack(taglist.margin or {}))
 
 	-- Create a tasklist widget
-	tasklist[s] = redwidget.tasklist(s, redwidget.tasklist.filter.currenttags, tasklist.buttons)
+	tasklist[s] = redflat.widget.tasklist(s, redflat.widget.tasklist.filter.currenttags, tasklist.buttons)
 
 	-- Create the wibox
 	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh or 50 })
@@ -314,9 +310,9 @@ do
 	local workarea = screen[mouse.screen].workarea
 	local ew = 1 -- edge width
 
-	local switcher = floatwidget.appswitcher
-	local currenttags = redwidget.tasklist.filter.currenttags
-	local allscreen   = redwidget.tasklist.filter.allscreen
+	local switcher = redflat.float.appswitcher
+	local currenttags = redflat.widget.tasklist.filter.currenttags
+	local allscreen   = redflat.widget.tasklist.filter.allscreen
 
 	-- edge geometry
 	local egeometry = {
@@ -327,7 +323,7 @@ do
 
 	-- Top
 	--------------------------------------------------------------------------------
-	local top = redutil.desktop.edge("horizontal")
+	local top = redflat.util.desktop.edge("horizontal")
 	top.wibox:geometry(egeometry["top"])
 
 	top.layout:buttons(awful.util.table.join(
@@ -338,7 +334,7 @@ do
 
 	-- Right
 	--------------------------------------------------------------------------------
-	local right = redutil.desktop.edge("vertical")
+	local right = redflat.util.desktop.edge("vertical")
 	right.wibox:geometry(egeometry["right"])
 
 	right.layout:buttons(awful.util.table.join(
@@ -348,7 +344,7 @@ do
 
 	-- Left
 	--------------------------------------------------------------------------------
-	local left = redutil.desktop.edge("vertical", { ew, workarea.height - ew })
+	local left = redflat.util.desktop.edge("vertical", { ew, workarea.height - ew })
 	left.wibox:geometry(egeometry["left"])
 
 	left.area[1]:buttons(awful.util.table.join(
@@ -362,7 +358,7 @@ do
 		awful.button({}, 5, function() switcher:show({ filter = currenttags, reverse = true }) end)
 	))
 
-	left.wibox:connect_signal("mouse::leave", function() floatwidget.appswitcher:hide() end)
+	left.wibox:connect_signal("mouse::leave", function() redflat.float.appswitcher:hide() end)
 end
 
 -- Mouse bindings
@@ -379,10 +375,10 @@ local globalkeys, clientkeys
 
 do
 	-- key aliases
-	local sw = floatwidget.appswitcher
-	local current = redwidget.tasklist.filter.currenttags
-	local allscreen = redwidget.tasklist.filter.allscreen
-	local laybox = redwidget.layoutbox
+	local sw = redflat.float.appswitcher
+	local current = redflat.widget.tasklist.filter.currenttags
+	local allscreen = redflat.widget.tasklist.filter.allscreen
+	local laybox = redflat.widget.layoutbox
 
 	-- key functions
 	local focus_switch = function(i)
@@ -433,9 +429,9 @@ do
 
 	-- Custom widget keys
 	--------------------------------------------------------------------------------
-	floatwidget.appswitcher.keys.next  = { "a", "A", "Tab" }
-	floatwidget.appswitcher.keys.prev  = { "q", "Q", }
-	floatwidget.appswitcher.keys.close = { "Super_L" }
+	redflat.float.appswitcher.keys.next  = { "a", "A", "Tab" }
+	redflat.float.appswitcher.keys.prev  = { "q", "Q", }
+	redflat.float.appswitcher.keys.close = { "Super_L" }
 
 	-- Global keys
 	--------------------------------------------------------------------------------
@@ -481,7 +477,7 @@ do
 		},
 		{ comment = "Widgets" },
 		{
-			args = { { modkey,           }, "x", function() floatwidget.top:show() end },
+			args = { { modkey,           }, "x", function() redflat.float.top:show() end },
 			comment = "Show top widget"
 		},
 		{
@@ -493,19 +489,19 @@ do
 			comment = "Open layout menu"
 		},
 		{
-			args = { { modkey            }, "p", function () floatwidget.prompt:run() end },
+			args = { { modkey            }, "p", function () redflat.float.prompt:run() end },
 			comment = "Run prompt"
 		},
 		{
-			args = { { modkey            }, "r", function() floatwidget.apprunner:show() end },
+			args = { { modkey            }, "r", function() redflat.float.apprunner:show() end },
 			comment = "Allication launcher"
 		},
 		{
-			args = { { modkey,           }, "i", function() redwidget.minitray:toggle() end },
+			args = { { modkey,           }, "i", function() redflat.widget.minitray:toggle() end },
 			comment = "Show minitray"
 		},
 		{
-			args = { { modkey,           }, "z", function() floatwidget.hotkeys:show() end },
+			args = { { modkey,           }, "z", function() redflat.float.hotkeys:show() end },
 			comment = "Show hotkeys helper"
 		},
 		{ comment = "Application switcher" },
@@ -599,7 +595,7 @@ do
 	}
 
 	-- format raw keys to key objects
-	globalkeys = redutil.table.join_raw(raw_globalkeys, awful.key)
+	globalkeys = redflat.util.table.join_raw(raw_globalkeys, awful.key)
 
 	-- Client keys
 	--------------------------------------------------------------------------------
@@ -630,13 +626,13 @@ do
 			comment = "Minimize client"
 		},
 		{
-			args = { { modkey,           }, "m",      function (c) c.maximized = not c.maximized    end },
+			args = { { modkey,           }, "m", function (c) c.maximized = not c.maximized end },
 			comment = "Maximize client"
 		}
 	}
 
 	-- format raw keys to key objects
-	clientkeys = redutil.table.join_raw(raw_clientkeys, awful.key)
+	clientkeys = redflat.util.table.join_raw(raw_clientkeys, awful.key)
 
 	-- Bind all key numbers to tags
 	--------------------------------------------------------------------------------
@@ -678,7 +674,7 @@ do
 
 	-- Hotkeys helper setup
 	--------------------------------------------------------------------------------
-	floatwidget.hotkeys.raw_keys = awful.util.table.join(raw_globalkeys, raw_clientkeys, num_tips)
+	redflat.float.hotkeys.raw_keys = awful.util.table.join(raw_globalkeys, raw_clientkeys, num_tips)
 
 end
 
@@ -758,9 +754,9 @@ do
 
 	local function on_maximize(c)
 		if c.maximized_vertical then
-			redtitlebar.hide(c)
+			redflat.titlebar.hide(c)
 		else
-			redtitlebar.show(c)
+			redflat.titlebar.show(c)
 		end
 	end
 
@@ -785,20 +781,20 @@ do
 
 		-- Add focus icon
 		------------------------------------------------------------
-		local focus_layout = wibox.layout.constraint(redtitlebar.widget.focused(c), "exact", nil, nil)
+		local focus_layout = wibox.layout.constraint(redflat.titlebar.widget.focused(c), "exact", nil, nil)
 		layout:set_middle(focus_layout)
 
 		-- Add window state icons
 		------------------------------------------------------------
 		local state_layout = wibox.layout.fixed.horizontal()
-		state_layout:add(ticon(c, redtitlebar.widget.floating, icon_size, icon_gap))
-		state_layout:add(ticon(c, redtitlebar.widget.sticky,   icon_size, icon_gap))
-		state_layout:add(ticon(c, redtitlebar.widget.ontop,    icon_size, icon_gap))
+		state_layout:add(ticon(c, redflat.titlebar.widget.floating, icon_size, icon_gap))
+		state_layout:add(ticon(c, redflat.titlebar.widget.sticky,   icon_size, icon_gap))
+		state_layout:add(ticon(c, redflat.titlebar.widget.ontop,    icon_size, icon_gap))
 		layout:set_right(state_layout)
 
 		-- Create titlebar
 		------------------------------------------------------------
-		redtitlebar(c, { size = height }):set_widget(wibox.layout.margin(layout, unpack(border_margin)))
+		redflat.titlebar(c, { size = height }):set_widget(wibox.layout.margin(layout, unpack(border_margin)))
 
 		-- Mouse actions setup
 		------------------------------------------------------------
@@ -809,7 +805,7 @@ do
 
 		-- Hide titlebar when window maximized
 		------------------------------------------------------------
-		if c.maximized_vertical then redtitlebar.hide(c) end
+		if c.maximized_vertical then redflat.titlebar.hide(c) end
 		c:connect_signal("property::maximized_vertical", on_maximize)
 	end
 end
@@ -866,7 +862,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 --------------------------------------------------------------------------------
 awesome.connect_signal("exit",
 	function()
-		redtitlebar.hide_all()
+		redflat.titlebar.hide_all()
 	end
 )
 

@@ -36,7 +36,8 @@ local function default_style()
 	local style = {
 		timeout       = 2,
 		screen_gap    = 0,
-		geometry      = { width = 460, height = 380, x =1440, y = 630 },
+		screen_pos    = {},
+		geometry      = { width = 460, height = 380 },
 		border_margin = { 10, 10, 10, 10 },
 		labels_width  = { 30, 70, 120 },
 		title_height  = 48,
@@ -166,6 +167,8 @@ function top:init()
 	local style = default_style()
 	local sort_function, title, toplist
 
+	self.style = style
+
 	-- Select process function
 	--------------------------------------------------------------------------------
 	local function select_item(i)
@@ -282,7 +285,6 @@ function top:init()
 
 	self.wibox:set_widget(list_layout)
 	self.wibox:geometry(style.geometry)
-	redutil.placement.no_offscreen(self.wibox, style.screen_gap)
 
 	-- Update timer
 	--------------------------------------------------------------------------------
@@ -312,6 +314,8 @@ function top:show(srt)
 	else
 		if srt then self:set_sort(srt) end
 		self:update_list()
+		if self.style.screen_pos[mouse.screen] then self.wibox:geometry(self.style.screen_pos[mouse.screen]) end
+		redutil.placement.no_offscreen(self.wibox, self.style.screen_gap, screen[mouse.screen].workarea)
 		self.wibox.visible = true
 		self.update_timer:start()
 		awful.keygrabber.run(self.keygrabber)

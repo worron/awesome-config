@@ -64,7 +64,6 @@ function floatprompt:init()
 
 	self.wibox:set_widget(wibox.layout.margin(self.decorated_widget, unpack(style.margin)))
 	self.wibox:geometry(style.geometry)
-	redutil.placement.centered(self.wibox)
 end
 
 -- Run method for prompt widget
@@ -72,6 +71,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 function floatprompt:run()
 	if not self.wibox then self:init() end
+	redutil.placement.centered(self.wibox, nil, screen[mouse.screen].workarea)
 	self.wibox.visible = true
 	self.info = false
 	return awful.prompt.run(

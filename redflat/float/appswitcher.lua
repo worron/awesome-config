@@ -194,9 +194,8 @@ function appswitcher:init()
 			iscf = (corrected_height - expen_v) / (style.wibox_height - expen_v)
 		end
 
-		-- set wibox size and placement
+		-- set wibox size
 		self.wibox:geometry({ width = w, height = h })
-		redutil.placement.centered(self.wibox)
 	end
 
 	-- Create custom widget to draw previews
@@ -331,7 +330,8 @@ function appswitcher:show(args)
 	cache.titlebar = redtitlebar.hide_all(clients)
 	cache.args = args
 	self.size_correction(#clients)
-	self.wibox.visible = not self.wibox.visible
+	redutil.placement.centered(self.wibox, nil, screen[mouse.screen].workarea)
+	self.wibox.visible = true
 	self.update_timer:start()
 	awful.keygrabber.run(self.keygrabber)
 

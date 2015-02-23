@@ -33,8 +33,9 @@ local actions = { "PlayPause", "Next", "Prev" }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		geometry       = { width = 520, height = 150, x = 580, y = 864},
+		geometry       = { width = 520, height = 150 },
 		screen_gap     = 0,
+		screen_pos     = {},
 		border_gap     = { 20, 20, 20, 20 },
 		elements_gap   = { 20, 0, 0, 0 },
 		volume_gap     = { 0, 0, 0, 3 },
@@ -83,6 +84,7 @@ function exaile:init()
 	local show_album = false
 
 	self.info = { artist = "Unknown", album = "Unknown" }
+	self.style = style
 
 	-- Construct layouts
 	--------------------------------------------------------------------------------
@@ -180,7 +182,6 @@ function exaile:init()
 
 	self.wibox:set_widget(wibox.layout.margin(area, unpack(style.border_gap)))
 	self.wibox:geometry(style.geometry)
-	redutil.placement.no_offscreen(self.wibox, style.screen_gap)
 
 	-- Update info functions
 	--------------------------------------------------------------------------------
@@ -270,6 +271,8 @@ function exaile:show()
 
 	if not self.wibox.visible then
 		self:update()
+		if self.style.screen_pos[mouse.screen] then self.wibox:geometry(self.style.screen_pos[mouse.screen]) end
+		redutil.placement.no_offscreen(self.wibox, self.style.screen_gap, screen[mouse.screen].workarea)
 		self.wibox.visible = true
 		if last.status == "Playing" then self.updatetimer:start() end
 	else
