@@ -34,18 +34,13 @@ local function size_correction(c, geometry, restore)
 end
 
 -- Fit client into grid
-local function fit(g, wa, cell)
+local function fit_cell(g, cell)
 	local g = {
 		x = round(g.x, cell.x),
 		y = round(g.y, cell.y),
 		width = round(g.width, cell.x),
 		height = round(g.height, cell.y)
 	}
-
-	if g.x < wa.x then g.x = wa.x end
-	if g.y < wa.y then g.y = wa.y end
-	if g.x + g.width > wa.x + wa.width then g.width = wa.x + wa.width - g.x end
-	if g.y + g.height > wa.y + wa.height then g.height = wa.y + wa.height - g.y end
 
 	return g
 end
@@ -55,7 +50,7 @@ end
 function grid.arrange(p)
 
     -- theme vars
-	local cellnum = beautiful.cellnum or { x = 100, y = 60, gap = 0 }
+	local cellnum = beautiful.cellnum or { x = 100, y = 60 }
 
     -- aliases
     local wa = p.workarea
@@ -65,24 +60,36 @@ function grid.arrange(p)
     if #cls == 0 then return end
 
 	-- calculate cell
-	local cell = { x = wa.width / cellnum.x, y = wa.height / cellnum.y }
-
-    -- workarea size correction
-    wa.width  = wa.width -  2 * cell.x * cellnum.gap
-    wa.height = wa.height - 2 * cell.y * cellnum.gap
-    wa.x = wa.x + cell.x * cellnum.gap
-    wa.y = wa.y + cell.y * cellnum.gap
+	grid.cell = {
+		x = wa.width  / cellnum.x,
+		y = wa.height / cellnum.y
+	}
 
 	-- tile
 	for i, c in ipairs(cls) do
 		local g = c:geometry()
 
 		size_correction(c, g, true)
-		g = fit(g, wa, cell)
+		g = fit_cell(g, grid.cell)
 		size_correction(c, g, false)
 
 		c:geometry(g)
 	end
+end
+
+-- Mouse moving function
+-----------------------------------------------------------------------------------------------------------------------
+function grid.mouse_move_handler(c, _mouse, dist)
+	local g = c:geometry()
+
+	for _, crd in ipairs({ "x", "y" }) do
+		local d = _mouse[crd] - g[crd] - dist[crd]
+		if math.abs(d) >= grid.cell[crd] then
+			g[crd] = g[crd] + d
+		end
+	end
+
+	c:geometry(g)
 end
 
 -- End

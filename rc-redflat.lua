@@ -81,6 +81,7 @@ local layouts = {
 	redflat.layout.grid,
 
 	--awful.layout.suit.fair,
+	--awful.layout.suit.tile.left,
 	--awful.layout.suit.fair.horizontal,
 	--awful.layout.suit.spiral,
 	--awful.layout.suit.spiral.dwindle,
@@ -88,6 +89,13 @@ local layouts = {
 	--lain.layout.uselesstile.left,
 	--lain.layout.uselessfair
 }
+
+-- Set moving handlers for user layouts
+local red_move_handler = redflat.layout.common.mouse.move_handler
+red_move_handler[lain.layout.uselessfair]        = redflat.layout.common.mouse.handler.move.tile
+red_move_handler[lain.layout.uselesstile]        = redflat.layout.common.mouse.handler.move.tile
+red_move_handler[lain.layout.uselesstile.left]   = redflat.layout.common.mouse.handler.move.tile
+red_move_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.mouse.handler.move.tile
 
 -- Tags
 -----------------------------------------------------------------------------------------------------------------------
@@ -989,7 +997,8 @@ root.keys(globalkeys)
 -----------------------------------------------------------------------------------------------------------------------
 clientbuttons = awful.util.table.join(
 	awful.button({                   }, 1, function (c) client.focus = c; c:raise() end),
-	awful.button({                   }, 2, awful.mouse.client.move),
+	--awful.button({                   }, 2, awful.mouse.client.move),
+	awful.button({                   }, 2, redflat.layout.common.mouse.move),
 	awful.button({ modkey            }, 3, awful.mouse.client.resize),
 	awful.button({                   }, 8, function(c) c:kill() end)
 )
