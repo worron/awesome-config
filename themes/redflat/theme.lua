@@ -69,6 +69,9 @@ theme.border_width        = 4  -- window border width
 theme.useless_gap_width   = 12 -- Lain useless gap
 theme.global_border_width = 0  -- Lain global border gap
 
+-- grid layout prop
+theme.cellnum = { x = 50, y = 31, gap = 0.5 }
+
 -- Shared icons
 --------------------------------------------------------------------------------
 theme.icon = {

@@ -11,5 +11,6 @@ return {
 	gauge = require("redflat.gauge"),
 	desktop = require("redflat.desktop"),
 	float = require("redflat.float"),
+	layout = require("redflat.layout"),
 	asyncshell = require("redflat.asyncshell")
 }
