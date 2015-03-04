@@ -70,7 +70,7 @@ theme.useless_gap_width   = 12 -- Lain useless gap
 theme.global_border_width = 0  -- Lain global border gap
 
 -- grid layout prop
-theme.cellnum = { x = 100, y = 62, gap = 0 }
+theme.cellnum = { x = 50, y = 31 }
 
 -- Shared icons
 --------------------------------------------------------------------------------
