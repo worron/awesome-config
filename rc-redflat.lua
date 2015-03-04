@@ -71,14 +71,13 @@ local modkey = "Mod4"
 -----------------------------------------------------------------------------------------------------------------------
 local layouts = {
 	awful.layout.suit.floating,
+	redflat.layout.grid,
 	lain.layout.uselesstile,
 	lain.layout.uselesstile.left,
 	lain.layout.uselesstile.bottom,
 	lain.layout.uselessfair,
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
-
-	redflat.layout.grid,
 
 	--awful.layout.suit.fair,
 	--awful.layout.suit.tile,
@@ -108,7 +107,7 @@ red_resize_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.mouse
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
 	names  = { "Main", "Full", "Edit", "Read", "Free" },
-	layout = { layouts[5], layouts[6], layouts[6], layouts[5], layouts[1] },
+	layout = { layouts[6], layouts[7], layouts[7], layouts[6], layouts[1] },
 }
 
 for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
@@ -648,9 +647,9 @@ do
 	local laybox = redflat.widget.layoutbox
 
 	-- key functions
-	local focus_switch = function(i)
-		return function ()
-			awful.client.focus.byidx(i)
+	local focus_switch_byd = function(dir)
+		return function()
+			awful.client.focus.bydirection(dir)
 			if client.focus then client.focus:raise() end
 		end
 	end
@@ -719,12 +718,20 @@ do
 		},
 		{ comment = "Window focus" },
 		{
-			args = { { modkey,           }, "j", focus_switch( 1), },
-			comment = "Focus next client"
+			args = { { modkey,           }, "Right", focus_switch_byd("right"), },
+			comment = "Focus right client"
 		},
 		{
-			args = { { modkey,           }, "k", focus_switch(-1), },
-			comment = "Focus previous client"
+			args = { { modkey,           }, "Left", focus_switch_byd("left"), },
+			comment = "Focus left client"
+		},
+		{
+			args = { { modkey,           }, "Up", focus_switch_byd("up"), },
+			comment = "Focus client above"
+		},
+		{
+			args = { { modkey,           }, "Down", focus_switch_byd("down"), },
+			comment = "Focus client below"
 		},
 		{
 			args = { { modkey,           }, "u", awful.client.urgent.jumpto, },
@@ -736,11 +743,11 @@ do
 		},
 		{ comment = "Tag navigation" },
 		{
-			args = { { modkey,           }, "Left", awful.tag.viewprev },
+			args = { { modkey, "Shift" }, "Left", awful.tag.viewprev },
 			comment = "View previous tag"
 		},
 		{
-			args = { { modkey,           }, "Right", awful.tag.viewnext },
+			args = { { modkey, "Shift" }, "Right", awful.tag.viewnext },
 			comment = "View next tag"
 		},
 		{
@@ -842,12 +849,20 @@ do
 		},
 		{ comment = "Window manipulation" },
 		{
-			args = { { modkey, "Shift"   }, "j", function () awful.client.swap.byidx(1) end },
-			comment = "Switch client with next client"
+			args = { { modkey, "Control" }, "Left", function () awful.client.swap.bydirection("left") end },
+			comment = "Swap with left client"
 		},
 		{
-			args = { { modkey, "Shift"   }, "k", function () awful.client.swap.byidx(-1) end },
-			comment = "Switch client with previous client"
+			args = { { modkey, "Control" }, "Right", function () awful.client.swap.bydirection("right") end },
+			comment = "Swap with right client"
+		},
+		{
+			args = { { modkey, "Control" }, "Up", function () awful.client.swap.bydirection("up") end },
+			comment = "Swap with client above"
+		},
+		{
+			args = { { modkey, "Control" }, "Down", function () awful.client.swap.bydirection("down") end },
+			comment = "Swap with client below"
 		},
 		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
@@ -1004,9 +1019,7 @@ root.keys(globalkeys)
 -----------------------------------------------------------------------------------------------------------------------
 clientbuttons = awful.util.table.join(
 	awful.button({                   }, 1, function (c) client.focus = c; c:raise() end),
-	--awful.button({                   }, 2, awful.mouse.client.move),
 	awful.button({                   }, 2, redflat.layout.common.mouse.move),
-	--awful.button({ modkey            }, 3, awful.mouse.client.resize),
 	awful.button({ modkey            }, 3, redflat.layout.common.mouse.resize),
 	awful.button({                   }, 8, function(c) c:kill() end)
 )
@@ -1120,8 +1133,8 @@ do
 		-- Mouse actions setup
 		------------------------------------------------------------
 		layout:buttons(awful.util.table.join(
-			awful.button({}, 1, titlebar_action(c, awful.mouse.client.move)),
-			awful.button({}, 3, titlebar_action(c, awful.mouse.client.resize))
+			awful.button({}, 1, titlebar_action(c, redflat.layout.common.mouse.move)),
+			awful.button({}, 3, titlebar_action(c, redflat.layout.common.mouse.resize))
 		))
 
 		-- Hide titlebar when window maximized
@@ -1161,7 +1174,7 @@ client.connect_signal("manage",
 		if not startup then
 			awful.client.setslave(c)
 			if not c.size_hints.user_position and not c.size_hints.program_position then
-				awful.placement.no_overlap(c)
+				awful.placement.no_overlap(c, { awful.layout.suit.floating, redflat.layout.grid })
 				awful.placement.no_offscreen(c)
 			end
 		end
