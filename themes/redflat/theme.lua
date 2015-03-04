@@ -69,6 +69,9 @@ theme.border_width        = 4  -- window border width
 theme.useless_gap_width   = 12 -- Lain useless gap
 theme.global_border_width = 0  -- Lain global border gap
 
+-- grid layout prop
+theme.cellnum = { x = 50, y = 31 }
+
 -- Shared icons
 --------------------------------------------------------------------------------
 theme.icon = {
@@ -392,6 +395,7 @@ theme.widget.layoutbox.icon = {
 	uselesstile       = theme.path .. "/layouts/tile.svg",
 	uselesstiletop    = theme.path .. "/layouts/tiletop.svg",
 	uselessfair       = theme.path .. "/layouts/fair.svg",
+	grid              = theme.path .. "/layouts/grid.svg",
 	unknown           = theme.path .. "/layouts/unknown.svg",
 }
 
@@ -407,6 +411,7 @@ theme.widget.layoutbox.name_alias = {
 	floating          = "Floating",
 	fullscreen        = "Fullscreen",
 	max               = "Maximized",
+	grid              = "Grid",
 	uselesstile       = "Right Tile",
 	uselessfair       = "Fair Tile",
 	uselesstileleft   = "Left Tile",
