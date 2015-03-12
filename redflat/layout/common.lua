@@ -40,11 +40,11 @@ function common.mouse.handler.move.tile(c)
 	end
 end
 
-function get_move_handler(lay)
+local function get_move_handler(lay)
 	return lay.mouse_move_handler or common.mouse.move_handler[lay]
 end
 
-function get_resize_handler(lay)
+local function get_resize_handler(lay)
 	return lay.mouse_resize_handler or common.mouse.resize_handler[lay]
 end
 

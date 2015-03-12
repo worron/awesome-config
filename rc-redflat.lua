@@ -713,6 +713,10 @@ do
 			comment = "Spawn terminal emulator"
 		},
 		{
+			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler:run() end },
+			comment = "Test"
+		},
+		{
 			args = { { modkey, "Control" }, "r", awesome.restart },
 			comment = "Restart awesome"
 		},
@@ -784,7 +788,7 @@ do
 			comment = "Show exaile widget"
 		},
 		{
-			args = { { modkey,           }, "z", function() redflat.float.hotkeys:show() end },
+			args = { { modkey,           }, "F1", function() redflat.float.hotkeys:show() end },
 			comment = "Show hotkeys helper"
 		},
 		{
@@ -1214,6 +1218,7 @@ if not stamp or (os.time() - tonumber(stamp)) > 5 then
 	awful.util.spawn_with_shell("/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
 	awful.util.spawn_with_shell("nm-applet")
 	awful.util.spawn_with_shell("bash /home/vorron/Documents/scripts/tmpfs_firefox.sh")
+	awful.util.spawn_with_shell("xrdb -merge /home/vorron/.Xdefaults")
 
 	-- keyboard layouts
 	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")

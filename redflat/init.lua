@@ -12,5 +12,6 @@ return {
 	desktop = require("redflat.desktop"),
 	float = require("redflat.float"),
 	layout = require("redflat.layout"),
+	service = require("redflat.service"),
 	asyncshell = require("redflat.asyncshell")
 }
