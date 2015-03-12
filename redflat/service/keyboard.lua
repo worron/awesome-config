@@ -8,6 +8,7 @@
 -----------------------------------------------------------------------------------------------------------------------
 local awful = require("awful")
 local redutil = require("redflat.util")
+local common = require("redflat.layout.common")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -18,7 +19,7 @@ keyboard.ignored = { "dock", "splash", "desktop"}
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
 function get_handler(lay)
-	return lay.key_handler or keyboard.handler_list[lay]
+	return lay.key_handler or common.keyboard.key_handler[lay]
 end
 
 -- Start key handler

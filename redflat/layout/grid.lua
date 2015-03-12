@@ -293,17 +293,35 @@ end
 
 -- Mouse moving function
 -----------------------------------------------------------------------------------------------------------------------
-function grid.mouse_move_handler(c, _mouse, dist)
-	local g = c:geometry()
+function grid.mouse_move_handler(c)
+	local orig = c:geometry()
+	local m_c = mouse.coords()
+	local dist = {
+		x = m_c.x - orig.x,
+		y = m_c.y - orig.y
+	}
 
-	for _, crd in ipairs({ "x", "y" }) do
-		local d = _mouse[crd] - g[crd] - dist[crd]
-		if math.abs(d) >= data.cell[crd] then
-			g[crd] = g[crd] + d
-		end
-	end
+	mousegrabber.run(
+		function (_mouse)
+			for k, v in ipairs(_mouse.buttons) do
+				if v then
+					local g = c:geometry()
 
-	c:geometry(g)
+					for _, crd in ipairs({ "x", "y" }) do
+						local d = _mouse[crd] - g[crd] - dist[crd]
+						if math.abs(d) >= data.cell[crd] then
+							g[crd] = g[crd] + d
+						end
+					end
+
+					c:geometry(g)
+					return true
+				end
+			end
+			return false
+		end,
+		"fleur"
+	)
 end
 
 -- Mouse resizing function

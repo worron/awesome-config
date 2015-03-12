@@ -18,37 +18,61 @@ local math = math
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
-local common = { mouse = {} }
+local common = { mouse = {}, keyboard = {} }
 
+common.mouse.handler = { move = {}, resize = {} }
+common.keyboard.handler = {}
 common.mouse.snap = 10
 common.mouse.ignored = { "dock", "splash", "desktop"}
 
--- Support functions
------------------------------------------------------------------------------------------------------------------------
-common.mouse.handler = { move = {}, resize = {} }
 
-function common.mouse.handler.move.floating(c, _mouse, dist)
-	local x = _mouse.x - dist.x
-	local y = _mouse.y - dist.y
-	c:geometry(awful.mouse.client.snap(c, common.mouse.snap, x, y, c.maximized_horizontal, c.maximized_vertical))
+-- Shared movement handlers
+-----------------------------------------------------------------------------------------------------------------------
+function common.mouse.handler.move.floating(c)
+	local orig = c:geometry()
+	local m_c = mouse.coords()
+    local fixed_x = c.maximized_horizontal
+    local fixed_y = c.maximized_vertical
+	local dist = {
+		x = m_c.x - orig.x,
+		y = m_c.y - orig.y
+	}
+
+	mousegrabber.run(
+		function (_mouse)
+			for k, v in ipairs(_mouse.buttons) do
+				if v then
+					local x = _mouse.x - dist.x
+					local y = _mouse.y - dist.y
+					c:geometry(awful.mouse.client.snap(c, common.mouse.snap, x, y, fixed_x, fixed_y))
+					return true
+				end
+			end
+			return false
+		end,
+		"fleur"
+	)
 end
 
 function common.mouse.handler.move.tile(c)
-	local c_u_m = awful.mouse.client_under_pointer()
-	if c_u_m and not awful.client.floating.get(c_u_m) then
-		if c_u_m ~= c then c:swap(c_u_m) end
-	end
+	mousegrabber.run(
+		function (_mouse)
+			for k, v in ipairs(_mouse.buttons) do
+				if v then
+					local c_u_m = awful.mouse.client_under_pointer()
+					if c_u_m and not awful.client.floating.get(c_u_m) then
+						if c_u_m ~= c then c:swap(c_u_m) end
+					end
+					return true
+				end
+			end
+			return false
+		end,
+		"fleur"
+	)
 end
 
-local function get_move_handler(lay)
-	return lay.mouse_move_handler or common.mouse.move_handler[lay]
-end
-
-local function get_resize_handler(lay)
-	return lay.mouse_resize_handler or common.mouse.resize_handler[lay]
-end
-
--- Resize handlers
+-- Shared resizing handlers
 -- !!! Temporary code !!!
 -- !!! remove after awesome github #56 'Layouts can define their own resizing handler' release !!!
 -----------------------------------------------------------------------------------------------------------------------
@@ -266,6 +290,8 @@ common.mouse.resize_handler[layout.suit.tile.right]  = common.mouse.handler.resi
 common.mouse.resize_handler[layout.suit.tile.left]   = common.mouse.handler.resize.tile.left
 common.mouse.resize_handler[layout.suit.tile.top]    = common.mouse.handler.resize.tile.top
 common.mouse.resize_handler[layout.suit.tile.bottom] = common.mouse.handler.resize.tile.bottom
+
+common.keyboard.key_handler = {}
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------

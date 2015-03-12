@@ -10,10 +10,6 @@ local awful = require("awful")
 local redutil = require("redflat.util")
 local common = require("redflat.layout.common")
 
-local ipairs = ipairs
-local math = math
-
-
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
 local amouse = { handler = {}, handler_list = {} }
@@ -40,31 +36,14 @@ function amouse.move(c)
 		return
 	end
 
-	local orig = c:geometry()
-	local m_c = mouse.coords()
-	local dist = {
-		x = m_c.x - orig.x,
-		y = m_c.y - orig.y
-	}
+	local lay = awful.layout.get(c.screen)
+	local handler = get_move_handler(lay)
 
-	mousegrabber.run(
-		function (_mouse)
-			for k, v in ipairs(_mouse.buttons) do
-				if v then
-					local lay = awful.layout.get(c.screen)
-					local handler = get_move_handler(lay)
-					if awful.client.floating.get(c) then
-						common.mouse.handler.move.floating(c, _mouse, dist)
-					elseif handler then
-						handler(c, _mouse, dist)
-					end
-					return true
-				end
-			end
-			return false
-		end,
-		"fleur"
-	)
+	if awful.client.floating.get(c) then
+		return common.mouse.handler.move.floating(c)
+	elseif handler then
+		return handler(c)
+	end
 end
 
 -- Resize a client
