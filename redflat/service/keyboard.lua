@@ -21,9 +21,9 @@ function get_handler(lay)
 	return lay.key_handler or keyboard.handler_list[lay]
 end
 
--- Start mover
+-- Start key handler
 -----------------------------------------------------------------------------------------------------------------------
-function keyboard.handler:run(c)
+function keyboard.handler(c)
 	local c = c or client.focus
 
 	if not c or c.fullscreen or awful.util.table.hasitem(keyboard.ignored, c.type) then

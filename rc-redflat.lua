@@ -713,7 +713,7 @@ do
 			comment = "Spawn terminal emulator"
 		},
 		{
-			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler:run() end },
+			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler() end },
 			comment = "Test"
 		},
 		{
@@ -1023,8 +1023,8 @@ root.keys(globalkeys)
 -----------------------------------------------------------------------------------------------------------------------
 clientbuttons = awful.util.table.join(
 	awful.button({                   }, 1, function (c) client.focus = c; c:raise() end),
-	awful.button({                   }, 2, redflat.layout.common.mouse.move),
-	awful.button({ modkey            }, 3, redflat.layout.common.mouse.resize),
+	awful.button({                   }, 2, redflat.service.mouse.move),
+	awful.button({ modkey            }, 3, redflat.service.mouse.resize),
 	awful.button({                   }, 8, function(c) c:kill() end)
 )
 
@@ -1137,8 +1137,8 @@ do
 		-- Mouse actions setup
 		------------------------------------------------------------
 		layout:buttons(awful.util.table.join(
-			awful.button({}, 1, titlebar_action(c, redflat.layout.common.mouse.move)),
-			awful.button({}, 3, titlebar_action(c, redflat.layout.common.mouse.resize))
+			awful.button({}, 1, titlebar_action(c, redflat.service.mouse.move)),
+			awful.button({}, 3, titlebar_action(c, redflat.service.mouse.resize))
 		))
 
 		-- Hide titlebar when window maximized

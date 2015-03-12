@@ -48,6 +48,7 @@ local function get_resize_handler(lay)
 	return lay.mouse_resize_handler or common.mouse.resize_handler[lay]
 end
 
+-- Resize handlers
 -- !!! Temporary code !!!
 -- !!! remove after awesome github #56 'Layouts can define their own resizing handler' release !!!
 -----------------------------------------------------------------------------------------------------------------------
@@ -265,66 +266,6 @@ common.mouse.resize_handler[layout.suit.tile.right]  = common.mouse.handler.resi
 common.mouse.resize_handler[layout.suit.tile.left]   = common.mouse.handler.resize.tile.left
 common.mouse.resize_handler[layout.suit.tile.top]    = common.mouse.handler.resize.tile.top
 common.mouse.resize_handler[layout.suit.tile.bottom] = common.mouse.handler.resize.tile.bottom
-
-
--- Move a client
------------------------------------------------------------------------------------------------------------------------
--- @param c The client to move, or the focused one if nil.
--- @param snap The pixel to snap clients.
--- !!! Multi monitor moving (temporary?) removed !!!
-function common.mouse.move(c)
-	local c = c or client.focus
-
-	if not c or c.fullscreen or awful.util.table.hasitem(common.mouse.ignored, c.type) then
-		return
-	end
-
-	local orig = c:geometry()
-	local m_c = mouse.coords()
-	local dist = {
-		x = m_c.x - orig.x,
-		y = m_c.y - orig.y
-	}
-
-	mousegrabber.run(
-		function (_mouse)
-			for k, v in ipairs(_mouse.buttons) do
-				if v then
-					local lay = layout.get(c.screen)
-					local handler = get_move_handler(lay)
-					if awful.client.floating.get(c) then
-						common.mouse.handler.move.floating(c, _mouse, dist)
-					elseif handler then
-						handler(c, _mouse, dist)
-					end
-					return true
-				end
-			end
-			return false
-		end,
-		"fleur"
-	)
-end
-
--- Resize a client
------------------------------------------------------------------------------------------------------------------------
-function common.mouse.resize(c)
-	local c = c or client.focus
-
-	if not c or c.fullscreen or awful.util.table.hasitem(common.mouse.ignored, c.type) then
-		return
-	end
-
-	local lay = layout.get(c.screen)
-	local corner, x, y = awful.mouse.client.corner(c, corner)
-	local handler = get_resize_handler(lay)
-
-	if awful.client.floating.get(c) then
-		return common.mouse.handler.resize.floating(c, corner, x, y)
-	elseif handler then
-		return handler(c, corner, x, y)
-	end
-end
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------
