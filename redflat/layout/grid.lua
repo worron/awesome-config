@@ -252,7 +252,9 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 data.keygrabber = function(mod, key, event)
 	if event == "press" then return false
-	elseif hasitem(grid.keys.exit,  key) then awful.keygrabber.stop(data.keygrabber)
+	elseif hasitem(grid.keys.exit,  key) then
+		if data.on_close then data.on_close() end
+		awful.keygrabber.stop(data.keygrabber)
 	elseif hasitem(grid.keys.move_up, key) then move_to(data, "up", mod)
 	elseif hasitem(grid.keys.move_down, key) then move_to(data, "down", mod)
 	elseif hasitem(grid.keys.move_left, key) then move_to(data, "left", mod)
@@ -383,11 +385,12 @@ end
 
 -- Keyboard handler function
 -----------------------------------------------------------------------------------------------------------------------
-function grid.key_handler(c)
+function grid.key_handler(c, on_close)
     local wa = screen[c.screen].workarea
     local cls = awful.client.visible(c.screen)
 
 	data.c = c or client.focus
+	data.on_close = on_close
 	data.rail = { x = { wa.x, wa.x + wa.width }, y = { wa.y, wa.y + wa.height } }
 	table.remove(cls, hasitem(cls, c))
 

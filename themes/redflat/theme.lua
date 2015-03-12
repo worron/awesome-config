@@ -198,6 +198,18 @@ theme.naughty_preset.critical = {
 	border_color = theme.color.main
 }
 
+-- Service utils config
+-----------------------------------------------------------------------------------------------------------------------
+theme.service = {}
+theme.service.kyboard = {
+	notify = {
+		geometry     = { width = 280, height = 60 },
+		border_width = 2,
+		font         = theme.font_title,
+		color        = theme.color
+	}
+}
+
 
 -- Menu config
 -----------------------------------------------------------------------------------------------------------------------
