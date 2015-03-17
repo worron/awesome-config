@@ -112,7 +112,7 @@ red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
 	names  = { "Main", "Full", "Edit", "Read", "Free" },
-	layout = { layouts[6], layouts[7], layouts[7], layouts[6], layouts[1] },
+	layout = { layouts[6], layouts[7], layouts[7], layouts[6], layouts[2] },
 }
 
 for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
@@ -718,12 +718,12 @@ do
 			comment = "Spawn terminal emulator"
 		},
 		{
-			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler() end },
-			comment = "Test"
-		},
-		{
 			args = { { modkey, "Control" }, "r", awesome.restart },
 			comment = "Restart awesome"
+		},
+		{
+			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler() end },
+			comment = "Window control mode"
 		},
 		{ comment = "Window focus" },
 		{
@@ -858,22 +858,6 @@ do
 		},
 		{ comment = "Window manipulation" },
 		{
-			args = { { modkey, "Control" }, "Left", function () awful.client.swap.bydirection("left") end },
-			comment = "Swap with left client"
-		},
-		{
-			args = { { modkey, "Control" }, "Right", function () awful.client.swap.bydirection("right") end },
-			comment = "Swap with right client"
-		},
-		{
-			args = { { modkey, "Control" }, "Up", function () awful.client.swap.bydirection("up") end },
-			comment = "Swap with client above"
-		},
-		{
-			args = { { modkey, "Control" }, "Down", function () awful.client.swap.bydirection("down") end },
-			comment = "Swap with client below"
-		},
-		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
 			comment = "Swap focused client with master"
 		},
@@ -895,30 +879,14 @@ do
 		},
 		{ comment = "Layouts" },
 		{
-			args = { { modkey,           }, "space", function () awful.layout.inc(layouts, 1) end },
+			args = { { modkey, "Control" }, "Right", function () awful.layout.inc(layouts, 1) end },
 			comment = "Switch to next layout"
 		},
 		{
-			args = { { modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, - 1) end },
+			args = { { modkey, "Control" }, "Left", function () awful.layout.inc(layouts, - 1) end },
 			comment = "Switch to previous layout"
 		},
 		{ comment = "Tile control" },
-		{
-			args = { { modkey,           }, "l", function () awful.tag.incmwfact(0.05) end },
-			comment = "Increase master width factor by 5%"
-		},
-		{
-			args = { { modkey,           }, "h", function () awful.tag.incmwfact(-0.05) end },
-			comment = "Decrease master width factor by 5%"
-		},
-		{
-			args = { { modkey, "Control" }, "j", function () awful.client.incwfact(0.05) end },
-			comment = "Increase window height factor by 5%"
-		},
-		{
-			args = { { modkey, "Control" }, "k", function () awful.client.incwfact(-0.05) end },
-			comment = "Decrease window height factor by 5%"
-		},
 		{
 			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
 			comment = "Increase number of master windows by 1"
