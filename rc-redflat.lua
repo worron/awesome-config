@@ -71,6 +71,7 @@ local modkey = "Mod4"
 -----------------------------------------------------------------------------------------------------------------------
 local layouts = {
 	awful.layout.suit.floating,
+	redflat.layout.grid,
 	lain.layout.uselesstile,
 	lain.layout.uselesstile.left,
 	lain.layout.uselesstile.bottom,
@@ -79,6 +80,7 @@ local layouts = {
 	awful.layout.suit.max.fullscreen,
 
 	--awful.layout.suit.fair,
+	--awful.layout.suit.tile,
 	--awful.layout.suit.fair.horizontal,
 	--awful.layout.suit.spiral,
 	--awful.layout.suit.spiral.dwindle,
@@ -87,11 +89,30 @@ local layouts = {
 	--lain.layout.uselessfair
 }
 
+-- Set handlers for user layouts
+local red_move_handler = redflat.layout.common.mouse.move_handler
+local red_resize_handler = redflat.layout.common.mouse.resize_handler
+local red_key_handler = redflat.layout.common.keyboard.key_handler
+
+red_move_handler[lain.layout.uselessfair]        = redflat.layout.common.mouse.handler.move.tile
+red_move_handler[lain.layout.uselesstile]        = redflat.layout.common.mouse.handler.move.tile
+red_move_handler[lain.layout.uselesstile.left]   = redflat.layout.common.mouse.handler.move.tile
+red_move_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.mouse.handler.move.tile
+
+red_resize_handler[lain.layout.uselesstile]        = redflat.layout.common.mouse.handler.resize.tile.right
+red_resize_handler[lain.layout.uselesstile.left]   = redflat.layout.common.mouse.handler.resize.tile.left
+red_resize_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.mouse.handler.resize.tile.bottom
+
+red_key_handler[lain.layout.uselessfair]        = redflat.layout.common.keyboard.handler.fair
+red_key_handler[lain.layout.uselesstile]        = redflat.layout.common.keyboard.handler.tile.right
+red_key_handler[lain.layout.uselesstile.left]   = redflat.layout.common.keyboard.handler.tile.left
+red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard.handler.tile.bottom
+
 -- Tags
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
 	names  = { "Main", "Full", "Edit", "Read", "Free" },
-	layout = { layouts[5], layouts[6], layouts[6], layouts[5], layouts[1] },
+	layout = { layouts[6], layouts[7], layouts[7], layouts[6], layouts[2] },
 }
 
 for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
@@ -631,9 +652,9 @@ do
 	local laybox = redflat.widget.layoutbox
 
 	-- key functions
-	local focus_switch = function(i)
-		return function ()
-			awful.client.focus.byidx(i)
+	local focus_switch_byd = function(dir)
+		return function()
+			awful.client.focus.bydirection(dir)
 			if client.focus then client.focus:raise() end
 		end
 	end
@@ -700,14 +721,26 @@ do
 			args = { { modkey, "Control" }, "r", awesome.restart },
 			comment = "Restart awesome"
 		},
+		{
+			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler() end },
+			comment = "Window control mode"
+		},
 		{ comment = "Window focus" },
 		{
-			args = { { modkey,           }, "j", focus_switch( 1), },
-			comment = "Focus next client"
+			args = { { modkey,           }, "Right", focus_switch_byd("right"), },
+			comment = "Focus right client"
 		},
 		{
-			args = { { modkey,           }, "k", focus_switch(-1), },
-			comment = "Focus previous client"
+			args = { { modkey,           }, "Left", focus_switch_byd("left"), },
+			comment = "Focus left client"
+		},
+		{
+			args = { { modkey,           }, "Up", focus_switch_byd("up"), },
+			comment = "Focus client above"
+		},
+		{
+			args = { { modkey,           }, "Down", focus_switch_byd("down"), },
+			comment = "Focus client below"
 		},
 		{
 			args = { { modkey,           }, "u", awful.client.urgent.jumpto, },
@@ -719,11 +752,11 @@ do
 		},
 		{ comment = "Tag navigation" },
 		{
-			args = { { modkey,           }, "Left", awful.tag.viewprev },
+			args = { { modkey, "Shift" }, "Left", awful.tag.viewprev },
 			comment = "View previous tag"
 		},
 		{
-			args = { { modkey,           }, "Right", awful.tag.viewnext },
+			args = { { modkey, "Shift" }, "Right", awful.tag.viewnext },
 			comment = "View next tag"
 		},
 		{
@@ -760,7 +793,7 @@ do
 			comment = "Show exaile widget"
 		},
 		{
-			args = { { modkey,           }, "z", function() redflat.float.hotkeys:show() end },
+			args = { { modkey,           }, "F1", function() redflat.float.hotkeys:show() end },
 			comment = "Show hotkeys helper"
 		},
 		{
@@ -825,14 +858,6 @@ do
 		},
 		{ comment = "Window manipulation" },
 		{
-			args = { { modkey, "Shift"   }, "j", function () awful.client.swap.byidx(1) end },
-			comment = "Switch client with next client"
-		},
-		{
-			args = { { modkey, "Shift"   }, "k", function () awful.client.swap.byidx(-1) end },
-			comment = "Switch client with previous client"
-		},
-		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
 			comment = "Swap focused client with master"
 		},
@@ -854,30 +879,14 @@ do
 		},
 		{ comment = "Layouts" },
 		{
-			args = { { modkey,           }, "space", function () awful.layout.inc(layouts, 1) end },
+			args = { { modkey, "Control" }, "Right", function () awful.layout.inc(layouts, 1) end },
 			comment = "Switch to next layout"
 		},
 		{
-			args = { { modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, - 1) end },
+			args = { { modkey, "Control" }, "Left", function () awful.layout.inc(layouts, - 1) end },
 			comment = "Switch to previous layout"
 		},
 		{ comment = "Tile control" },
-		{
-			args = { { modkey,           }, "l", function () awful.tag.incmwfact(0.05) end },
-			comment = "Increase master width factor by 5%"
-		},
-		{
-			args = { { modkey,           }, "h", function () awful.tag.incmwfact(-0.05) end },
-			comment = "Decrease master width factor by 5%"
-		},
-		{
-			args = { { modkey, "Control" }, "j", function () awful.client.incwfact(0.05) end },
-			comment = "Increase window height factor by 5%"
-		},
-		{
-			args = { { modkey, "Control" }, "k", function () awful.client.incwfact(-0.05) end },
-			comment = "Decrease window height factor by 5%"
-		},
 		{
 			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
 			comment = "Increase number of master windows by 1"
@@ -987,8 +996,8 @@ root.keys(globalkeys)
 -----------------------------------------------------------------------------------------------------------------------
 clientbuttons = awful.util.table.join(
 	awful.button({                   }, 1, function (c) client.focus = c; c:raise() end),
-	awful.button({                   }, 2, awful.mouse.client.move),
-	awful.button({ modkey            }, 3, awful.mouse.client.resize),
+	awful.button({                   }, 2, redflat.service.mouse.move),
+	awful.button({ modkey            }, 3, redflat.service.mouse.resize),
 	awful.button({                   }, 8, function(c) c:kill() end)
 )
 
@@ -1101,8 +1110,8 @@ do
 		-- Mouse actions setup
 		------------------------------------------------------------
 		layout:buttons(awful.util.table.join(
-			awful.button({}, 1, titlebar_action(c, awful.mouse.client.move)),
-			awful.button({}, 3, titlebar_action(c, awful.mouse.client.resize))
+			awful.button({}, 1, titlebar_action(c, redflat.service.mouse.move)),
+			awful.button({}, 3, titlebar_action(c, redflat.service.mouse.resize))
 		))
 
 		-- Hide titlebar when window maximized
@@ -1142,7 +1151,7 @@ client.connect_signal("manage",
 		if not startup then
 			awful.client.setslave(c)
 			if not c.size_hints.user_position and not c.size_hints.program_position then
-				awful.placement.no_overlap(c)
+				awful.placement.no_overlap(c, { awful.layout.suit.floating, redflat.layout.grid })
 				awful.placement.no_offscreen(c)
 			end
 		end
@@ -1182,6 +1191,7 @@ if not stamp or (os.time() - tonumber(stamp)) > 5 then
 	awful.util.spawn_with_shell("/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
 	awful.util.spawn_with_shell("nm-applet")
 	awful.util.spawn_with_shell("bash /home/vorron/Documents/scripts/tmpfs_firefox.sh")
+	awful.util.spawn_with_shell("xrdb -merge /home/vorron/.Xdefaults")
 
 	-- keyboard layouts
 	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")

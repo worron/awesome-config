@@ -69,6 +69,9 @@ theme.border_width        = 4  -- window border width
 theme.useless_gap_width   = 12 -- Lain useless gap
 theme.global_border_width = 0  -- Lain global border gap
 
+-- grid layout prop
+theme.cellnum = { x = 100, y = 62 }
+
 -- Shared icons
 --------------------------------------------------------------------------------
 theme.icon = {
@@ -193,6 +196,18 @@ theme.naughty_preset.critical = {
 	fg           = theme.color.text,
 	border_width = 2,
 	border_color = theme.color.main
+}
+
+-- Service utils config
+-----------------------------------------------------------------------------------------------------------------------
+theme.service = {}
+theme.service.kyboard = {
+	notify = {
+		geometry     = { width = 280, height = 60 },
+		border_width = 2,
+		font         = theme.font_title,
+		color        = theme.color
+	}
 }
 
 
@@ -392,6 +407,7 @@ theme.widget.layoutbox.icon = {
 	uselesstile       = theme.path .. "/layouts/tile.svg",
 	uselesstiletop    = theme.path .. "/layouts/tiletop.svg",
 	uselessfair       = theme.path .. "/layouts/fair.svg",
+	grid              = theme.path .. "/layouts/grid.svg",
 	unknown           = theme.path .. "/layouts/unknown.svg",
 }
 
@@ -407,6 +423,7 @@ theme.widget.layoutbox.name_alias = {
 	floating          = "Floating",
 	fullscreen        = "Fullscreen",
 	max               = "Maximized",
+	grid              = "Grid",
 	uselesstile       = "Right Tile",
 	uselessfair       = "Fair Tile",
 	uselesstileleft   = "Left Tile",

@@ -69,6 +69,8 @@ local modkey = "Mod4"
 -----------------------------------------------------------------------------------------------------------------------
 local layouts = {
 	awful.layout.suit.floating,
+	redflat.layout.grid,
+
 	--lain.layout.uselesstile,
 	--lain.layout.uselesstile.left,
 	--lain.layout.uselesstile.bottom,
@@ -445,6 +447,10 @@ do
 			args = { { modkey, "Control" }, "r", awesome.restart },
 			comment = "Restart awesome"
 		},
+		{
+			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler() end },
+			comment = "Window control mode"
+		},
 		{ comment = "Window focus" },
 		{
 			args = { { modkey,           }, "j", focus_switch( 1), },
@@ -501,7 +507,7 @@ do
 			comment = "Show minitray"
 		},
 		{
-			args = { { modkey,           }, "z", function() redflat.float.hotkeys:show() end },
+			args = { { modkey,           }, "F1", function() redflat.float.hotkeys:show() end },
 			comment = "Show hotkeys helper"
 		},
 		{ comment = "Application switcher" },
@@ -685,8 +691,8 @@ root.keys(globalkeys)
 -----------------------------------------------------------------------------------------------------------------------
 clientbuttons = awful.util.table.join(
 	awful.button({                   }, 1, function (c) client.focus = c; c:raise() end),
-	awful.button({                   }, 2, awful.mouse.client.move),
-	awful.button({ modkey            }, 3, awful.mouse.client.resize),
+	awful.button({                   }, 2, redflat.service.mouse.move),
+	awful.button({ modkey            }, 3, redflat.service.mouse.resize),
 	awful.button({                   }, 8, function(c) c:kill() end)
 )
 
@@ -799,8 +805,8 @@ do
 		-- Mouse actions setup
 		------------------------------------------------------------
 		layout:buttons(awful.util.table.join(
-			awful.button({}, 1, titlebar_action(c, awful.mouse.client.move)),
-			awful.button({}, 3, titlebar_action(c, awful.mouse.client.resize))
+			awful.button({}, 1, titlebar_action(c, redflat.service.mouse.move)),
+			awful.button({}, 3, titlebar_action(c, redflat.service.mouse.resize))
 		))
 
 		-- Hide titlebar when window maximized

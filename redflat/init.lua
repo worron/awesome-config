@@ -1,15 +1,12 @@
 -----------------------------------------------------------------------------------------------------------------------
 --                                                   RedFlat library                                                 --
 -----------------------------------------------------------------------------------------------------------------------
+local setmetatable = setmetatable
 
-return {
-	util = require("redflat.util"),
-	menu = require("redflat.menu"),
-	titlebar = require("redflat.titlebar"),
-	system = require("redflat.system"),
-	widget = require("redflat.widget"),
-	gauge = require("redflat.gauge"),
-	desktop = require("redflat.desktop"),
-	float = require("redflat.float"),
-	asyncshell = require("redflat.asyncshell")
-}
+return setmetatable(
+	{ _NAME = "redflat" },
+	{ __index = function(table, key)
+		local module = rawget(table, key)
+		return module or require(table._NAME .. '.' .. key)
+	end }
+)
