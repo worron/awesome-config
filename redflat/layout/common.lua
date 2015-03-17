@@ -16,6 +16,8 @@ local awful = require("awful")
 local ipairs = ipairs
 local math = math
 
+local hasitem = awful.util.table.hasitem
+
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
 local common = { mouse = {}, keyboard = {} }
@@ -23,8 +25,22 @@ local common = { mouse = {}, keyboard = {} }
 common.mouse.handler = { move = {}, resize = {} }
 common.keyboard.handler = {}
 common.mouse.snap = 10
-common.mouse.ignored = { "dock", "splash", "desktop"}
+common.wfactstep = 0.05
 
+local last = {}
+
+-- default keys
+common.keys = {
+	move_up    = { "Up" },
+	move_down  = { "Down" },
+	move_left  = { "Left" },
+	move_right = { "Right" },
+	resize_up    = { "k", "K", "KP_Up", "8" },
+	resize_down  = { "j", "J", "KP_Down", "2" },
+	resize_left  = { "h", "H", "KP_Left", "4" },
+	resize_right = { "l", "L", "KP_Right", "6" },
+	exit = { "Escape", "Super_L" },
+}
 
 -- Shared movement handlers
 -----------------------------------------------------------------------------------------------------------------------
@@ -271,6 +287,86 @@ function common.mouse.handler.resize.magnifier(c, corner, x, y)
 	)
 end
 
+-- Shared keyboard handlers
+-----------------------------------------------------------------------------------------------------------------------
+local function swap_by_geometry(mod, key, event)
+	if     hasitem(common.keys.move_up, key)    then awful.client.swap.bydirection("up")
+	elseif hasitem(common.keys.move_down, key)  then awful.client.swap.bydirection("down")
+	elseif hasitem(common.keys.move_left, key)  then awful.client.swap.bydirection("left")
+	elseif hasitem(common.keys.move_right, key) then awful.client.swap.bydirection("right")
+	else
+		return false
+	end
+	return true
+end
+
+-- Keygrabbers for awful layouts
+-- TODO: improve resize direction finding for tile layout
+--------------------------------------------------------------------------------
+local function fair_keygrabber(mod, key, event)
+	if event == "press" then return false
+	elseif hasitem(common.keys.exit, key) then
+		if last.on_close then last.on_close() end
+		awful.keygrabber.stop(last.keygrabber)
+	elseif swap_by_geometry(mod, key, event) then return true
+	else return false
+	end
+end
+
+local function tile_keygrabber_constructor(dir)
+	local dy = (dir == "bottom" and -1 or 1) * common.wfactstep
+	local dx = (dir == "left"   and -1 or 1) * common.wfactstep
+
+	local vertical_action   = (dir == "left" or dir == "right") and awful.client.incwfact or awful.tag.incmwfact
+	local horizontal_action = (dir == "left" or dir == "right") and awful.tag.incmwfact or awful.client.incwfact
+
+	return function(mod, key, event)
+		if event == "press" then return false
+		elseif hasitem(common.keys.exit, key) then
+			if last.on_close then last.on_close() end
+			awful.keygrabber.stop(last.keygrabber)
+		elseif swap_by_geometry(mod, key, event) then return true
+		elseif hasitem(common.keys.resize_up, key)    then vertical_action(dy)
+		elseif hasitem(common.keys.resize_down, key)  then vertical_action(- dy)
+		elseif hasitem(common.keys.resize_right, key) then horizontal_action(dx)
+		elseif hasitem(common.keys.resize_left, key)  then horizontal_action(- dx)
+		else return false
+		end
+	end
+end
+
+local tile_keygrabber = {}
+tile_keygrabber["right"]  = tile_keygrabber_constructor("right")
+tile_keygrabber["left"]   = tile_keygrabber_constructor("left")
+tile_keygrabber["top"]    = tile_keygrabber_constructor("top")
+tile_keygrabber["bottom"] = tile_keygrabber_constructor("bottom")
+
+
+-- Keyboard handlers for awful layouts
+--------------------------------------------------------------------------------
+common.keyboard.handler.fair = function(c, on_close)
+	last.on_close = on_close
+	last.keygrabber = fair_keygrabber
+
+	awful.keygrabber.run(last.keygrabber)
+end
+
+local function handler_tile_constructor(dir)
+	return function(c, on_close)
+		last.c = c or client.focus
+		last.on_close = on_close
+		last.keygrabber = tile_keygrabber[dir]
+
+		awful.keygrabber.run(last.keygrabber)
+	end
+end
+
+common.keyboard.handler.tile = {}
+common.keyboard.handler.tile.right  = handler_tile_constructor("right")
+common.keyboard.handler.tile.left   = handler_tile_constructor("left")
+common.keyboard.handler.tile.top    = handler_tile_constructor("top")
+common.keyboard.handler.tile.bottom = handler_tile_constructor("bottom")
+
 -- Handlers table
 -----------------------------------------------------------------------------------------------------------------------
 common.mouse.move_handler = {}
@@ -292,6 +388,12 @@ common.mouse.resize_handler[layout.suit.tile.top]    = common.mouse.handler.resi
 common.mouse.resize_handler[layout.suit.tile.bottom] = common.mouse.handler.resize.tile.bottom
 
 common.keyboard.key_handler = {}
+common.keyboard.key_handler[layout.suit.fair]        = common.keyboard.handler.fair
+common.keyboard.key_handler[layout.suit.tile]        = common.keyboard.handler.tile.right
+common.keyboard.key_handler[layout.suit.tile.right]  = common.keyboard.handler.tile.right
+common.keyboard.key_handler[layout.suit.tile.left]   = common.keyboard.handler.tile.left
+common.keyboard.key_handler[layout.suit.tile.top]    = common.keyboard.handler.tile.top
+common.keyboard.key_handler[layout.suit.tile.bottom] = common.keyboard.handler.tile.bottom
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------

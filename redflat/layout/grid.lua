@@ -14,7 +14,6 @@ local math = math
 
 local awful = require("awful")
 local hasitem = awful.util.table.hasitem
-local moveresize = awful.client.moveresize
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -252,7 +251,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 data.keygrabber = function(mod, key, event)
 	if event == "press" then return false
-	elseif hasitem(grid.keys.exit,  key) then
+	elseif hasitem(grid.keys.exit, key) then
 		if data.on_close then data.on_close() end
 		awful.keygrabber.stop(data.keygrabber)
 	elseif hasitem(grid.keys.move_up, key) then move_to(data, "up", mod)
