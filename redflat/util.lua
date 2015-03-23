@@ -19,7 +19,7 @@ local beautiful = require("beautiful")
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
-local util = { text = {}, cairo = {}, table = {}, desktop = {}, placement = {} }
+local util = { text = {}, cairo = {}, table = {}, desktop = {}, placement = {}, client = {} }
 
 
 -- Read from file
@@ -129,6 +129,13 @@ function util.cairo.tcenter_horizontal(cr, coord, text)
 	local ext = cr:text_extents(text)
 	cr:move_to(coord[1] - (ext.width/2 + ext.x_bearing), coord[2])
 	cr:show_text(text)
+end
+
+-- Set font
+------------------------------------------------------------
+function util.cairo.set_font(cr, font)
+	cr:set_font_size(font.size)
+	cr:select_font_face(font.font, font.slant, font.face)
 end
 
 -- Table operations
@@ -276,6 +283,37 @@ util.placement.centered = setmetatable({}, {
 })
 util.placement.centered.horizontal = centered_base(true, false)
 util.placement.centered.vertical = centered_base(false, true)
+
+-- Client utilits
+-----------------------------------------------------------------------------------------------------------------------
+local function size_correction(c, geometry, is_restore)
+	local sign = is_restore and - 1 or 1
+	local bg = sign * 2 * c.border_width
+
+    if geometry.width  then geometry.width  = geometry.width  - bg end
+    if geometry.height then geometry.height = geometry.height - bg end
+end
+
+-- Client geometry correction by border width
+--------------------------------------------------------------------------------
+function util.client.fullgeometry(c, g)
+	local ng
+
+	if g then
+		if g.width  and g.width  <= 1 then return end
+		if g.height and g.height <= 1 then return end
+
+		size_correction(c, g, false)
+		ng = c:geometry(g)
+	else
+		ng = c:geometry()
+	end
+
+	size_correction(c, ng, true)
+
+	return ng
+end
+
 
 -----------------------------------------------------------------------------------------------------------------------
 return util

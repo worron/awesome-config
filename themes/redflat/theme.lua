@@ -201,6 +201,7 @@ theme.naughty_preset.critical = {
 -- Service utils config
 -----------------------------------------------------------------------------------------------------------------------
 theme.service = {}
+
 theme.service.kyboard = {
 	notify = {
 		geometry     = { width = 280, height = 60 },
@@ -210,6 +211,17 @@ theme.service.kyboard = {
 	}
 }
 
+theme.service.navigator = {
+	border_width = 0,
+	gradstep     = 60,
+	marksize     = { width = 160, height = 80, r = 20 },
+	linegap      = 32,
+	titlefont    = { font = "Play", size = 28, face = 1, slant = 0 },
+	font         = { font = "Play", size = 22, face = 1, slant = 0 },
+	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
+	                 fbg1 = theme.color.main .. "40", fbg2 = theme.color.main .. "20",
+	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
+}
 
 -- Menu config
 -----------------------------------------------------------------------------------------------------------------------

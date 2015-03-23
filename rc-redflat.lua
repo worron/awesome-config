@@ -725,6 +725,10 @@ do
 			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler() end },
 			comment = "Window control mode"
 		},
+		{
+			args = { { modkey,           }, "F2", function () redflat.service.navigator:run() end },
+			comment = "Test"
+		},
 		{ comment = "Window focus" },
 		{
 			args = { { modkey,           }, "Right", focus_switch_byd("right"), },
