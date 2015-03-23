@@ -10,13 +10,15 @@
 
 -- Grab environment
 -----------------------------------------------------------------------------------------------------------------------
-local layout = require("awful.layout")
 local awful = require("awful")
+local navigator = require("redflat.service.navigator")
 
 local ipairs = ipairs
 local math = math
 
 local hasitem = awful.util.table.hasitem
+local layout = awful.layout
+
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -35,10 +37,10 @@ common.keys = {
 	move_down  = { "Down" },
 	move_left  = { "Left" },
 	move_right = { "Right" },
-	resize_up    = { "k", "K", "KP_Up", "8" },
-	resize_down  = { "j", "J", "KP_Down", "2" },
-	resize_left  = { "h", "H", "KP_Left", "4" },
-	resize_right = { "l", "L", "KP_Right", "6" },
+	resize_up    = { "k", "K", },
+	resize_down  = { "j", "J", },
+	resize_left  = { "h", "H", },
+	resize_right = { "l", "L", },
 	exit = { "Escape", "Super_L" },
 }
 
@@ -308,6 +310,7 @@ local function fair_keygrabber(mod, key, event)
 	elseif hasitem(common.keys.exit, key) then
 		if last.on_close then last.on_close() end
 		awful.keygrabber.stop(last.keygrabber)
+	elseif navigator.raw_keygrabber(mod, key, event) then return true
 	elseif swap_by_geometry(mod, key, event) then return true
 	else return false
 	end
@@ -325,6 +328,7 @@ local function tile_keygrabber_constructor(dir)
 		elseif hasitem(common.keys.exit, key) then
 			if last.on_close then last.on_close() end
 			awful.keygrabber.stop(last.keygrabber)
+		elseif navigator.raw_keygrabber(mod, key, event) then return true
 		elseif swap_by_geometry(mod, key, event) then return true
 		elseif hasitem(common.keys.resize_up, key)    then vertical_action(dy)
 		elseif hasitem(common.keys.resize_down, key)  then vertical_action(- dy)

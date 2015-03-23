@@ -202,15 +202,6 @@ theme.naughty_preset.critical = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.service = {}
 
-theme.service.kyboard = {
-	notify = {
-		geometry     = { width = 280, height = 60 },
-		border_width = 2,
-		font         = theme.font_title,
-		color        = theme.color
-	}
-}
-
 theme.service.navigator = {
 	border_width = 0,
 	gradstep     = 60,

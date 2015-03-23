@@ -27,6 +27,8 @@ navigator.keys = {
 	close = { "Escape", "Super_L" },
 }
 
+navigator.float_layout = {}
+
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
@@ -46,6 +48,17 @@ end
 
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
+local function smart_swap(c1, c2)
+	local lay = awful.layout.get(c1.screen)
+	if awful.util.table.hasitem(navigator.float_layout, lay) then
+		local g1, g2 = redutil.client.fullgeometry(c1), redutil.client.fullgeometry(c2)
+
+		redutil.client.fullgeometry(c1, g2)
+		redutil.client.fullgeometry(c2, g1)
+	else
+		c1:swap(c2)
+	end
+end
 
 local function cairo_set_font(cr, font)
 	cr:set_font_size(font.size)
@@ -180,24 +193,35 @@ end
 
 -- keygrabber
 -----------------------------------------------------------------------------------------------------------------------
-navigator.keygrabber = function(mod, key, event)
-	if event == "press" then return false
-	elseif awful.util.table.hasitem(navigator.keys.close, key) then navigator:close()
-	elseif awful.util.table.hasitem(navigator.keys.num, key) then
+navigator.raw_keygrabber = function(mod, key, event)
+	if awful.util.table.hasitem(navigator.keys.num, key) then
 		local index = tonumber(key)
+
 		if data[index] and awful.util.table.hasitem(navigator.cls, data[index].client) then
 			if navigator.last then
 				if navigator.last == index then
 					client.focus = data[index].client
 					client.focus:raise()
 				else
-					data[navigator.last].client:swap(data[index].client)
+					--data[navigator.last].client:swap(data[index].client)
+					smart_swap(data[navigator.last].client, data[index].client)
 				end
 				navigator.last = nil
 			else
 				navigator.last = index
 			end
 		end
+
+		return true
+	end
+
+	return false
+end
+
+navigator.keygrabber = function(mod, key, event)
+	if event == "press" then return false
+	elseif awful.util.table.hasitem(navigator.keys.close, key) then navigator:close()
+	elseif navigator.raw_keygrabber(mod, key, event) then return true
 	else return false
 	end
 end
