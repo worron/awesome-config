@@ -129,8 +129,7 @@ function textbox.new(txt, style)
 	------------------------------------------------------------
 	textwidg.draw = function(textwidg, wibox, cr, width, height)
 		cr:set_source(color(data.color))
-		cr:set_font_size(style.font.size)
-		cr:select_font_face(style.font.font, style.font.slant, style.font.face)
+		redutil.cairo.set_font(cr, style.font)
 
 		align[style.draw](cr, width, height, data.text)
 	end

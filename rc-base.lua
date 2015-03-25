@@ -448,7 +448,7 @@ do
 			comment = "Restart awesome"
 		},
 		{
-			args = { { modkey,           }, "z", function () redflat.service.keyboard.handler() end },
+			args = { { modkey,           }, "F2", function () redflat.service.keyboard.handler() end },
 			comment = "Window control mode"
 		},
 		{ comment = "Window focus" },

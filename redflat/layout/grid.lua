@@ -13,6 +13,9 @@ local pairs = pairs
 local math = math
 
 local awful = require("awful")
+local navigator = require("redflat.service.navigator")
+local redutil = require("redflat.util")
+
 local hasitem = awful.util.table.hasitem
 
 -- Initialize tables for module
@@ -26,10 +29,10 @@ grid.keys = {
 	move_down  = { "Down" },
 	move_left  = { "Left" },
 	move_right = { "Right" },
-	resize_up    = { "k", "K", "KP_Up", "8" },
-	resize_down  = { "j", "J", "KP_Down", "2" },
-	resize_left  = { "h", "H", "KP_Left", "4" },
-	resize_right = { "l", "L", "KP_Right", "6" },
+	resize_up    = { "k", "K" },
+	resize_down  = { "j", "J" },
+	resize_left  = { "h", "H" },
+	resize_right = { "l", "L" },
 	exit = { "Escape", "Super_L" },
 	mod  = { rail = "Control", reverse = "Shift" }
 }
@@ -40,6 +43,34 @@ local data = {}
 -----------------------------------------------------------------------------------------------------------------------
 
 local function compare(a ,b) return a < b end
+
+-- Find all rails for given client
+------------------------------------------------------------
+local function get_rail(c)
+    local wa = screen[c.screen].workarea
+    local cls = awful.client.visible(c.screen)
+
+	local rail = { x = { wa.x, wa.x + wa.width }, y = { wa.y, wa.y + wa.height } }
+	table.remove(cls, hasitem(cls, c))
+
+	for i, v in ipairs(cls) do
+		local lg = redutil.client.fullgeometry(v)
+		local xr = lg.x + lg.width
+		local yb = lg.y + lg.height
+
+		if not hasitem(rail.x, lg.x) then table.insert(rail.x, lg.x) end
+		if not hasitem(rail.x, xr)   then table.insert(rail.x, xr)   end
+		if not hasitem(rail.y, lg.y) then table.insert(rail.y, lg.y) end
+		if not hasitem(rail.y, yb)   then table.insert(rail.y, yb)   end
+	end
+
+	table.sort(rail.x, compare)
+	table.sort(rail.y, compare)
+
+	return rail
+end
+
+local function update_rail(c) data.rail = get_rail(c) end
 
 -- Calculate cell geometry
 ------------------------------------------------------------
@@ -60,34 +91,6 @@ end
 ------------------------------------------------------------
 local function round(a, n)
 	return n * math.floor((a + n / 2) / n)
-end
-
--- Client geometry correction by border width
-------------------------------------------------------------
-local function size_correction(c, geometry, is_restore)
-	local sign = is_restore and - 1 or 1
-	local bg = sign * 2 * c.border_width
-
-    if geometry.width  then geometry.width  = geometry.width  - bg end
-    if geometry.height then geometry.height = geometry.height - bg end
-end
-
-local function fullgeometry(c, g)
-	local ng
-
-	if g then
-		if g.width  and g.width  <= 1 then return end
-		if g.height and g.height <= 1 then return end
-
-		size_correction(c, g, false)
-		ng = c:geometry(g)
-	else
-		ng = c:geometry()
-	end
-
-	size_correction(c, ng, true)
-
-	return ng
 end
 
 -- Fit client into grid
@@ -130,7 +133,10 @@ end
 --------------------------------------------------------------------------------
 local function move_to(data, dir, mod)
 	local ng = {}
-	local g = fullgeometry(data.c, g)
+	local c = client.focus
+	if not c then return end
+
+	local g = redutil.client.fullgeometry(c, g)
 	local is_rail = hasitem(mod, grid.keys.mod.rail) ~= nil
 
 	if dir == "left" then
@@ -179,14 +185,17 @@ local function move_to(data, dir, mod)
 		end
 	end
 
-	fullgeometry(data.c, ng)
+	redutil.client.fullgeometry(c, ng)
 end
 
 -- Resize client
 --------------------------------------------------------------------------------
 function resize_to(data, dir, mod)
 	local ng = {}
-	local g = fullgeometry(data.c)
+	local c = client.focus
+	if not c then return end
+
+	local g = redutil.client.fullgeometry(c)
 	local is_reverse = hasitem(mod, grid.keys.mod.reverse) ~= nil
 	local is_rail = hasitem(mod, grid.keys.mod.rail) ~= nil
 	local sign = is_reverse and -1 or 1
@@ -244,7 +253,7 @@ function resize_to(data, dir, mod)
 		end
 	end
 
-	fullgeometry(data.c, ng)
+	redutil.client.fullgeometry(c, ng)
 end
 
 -- Keygrabber
@@ -253,7 +262,9 @@ data.keygrabber = function(mod, key, event)
 	if event == "press" then return false
 	elseif hasitem(grid.keys.exit, key) then
 		if data.on_close then data.on_close() end
+		client.disconnect_signal("focus", update_rail)
 		awful.keygrabber.stop(data.keygrabber)
+	elseif navigator.raw_keygrabber(mod, key, event) then
 	elseif hasitem(grid.keys.move_up, key) then move_to(data, "up", mod)
 	elseif hasitem(grid.keys.move_down, key) then move_to(data, "down", mod)
 	elseif hasitem(grid.keys.move_left, key) then move_to(data, "left", mod)
@@ -285,10 +296,10 @@ function grid.arrange(p)
 
 	-- tile
 	for i, c in ipairs(cls) do
-		local g = fullgeometry(c)
+		local g = redutil.client.fullgeometry(c)
 
 		g = fit_cell(g, data.cell)
-		fullgeometry(c, g)
+		redutil.client.fullgeometry(c, g)
 	end
 end
 
@@ -328,7 +339,7 @@ end
 -- Mouse resizing function
 -----------------------------------------------------------------------------------------------------------------------
 function grid.mouse_resize_handler(c, corner, x, y)
-	local g = fullgeometry(c)
+	local g = redutil.client.fullgeometry(c)
 	local cg = g
 
 	set_mouse_on_corner(g, corner)
@@ -370,7 +381,7 @@ function grid.mouse_resize_handler(c, corner, x, y)
 					if c.maximized_vertical   then ng.height = g.height ng.y = g.y end
 
 					if is_diff(ng, cg, data.cell) then
-						cg = fullgeometry(c, ng)
+						cg = redutil.client.fullgeometry(c, ng)
 					end
 
 					return true
@@ -385,28 +396,11 @@ end
 -- Keyboard handler function
 -----------------------------------------------------------------------------------------------------------------------
 function grid.key_handler(c, on_close)
-    local wa = screen[c.screen].workarea
-    local cls = awful.client.visible(c.screen)
 
-	data.c = c or client.focus
+	data.rail = get_rail(c)
 	data.on_close = on_close
-	data.rail = { x = { wa.x, wa.x + wa.width }, y = { wa.y, wa.y + wa.height } }
-	table.remove(cls, hasitem(cls, c))
 
-	for i, v in ipairs(cls) do
-		local lg = fullgeometry(v)
-		local xr = lg.x + lg.width
-		local yb = lg.y + lg.height
-
-		if not hasitem(data.rail.x, lg.x) then table.insert(data.rail.x, lg.x) end
-		if not hasitem(data.rail.x, xr)   then table.insert(data.rail.x, xr)   end
-		if not hasitem(data.rail.y, lg.y) then table.insert(data.rail.y, lg.y) end
-		if not hasitem(data.rail.y, yb)   then table.insert(data.rail.y, yb)   end
-	end
-
-	table.sort(data.rail.x, compare)
-	table.sort(data.rail.y, compare)
-
+	client.connect_signal("focus", update_rail)
 	awful.keygrabber.run(data.keygrabber)
 end
 
