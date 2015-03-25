@@ -60,11 +60,6 @@ local function smart_swap(c1, c2)
 	end
 end
 
-local function cairo_set_font(cr, font)
-	cr:set_font_size(font.size)
-	cr:select_font_face(font.font, font.slant, font.face)
-end
-
 -- Window painting
 --------------------------------------------------------------------------------
 function navigator.make_paint(c)

@@ -139,8 +139,7 @@ function redtag.new(style)
 
 		-- text
 		cr:set_source(color(style.color.icon))
-		cr:set_font_size(style.font.size)
-		cr:select_font_face(style.font.font, style.font.slant, style.font.face)
+		redutil.cairo.set_font(cr, style.font)
 		redutil.cairo.tcenter_horizontal(cr, { width/2, style.text_gap }, data.state.text)
 
 		-- active mark

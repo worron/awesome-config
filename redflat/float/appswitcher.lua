@@ -268,8 +268,7 @@ function appswitcher:init()
 			-- draw label
 			local txt = style.hotkeys[i] or "?"
 			cr:set_source(gears.color(i == self.index and style.color.main or style.color.text))
-			cr:set_font_size(style.font.size)
-			cr:select_font_face(style.font.font, style.font.slant, style.font.face)
+			redutil.cairo.set_font(cr, style.font)
 			redutil.cairo.tcenter_horizontal(cr, { psize.width/2, psize.height + style.label_height }, txt)
 		end
 	end
