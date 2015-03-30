@@ -79,6 +79,7 @@ local layouts = {
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
 
+	redflat.layout.map,
 	--awful.layout.suit.fair,
 	--awful.layout.suit.tile,
 	--awful.layout.suit.fair.horizontal,

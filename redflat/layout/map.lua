@@ -1,0 +1,342 @@
+-----------------------------------------------------------------------------------------------------------------------
+--                                                RedFlat map layout                                                 --
+-----------------------------------------------------------------------------------------------------------------------
+-- Tiling with user defined geometry
+-----------------------------------------------------------------------------------------------------------------------
+
+-- Grab environment
+-----------------------------------------------------------------------------------------------------------------------
+local ipairs = ipairs
+local pairs = pairs
+local math = math
+
+local beautiful = require("beautiful")
+local awful = require("awful")
+local navigator = require("redflat.service.navigator")
+local redutil = require("redflat.util")
+
+local hasitem = awful.util.table.hasitem
+
+-- Initialize tables for module
+-----------------------------------------------------------------------------------------------------------------------
+local map = {}
+map.name = "usermap"
+map.fstep = 0.02
+
+local data = setmetatable({}, { __mode = 'k' })
+data.aim = 0
+
+-- default keys
+map.keys = {
+	move_up    = { "Up" },
+	move_down  = { "Down" },
+	move_left  = { "Left" },
+	move_right = { "Right" },
+	resize_up    = { "k", "K" },
+	resize_down  = { "j", "J" },
+	resize_left  = { "h", "H" },
+	resize_right = { "l", "L" },
+	close        = { "c", "C" },
+	aim          = { "f", "F" },
+	swap         = { "s", "S" },
+	fair         = { "e", "E" },
+	exit = { "Escape", "Super_L" },
+	mod  = { total = "Shift" }
+}
+
+
+-- Support functions
+-----------------------------------------------------------------------------------------------------------------------
+
+-- Client geometry correction depending on useless gap and window border
+--------------------------------------------------------------------------------
+local function size_correction(c, geometry, useless_gap)
+	geometry.width  = math.max(geometry.width  - 2 * c.border_width - useless_gap, 1)
+	geometry.height = math.max(geometry.height - 2 * c.border_width - useless_gap, 1)
+	geometry.x = geometry.x + useless_gap / 2
+	geometry.y = geometry.y + useless_gap / 2
+end
+
+-- Construct object with full placement info
+--------------------------------------------------------------------------------
+local function construct_item()
+	local item = { child = {}, factor = { x = 1, y = 1 } }
+
+	-- Increase geometry factor
+	------------------------------------------------------------
+	function item:incf(value, is_vertical)
+		local d = is_vertical and "y" or "x"
+		self.factor[d] = self.factor[d] + value
+		if self.factor[d] < 0.05 then self.factor[d] = 0.05 end
+	end
+
+	-- Calculate window geometry
+	------------------------------------------------------------
+	function item:get_geometry(except)
+		local area
+
+		-- get base geometry
+		if self.geometry then
+			area = awful.util.table.clone(self.geometry)
+		else
+			-- cut area from parent window
+			local g = self.parent:get_geometry(self)
+
+			if self.vertical then
+				local h = g.height * self.factor.y / (self.parent.factor.y  + self.factor.y)
+				area = { x = g.x, y = g.y + g.height - h, width = g.width, height = h }
+			else
+				local w = g.width * self.factor.x / (self.parent.factor.x  + self.factor.x)
+				area = { x = g.x + g.width - w, y = g.y, width = w, height = g.height }
+			end
+		end
+
+		-- correct area size depending on child windows
+		-- !!! need optimization here !!!
+		local ex_index = awful.util.table.hasitem(self.child, except) or #self.child + 1
+		for i, chd in ipairs(self.child) do
+			if ex_index > i then
+				if chd.vertical then
+					area.height = area.height * self.factor.y / (chd.factor.y  + self.factor.y)
+				else
+					area.width = area.width * self.factor.x / (chd.factor.x  + self.factor.x)
+				end
+			end
+		end
+
+		return area
+	end
+
+	------------------------------------------------------------
+	return item
+end
+
+-- Select object (index) which will be used as sourse for new windows geometry
+--------------------------------------------------------------------------------
+local function set_aim(data)
+	for i, o in ipairs(data[data.ctag]) do
+		if o.client == client.focus then data.aim = i end
+	end
+end
+
+-- Get index of focused window
+--------------------------------------------------------------------------------
+local function get_focus(data)
+	for i, o in ipairs(data[data.ctag]) do
+		if o.client == client.focus then return i end
+	end
+
+	return nil
+end
+
+-- Set fair gemetry for focused window
+--------------------------------------------------------------------------------
+
+-- Form all parent objects with given direction
+------------------------------------------------------------
+local function get_branch(object, is_vertical, storage)
+	local storage = storage or {}
+	table.insert(storage, object)
+
+	if object.parent then
+		if object.parent.vertical == is_vertical then
+			get_branch(object.parent, is_vertical, storage)
+		else
+			table.insert(storage, object.parent)
+		end
+	end
+
+	return storage
+end
+
+-- Set fair factor
+------------------------------------------------------------
+local function set_fair(data)
+	local findex = get_focus(data)
+	local vertical = data[data.ctag][findex].vertical
+	local d = vertical and "y" or "x"
+	local branch = get_branch(data[data.ctag][findex], vertical)
+
+	local k = branch[#branch].factor[d]
+	for i = #branch - 1, 1, -1 do
+		k = k * i
+		branch[i].factor[d] = k
+	end
+
+	data.ctag:emit_signal("property::layout")
+end
+
+-- Change focused window geometry factor
+--------------------------------------------------------------------------------
+local function incfactor(data, value, is_vertical)
+	local findex = get_focus(data)
+	data[data.ctag][findex]:incf(value, is_vertical)
+	data.ctag:emit_signal("property::layout")
+end
+
+-- Swap split direction
+--------------------------------------------------------------------------------
+local function swap(data)
+	local findex = get_focus(data)
+	if findex then
+		data[data.ctag][findex].vertical = not data[data.ctag][findex].vertical
+		data.ctag:emit_signal("property::layout")
+	end
+end
+
+-- Close client with placement shifting
+-- !!! This work with lineal sequence only !!!
+-- !!! Should be rewritten !!!
+--------------------------------------------------------------------------------
+local function smart_close(data)
+	local findex = get_focus(data)
+	if not findex then return end
+
+	local removed = data[data.ctag][findex]
+	if #removed.child > 0 then
+		for i, chd in ipairs(removed.child) do
+			if i == #removed.child then
+				local cindex = awful.util.table.hasitem(data[data.ctag], chd)
+				table.remove(data[data.ctag], cindex)
+				chd.vertical = removed.vertical
+				chd.parent = removed.parent
+				data[data.ctag][findex] = chd
+
+				if removed.parent then
+					local rindex = awful.util.table.hasitem(removed.parent.child, removed)
+					removed.parent.child[rindex] = chd
+				else
+					chd.geometry = removed.geometry
+				end
+			else
+				chd.parent = removed.child[#removed.child]
+				table.insert(removed.child[#removed.child].child, 1, chd)
+			end
+		end
+	else
+		if removed.parent then
+			table.remove(removed.parent.child, awful.util.table.hasitem(removed.parent.child, removed))
+		end
+		table.remove(data[data.ctag], findex)
+	end
+
+	removed.client:kill()
+end
+
+-- Create new window object by cutting area from parent object
+-- @index Index of parent object
+--------------------------------------------------------------------------------
+local function split(data, index)
+	local tagmap = data[data.ctag]
+	local g = tagmap[index]:get_geometry()
+	local is_vertical = g.width <= g.height
+	local new = construct_item()
+
+	new.vertical = is_vertical
+	new.factor = { x = tagmap[index].factor.x, y = tagmap[index].factor.y }
+	new.parent = tagmap[index]
+	table.insert(tagmap[index].child, new)
+	table.insert(tagmap, new)
+
+	-- reset aim
+	data.aim = 0
+end
+
+-- Keygrabber
+-----------------------------------------------------------------------------------------------------------------------
+data.keygrabber = function(mod, key, event)
+	local step = hasitem(mod, map.keys.mod.total) and 5 * map.fstep or map.fstep
+	if event == "press" then return false
+	elseif hasitem(map.keys.exit, key) then
+		if data.on_close then data.on_close() end
+		awful.keygrabber.stop(data.keygrabber)
+	elseif navigator.raw_keygrabber(mod, key, event) then
+	elseif hasitem(map.keys.move_up, key)    then awful.client.swap.bydirection("up")
+	elseif hasitem(map.keys.move_down, key)  then awful.client.swap.bydirection("down")
+	elseif hasitem(map.keys.move_left, key)  then awful.client.swap.bydirection("left")
+	elseif hasitem(map.keys.move_right, key) then awful.client.swap.bydirection("right")
+	elseif hasitem(map.keys.aim, key)   then set_aim(data)
+	elseif hasitem(map.keys.swap, key)  then swap(data)
+	elseif hasitem(map.keys.close, key) then smart_close(data)
+	elseif hasitem(map.keys.fair, key)  then set_fair(data)
+	elseif hasitem(map.keys.resize_up, key)    then incfactor(data, step, true)
+	elseif hasitem(map.keys.resize_down, key)  then incfactor(data, -step, true)
+	elseif hasitem(map.keys.resize_left, key)  then incfactor(data, -step)
+	elseif hasitem(map.keys.resize_right, key) then incfactor(data, step)
+	else return false
+	end
+end
+
+-- Tile function
+-----------------------------------------------------------------------------------------------------------------------
+function map.arrange(p)
+
+	-- theme vars
+	local useless_gap = beautiful.useless_gap_width or 0
+	local global_border = beautiful.global_border_width or 0
+
+	-- aliases
+	local wa = p.workarea
+	local cls = p.clients
+    data.ctag = awful.tag.selected(p.screen)
+
+    if not data[data.ctag] then data[data.ctag] = {} end
+    local tagmap = data[data.ctag]
+
+	-- nothing to tile here
+	if #cls == 0 then return end
+
+	-- workarea size correction depending on useless gap and global border
+	wa.height = wa.height - 2 * global_border - useless_gap
+	wa.width  = wa.width -  2 * global_border - useless_gap
+	wa.x = wa.x + useless_gap / 2 + global_border
+	wa.y = wa.y + useless_gap / 2 + global_border
+
+	-- Construct object tree for client list
+	------------------------------------------------------------
+	for i, c in ipairs(cls) do
+		if not tagmap[i] then
+			if i > 1 then
+				local aim = tagmap[data.aim] and data.aim or #tagmap
+				split(data, aim)
+			else
+				tagmap[i] = construct_item()
+				tagmap[i].geometry = awful.util.table.clone(wa)
+			end
+		end
+
+		tagmap[i].client = c
+	end
+
+	-- Clear empty items
+	------------------------------------------------------------
+	if #tagmap > #cls then
+		for i = #cls + 1, #tagmap do
+			if tagmap[i].parent then
+				-- !!! need some optimization here !!!
+				table.remove(tagmap[i].parent.child, awful.util.table.hasitem(tagmap[i].parent.child, tagmap[i]))
+			end
+			tagmap[i] = nil
+		end
+		tagmap[#tagmap].child = {}
+	end
+
+	-- Tile
+	------------------------------------------------------------
+	for i, c in ipairs(cls) do
+		local g = tagmap[i]:get_geometry()
+		size_correction(c, g, useless_gap)
+		c:geometry(g)
+	end
+end
+
+-- Keyboard handler function
+-----------------------------------------------------------------------------------------------------------------------
+function map.key_handler(c, on_close)
+	data.on_close = on_close
+	awful.keygrabber.run(data.keygrabber)
+end
+
+-- End
+-----------------------------------------------------------------------------------------------------------------------
+return map
