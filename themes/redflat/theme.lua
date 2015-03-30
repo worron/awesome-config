@@ -411,6 +411,7 @@ theme.widget.layoutbox.icon = {
 	uselesstiletop    = theme.path .. "/layouts/tiletop.svg",
 	uselessfair       = theme.path .. "/layouts/fair.svg",
 	grid              = theme.path .. "/layouts/grid.svg",
+	usermap           = theme.path .. "/layouts/map.svg",
 	unknown           = theme.path .. "/layouts/unknown.svg",
 }
 
@@ -427,6 +428,7 @@ theme.widget.layoutbox.name_alias = {
 	fullscreen        = "Fullscreen",
 	max               = "Maximized",
 	grid              = "Grid",
+	usermap           = "User Map",
 	uselesstile       = "Right Tile",
 	uselessfair       = "Fair Tile",
 	uselesstileleft   = "Left Tile",

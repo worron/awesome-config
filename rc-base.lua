@@ -70,6 +70,7 @@ local modkey = "Mod4"
 local layouts = {
 	awful.layout.suit.floating,
 	redflat.layout.grid,
+	redflat.layout.map,
 
 	--lain.layout.uselesstile,
 	--lain.layout.uselesstile.left,

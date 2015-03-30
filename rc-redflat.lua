@@ -76,10 +76,10 @@ local layouts = {
 	lain.layout.uselesstile.left,
 	lain.layout.uselesstile.bottom,
 	lain.layout.uselessfair,
+	redflat.layout.map,
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
 
-	redflat.layout.map,
 	--awful.layout.suit.fair,
 	--awful.layout.suit.tile,
 	--awful.layout.suit.fair.horizontal,
@@ -116,7 +116,7 @@ redflat.service.navigator.float_layout = { redflat.layout.grid }
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
 	names  = { "Main", "Full", "Edit", "Read", "Free" },
-	layout = { layouts[6], layouts[7], layouts[7], layouts[6], layouts[2] },
+	layout = { layouts[6], layouts[8], layouts[8], layouts[6], layouts[2] },
 }
 
 for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
