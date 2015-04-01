@@ -163,7 +163,7 @@ function navigator.make_decor(c)
 	------------------------------------------------------------
 	object.update =  {
 		focus = function() object.widget:emit_signal("widget::updated") end,
-		close = function() object:clear() end,
+		close = function() navigator:restart() end,
 		geometry = function() redutil.client.fullgeometry(object.wibox, redutil.client.fullgeometry(object.client)) end
 	}
 
@@ -257,6 +257,10 @@ function navigator:close(is_soft)
 
 	if not is_soft then awful.keygrabber.stop(navigator.keygrabber) end
 	navigator.last = nil
+end
+function navigator:restart()
+	self:close(true)
+	self:run(true)
 end
 
 -- End

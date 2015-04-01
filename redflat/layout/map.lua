@@ -39,6 +39,7 @@ map.keys = {
 	close        = { "c", "C" },
 	aim          = { "f", "F" },
 	swap         = { "s", "S" },
+	last         = { "i", "I" },
 	fair         = { "e", "E" },
 	exit = { "Escape", "Super_L" },
 	mod  = { total = "Shift" }
@@ -93,7 +94,7 @@ local function construct_item()
 
 		-- correct area size depending on child windows
 		-- !!! need optimization here !!!
-		local ex_index = awful.util.table.hasitem(self.child, except) or #self.child + 1
+		local ex_index = hasitem(self.child, except) or #self.child + 1
 		for i, chd in ipairs(self.child) do
 			if ex_index > i then
 				if chd.vertical then
@@ -113,20 +114,23 @@ end
 
 -- Select object (index) which will be used as sourse for new windows geometry
 --------------------------------------------------------------------------------
-local function set_aim(data)
-	for i, o in ipairs(data[data.ctag]) do
-		if o.client == client.focus then data.aim = i end
+function data:set_aim()
+	for i, o in ipairs(self[self.ctag]) do
+		if o.client == client.focus then self.aim = i end
 	end
 end
 
 -- Get index of focused window
 --------------------------------------------------------------------------------
-local function get_focus(data)
-	for i, o in ipairs(data[data.ctag]) do
-		if o.client == client.focus then return i end
-	end
+function data:update_focus()
+	self.fid = nil
 
-	return nil
+	for i, o in ipairs(self[self.ctag]) do
+		if o.client == client.focus then
+			self.fid = i
+			break
+		end
+	end
 end
 
 -- Set fair gemetry for focused window
@@ -151,11 +155,12 @@ end
 
 -- Set fair factor
 ------------------------------------------------------------
-local function set_fair(data)
-	local findex = get_focus(data)
-	local vertical = data[data.ctag][findex].vertical
+function data:set_fair()
+	self:update_focus()
+
+	local vertical = self[self.ctag][self.fid].vertical
 	local d = vertical and "y" or "x"
-	local branch = get_branch(data[data.ctag][findex], vertical)
+	local branch = get_branch(self[self.ctag][self.fid], vertical)
 
 	local k = branch[#branch].factor[d]
 	for i = #branch - 1, 1, -1 do
@@ -163,71 +168,161 @@ local function set_fair(data)
 		branch[i].factor[d] = k
 	end
 
-	data.ctag:emit_signal("property::layout")
+	self.ctag:emit_signal("property::layout")
 end
 
 -- Change focused window geometry factor
 --------------------------------------------------------------------------------
-local function incfactor(data, value, is_vertical)
-	local findex = get_focus(data)
-	data[data.ctag][findex]:incf(value, is_vertical)
-	data.ctag:emit_signal("property::layout")
+function data:incfactor(value, is_vertical)
+	self:update_focus()
+	self[self.ctag][self.fid]:incf(value, is_vertical)
+	self.ctag:emit_signal("property::layout")
+end
+
+-- Move last opened client to focusd client as child
+--------------------------------------------------------------------------------
+function data:movelast()
+	self:update_focus()
+	local moved = self[self.ctag][#self[self.ctag]]
+
+	if moved.parent then
+		table.remove(moved.parent.child, hasitem(moved.parent.child, moved))
+	end
+	self[self.ctag][#self[self.ctag]] = nil
+
+	data:split(data.fid)
+	self.ctag:emit_signal("property::layout")
 end
 
 -- Swap split direction
 --------------------------------------------------------------------------------
-local function swap(data)
-	local findex = get_focus(data)
-	if findex then
-		data[data.ctag][findex].vertical = not data[data.ctag][findex].vertical
-		data.ctag:emit_signal("property::layout")
+local function sw(object, is_total)
+	object.vertical = not object.vertical
+	if is_total then
+		for _, chd in ipairs(object.child) do sw(chd, is_total) end
+	end
+end
+
+function data:swap(is_total)
+	self:update_focus()
+
+	if self.fid then sw(self[self.ctag][self.fid], is_total) end
+	self.ctag:emit_signal("property::layout")
+end
+
+-- Close client with placement shifting
+-- !!! Bad code here. Should be rewritten. !!!
+--------------------------------------------------------------------------------
+
+-- Save current client list
+------------------------------------------------------------
+function data:make_snapshot()
+	self.snapshot = {}
+	for i, o in ipairs(self[self.ctag]) do
+		self.snapshot[i] = o.client
+	end
+end
+
+-- Fucntion for resoring clients order
+------------------------------------------------------------
+data.restore_timer = timer({ timeout = 0.05 })
+data.restore_timer:connect_signal("timeout",
+	function()
+		for i = data.fid + 1, #data[data.ctag] do
+			if data[data.ctag][i].client ~= data.snapshot[i] then
+				data[data.ctag][i].client:swap(data.snapshot[i])
+			end
+		end
+		data.restore_timer:stop()
+	end
+)
+
+-- Factor correction after object replacement
+------------------------------------------------------------
+local function correct_factor(object, k)
+	local ck = { x = k.x, y = k.y }
+
+	ck[object.vertical and "x" or "y"] = 1
+	object.factor = { x = object.factor.x * ck.x, y = object.factor.y * ck.y }
+
+	for _, chd in ipairs(object.child) do
+		correct_factor(chd, ck)
+	end
+end
+
+local function factor_transfer(object, factor, real_child_num)
+	local k = { x = factor.x / object.factor.x, y = factor.y / object.factor.y  }
+	object.factor = factor
+
+	for i = real_child_num, #object.child do
+		correct_factor(object.child[i], k)
 	end
 end
 
 -- Close client with placement shifting
--- !!! This work with lineal sequence only !!!
--- !!! Should be rewritten !!!
---------------------------------------------------------------------------------
+------------------------------------------------------------
 local function smart_close(data)
-	local findex = get_focus(data)
-	if not findex then return end
+	data:update_focus()
+	if not data.fid then return end
 
-	local removed = data[data.ctag][findex]
+	-- alias for closing object
+	local removed = data[data.ctag][data.fid]
+
+	-- check if object have any child objects
 	if #removed.child > 0 then
+		-- save client list
+		data:make_snapshot()
+
 		for i, chd in ipairs(removed.child) do
 			if i == #removed.child then
-				local cindex = awful.util.table.hasitem(data[data.ctag], chd)
+				-- replace removing object with its last child
+				local cindex = hasitem(data[data.ctag], chd)
 				table.remove(data[data.ctag], cindex)
 				chd.vertical = removed.vertical
 				chd.parent = removed.parent
-				data[data.ctag][findex] = chd
+				factor_transfer(chd, removed.factor, #removed.child)
+				data[data.ctag][data.fid] = chd
 
 				if removed.parent then
-					local rindex = awful.util.table.hasitem(removed.parent.child, removed)
+					local rindex = hasitem(removed.parent.child, removed)
 					removed.parent.child[rindex] = chd
 				else
 					chd.geometry = removed.geometry
 				end
+
+				-- remove closing client from snapshot if nedded
+				table.remove(data.snapshot, cindex)
+
+				-- kill client
+				removed.client:kill()
+
+				-- restore saved client placement order
+				-- we need some delay until client list will be updated after last kill
+				-- so timer used here
+				data.restore_timer:start()
 			else
+				-- all childs except last have new parent
 				chd.parent = removed.child[#removed.child]
-				table.insert(removed.child[#removed.child].child, 1, chd)
+				table.insert(removed.child[#removed.child].child, i, chd)
 			end
 		end
 	else
+		-- just remove object if it has no child
 		if removed.parent then
-			table.remove(removed.parent.child, awful.util.table.hasitem(removed.parent.child, removed))
+			table.remove(removed.parent.child, hasitem(removed.parent.child, removed))
 		end
-		table.remove(data[data.ctag], findex)
-	end
+		table.remove(data[data.ctag], data.fid)
 
-	removed.client:kill()
+		-- kill client
+		removed.client:kill()
+	end
 end
 
 -- Create new window object by cutting area from parent object
 -- @index Index of parent object
 --------------------------------------------------------------------------------
-local function split(data, index)
-	local tagmap = data[data.ctag]
+function data:split(index)
+	local tagmap = self[self.ctag]
 	local g = tagmap[index]:get_geometry()
 	local is_vertical = g.width <= g.height
 	local new = construct_item()
@@ -239,13 +334,14 @@ local function split(data, index)
 	table.insert(tagmap, new)
 
 	-- reset aim
-	data.aim = 0
+	self.aim = 0
 end
 
 -- Keygrabber
 -----------------------------------------------------------------------------------------------------------------------
 data.keygrabber = function(mod, key, event)
-	local step = hasitem(mod, map.keys.mod.total) and 5 * map.fstep or map.fstep
+	local total = hasitem(mod, map.keys.mod.total)
+	local step = total and 5 * map.fstep or map.fstep
 	if event == "press" then return false
 	elseif hasitem(map.keys.exit, key) then
 		if data.on_close then data.on_close() end
@@ -255,14 +351,15 @@ data.keygrabber = function(mod, key, event)
 	elseif hasitem(map.keys.move_down, key)  then awful.client.swap.bydirection("down")
 	elseif hasitem(map.keys.move_left, key)  then awful.client.swap.bydirection("left")
 	elseif hasitem(map.keys.move_right, key) then awful.client.swap.bydirection("right")
-	elseif hasitem(map.keys.aim, key)   then set_aim(data)
-	elseif hasitem(map.keys.swap, key)  then swap(data)
+	elseif hasitem(map.keys.aim, key)   then data:set_aim()
+	elseif hasitem(map.keys.swap, key)  then data:swap(total)
 	elseif hasitem(map.keys.close, key) then smart_close(data)
-	elseif hasitem(map.keys.fair, key)  then set_fair(data)
-	elseif hasitem(map.keys.resize_up, key)    then incfactor(data, step, true)
-	elseif hasitem(map.keys.resize_down, key)  then incfactor(data, -step, true)
-	elseif hasitem(map.keys.resize_left, key)  then incfactor(data, -step)
-	elseif hasitem(map.keys.resize_right, key) then incfactor(data, step)
+	elseif hasitem(map.keys.last, key) then data:movelast()
+	elseif hasitem(map.keys.fair, key)  then data:set_fair()
+	elseif hasitem(map.keys.resize_up, key)    then data:incfactor(step, true)
+	elseif hasitem(map.keys.resize_down, key)  then data:incfactor(-step, true)
+	elseif hasitem(map.keys.resize_left, key)  then data:incfactor(-step)
+	elseif hasitem(map.keys.resize_right, key) then data:incfactor(step)
 	else return false
 	end
 end
@@ -298,7 +395,7 @@ function map.arrange(p)
 		if not tagmap[i] then
 			if i > 1 then
 				local aim = tagmap[data.aim] and data.aim or #tagmap
-				split(data, aim)
+				data:split(aim)
 			else
 				tagmap[i] = construct_item()
 				tagmap[i].geometry = awful.util.table.clone(wa)
@@ -314,7 +411,7 @@ function map.arrange(p)
 		for i = #cls + 1, #tagmap do
 			if tagmap[i].parent then
 				-- !!! need some optimization here !!!
-				table.remove(tagmap[i].parent.child, awful.util.table.hasitem(tagmap[i].parent.child, tagmap[i]))
+				table.remove(tagmap[i].parent.child, hasitem(tagmap[i].parent.child, tagmap[i]))
 			end
 			tagmap[i] = nil
 		end
