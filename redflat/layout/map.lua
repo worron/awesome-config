@@ -45,7 +45,6 @@ map.keys = {
 	mod  = { total = "Shift" }
 }
 
-
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
 
@@ -181,16 +180,43 @@ end
 
 -- Move last opened client to focusd client as child
 --------------------------------------------------------------------------------
-function data:movelast()
+function data:movelast(is_infront)
 	self:update_focus()
 	local moved = self[self.ctag][#self[self.ctag]]
 
+	-- remove last object from list
 	if moved.parent then
 		table.remove(moved.parent.child, hasitem(moved.parent.child, moved))
 	end
 	self[self.ctag][#self[self.ctag]] = nil
 
-	data:split(data.fid)
+	if is_infront then
+		-- Create new object in front of focused
+		local newitem = construct_item()
+		local snapshot = self:make_snapshot()
+		local focused = self[self.ctag][data.fid]
+
+		if focused.parent then
+			local cindex = hasitem(focused.parent.child, focused)
+			focused.parent.child[cindex] = newitem
+			newitem.parent = focused.parent
+		else
+			newitem.geometry = focused.geometry
+			focused.geometry = nil
+		end
+
+		newitem.child[1] = focused
+		newitem.factor = { x = focused.factor.x, y = focused.factor.y }
+		focused.parent = newitem
+		table.insert(self[self.ctag], data.fid, newitem)
+
+		-- move last client into focused position
+		for i = #snapshot - 1, data.fid, -1 do moved.client:swap(snapshot[i]) end
+	else
+		-- create new object behind focused
+		data:split(data.fid)
+	end
+
 	self.ctag:emit_signal("property::layout")
 end
 
@@ -217,25 +243,13 @@ end
 -- Save current client list
 ------------------------------------------------------------
 function data:make_snapshot()
-	self.snapshot = {}
+	snapshot = {}
 	for i, o in ipairs(self[self.ctag]) do
-		self.snapshot[i] = o.client
+		snapshot[i] = o.client
 	end
-end
 
--- Fucntion for resoring clients order
-------------------------------------------------------------
-data.restore_timer = timer({ timeout = 0.05 })
-data.restore_timer:connect_signal("timeout",
-	function()
-		for i = data.fid + 1, #data[data.ctag] do
-			if data[data.ctag][i].client ~= data.snapshot[i] then
-				data[data.ctag][i].client:swap(data.snapshot[i])
-			end
-		end
-		data.restore_timer:stop()
-	end
-)
+	return snapshot
+end
 
 -- Factor correction after object replacement
 ------------------------------------------------------------
@@ -261,27 +275,28 @@ end
 
 -- Close client with placement shifting
 ------------------------------------------------------------
-local function smart_close(data)
-	data:update_focus()
-	if not data.fid then return end
+function data:close()
+	self:update_focus()
+	if not self.fid then return end
 
 	-- alias for closing object
-	local removed = data[data.ctag][data.fid]
+	local removed = self[self.ctag][self.fid]
 
 	-- check if object have any child objects
 	if #removed.child > 0 then
 		-- save client list
-		data:make_snapshot()
+		local oldsnap = self:make_snapshot()
+		local newsnap = self:make_snapshot()
 
 		for i, chd in ipairs(removed.child) do
 			if i == #removed.child then
 				-- replace removing object with its last child
-				local cindex = hasitem(data[data.ctag], chd)
-				table.remove(data[data.ctag], cindex)
+				local cindex = hasitem(self[self.ctag], chd)
+				table.remove(self[self.ctag], cindex)
 				chd.vertical = removed.vertical
 				chd.parent = removed.parent
 				factor_transfer(chd, removed.factor, #removed.child)
-				data[data.ctag][data.fid] = chd
+				self[self.ctag][self.fid] = chd
 
 				if removed.parent then
 					local rindex = hasitem(removed.parent.child, removed)
@@ -290,18 +305,21 @@ local function smart_close(data)
 					chd.geometry = removed.geometry
 				end
 
-				-- remove closing client from snapshot if nedded
-				table.remove(data.snapshot, cindex)
+				-- remove closing client from snapshot
+				table.remove(oldsnap, cindex)
+				table.remove(newsnap, self.fid)
+
+				-- restore client placement order
+				for i = self.fid + 1, #self[self.ctag] do
+					if newsnap[i] ~= oldsnap[i] then
+						newsnap[i]:swap(oldsnap[i])
+					end
+				end
 
 				-- kill client
 				removed.client:kill()
-
-				-- restore saved client placement order
-				-- we need some delay until client list will be updated after last kill
-				-- so timer used here
-				data.restore_timer:start()
 			else
-				-- all childs except last have new parent
+				-- all children except last have new parent
 				chd.parent = removed.child[#removed.child]
 				table.insert(removed.child[#removed.child].child, i, chd)
 			end
@@ -311,7 +329,7 @@ local function smart_close(data)
 		if removed.parent then
 			table.remove(removed.parent.child, hasitem(removed.parent.child, removed))
 		end
-		table.remove(data[data.ctag], data.fid)
+		table.remove(self[self.ctag], self.fid)
 
 		-- kill client
 		removed.client:kill()
@@ -353,8 +371,8 @@ data.keygrabber = function(mod, key, event)
 	elseif hasitem(map.keys.move_right, key) then awful.client.swap.bydirection("right")
 	elseif hasitem(map.keys.aim, key)   then data:set_aim()
 	elseif hasitem(map.keys.swap, key)  then data:swap(total)
-	elseif hasitem(map.keys.close, key) then smart_close(data)
-	elseif hasitem(map.keys.last, key) then data:movelast()
+	elseif hasitem(map.keys.close, key) then data:close()
+	elseif hasitem(map.keys.last, key)  then data:movelast(total)
 	elseif hasitem(map.keys.fair, key)  then data:set_fair()
 	elseif hasitem(map.keys.resize_up, key)    then data:incfactor(step, true)
 	elseif hasitem(map.keys.resize_down, key)  then data:incfactor(-step, true)
