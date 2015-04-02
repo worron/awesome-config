@@ -60,10 +60,11 @@ end
 local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/redflat"
 beautiful.init(theme_path .. "/theme.lua")
 
-local terminal = "x-terminal-emulator"
+local terminal = "urxvt"
 local editor   = os.getenv("EDITOR") or "geany"
 local editor_cmd = terminal .. " -e " .. editor
 local fm = "nemo"
+local set_slave = true
 
 local modkey = "Mod4"
 
@@ -155,7 +156,7 @@ do
 	}
 
 	-- run commands
-	local terminal_command = "gnome-terminal --hide-menubar"
+	local ranger_command   = "urxvt -fn 'xft:Ubuntu Mono:pixelsize=20' -e ranger"
 	local suspend_command  = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
 	                          /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
 
@@ -206,9 +207,8 @@ do
 			{ "Places",          placesmenu,             micon("folder_home"), key = "c"  },
 			menu_sep,
 			{ "Firefox",         "firefox",              micon("firefox")                 },
-			--{ "Terminal",        terminal_command,       micon("gnome-terminal")          },
 			{ "Nemo",            "nemo",                 micon("folder")                  },
-			{ "Ranger",          "uxterm -e ranger",     micon("folder")                  },
+			{ "Ranger",          ranger_command,         micon("folder")                  },
 			{ "Geany",           "geany",                micon("geany")                   },
 			{ "Exaile",          "exaile",               micon("exaile")                  },
 			menu_sep,
@@ -707,6 +707,15 @@ do
 	local volume_lower = function() redflat.widget.pulse:change_volume({ show_notify = true, down = true }) end
 	local volume_mute  = function() redflat.widget.pulse:mute() end
 
+	--other
+	local function toggle_placement()
+		set_slave = not set_slave
+		redflat.float.notify:show({
+			text = (set_slave and "Slave" or "Master") .. " placement",
+			icon = beautiful.icon.warning
+		})
+	end
+
 	-- Custom widget keys
 	--------------------------------------------------------------------------------
 	redflat.float.appswitcher.keys.next  = { "a", "A", "Tab" }
@@ -861,6 +870,10 @@ do
 			comment = "Reduce brightness"
 		},
 		{ comment = "Window manipulation" },
+		{
+			args = { { modkey,           }, "F3", toggle_placement },
+			comment = "Toggle master/slave placement"
+		},
 		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
 			comment = "Swap focused client with master"
@@ -1153,7 +1166,7 @@ client.connect_signal("manage",
 		-- only if they does not set an initial position
 		------------------------------------------------------------
 		if not startup then
-			awful.client.setslave(c)
+			if set_slave then awful.client.setslave(c) end
 			if not c.size_hints.user_position and not c.size_hints.program_position then
 				awful.placement.no_overlap(c, { awful.layout.suit.floating, redflat.layout.grid })
 				awful.placement.no_offscreen(c)

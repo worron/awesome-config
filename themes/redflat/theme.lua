@@ -77,6 +77,7 @@ theme.cellnum = { x = 100, y = 62 }
 theme.icon = {
 	check   = theme.path .. "/common/check.svg",
 	blank   = theme.path .. "/common/blank.svg",
+	warning = theme.path .. "/common/warning.svg",
 	awesome = theme.path .. "/awesome.svg",
 }
 
