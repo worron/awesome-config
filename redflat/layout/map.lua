@@ -427,6 +427,26 @@ function map.arrange(p)
 	end
 end
 
+-- Mouse moving function
+-----------------------------------------------------------------------------------------------------------------------
+function map.mouse_move_handler(c)
+	mousegrabber.run(
+		function (_mouse)
+			for k, v in ipairs(_mouse.buttons) do
+				if v then
+					local c_u_m = awful.mouse.client_under_pointer()
+					if c_u_m and not awful.client.floating.get(c_u_m) then
+						if c_u_m ~= c then c:swap(c_u_m) end
+					end
+					return true
+				end
+			end
+			return false
+		end,
+		"fleur"
+	)
+end
+
 -- Keyboard handler function
 -----------------------------------------------------------------------------------------------------------------------
 function map.key_handler(c, on_close)
