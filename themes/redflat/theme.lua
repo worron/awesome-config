@@ -77,6 +77,7 @@ theme.cellnum = { x = 100, y = 62 }
 theme.icon = {
 	check   = theme.path .. "/common/check.svg",
 	blank   = theme.path .. "/common/blank.svg",
+	warning = theme.path .. "/common/warning.svg",
 	awesome = theme.path .. "/awesome.svg",
 }
 
@@ -239,7 +240,11 @@ theme.menu.color = {
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------
 theme.titlebar = {
-	color = theme.color
+	size          = 8,
+	position      = "top",
+	icon          = { size = 30, gap = 10 },
+	border_margin = { 0, 0, 0, 4 },
+	color         = theme.color
 }
 
 -- Gauge style
@@ -411,6 +416,7 @@ theme.widget.layoutbox.icon = {
 	uselesstiletop    = theme.path .. "/layouts/tiletop.svg",
 	uselessfair       = theme.path .. "/layouts/fair.svg",
 	grid              = theme.path .. "/layouts/grid.svg",
+	usermap           = theme.path .. "/layouts/map.svg",
 	unknown           = theme.path .. "/layouts/unknown.svg",
 }
 
@@ -427,6 +433,7 @@ theme.widget.layoutbox.name_alias = {
 	fullscreen        = "Fullscreen",
 	max               = "Maximized",
 	grid              = "Grid",
+	usermap           = "User Map",
 	uselesstile       = "Right Tile",
 	uselessfair       = "Fair Tile",
 	uselesstileleft   = "Left Tile",

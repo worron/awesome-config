@@ -60,10 +60,11 @@ end
 local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/redflat"
 beautiful.init(theme_path .. "/theme.lua")
 
-local terminal = "x-terminal-emulator"
+local terminal = "urxvt"
 local editor   = os.getenv("EDITOR") or "geany"
 local editor_cmd = terminal .. " -e " .. editor
 local fm = "nemo"
+local set_slave = true
 
 local modkey = "Mod4"
 
@@ -76,6 +77,7 @@ local layouts = {
 	lain.layout.uselesstile.left,
 	lain.layout.uselesstile.bottom,
 	lain.layout.uselessfair,
+	redflat.layout.map,
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
 
@@ -115,7 +117,7 @@ redflat.service.navigator.float_layout = { redflat.layout.grid }
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
 	names  = { "Main", "Full", "Edit", "Read", "Free" },
-	layout = { layouts[6], layouts[7], layouts[7], layouts[6], layouts[2] },
+	layout = { layouts[7], layouts[8], layouts[8], layouts[7], layouts[2] },
 }
 
 for s = 1, screen.count() do tags[s] = awful.tag(tags.names, s, tags.layout) end
@@ -154,7 +156,7 @@ do
 	}
 
 	-- run commands
-	local terminal_command = "gnome-terminal --hide-menubar"
+	local ranger_command   = "urxvt -fn 'xft:Ubuntu Mono:pixelsize=20' -e ranger"
 	local suspend_command  = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
 	                          /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
 
@@ -205,9 +207,8 @@ do
 			{ "Places",          placesmenu,             micon("folder_home"), key = "c"  },
 			menu_sep,
 			{ "Firefox",         "firefox",              micon("firefox")                 },
-			--{ "Terminal",        terminal_command,       micon("gnome-terminal")          },
 			{ "Nemo",            "nemo",                 micon("folder")                  },
-			{ "Ranger",          "uxterm -e ranger",     micon("folder")                  },
+			{ "Ranger",          ranger_command,         micon("folder")                  },
 			{ "Geany",           "geany",                micon("geany")                   },
 			{ "Exaile",          "exaile",               micon("exaile")                  },
 			menu_sep,
@@ -706,6 +707,15 @@ do
 	local volume_lower = function() redflat.widget.pulse:change_volume({ show_notify = true, down = true }) end
 	local volume_mute  = function() redflat.widget.pulse:mute() end
 
+	--other
+	local function toggle_placement()
+		set_slave = not set_slave
+		redflat.float.notify:show({
+			text = (set_slave and "Slave" or "Master") .. " placement",
+			icon = beautiful.icon.warning
+		})
+	end
+
 	-- Custom widget keys
 	--------------------------------------------------------------------------------
 	redflat.float.appswitcher.keys.next  = { "a", "A", "Tab" }
@@ -860,6 +870,10 @@ do
 			comment = "Reduce brightness"
 		},
 		{ comment = "Window manipulation" },
+		{
+			args = { { modkey,           }, "F3", toggle_placement },
+			comment = "Toggle master/slave placement"
+		},
 		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
 			comment = "Swap focused client with master"
@@ -1032,8 +1046,14 @@ awful.rules.rules = {
 		properties = { floating = true }
 	},
     {
-		rule = { class = "Exaile", type = "normal" },
+		rule = { class = "Exaile" },
 		callback = function(c)
+			for _, exist in ipairs(awful.client.visible(c.screen)) do
+				if c ~= exist and c.class == exist.class then
+					awful.client.floating.set(c, true)
+					return
+				end
+			end
 			awful.client.movetotag(tags[1][2], c)
 			c.minimized = true
 		end
@@ -1049,13 +1069,6 @@ local titlebar = {
 }
 
 do
-	-- Geometry
-	--------------------------------------------------------------------------------
-	local height = 8
-	local border_margin = { 0, 0, 0, 4 }
-	local icon_size = 30
-	local icon_gap  = 10
-
 	-- Support functions
 	--------------------------------------------------------------------------------
 	local function titlebar_action(c, action)
@@ -1074,10 +1087,6 @@ do
 		end
 	end
 
-	local function ticon(c, t_func, size, gap)
-		return wibox.layout.margin(wibox.layout.constraint(t_func(c), "exact", size, nil), gap)
-	end
-
 	-- Function to check if titlebar needed for given window
 	--------------------------------------------------------------------------------
 	titlebar.allowed = function(c)
@@ -1089,26 +1098,10 @@ do
 	--------------------------------------------------------------------------------
 	titlebar.create = function(c)
 
-		-- Construct titlebar layout
-		------------------------------------------------------------
-		local layout = wibox.layout.align.horizontal()
-
-		-- Add focus icon
-		------------------------------------------------------------
-		local focus_layout = wibox.layout.constraint(redflat.titlebar.widget.focused(c), "exact", nil, nil)
-		layout:set_middle(focus_layout)
-
-		-- Add window state icons
-		------------------------------------------------------------
-		local state_layout = wibox.layout.fixed.horizontal()
-		state_layout:add(ticon(c, redflat.titlebar.widget.floating, icon_size, icon_gap))
-		state_layout:add(ticon(c, redflat.titlebar.widget.sticky,   icon_size, icon_gap))
-		state_layout:add(ticon(c, redflat.titlebar.widget.ontop,    icon_size, icon_gap))
-		layout:set_right(state_layout)
-
 		-- Create titlebar
 		------------------------------------------------------------
-		redflat.titlebar(c, { size = height }):set_widget(wibox.layout.margin(layout, unpack(border_margin)))
+		local layout = redflat.titlebar.constructor(c, { "floating", "sticky", "ontop" })
+		redflat.titlebar(c):set_widget(layout)
 
 		-- Mouse actions setup
 		------------------------------------------------------------
@@ -1152,7 +1145,7 @@ client.connect_signal("manage",
 		-- only if they does not set an initial position
 		------------------------------------------------------------
 		if not startup then
-			awful.client.setslave(c)
+			if set_slave then awful.client.setslave(c) end
 			if not c.size_hints.user_position and not c.size_hints.program_position then
 				awful.placement.no_overlap(c, { awful.layout.suit.floating, redflat.layout.grid })
 				awful.placement.no_offscreen(c)

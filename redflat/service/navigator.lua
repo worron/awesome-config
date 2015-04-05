@@ -88,6 +88,8 @@ function navigator.make_paint(c)
 	------------------------------------------------------------
 	widg.draw = function(widg, wibox, cr, width, height)
 
+		if not data.client then return end
+
 		-- background
 		local num = math.ceil((width + height) / style.gradstep)
 		local is_focused = data.client == client.focus
@@ -161,6 +163,7 @@ function navigator.make_decor(c)
 	------------------------------------------------------------
 	object.update =  {
 		focus = function() object.widget:emit_signal("widget::updated") end,
+		close = function() navigator:restart() end,
 		geometry = function() redutil.client.fullgeometry(object.wibox, redutil.client.fullgeometry(object.client)) end
 	}
 
@@ -172,12 +175,15 @@ function navigator.make_decor(c)
 		object.client:connect_signal("focus", object.update.focus)
 		object.client:connect_signal("unfocus", object.update.focus)
 		object.client:connect_signal("property::geometry", object.update.geometry)
+		object.client:connect_signal("unmanage", object.update.close)
 	end
 
 	function object:clear()
 		object.client:disconnect_signal("focus", object.update.focus)
 		object.client:disconnect_signal("unfocus", object.update.focus)
 		object.client:disconnect_signal("property::geometry", object.update.geometry)
+		object.client:disconnect_signal("unmanage", object.update.close)
+		object.widget:set_client()
 		object.wibox.visible = false
 	end
 
@@ -251,6 +257,10 @@ function navigator:close(is_soft)
 
 	if not is_soft then awful.keygrabber.stop(navigator.keygrabber) end
 	navigator.last = nil
+end
+function navigator:restart()
+	self:close(true)
+	self:run(true)
 end
 
 -- End
