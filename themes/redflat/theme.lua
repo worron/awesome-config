@@ -240,7 +240,11 @@ theme.menu.color = {
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------
 theme.titlebar = {
-	color = theme.color
+	size          = 8,
+	position      = "top",
+	icon          = { size = 30, gap = 10 },
+	border_margin = { 0, 0, 0, 4 },
+	color         = theme.color
 }
 
 -- Gauge style

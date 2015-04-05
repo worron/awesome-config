@@ -36,9 +36,11 @@ local all_titlebars = setmetatable({}, { __mode = 'k' })
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		size     = 16,
-		position = "top",
-		color    = { main = "#b1222b", wibox = "#202020", gray = "#575757" }
+		size          = 16,
+		position      = "top",
+		icon          = { size = 20, gap = 10 },
+		border_margin = { 0, 0, 0, 8 },
+		color         = { main = "#b1222b", wibox = "#202020", gray = "#575757" }
 	}
 
 	return redutil.table.merge(style, beautiful.titlebar or {})
@@ -46,6 +48,12 @@ end
 
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
+
+-- Construct layout with titlebar indicator
+------------------------------------------------------------
+local function ticon(c, t_func, size, gap)
+	return wibox.layout.margin(wibox.layout.constraint(t_func(c), "exact", size, nil), gap)
+end
 
 -- Get titlebar function
 ------------------------------------------------------------
@@ -251,6 +259,44 @@ function titlebar.widget.below(c, style)
 	ret:set_active(c.below)
 	c:connect_signal("property::below", function() ret:set_active(c.below) end)
 	return ret
+end
+
+
+-- Base example of lightweight titlebar widget
+-----------------------------------------------------------------------------------------------------------------------
+function titlebar.constructor(c, indicators, style)
+	local style = redutil.table.merge(default_style(), style or {})
+
+	-- Construct titlebar layout
+	------------------------------------------------------------
+	local layout = wibox.layout.align.horizontal()
+
+	-- Add focus icon
+	------------------------------------------------------------
+	local focus_layout = wibox.layout.constraint(titlebar.widget.focused(c), "exact")
+	layout:set_middle(focus_layout)
+
+	-- Add window state icons
+	------------------------------------------------------------
+	local state_layout = wibox.layout.fixed.horizontal()
+	for _, id in ipairs(indicators) do
+		state_layout:add(ticon(c, titlebar.widget[id], style.icon.size, style.icon.gap))
+	end
+	layout:set_right(state_layout)
+
+	-- Set margin
+	------------------------------------------------------------
+	local margin_layout = wibox.layout.margin(layout, unpack(style.border_margin))
+
+	-- Rotate layout if needed
+	------------------------------------------------------------
+	if style.position == "left" then
+		return wibox.layout.rotate(margin_layout, "east")
+	elseif style.position == "right" then
+		return wibox.layout.rotate(margin_layout, "west")
+	else
+		return margin_layout
+	end
 end
 
 
