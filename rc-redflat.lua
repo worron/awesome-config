@@ -903,6 +903,31 @@ do
 			args = { { modkey, "Control" }, "Left", function () awful.layout.inc(layouts, - 1) end },
 			comment = "Switch to previous layout"
 		},
+		{ comment = "Titlebar" },
+		{
+			args = { { modkey,           }, "k", function (c) redflat.titlebar.toggle_group(client.focus) end },
+			comment = "Switch to next client in group"
+		},
+		{
+			args = { { modkey,           }, "j", function (c) redflat.titlebar.toggle_group(client.focus, true) end },
+			comment = "Switch to previous client in group"
+		},
+		{
+			args = { { modkey,           }, "t", function (c) redflat.titlebar.toggle_view(client.focus) end },
+			comment = "Toggle focused titlebar view"
+		},
+		{
+			args = { { modkey, "Shift"   }, "t", function (c) redflat.titlebar.toggle_view_all() end },
+			comment = "Toggle all titlebar view"
+		},
+		{
+			args = { { modkey, "Control" }, "t", function (c) redflat.titlebar.toggle(client.focus) end },
+			comment = "Toggle focused titlebar visible"
+		},
+		{
+			args = { { modkey, "Control", "Shift" }, "t", function (c) redflat.titlebar.toggle_all() end },
+			comment = "Toggle all titlebar visible"
+		},
 		{ comment = "Tile control" },
 		{
 			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
@@ -944,18 +969,6 @@ do
 		{
 			args = { { modkey, "Control" }, "f", awful.client.floating.toggle },
 			comment = "Toggle client floating status"
-		},
-		{
-			args = { { modkey,           }, "j", function (c) redflat.titlebar.toggle_group(c) end },
-			comment = "Switch to next client in group"
-		},
-		{
-			args = { { modkey,           }, "t", function (c) redflat.titlebar.toggle_view(c) end },
-			comment = "Togle titlebar view"
-		},
-		{
-			args = { { modkey, "Control" }, "t", function (c) redflat.titlebar.toggle(c) end },
-			comment = "Togle titlebar visible"
 		},
 		{
 			args = { { modkey, "Control" }, "p", function (c) c.ontop = not c.ontop end },

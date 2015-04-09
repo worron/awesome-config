@@ -84,7 +84,8 @@ local function check_group_list(cls, position)
 	end
 	return true
 end
--- Function to remove client from group
+
+-- Get current titlebar size
 ------------------------------------------------------------
 local function get_size_by_model(model)
 	return model.widget.widget == model.full.layout and model.full.size or model.light.size
@@ -94,9 +95,10 @@ end
 ------------------------------------------------------------
 local function construct_remover(c, position)
 	return function(c)
-		local model = all_titlebars[c] and all_titlebars[c][position] and all_titlebars[c][position].model
-		if model and model.cls then
-			local list = model.cls
+		local bar = all_titlebars[c] and all_titlebars[c][position]
+
+		if bar and bar.cls then
+			local list = bar.cls
 			local id = awful.util.table.hasitem(list, c)
 
 			titlebar.destroy_group(c, position)
@@ -204,12 +206,10 @@ function titlebar.new(c, model, style)
 		model.size = style.size
 		model.position = style.position
 		model.tfunction = tfunction
+		model.index = awful.util.table.hasitem(client.get(), c)
 
 		-- save title bar info
-		all_titlebars[c][style.position] = {
-			model = model,
-			drawable = ret
-		}
+		all_titlebars[c][style.position] = model
 	end
 
 	return ret
@@ -225,7 +225,7 @@ function titlebar.get_state(c, position)
 	local bar = all_titlebars[c] and all_titlebars[c][position]
 	if not bar then return false end
 
-	return bar.model.size > 0
+	return bar.size > 0
 end
 
 -- Show a client's titlebar
@@ -235,12 +235,12 @@ function titlebar.show(c, position)
 	local bar = all_titlebars[c] and all_titlebars[c][position]
 	if not bar then return false end
 
-	local size = bar.model.size
+	local size = bar.size
 
 	if size == 0 then
-		bar.model.size = get_size_by_model(bar.model)
-		bar.model.tfunction(c, bar.model.size)
-		correct_size(c, position, - bar.model.size)
+		bar.size = get_size_by_model(bar)
+		bar.tfunction(c, bar.size)
+		correct_size(c, position, - bar.size)
 	end
 end
 
@@ -251,11 +251,11 @@ function titlebar.hide(c, position)
 	local bar = all_titlebars[c] and all_titlebars[c][position]
 	if not bar then return false end
 
-	local size = bar.model.size
+	local size = bar.size
 
 	if size > 0 then
-		bar.model.tfunction(c, 0)
-		bar.model.size = 0
+		bar.tfunction(c, 0)
+		bar.size = 0
 		correct_size(c, position, size)
 	end
 
@@ -280,9 +280,9 @@ end
 function titlebar.show_all(list, position)
 	local cls = list or client.get()
 
-	for k, c in pairs(cls) do
-		-- work with user client list is a pain, so pcall used here
-		pcall(titlebar.show, c, position)
+	for _, c in pairs(cls) do
+		--pcall(titlebar.show, c, position)
+		titlebar.show(c, position)
 	end
 end
 
@@ -293,28 +293,38 @@ function titlebar.toggle(c, position)
 	local bar = all_titlebars[c] and all_titlebars[c][position]
 	if not bar then return false end
 
-	if bar.model.size == 0 then
+	if bar.size == 0 then
 		titlebar.show(c, position)
 	else
 		titlebar.hide(c, position)
 	end
 end
 
--- Toggle titlebar view
+function titlebar.toggle_all(list, position)
+	local cls = list or client.get()
+	for _, c in pairs(cls) do titlebar.toggle(c, position) end
+end
+
+-- Toggle titlebar view (light or full)
 ------------------------------------------------------------
 function titlebar.toggle_view(c, position)
 	local position = position or beautiful.titlebar and beautiful.titlebar.position or "top"
 	local bar = all_titlebars[c] and all_titlebars[c][position]
 	if not bar then return false end
 
-	if bar.model.size > 0 then
-		local model_setup = bar.model.widget.widget == bar.model.light.layout and bar.model.full or bar.model.light
+	if bar.size > 0 then
+		local model_setup = bar.widget.widget == bar.light.layout and bar.full or bar.light
 
-		bar.model.tfunction(c, model_setup.size)
-		correct_size(c, position, bar.model.size - model_setup.size)
-		bar.model.size = model_setup.size
-		bar.model.widget:set_widget(model_setup.layout)
+		bar.tfunction(c, model_setup.size)
+		correct_size(c, position, bar.size - model_setup.size)
+		bar.size = model_setup.size
+		bar.widget:set_widget(model_setup.layout)
 	end
+end
+
+function titlebar.toggle_view_all(list, position)
+	local cls = list or client.get()
+	for _, c in pairs(cls) do titlebar.toggle_view(c, position) end
 end
 
 -- Group windows
@@ -325,9 +335,9 @@ function titlebar.set_group(cls, position)
 	if not cls or #cls < 2 or not check_group_list(cls, position) then return end
 
 	awful.layout.arrange_lock = true
+
     for i, c in ipairs(cls) do
-		local model = all_titlebars[c][position].model
-		model:set_group(cls)
+		all_titlebars[c][position]:set_group(cls)
 		c.hidden = i ~= 1
 	end
 
@@ -337,21 +347,26 @@ end
 
 -- Toggle to next window in group
 ------------------------------------------------------------
-function titlebar.toggle_group(c, position)
+function titlebar.toggle_group(c, is_reverse, position)
 	local position = position or beautiful.titlebar and beautiful.titlebar.position or "top"
 	local bar = all_titlebars[c] and all_titlebars[c][position]
-	if not bar or not bar.model.cls then return false end
+	if not bar or not bar.cls then return false end
 
-	local cid = awful.util.table.hasitem(bar.model.cls, c)
-	local nid = cid % #bar.model.cls + 1
+	local cid = awful.util.table.hasitem(bar.cls, c)
+	local nid
+	if is_reverse then
+		nid = cid == 1 and #bar.cls or cid - 1
+	else
+		nid = cid % #bar.cls + 1
+	end
 
 	awful.layout.arrange_lock = true
-	bar.model.cls[nid].hidden = false
-	bar.model.cls[nid]:swap(bar.model.cls[cid])
+	bar.cls[nid].hidden = false
+	bar.cls[nid]:swap(bar.cls[cid])
 
 	awful.layout.arrange_lock = false
-	bar.model.cls[cid].hidden = true
-	client.focus = bar.model.cls[nid]; bar.model.cls[nid]:raise()
+	bar.cls[cid].hidden = true
+	client.focus = bar.cls[nid]; bar.cls[nid]:raise()
 end
 
 -- Destroy group
@@ -359,10 +374,10 @@ end
 function titlebar.destroy_group(c, position)
 	local position = position or beautiful.titlebar and beautiful.titlebar.position or "top"
 	local bar = all_titlebars[c] and all_titlebars[c][position]
-	if not bar or not bar.model.cls then return false end
+	if not bar or not bar.cls then return false end
 
-	for _, v in ipairs(bar.model.cls) do
-		all_titlebars[v][position].model:reset()
+	for _, v in ipairs(bar.cls) do
+		all_titlebars[v][position]:reset()
 	end
 end
 
