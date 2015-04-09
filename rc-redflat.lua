@@ -946,7 +946,19 @@ do
 			comment = "Toggle client floating status"
 		},
 		{
-			args = { { modkey,           }, "t", function (c) c.ontop = not c.ontop end },
+			args = { { modkey,           }, "j", function (c) redflat.titlebar.toggle_group(c) end },
+			comment = "Switch to next client in group"
+		},
+		{
+			args = { { modkey,           }, "t", function (c) redflat.titlebar.toggle_view(c) end },
+			comment = "Togle titlebar view"
+		},
+		{
+			args = { { modkey, "Control" }, "t", function (c) redflat.titlebar.toggle(c) end },
+			comment = "Togle titlebar visible"
+		},
+		{
+			args = { { modkey, "Control" }, "p", function (c) c.ontop = not c.ontop end },
 			comment = "Toggle client ontop status"
 		},
 		{
@@ -1100,12 +1112,13 @@ do
 
 		-- Create titlebar
 		------------------------------------------------------------
-		local layout = redflat.titlebar.constructor(c, { "floating", "sticky", "ontop" })
-		redflat.titlebar(c):set_widget(layout)
+		local full_style =  { size = 28, icon = { gap = 0, size = 25, angle = 0.50 } }
+		local model = redflat.titlebar.model(c, { "floating", "sticky", "ontop" }, nil, full_style)
+		redflat.titlebar(c, model):set_widget(model.widget)
 
 		-- Mouse actions setup
 		------------------------------------------------------------
-		layout:buttons(awful.util.table.join(
+		model.widget:buttons(awful.util.table.join(
 			awful.button({}, 1, titlebar_action(c, redflat.service.mouse.move)),
 			awful.button({}, 3, titlebar_action(c, redflat.service.mouse.resize))
 		))
@@ -1170,6 +1183,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awesome.connect_signal("exit",
 	function()
 		redflat.titlebar.hide_all()
+		for _, c in ipairs(client:get(mouse.screen)) do c.hidden = false end
 	end
 )
 
