@@ -33,6 +33,9 @@ local redutil = require("redflat.util")
 local titlebar = { mt = {}, widget = {} }
 
 local all_titlebars = setmetatable({}, { __mode = 'k' })
+local snapshot = {}
+
+client.connect_signal("list", function() snapshot = client.get() end)
 
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
@@ -91,21 +94,47 @@ local function get_size_by_model(model)
 	return model.widget.widget == model.full.layout and model.full.size or model.light.size
 end
 
+-- Move client to the end of list
+------------------------------------------------------------
+local function set_slave(c)
+	local cls = client.get(c.screen)
+	local k = awful.util.table.hasitem(cls, c)
+
+	for i = k, #cls do c:swap(cls[i]) end
+end
+
 -- Function to remove client from group
 ------------------------------------------------------------
 local function construct_remover(c, position)
 	return function(c)
-		local bar = all_titlebars[c] and all_titlebars[c][position]
+		local all_hidden = true
+		local lid = awful.util.table.hasitem(snapshot, c)
+		local fullcls = client.get()
+		local cls = all_titlebars[c][position].cls
 
-		if bar and bar.cls then
-			local list = bar.cls
-			local id = awful.util.table.hasitem(list, c)
+		awful.layout.arrange_lock = true
 
-			titlebar.destroy_group(c, position)
-			table.remove(list, id)
-			if #list > 1 then titlebar.set_group(list, position) end
-			client.focus = list[1]
+		-- remove client from tab cls
+		table.remove(cls, awful.util.table.hasitem(cls, c))
+		for _, v in ipairs(cls) do
+			local b = all_titlebars[v] and all_titlebars[v][position]
+			b.full:set_names(cls)
+			all_hidden = all_hidden and v.hidden
+			if v.hidden then set_slave(v) end
 		end
+
+		if all_hidden then
+			-- set visible first client in cls
+			cls[1].hidden = false
+			client.focus = cls[1]
+
+			-- set right placement for new visible client
+			for i = #fullcls, lid, -1 do cls[1]:swap(fullcls[i]) end
+		end
+
+		-- destoy tab if last
+		if #cls == 1 then titlebar.destroy_group(c, position) end
+		awful.layout.arrange_lock = false
 	end
 end
 
@@ -331,21 +360,34 @@ end
 ------------------------------------------------------------
 function titlebar.set_group(cls, position)
 	local position = position or beautiful.titlebar and beautiful.titlebar.position or "top"
+	local raw_cls = {}
 
 	if not cls or #cls < 2 or not check_group_list(cls, position) then return end
 
 	awful.layout.arrange_lock = true
 
-    for i, c in ipairs(cls) do
-		all_titlebars[c][position]:set_group(cls)
+	-- unpack tab if needed
+	for i, c in ipairs(cls) do
+		if all_titlebars[c][position].cls then
+			for _, v in ipairs(all_titlebars[c][position].cls) do table.insert(raw_cls, v) end
+			titlebar.destroy_group(c, position)
+		else
+			table.insert(raw_cls, c)
+		end
+	end
+
+	-- set tab
+    for i, c in ipairs(raw_cls) do
+		all_titlebars[c][position]:set_group(raw_cls)
 		c.hidden = i ~= 1
 	end
 
+	-- update
 	awful.layout.arrange_lock = false
-	cls[1]:emit_signal("property::geometry")
+	raw_cls[1]:emit_signal("property::geometry")
 end
 
--- Toggle to next window in group
+-- Toggle to next window in tab group
 ------------------------------------------------------------
 function titlebar.toggle_group(c, is_reverse, position)
 	local position = position or beautiful.titlebar and beautiful.titlebar.position or "top"
@@ -366,7 +408,45 @@ function titlebar.toggle_group(c, is_reverse, position)
 
 	awful.layout.arrange_lock = false
 	bar.cls[cid].hidden = true
-	client.focus = bar.cls[nid]; bar.cls[nid]:raise()
+	client.focus = bar.cls[nid]
+	bar.cls[nid]:raise()
+end
+
+-- Remove client from tab group
+------------------------------------------------------------
+function titlebar.ungroup(c, position)
+	local all_hidden = true
+	local position = position or beautiful.titlebar and beautiful.titlebar.position or "top"
+	local bar = all_titlebars[c] and all_titlebars[c][position]
+	if not bar or not bar.cls then return false end
+
+	awful.layout.arrange_lock = true
+
+	-- remove client from tab
+	local cls = bar.cls
+	table.remove(cls, awful.util.table.hasitem(cls, c))
+	bar:reset()
+
+	for _, v in ipairs(cls) do
+		local b = all_titlebars[v] and all_titlebars[v][position]
+		b.full:set_names(cls)
+		all_hidden = all_hidden and v.hidden
+		if v.hidden then set_slave(v) end
+	end
+
+	-- set new visible client if need
+	if all_hidden then
+		cls[1].hidden = false
+		client.focus = c
+		c:swap(cls[1])
+	end
+
+	-- destoy tab if last
+	if #cls == 1 then titlebar.destroy_group(cls[1], position) end
+
+	-- update tiling
+	awful.layout.arrange_lock = false
+	c:emit_signal("property::geometry")
 end
 
 -- Destroy group

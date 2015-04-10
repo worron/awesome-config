@@ -28,6 +28,7 @@ navigator.keys = {
 	num = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
 	group_make = { "g", "G" },
 	group_destroy = { "d", "D" },
+	mod  = { total = "Shift" },
 	close = { "Escape", "Super_L" },
 }
 
@@ -208,8 +209,13 @@ navigator.raw_keygrabber = function(mod, key, event)
 			navigator.group_list = {}
 		end
 	elseif awful.util.table.hasitem(navigator.keys.group_destroy, key) then
-		redbar.destroy_group(client.focus)
-		navigator:restart()
+		if awful.util.table.hasitem(mod, navigator.keys.mod.total) then
+			redbar.destroy_group(client.focus)
+		else
+			redbar.ungroup(client.focus)
+		end
+		-- !!! fix this !!! set delay? !!!
+		navigator:restart();navigator:restart()
 	elseif awful.util.table.hasitem(navigator.keys.num, key) then
 		local index = tonumber(key)
 
