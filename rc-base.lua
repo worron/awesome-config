@@ -62,6 +62,7 @@ local terminal = "x-terminal-emulator"
 local editor   = os.getenv("EDITOR") or "geany"
 local editor_cmd = terminal .. " -e " .. editor
 local fm = "nemo"
+local set_slave = true
 
 local modkey = "Mod4"
 
@@ -110,7 +111,7 @@ do
 
 	-- icon finder
 	local function micon(name)
-		return redflat.float.dfparser.lookup_icon(name, icon_style)
+		return redflat.service.dfparser.lookup_icon(name, icon_style)
 	end
 
 	-- menu separator
@@ -130,7 +131,7 @@ do
 
 	-- Application submenu
 	------------------------------------------------------------
-	local appmenu = redflat.float.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
+	local appmenu = redflat.service.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
 
 	-- Awesome submenu
 	------------------------------------------------------------
@@ -384,9 +385,9 @@ do
 	local laybox = redflat.widget.layoutbox
 
 	-- key functions
-	local focus_switch = function(i)
-		return function ()
-			awful.client.focus.byidx(i)
+	local focus_switch_byd = function(dir)
+		return function()
+			awful.client.focus.bydirection(dir)
 			if client.focus then client.focus:raise() end
 		end
 	end
@@ -430,6 +431,15 @@ do
 		end
 	end
 
+	--other
+	local function toggle_placement()
+		set_slave = not set_slave
+		redflat.float.notify:show({
+			text = (set_slave and "Slave" or "Master") .. " placement",
+			icon = beautiful.icon.warning
+		})
+	end
+
 	-- Custom widget keys
 	--------------------------------------------------------------------------------
 	redflat.float.appswitcher.keys.next  = { "a", "A", "Tab" }
@@ -454,12 +464,20 @@ do
 		},
 		{ comment = "Window focus" },
 		{
-			args = { { modkey,           }, "j", focus_switch( 1), },
-			comment = "Focus next client"
+			args = { { modkey,           }, "Right", focus_switch_byd("right"), },
+			comment = "Focus right client"
 		},
 		{
-			args = { { modkey,           }, "k", focus_switch(-1), },
-			comment = "Focus previous client"
+			args = { { modkey,           }, "Left", focus_switch_byd("left"), },
+			comment = "Focus left client"
+		},
+		{
+			args = { { modkey,           }, "Up", focus_switch_byd("up"), },
+			comment = "Focus client above"
+		},
+		{
+			args = { { modkey,           }, "Down", focus_switch_byd("down"), },
+			comment = "Focus client below"
 		},
 		{
 			args = { { modkey,           }, "u", awful.client.urgent.jumpto, },
@@ -471,11 +489,11 @@ do
 		},
 		{ comment = "Tag navigation" },
 		{
-			args = { { modkey,           }, "Left", awful.tag.viewprev },
+			args = { { modkey, "Shift"   }, "Left", awful.tag.viewprev },
 			comment = "View previous tag"
 		},
 		{
-			args = { { modkey,           }, "Right", awful.tag.viewnext },
+			args = { { modkey, "Shift"   }, "Right", awful.tag.viewnext },
 			comment = "View next tag"
 		},
 		{
@@ -530,12 +548,8 @@ do
 		},
 		{ comment = "Window manipulation" },
 		{
-			args = { { modkey, "Shift"   }, "j", function () awful.client.swap.byidx(1) end },
-			comment = "Switch client with next client"
-		},
-		{
-			args = { { modkey, "Shift"   }, "k", function () awful.client.swap.byidx(-1) end },
-			comment = "Switch client with previous client"
+			args = { { modkey,           }, "F3", toggle_placement },
+			comment = "Toggle master/slave placement"
 		},
 		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
@@ -565,6 +579,31 @@ do
 		{
 			args = { { modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, - 1) end },
 			comment = "Switch to previous layout"
+		},
+		{ comment = "Titlebar" },
+		{
+			args = { { modkey,           }, "k", function (c) redflat.titlebar.toggle_group(client.focus) end },
+			comment = "Switch to next client in group"
+		},
+		{
+			args = { { modkey,           }, "j", function (c) redflat.titlebar.toggle_group(client.focus, true) end },
+			comment = "Switch to previous client in group"
+		},
+		{
+			args = { { modkey,           }, "t", function (c) redflat.titlebar.toggle_view(client.focus) end },
+			comment = "Toggle focused titlebar view"
+		},
+		{
+			args = { { modkey, "Shift"   }, "t", function (c) redflat.titlebar.toggle_view_all() end },
+			comment = "Toggle all titlebar view"
+		},
+		{
+			args = { { modkey, "Control" }, "t", function (c) redflat.titlebar.toggle(client.focus) end },
+			comment = "Toggle focused titlebar visible"
+		},
+		{
+			args = { { modkey, "Control", "Shift" }, "t", function (c) redflat.titlebar.toggle_all() end },
+			comment = "Toggle all titlebar visible"
 		},
 		{ comment = "Tile control" },
 		{
@@ -733,7 +772,6 @@ awful.rules.rules = {
 	}
 }
 
-
 -- Windows titlebar config
 -----------------------------------------------------------------------------------------------------------------------
 local titlebar = {
@@ -742,13 +780,6 @@ local titlebar = {
 }
 
 do
-	-- Geometry
-	--------------------------------------------------------------------------------
-	local height = 8
-	local border_margin = { 0, 0, 0, 4 }
-	local icon_size = 30
-	local icon_gap  = 10
-
 	-- Support functions
 	--------------------------------------------------------------------------------
 	local function titlebar_action(c, action)
@@ -767,10 +798,6 @@ do
 		end
 	end
 
-	local function ticon(c, t_func, size, gap)
-		return wibox.layout.margin(wibox.layout.constraint(t_func(c), "exact", size, nil), gap)
-	end
-
 	-- Function to check if titlebar needed for given window
 	--------------------------------------------------------------------------------
 	titlebar.allowed = function(c)
@@ -782,30 +809,15 @@ do
 	--------------------------------------------------------------------------------
 	titlebar.create = function(c)
 
-		-- Construct titlebar layout
-		------------------------------------------------------------
-		local layout = wibox.layout.align.horizontal()
-
-		-- Add focus icon
-		------------------------------------------------------------
-		local focus_layout = wibox.layout.constraint(redflat.titlebar.widget.focused(c), "exact", nil, nil)
-		layout:set_middle(focus_layout)
-
-		-- Add window state icons
-		------------------------------------------------------------
-		local state_layout = wibox.layout.fixed.horizontal()
-		state_layout:add(ticon(c, redflat.titlebar.widget.floating, icon_size, icon_gap))
-		state_layout:add(ticon(c, redflat.titlebar.widget.sticky,   icon_size, icon_gap))
-		state_layout:add(ticon(c, redflat.titlebar.widget.ontop,    icon_size, icon_gap))
-		layout:set_right(state_layout)
-
 		-- Create titlebar
 		------------------------------------------------------------
-		redflat.titlebar(c, { size = height }):set_widget(wibox.layout.margin(layout, unpack(border_margin)))
+		local full_style =  { size = 28, icon = { gap = 0, size = 25, angle = 0.50 } }
+		local model = redflat.titlebar.model(c, { "floating", "sticky", "ontop" }, nil, full_style)
+		redflat.titlebar(c, model):set_widget(model.widget)
 
 		-- Mouse actions setup
 		------------------------------------------------------------
-		layout:buttons(awful.util.table.join(
+		model.widget:buttons(awful.util.table.join(
 			awful.button({}, 1, titlebar_action(c, redflat.service.mouse.move)),
 			awful.button({}, 3, titlebar_action(c, redflat.service.mouse.resize))
 		))
