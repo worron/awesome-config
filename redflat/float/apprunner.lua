@@ -19,7 +19,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local svgbox = require("redflat.gauge.svgbox")
-local dfparser = require("redflat.float.dfparser")
+local dfparser = require("redflat.service.dfparser")
 local redutil = require("redflat.util")
 local decoration = require("redflat.float.decoration")
 

@@ -143,7 +143,7 @@ do
 
 	-- icon finder
 	local function micon(name)
-		return redflat.float.dfparser.lookup_icon(name, icon_style)
+		return redflat.service.dfparser.lookup_icon(name, icon_style)
 	end
 
 	-- menu separator
@@ -165,7 +165,7 @@ do
 
 	-- Application submenu
 	------------------------------------------------------------
-	local appmenu = redflat.float.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
+	local appmenu = redflat.service.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
 
 	-- Awesome submenu
 	------------------------------------------------------------
