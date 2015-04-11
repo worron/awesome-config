@@ -2,6 +2,7 @@
 --                                            RedFlat focus switch util                                              --
 -----------------------------------------------------------------------------------------------------------------------
 -- Visual swap and focus switch helper
+-- Group window with redfalt titlebar
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
@@ -14,16 +15,20 @@ local color = require("gears.color")
 local beautiful = require("beautiful")
 
 local redutil = require("redflat.util")
+local redbar = require("redflat.titlebar")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
 local navigator = {}
 
-local data = {}
+local data = { group = false, gruop_list = {} }
 
 -- default keys
 navigator.keys = {
 	num = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	group_make = { "g", "G" },
+	group_destroy = { "d", "D" },
+	mod  = { total = "Shift" },
 	close = { "Escape", "Super_L" },
 }
 
@@ -195,11 +200,29 @@ end
 -- keygrabber
 -----------------------------------------------------------------------------------------------------------------------
 navigator.raw_keygrabber = function(mod, key, event)
-	if awful.util.table.hasitem(navigator.keys.num, key) then
+	if awful.util.table.hasitem(navigator.keys.group_make, key) then
+		if navigator.group then
+			redbar.set_group(navigator.group_list)
+			navigator:restart()
+		else
+			navigator.group = true
+			navigator.group_list = {}
+		end
+	elseif awful.util.table.hasitem(navigator.keys.group_destroy, key) then
+		if awful.util.table.hasitem(mod, navigator.keys.mod.total) then
+			redbar.destroy_group(client.focus)
+		else
+			redbar.ungroup(client.focus)
+		end
+		-- !!! fix this !!! set delay? !!!
+		navigator:restart();navigator:restart()
+	elseif awful.util.table.hasitem(navigator.keys.num, key) then
 		local index = tonumber(key)
 
 		if data[index] and awful.util.table.hasitem(navigator.cls, data[index].client) then
-			if navigator.last then
+			if navigator.group then
+				table.insert(navigator.group_list, data[index].client)
+			elseif navigator.last then
 				if navigator.last == index then
 					client.focus = data[index].client
 					client.focus:raise()
@@ -257,6 +280,8 @@ function navigator:close(is_soft)
 
 	if not is_soft then awful.keygrabber.stop(navigator.keygrabber) end
 	navigator.last = nil
+	navigator.group = false
+	navigator.group_list = {}
 end
 function navigator:restart()
 	self:close(true)

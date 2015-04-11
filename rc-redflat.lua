@@ -143,7 +143,7 @@ do
 
 	-- icon finder
 	local function micon(name)
-		return redflat.float.dfparser.lookup_icon(name, icon_style)
+		return redflat.service.dfparser.lookup_icon(name, icon_style)
 	end
 
 	-- menu separator
@@ -165,7 +165,7 @@ do
 
 	-- Application submenu
 	------------------------------------------------------------
-	local appmenu = redflat.float.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
+	local appmenu = redflat.service.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
 
 	-- Awesome submenu
 	------------------------------------------------------------
@@ -903,6 +903,31 @@ do
 			args = { { modkey, "Control" }, "Left", function () awful.layout.inc(layouts, - 1) end },
 			comment = "Switch to previous layout"
 		},
+		{ comment = "Titlebar" },
+		{
+			args = { { modkey,           }, "k", function (c) redflat.titlebar.toggle_group(client.focus) end },
+			comment = "Switch to next client in group"
+		},
+		{
+			args = { { modkey,           }, "j", function (c) redflat.titlebar.toggle_group(client.focus, true) end },
+			comment = "Switch to previous client in group"
+		},
+		{
+			args = { { modkey,           }, "t", function (c) redflat.titlebar.toggle_view(client.focus) end },
+			comment = "Toggle focused titlebar view"
+		},
+		{
+			args = { { modkey, "Shift"   }, "t", function (c) redflat.titlebar.toggle_view_all() end },
+			comment = "Toggle all titlebar view"
+		},
+		{
+			args = { { modkey, "Control" }, "t", function (c) redflat.titlebar.toggle(client.focus) end },
+			comment = "Toggle focused titlebar visible"
+		},
+		{
+			args = { { modkey, "Control", "Shift" }, "t", function (c) redflat.titlebar.toggle_all() end },
+			comment = "Toggle all titlebar visible"
+		},
 		{ comment = "Tile control" },
 		{
 			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
@@ -946,7 +971,7 @@ do
 			comment = "Toggle client floating status"
 		},
 		{
-			args = { { modkey,           }, "t", function (c) c.ontop = not c.ontop end },
+			args = { { modkey, "Control" }, "p", function (c) c.ontop = not c.ontop end },
 			comment = "Toggle client ontop status"
 		},
 		{
@@ -1100,12 +1125,13 @@ do
 
 		-- Create titlebar
 		------------------------------------------------------------
-		local layout = redflat.titlebar.constructor(c, { "floating", "sticky", "ontop" })
-		redflat.titlebar(c):set_widget(layout)
+		local full_style =  { size = 28, icon = { gap = 0, size = 25, angle = 0.50 } }
+		local model = redflat.titlebar.model(c, { "floating", "sticky", "ontop" }, nil, full_style)
+		redflat.titlebar(c, model):set_widget(model.widget)
 
 		-- Mouse actions setup
 		------------------------------------------------------------
-		layout:buttons(awful.util.table.join(
+		model.widget:buttons(awful.util.table.join(
 			awful.button({}, 1, titlebar_action(c, redflat.service.mouse.move)),
 			awful.button({}, 3, titlebar_action(c, redflat.service.mouse.resize))
 		))
@@ -1170,6 +1196,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awesome.connect_signal("exit",
 	function()
 		redflat.titlebar.hide_all()
+		for _, c in ipairs(client:get(mouse.screen)) do c.hidden = false end
 	end
 )
 

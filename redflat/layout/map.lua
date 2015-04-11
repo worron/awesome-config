@@ -211,7 +211,9 @@ function data:movelast(is_infront)
 		table.insert(self[self.ctag], data.fid, newitem)
 
 		-- move last client into focused position
+		self.lock = true
 		for i = #snapshot - 1, data.fid, -1 do moved.client:swap(snapshot[i]) end
+		self.lock = false
 	else
 		-- create new object behind focused
 		data:split(data.fid)
@@ -310,13 +312,16 @@ function data:close()
 				table.remove(newsnap, self.fid)
 
 				-- restore client placement order
+				self.lock = true
 				for i = self.fid + 1, #self[self.ctag] do
 					if newsnap[i] ~= oldsnap[i] then
 						newsnap[i]:swap(oldsnap[i])
 					end
 				end
+				self.lock = false
 
 				-- kill client
+				client.focus = chd.client
 				removed.client:kill()
 			else
 				-- all children except last have new parent
@@ -399,7 +404,7 @@ function map.arrange(p)
     local tagmap = data[data.ctag]
 
 	-- nothing to tile here
-	if #cls == 0 then return end
+	if #cls == 0 or data.lock then return end
 
 	-- workarea size correction depending on useless gap and global border
 	wa.height = wa.height - 2 * global_border - useless_gap

@@ -21,7 +21,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 local gears = require("gears")
 
-local dfparser = require("redflat.float.dfparser")
+local dfparser = require("redflat.service.dfparser")
 local redutil = require("redflat.util")
 local redtitlebar = require("redflat.titlebar")
 

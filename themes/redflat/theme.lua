@@ -242,9 +242,12 @@ theme.menu.color = {
 theme.titlebar = {
 	size          = 8,
 	position      = "top",
+	font          = "Play Bold 14",
 	icon          = { size = 30, gap = 10 },
 	border_margin = { 0, 0, 0, 4 },
-	color         = theme.color
+	--color         = theme.color
+	color         = { text = theme.color.text, main = theme.color.main, gray = theme.color.gray,
+	                  wibox = theme.color.wibox }
 }
 
 -- Gauge style
