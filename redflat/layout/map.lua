@@ -22,6 +22,8 @@ local hasitem = awful.util.table.hasitem
 local map = {}
 map.name = "usermap"
 map.fstep = 0.02
+map.smartclose = false
+map.autoaim = false
 
 local data = setmetatable({}, { __mode = 'k' })
 data.aim = 0
@@ -36,7 +38,6 @@ map.keys = {
 	resize_down  = { "j", "J" },
 	resize_left  = { "h", "H" },
 	resize_right = { "l", "L" },
-	close        = { "c", "C" },
 	aim          = { "f", "F" },
 	swap         = { "s", "S" },
 	last         = { "i", "I" },
@@ -111,6 +112,22 @@ local function construct_item()
 	return item
 end
 
+-- Find the biggest window index
+--------------------------------------------------------------------------------
+local function get_max_object(tagmap, current_id)
+	local s = 0
+	local max_id
+
+	for i = 1, current_id do
+		local g = tagmap[i]:get_geometry()
+		local cs = g.width * g.height
+
+		if cs > s then max_id = i; s = cs end
+	end
+
+	return max_id
+end
+
 -- Select object (index) which will be used as sourse for new windows geometry
 --------------------------------------------------------------------------------
 function data:set_aim()
@@ -178,7 +195,18 @@ function data:incfactor(value, is_vertical)
 	self.ctag:emit_signal("property::layout")
 end
 
--- Move last opened client to focusd client as child
+-- Save current client list
+--------------------------------------------------------------------------------
+function data:make_snapshot()
+	snapshot = {}
+	for i, o in ipairs(self[self.ctag]) do
+		snapshot[i] = o.client
+	end
+
+	return snapshot
+end
+
+-- Move last opened client to focused client as child
 --------------------------------------------------------------------------------
 function data:movelast(is_infront)
 	self:update_focus()
@@ -238,19 +266,49 @@ function data:swap(is_total)
 	self.ctag:emit_signal("property::layout")
 end
 
--- Close client with placement shifting
--- !!! Bad code here. Should be rewritten. !!!
+-- Create new window object by cutting area from parent object
+-- @index Index of parent object
+--------------------------------------------------------------------------------
+function data:split(index)
+	local tagmap = self[self.ctag]
+	local g = tagmap[index]:get_geometry()
+	local is_vertical = g.width <= g.height
+	local new = construct_item()
+
+	new.vertical = is_vertical
+	new.factor = { x = tagmap[index].factor.x, y = tagmap[index].factor.y }
+	new.parent = tagmap[index]
+	table.insert(tagmap[index].child, new)
+	table.insert(tagmap, new)
+
+	-- reset aim
+	self.aim = 0
+end
+
+-- Make placement shifting after one of the client was closed
 --------------------------------------------------------------------------------
 
--- Save current client list
+-- Find difference in two client list
 ------------------------------------------------------------
-function data:make_snapshot()
-	snapshot = {}
-	for i, o in ipairs(self[self.ctag]) do
-		snapshot[i] = o.client
+local function first_diff(list1, list2)
+	for i, c in ipairs(list1) do
+		if list2[i] ~= c then return i end
 	end
+end
 
-	return snapshot
+-- Check if one of clients was closed
+------------------------------------------------------------
+function data:is_single_closed(cls)
+	if data[data.ctag].lastcls and #data[data.ctag].lastcls == #cls + 1 then
+		local diff_id = first_diff(cls, data[data.ctag].lastcls)
+		if not diff_id then return end
+
+		for i = diff_id, #cls do
+			if cls[i] ~= data[data.ctag].lastcls[i + 1] then return end
+		end
+
+		return diff_id
+	end
 end
 
 -- Factor correction after object replacement
@@ -275,21 +333,13 @@ local function factor_transfer(object, factor, real_child_num)
 	end
 end
 
--- Close client with placement shifting
+
+-- Remove placement object with client shifting
 ------------------------------------------------------------
-function data:close()
-	self:update_focus()
-	if not self.fid then return end
+function data:delete_item(cls, id)
+	local removed = self[self.ctag][id]
 
-	-- alias for closing object
-	local removed = self[self.ctag][self.fid]
-
-	-- check if object have any child objects
 	if #removed.child > 0 then
-		-- save client list
-		local oldsnap = self:make_snapshot()
-		local newsnap = self:make_snapshot()
-
 		for i, chd in ipairs(removed.child) do
 			if i == #removed.child then
 				-- replace removing object with its last child
@@ -298,7 +348,7 @@ function data:close()
 				chd.vertical = removed.vertical
 				chd.parent = removed.parent
 				factor_transfer(chd, removed.factor, #removed.child)
-				self[self.ctag][self.fid] = chd
+				self[self.ctag][id] = chd
 
 				if removed.parent then
 					local rindex = hasitem(removed.parent.child, removed)
@@ -307,22 +357,12 @@ function data:close()
 					chd.geometry = removed.geometry
 				end
 
-				-- remove closing client from snapshot
-				table.remove(oldsnap, cindex)
-				table.remove(newsnap, self.fid)
-
 				-- restore client placement order
 				self.lock = true
-				for i = self.fid + 1, #self[self.ctag] do
-					if newsnap[i] ~= oldsnap[i] then
-						newsnap[i]:swap(oldsnap[i])
-					end
-				end
+				local c = cls[cindex - 1]
+				for i = cindex - 2, id, -1 do c:swap(cls[i]) end
+				client.focus = cls[id]
 				self.lock = false
-
-				-- kill client
-				client.focus = chd.client
-				removed.client:kill()
 			else
 				-- all children except last have new parent
 				chd.parent = removed.child[#removed.child]
@@ -334,30 +374,9 @@ function data:close()
 		if removed.parent then
 			table.remove(removed.parent.child, hasitem(removed.parent.child, removed))
 		end
-		table.remove(self[self.ctag], self.fid)
-
-		-- kill client
-		removed.client:kill()
+		table.remove(self[self.ctag], id)
 	end
-end
 
--- Create new window object by cutting area from parent object
--- @index Index of parent object
---------------------------------------------------------------------------------
-function data:split(index)
-	local tagmap = self[self.ctag]
-	local g = tagmap[index]:get_geometry()
-	local is_vertical = g.width <= g.height
-	local new = construct_item()
-
-	new.vertical = is_vertical
-	new.factor = { x = tagmap[index].factor.x, y = tagmap[index].factor.y }
-	new.parent = tagmap[index]
-	table.insert(tagmap[index].child, new)
-	table.insert(tagmap, new)
-
-	-- reset aim
-	self.aim = 0
 end
 
 -- Keygrabber
@@ -369,6 +388,7 @@ data.keygrabber = function(mod, key, event)
 	elseif hasitem(map.keys.exit, key) then
 		if data.on_close then data.on_close() end
 		awful.keygrabber.stop(data.keygrabber)
+		data.smartclose = false
 	elseif navigator.raw_keygrabber(mod, key, event) then
 	elseif hasitem(map.keys.move_up, key)    then awful.client.swap.bydirection("up")
 	elseif hasitem(map.keys.move_down, key)  then awful.client.swap.bydirection("down")
@@ -376,7 +396,6 @@ data.keygrabber = function(mod, key, event)
 	elseif hasitem(map.keys.move_right, key) then awful.client.swap.bydirection("right")
 	elseif hasitem(map.keys.aim, key)   then data:set_aim()
 	elseif hasitem(map.keys.swap, key)  then data:swap(total)
-	elseif hasitem(map.keys.close, key) then data:close()
 	elseif hasitem(map.keys.last, key)  then data:movelast(total)
 	elseif hasitem(map.keys.fair, key)  then data:set_fair()
 	elseif hasitem(map.keys.resize_up, key)    then data:incfactor(step, true)
@@ -406,6 +425,14 @@ function map.arrange(p)
 	-- nothing to tile here
 	if #cls == 0 or data.lock then return end
 
+	-- make shift palcement if need
+	if  map.smartclose or data.smartclose then
+		local closed_id = data:is_single_closed(cls)
+		if closed_id then data:delete_item(cls, closed_id) end
+	end
+
+    tagmap.lastcls = cls
+
 	-- workarea size correction depending on useless gap and global border
 	wa.height = wa.height - 2 * global_border - useless_gap
 	wa.width  = wa.width -  2 * global_border - useless_gap
@@ -417,7 +444,7 @@ function map.arrange(p)
 	for i, c in ipairs(cls) do
 		if not tagmap[i] then
 			if i > 1 then
-				local aim = tagmap[data.aim] and data.aim or #tagmap
+				local aim = tagmap[data.aim] and data.aim or map.autoaim and get_max_object(tagmap, i - 1) or #tagmap
 				data:split(aim)
 			else
 				tagmap[i] = construct_item()
@@ -474,6 +501,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 function map.key_handler(c, on_close)
 	data.on_close = on_close
+	data.smartclose = true
 	awful.keygrabber.run(data.keygrabber)
 end
 

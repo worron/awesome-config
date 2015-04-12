@@ -113,6 +113,9 @@ red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard
 -- Set floating layouts for navigator
 redflat.service.navigator.float_layout = { redflat.layout.grid }
 
+-- Set layouts prop
+--redflat.layout.map.autoaim = true
+
 -- Tags
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {
@@ -249,7 +252,7 @@ taglist.buttons = awful.util.table.join(
 	awful.button({           }, 1, awful.tag.viewonly    ),
 	awful.button({           }, 2, awful.tag.viewtoggle  ),
 	awful.button({ modkey    }, 3, awful.client.toggletag),
-	awful.button({           }, 3, function(t) redflat.widget.layoutbox:toggle_menu(t)         end),
+	awful.button({           }, 3, function(t) redflat.widget.layoutbox:toggle_menu(t)    end),
 	awful.button({           }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
 	awful.button({           }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
 )
@@ -289,7 +292,7 @@ volume.layout = wibox.layout.margin(volume.widget, unpack(pmargin.volume or {}))
 volume.widget:buttons(awful.util.table.join(
 	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
 	awful.button({}, 5, function() redflat.widget.pulse:change_volume({ down = true }) end),
-	awful.button({}, 3, function() redflat.float.exaile:show()                      end),
+	awful.button({}, 3, function() redflat.float.exaile:show()                         end),
 	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end),
 	awful.button({}, 1, function() redflat.float.exaile:action("PlayPause") end),
 	awful.button({}, 8, function() redflat.float.exaile:action("Prev")      end),

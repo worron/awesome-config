@@ -26,6 +26,7 @@ local data = { group = false, gruop_list = {} }
 -- default keys
 navigator.keys = {
 	num = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	kill = { "c", "C" },
 	group_make = { "g", "G" },
 	group_destroy = { "d", "D" },
 	mod  = { total = "Shift" },
@@ -216,6 +217,9 @@ navigator.raw_keygrabber = function(mod, key, event)
 		end
 		-- !!! fix this !!! set delay? !!!
 		navigator:restart();navigator:restart()
+	elseif awful.util.table.hasitem(navigator.keys.kill, key) then
+		client.focus:kill()
+		navigator:restart()
 	elseif awful.util.table.hasitem(navigator.keys.num, key) then
 		local index = tonumber(key)
 
