@@ -138,6 +138,7 @@ local function move_to(data, dir, mod)
 
 	local g = redutil.client.fullgeometry(c, g)
 	local is_rail = hasitem(mod, grid.keys.mod.rail) ~= nil
+	local k = hasitem(mod, grid.keys.mod.reverse) and 5 or 1
 
 	if dir == "left" then
 		if is_rail then
@@ -148,7 +149,7 @@ local function move_to(data, dir, mod)
 				end
 			end
 		else
-			ng.x = g.x - data.cell.x
+			ng.x = g.x - data.cell.x * k
 		end
 	elseif dir == "right" then
 		if is_rail then
@@ -159,7 +160,7 @@ local function move_to(data, dir, mod)
 				end
 			end
 		else
-			ng.x = g.x + data.cell.x
+			ng.x = g.x + data.cell.x * k
 		end
 	elseif dir == "up" then
 		if is_rail then
@@ -170,7 +171,7 @@ local function move_to(data, dir, mod)
 				end
 			end
 		else
-			ng.y = g.y - data.cell.y
+			ng.y = g.y - data.cell.y * k
 		end
 	elseif dir == "down" then
 		if is_rail then
@@ -181,7 +182,7 @@ local function move_to(data, dir, mod)
 				end
 			end
 		else
-			ng.y = g.y + data.cell.y
+			ng.y = g.y + data.cell.y * k
 		end
 	end
 

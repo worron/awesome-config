@@ -377,6 +377,7 @@ function titlebar.set_group(cls, position)
 	end
 
 	-- set tab
+	client.focus = raw_cls[1]
     for i, c in ipairs(raw_cls) do
 		all_titlebars[c][position]:set_group(raw_cls)
 		c.hidden = i ~= 1

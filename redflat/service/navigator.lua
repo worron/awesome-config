@@ -25,7 +25,8 @@ local data = { group = false, gruop_list = {} }
 
 -- default keys
 navigator.keys = {
-	num = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "F1", "F3", "F4", "F5" },
+	kill = { "c", "C" },
 	group_make = { "g", "G" },
 	group_destroy = { "d", "D" },
 	mod  = { total = "Shift" },
@@ -131,7 +132,7 @@ function navigator.make_paint(c)
 		cr:fill()
 
 		-- label
-		local index = awful.util.table.hasitem(navigator.cls, data.client)
+		local index = navigator.keys.num[awful.util.table.hasitem(navigator.cls, data.client)]
 		local g = redutil.client.fullgeometry(data.client)
 
 		cr:set_source(color(style.color.text))
@@ -200,6 +201,8 @@ end
 -- keygrabber
 -----------------------------------------------------------------------------------------------------------------------
 navigator.raw_keygrabber = function(mod, key, event)
+	local index = awful.util.table.hasitem(navigator.keys.num, key)
+
 	if awful.util.table.hasitem(navigator.keys.group_make, key) then
 		if navigator.group then
 			redbar.set_group(navigator.group_list)
@@ -214,10 +217,12 @@ navigator.raw_keygrabber = function(mod, key, event)
 		else
 			redbar.ungroup(client.focus)
 		end
-		-- !!! fix this !!! set delay? !!!
-		navigator:restart();navigator:restart()
-	elseif awful.util.table.hasitem(navigator.keys.num, key) then
-		local index = tonumber(key)
+		navigator:restart()
+	elseif awful.util.table.hasitem(navigator.keys.kill, key) then
+		client.focus:kill()
+		navigator:restart()
+	elseif index then
+		local index = awful.util.table.hasitem(navigator.keys.num, key)
 
 		if data[index] and awful.util.table.hasitem(navigator.cls, data[index].client) then
 			if navigator.group then
