@@ -217,8 +217,7 @@ navigator.raw_keygrabber = function(mod, key, event)
 		else
 			redbar.ungroup(client.focus)
 		end
-		-- !!! fix this !!! set delay? !!!
-		navigator:restart();navigator:restart()
+		navigator:restart()
 	elseif awful.util.table.hasitem(navigator.keys.kill, key) then
 		client.focus:kill()
 		navigator:restart()
