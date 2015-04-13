@@ -240,7 +240,7 @@ function data:movelast(is_infront)
 
 		-- move last client into focused position
 		self.lock = true
-		for i = #snapshot - 1, data.fid, -1 do moved.client:swap(snapshot[i]) end
+		for i = #snapshot, data.fid, -1 do moved.client:swap(snapshot[i]) end
 		self.lock = false
 	else
 		-- create new object behind focused
