@@ -184,13 +184,13 @@ function navigator.make_decor(c)
 		object.client:connect_signal("unmanage", object.update.close)
 	end
 
-	function object:clear()
+	function object:clear(no_hide)
 		object.client:disconnect_signal("focus", object.update.focus)
 		object.client:disconnect_signal("unfocus", object.update.focus)
 		object.client:disconnect_signal("property::geometry", object.update.geometry)
 		object.client:disconnect_signal("unmanage", object.update.close)
 		object.widget:set_client()
-		object.wibox.visible = false
+		if not no_hide then object.wibox.visible = false end
 	end
 
 	------------------------------------------------------------
@@ -288,9 +288,31 @@ function navigator:close(is_soft)
 	navigator.group = false
 	navigator.group_list = {}
 end
+
 function navigator:restart()
-	self:close(true)
-	self:run(true)
+	--clear navigator info
+	navigator.last = nil
+	navigator.group = false
+	navigator.group_list = {}
+
+	-- update decoration
+	for i, c in ipairs(self.cls) do data[i]:clear(true) end
+	local newcls = awful.client.tiled(mouse.screen)
+	for i = 1, math.max(#self.cls, #newcls) do
+		if newcls[i] then
+			if not data[i] then
+				data[i] = self.make_decor(newcls[i])
+			else
+				data[i]:set_client(newcls[i])
+			end
+
+			data[i].wibox.visible = true
+		else
+			data[i].wibox.visible = false
+		end
+	end
+
+	self.cls = newcls
 end
 
 -- End

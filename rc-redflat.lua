@@ -1093,7 +1093,7 @@ awful.rules.rules = {
 -----------------------------------------------------------------------------------------------------------------------
 local titlebar = {
 	enabled    = true,
-	exceptions = { "Plugin-container", "Steam" }
+	exceptions = { "Plugin-container", "Steam", "Key-mon" }
 }
 
 do
