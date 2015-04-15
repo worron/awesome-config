@@ -81,6 +81,9 @@ local layouts = {
 	awful.layout.suit.max.fullscreen,
 }
 
+-- Set floating layouts for sawp util
+redflat.util.floating_layout = { redflat.layout.grid }
+
 -- Tags
 -----------------------------------------------------------------------------------------------------------------------
 local tags = {

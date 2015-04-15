@@ -110,8 +110,8 @@ red_key_handler[lain.layout.uselesstile]        = redflat.layout.common.keyboard
 red_key_handler[lain.layout.uselesstile.left]   = redflat.layout.common.keyboard.handler.tile.left
 red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard.handler.tile.bottom
 
--- Set floating layouts for navigator
-redflat.service.navigator.float_layout = { redflat.layout.grid }
+-- Set floating layouts for sawp util
+redflat.util.floating_layout = { redflat.layout.grid }
 
 -- Set layouts prop
 --redflat.layout.map.autoaim = true

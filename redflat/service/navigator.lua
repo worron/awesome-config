@@ -33,8 +33,6 @@ navigator.keys = {
 	close = { "Escape", "Super_L" },
 }
 
-navigator.float_layout = {}
-
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
@@ -54,17 +52,6 @@ end
 
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
-local function smart_swap(c1, c2)
-	local lay = awful.layout.get(c1.screen)
-	if awful.util.table.hasitem(navigator.float_layout, lay) then
-		local g1, g2 = redutil.client.fullgeometry(c1), redutil.client.fullgeometry(c2)
-
-		redutil.client.fullgeometry(c1, g2)
-		redutil.client.fullgeometry(c2, g1)
-	else
-		c1:swap(c2)
-	end
-end
 
 -- Window painting
 --------------------------------------------------------------------------------
@@ -232,8 +219,7 @@ navigator.raw_keygrabber = function(mod, key, event)
 					client.focus = data[index].client
 					client.focus:raise()
 				else
-					--data[navigator.last].client:swap(data[index].client)
-					smart_swap(data[navigator.last].client, data[index].client)
+					redutil.client.swap(data[navigator.last].client, data[index].client)
 				end
 				navigator.last = nil
 			else
