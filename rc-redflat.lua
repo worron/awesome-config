@@ -691,7 +691,7 @@ do
 
 	local function kill_all()
 		for _, c in ipairs(client.get()) do
-			if current(c, mouse.screen) then c:kill() end
+			if current(c, mouse.screen) and not c.sticky then c:kill() end
 		end
 	end
 
@@ -1074,6 +1074,10 @@ awful.rules.rules = {
 		properties = { floating = true }
 	},
     {
+		rule       = { class = "Key-mon" },
+		properties = { sticky = true }
+	},
+    {
 		rule = { class = "Exaile" },
 		callback = function(c)
 			for _, exist in ipairs(awful.client.visible(c.screen)) do
@@ -1199,7 +1203,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awesome.connect_signal("exit",
 	function()
 		redflat.titlebar.hide_all()
-		for _, c in ipairs(client:get(mouse.screen)) do c.hidden = false end
+		--for _, c in ipairs(client:get(mouse.screen)) do c.hidden = false end
 	end
 )
 
