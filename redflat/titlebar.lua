@@ -41,11 +41,11 @@ client.connect_signal("list", function() snapshot = client.get() end)
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		size          = 16,
+		size          = 8,
 		position      = "top",
 		icon          = { size = 20, gap = 10, angle = 0 },
 		font          = "Sans 12 bold",
-		border_margin = { 0, 0, 0, 8 },
+		border_margin = { 0, 0, 0, 4 },
 		color         = { main = "#b1222b", wibox = "#202020", gray = "#575757", text = "#aaaaaa" }
 	}
 

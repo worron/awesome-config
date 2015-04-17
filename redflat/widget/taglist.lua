@@ -35,7 +35,7 @@ local function default_style()
 		widget    = redtag.new,
 		separator = nil
 	}
-	return redutil.table.merge(style, beautiful.widget.taglist or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.taglist") or {})
 end
 
 -- Support functions
