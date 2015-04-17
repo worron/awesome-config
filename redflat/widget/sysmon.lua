@@ -26,7 +26,7 @@ local function default_style()
 	local style = {
 		timeout = 5
 	}
-	return redutil.table.merge(style, beautiful.widget.sysmon or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "widget.sysmon") or {})
 end
 
 -- Create a new cpu monitor widget

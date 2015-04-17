@@ -57,6 +57,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/redflat"
 beautiful.init(theme_path .. "/theme.lua")
+--beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 local terminal = "x-terminal-emulator"
 local editor   = os.getenv("EDITOR") or "geany"
@@ -149,7 +150,7 @@ do
 	------------------------------------------------------------
 	mainmenu = redflat.menu({ hide_timeout = 1, theme = menu_theme,
 		items = {
-			{ "Awesome",       awesomemenu, beautiful.icon.awesome },
+			{ "Awesome",       awesomemenu, beautiful.icon and beautiful.icon.awesome },
 			{ "Applications",  appmenu,     micon("distributor-logo") },
 			menu_sep,
 			{ "Open terminal", terminal,    micon("gnome-terminal") }
@@ -550,10 +551,10 @@ do
 			comment = "Switch to previous through all tags"
 		},
 		{ comment = "Window manipulation" },
-		{
-			args = { { modkey,           }, "F3", toggle_placement },
-			comment = "Toggle master/slave placement"
-		},
+		--{
+		--	args = { { modkey,           }, "F3", toggle_placement },
+		--	comment = "Toggle master/slave placement"
+		--},
 		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
 			comment = "Swap focused client with master"
