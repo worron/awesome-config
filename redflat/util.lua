@@ -21,6 +21,7 @@ local beautiful = require("beautiful")
 -----------------------------------------------------------------------------------------------------------------------
 local util = { text = {}, cairo = {}, table = {}, desktop = {}, placement = {}, client = {} }
 
+util.floating_layout = {}
 
 -- Read from file
 -----------------------------------------------------------------------------------------------------------------------
@@ -312,6 +313,20 @@ function util.client.fullgeometry(c, g)
 	size_correction(c, ng, true)
 
 	return ng
+end
+
+-- Smart swap include floating layout
+--------------------------------------------------------------------------------
+function util.client.swap(c1, c2)
+	local lay = awful.layout.get(c1.screen)
+	if awful.util.table.hasitem(util.floating_layout, lay) then
+		local g1, g2 = util.client.fullgeometry(c1), util.client.fullgeometry(c2)
+
+		util.client.fullgeometry(c1, g2)
+		util.client.fullgeometry(c2, g1)
+	end
+
+	c1:swap(c2)
 end
 
 

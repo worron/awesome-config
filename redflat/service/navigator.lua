@@ -33,8 +33,6 @@ navigator.keys = {
 	close = { "Escape", "Super_L" },
 }
 
-navigator.float_layout = {}
-
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
@@ -54,17 +52,6 @@ end
 
 -- Support functions
 -----------------------------------------------------------------------------------------------------------------------
-local function smart_swap(c1, c2)
-	local lay = awful.layout.get(c1.screen)
-	if awful.util.table.hasitem(navigator.float_layout, lay) then
-		local g1, g2 = redutil.client.fullgeometry(c1), redutil.client.fullgeometry(c2)
-
-		redutil.client.fullgeometry(c1, g2)
-		redutil.client.fullgeometry(c2, g1)
-	else
-		c1:swap(c2)
-	end
-end
 
 -- Window painting
 --------------------------------------------------------------------------------
@@ -184,13 +171,13 @@ function navigator.make_decor(c)
 		object.client:connect_signal("unmanage", object.update.close)
 	end
 
-	function object:clear()
+	function object:clear(no_hide)
 		object.client:disconnect_signal("focus", object.update.focus)
 		object.client:disconnect_signal("unfocus", object.update.focus)
 		object.client:disconnect_signal("property::geometry", object.update.geometry)
 		object.client:disconnect_signal("unmanage", object.update.close)
 		object.widget:set_client()
-		object.wibox.visible = false
+		if not no_hide then object.wibox.visible = false end
 	end
 
 	------------------------------------------------------------
@@ -232,8 +219,7 @@ navigator.raw_keygrabber = function(mod, key, event)
 					client.focus = data[index].client
 					client.focus:raise()
 				else
-					--data[navigator.last].client:swap(data[index].client)
-					smart_swap(data[navigator.last].client, data[index].client)
+					redutil.client.swap(data[navigator.last].client, data[index].client)
 				end
 				navigator.last = nil
 			else
@@ -288,9 +274,31 @@ function navigator:close(is_soft)
 	navigator.group = false
 	navigator.group_list = {}
 end
+
 function navigator:restart()
-	self:close(true)
-	self:run(true)
+	--clear navigator info
+	navigator.last = nil
+	navigator.group = false
+	navigator.group_list = {}
+
+	-- update decoration
+	for i, c in ipairs(self.cls) do data[i]:clear(true) end
+	local newcls = awful.client.tiled(mouse.screen)
+	for i = 1, math.max(#self.cls, #newcls) do
+		if newcls[i] then
+			if not data[i] then
+				data[i] = self.make_decor(newcls[i])
+			else
+				data[i]:set_client(newcls[i])
+			end
+
+			data[i].wibox.visible = true
+		else
+			data[i].wibox.visible = false
+		end
+	end
+
+	self.cls = newcls
 end
 
 -- End

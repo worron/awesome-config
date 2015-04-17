@@ -403,14 +403,16 @@ function titlebar.toggle_group(c, is_reverse, position)
 		nid = cid % #bar.cls + 1
 	end
 
-	awful.layout.arrange_lock = true
-	bar.cls[nid].hidden = false
-	bar.cls[nid]:swap(bar.cls[cid])
+	local n = bar.cls[nid]
 
+	awful.layout.arrange_lock = true
+	c.hidden = true
+	redutil.client.swap(c, n)
 	awful.layout.arrange_lock = false
-	bar.cls[cid].hidden = true
-	client.focus = bar.cls[nid]
-	bar.cls[nid]:raise()
+
+	n.hidden = false
+	client.focus = n
+	n:raise()
 end
 
 -- Remove client from tab group

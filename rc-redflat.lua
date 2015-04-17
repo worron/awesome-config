@@ -110,8 +110,8 @@ red_key_handler[lain.layout.uselesstile]        = redflat.layout.common.keyboard
 red_key_handler[lain.layout.uselesstile.left]   = redflat.layout.common.keyboard.handler.tile.left
 red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard.handler.tile.bottom
 
--- Set floating layouts for navigator
-redflat.service.navigator.float_layout = { redflat.layout.grid }
+-- Set floating layouts for sawp util
+redflat.util.floating_layout = { redflat.layout.grid }
 
 -- Set layouts prop
 --redflat.layout.map.autoaim = true
@@ -691,7 +691,7 @@ do
 
 	local function kill_all()
 		for _, c in ipairs(client.get()) do
-			if current(c, mouse.screen) then c:kill() end
+			if current(c, mouse.screen) and not c.sticky then c:kill() end
 		end
 	end
 
@@ -1074,6 +1074,10 @@ awful.rules.rules = {
 		properties = { floating = true }
 	},
     {
+		rule       = { class = "Key-mon" },
+		properties = { sticky = true }
+	},
+    {
 		rule = { class = "Exaile" },
 		callback = function(c)
 			for _, exist in ipairs(awful.client.visible(c.screen)) do
@@ -1093,7 +1097,7 @@ awful.rules.rules = {
 -----------------------------------------------------------------------------------------------------------------------
 local titlebar = {
 	enabled    = true,
-	exceptions = { "Plugin-container", "Steam" }
+	exceptions = { "Plugin-container", "Steam", "Key-mon" }
 }
 
 do
@@ -1199,7 +1203,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awesome.connect_signal("exit",
 	function()
 		redflat.titlebar.hide_all()
-		for _, c in ipairs(client:get(mouse.screen)) do c.hidden = false end
+		--for _, c in ipairs(client:get(mouse.screen)) do c.hidden = false end
 	end
 )
 
