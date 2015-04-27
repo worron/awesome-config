@@ -64,7 +64,7 @@ theme.cf_appswitcher = { font = "Play", size = 22, face = 1 } -- application swi
 theme.cf_monitor     = { font = "Play", size = 20, face = 1 } -- monitoring widget font
 
 -- environment vars
-theme.panel_heigh         = 50 -- panel height
+theme.panel_height        = 50 -- panel height
 theme.border_width        = 4  -- window border width
 theme.useless_gap_width   = 12 -- Lain useless gap
 theme.global_border_width = 0  -- Lain global border gap

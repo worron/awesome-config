@@ -159,7 +159,8 @@ do
 	}
 
 	-- run commands
-	local ranger_command   = "urxvt -fn 'xft:Ubuntu Mono:pixelsize=20' -e ranger"
+	--local ranger_command   = "urxvt -fn 'xft:Ubuntu Mono:pixelsize=20' -e ranger"
+	local ranger_command   = "urxvt -e ranger"
 	local suspend_command  = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
 	                          /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
 
@@ -391,7 +392,7 @@ for s = 1, screen.count() do
 	tasklist[s] = redflat.widget.tasklist(s, redflat.widget.tasklist.filter.currenttags, tasklist.buttons)
 
 	-- Create the wibox
-	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_heigh or 50 })
+	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_height or 50})
 
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
@@ -478,7 +479,7 @@ do
 		interface = "sdb",
 		meter_function = system.disk_speed,
 		timeout   = 2,
-		label     = "SOLID DISK"
+		label     = "SOLID DRIVE"
 	}
 
 	ssdspeed.style = { unit = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } } }
@@ -491,7 +492,7 @@ do
 		interface = "sdc",
 		meter_function = system.disk_speed,
 		timeout = 2,
-		label = "HARD DISK"
+		label = "HARD DRIVE"
 	}
 
 	hddspeed.style = awful.util.table.clone(ssdspeed.style)
