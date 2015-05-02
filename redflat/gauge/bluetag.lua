@@ -1,4 +1,4 @@
-
+-----------------------------------------------------------------------------------------------------------------------
 --                                                   RedFlat tag widget                                              --
 -----------------------------------------------------------------------------------------------------------------------
 -- Custom widget to display tag info
@@ -18,7 +18,7 @@ local redutil = require("redflat.util")
 
 -- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
-local redtag = { mt = {} }
+local bluetag = { mt = {} }
 
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
@@ -36,13 +36,11 @@ local function default_style()
 	return redutil.table.merge(style, redutil.check(beautiful, "gauge.bluetag") or {})
 end
 
--- Support functions
------------------------------------------------------------------------------------------------------------------------
 
 -- Create a new tag widget
 -- @param style Table containing colors and geometry parameters for all elemets
 -----------------------------------------------------------------------------------------------------------------------
-function redtag.new(style)
+function bluetag.new(style)
 
 	-- Initialize vars
 	--------------------------------------------------------------------------------
@@ -83,14 +81,14 @@ function redtag.new(style)
 	-- Draw
 	------------------------------------------------------------
 	widg.draw = function(widg, wibox, cr, width, height)
+		local n = #data.state.list
 
 		-- text
-		cr:set_source(color(data.state.active and style.color.main or style.color.icon))
+		cr:set_source(color(data.state.active and style.color.main or n == 0 and style.color.gray or style.color.icon))
 		redutil.cairo.set_font(cr, style.font)
-		redutil.cairo.tcenter_horizontal(cr, { width/2, style.text_gap }, data.state.text)
+		redutil.cairo.tcenter_horizontal(cr, { width / 2, style.text_gap }, data.state.text)
 
 		-- occupied mark
-		local n = #data.state.list
 		local x = (width - style.point.width) / 2
 
 		if n > 0 then
@@ -116,10 +114,10 @@ function redtag.new(style)
 	return widg
 end
 
--- Config metatable to call redtag module as function
+-- Config metatable to call bluetag module as function
 -----------------------------------------------------------------------------------------------------------------------
-function redtag.mt:__call(...)
-	return redtag.new(...)
+function bluetag.mt:__call(...)
+	return bluetag.new(...)
 end
 
-return setmetatable(redtag, redtag.mt)
+return setmetatable(bluetag, bluetag.mt)

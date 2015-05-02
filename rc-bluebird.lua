@@ -59,7 +59,7 @@ local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/bluebird"
 beautiful.init(theme_path .. "/theme.lua")
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
-local terminal = "x-terminal-emulator"
+local terminal = "urxvt"
 local editor   = os.getenv("EDITOR") or "geany"
 local editor_cmd = terminal .. " -e " .. editor
 local fm = "nemo"
@@ -259,6 +259,9 @@ layoutbox.buttons = awful.util.table.join(
 -- Tasklist
 --------------------------------------------------------------------------------
 local tasklist = {}
+tasklist.filter = redflat.widget.tasklist.filter.currenttags
+tasklist.style  = { widget = redflat.gauge.bluetag.new }
+tasklist.margin = pmargin.tasklist
 
 tasklist.buttons = awful.util.table.join(
 	awful.button({}, 1, redflat.widget.tasklist.action.select),
@@ -301,7 +304,9 @@ for s = 1, screen.count() do
 	taglist[s].layout = wibox.layout.margin(taglist[s].widget, unpack(taglist.margin or {}))
 
 	-- Create a tasklist widget
-	tasklist[s] = redflat.widget.tasklist(s, redflat.widget.tasklist.filter.currenttags, tasklist.buttons)
+	tasklist[s] = {}
+	tasklist[s].widget = redflat.widget.tasklist(s, tasklist.filter, tasklist.buttons, tasklist.style)
+	tasklist[s].layout = wibox.layout.margin(tasklist[s].widget, unpack(tasklist.margin or {}))
 
 	-- Create the wibox
 	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_height or 50})
@@ -330,7 +335,7 @@ for s = 1, screen.count() do
 
 	-- Center widgets are aligned to the left
 	local middle_align = wibox.layout.align.horizontal()
-	middle_align:set_left(tasklist[s])
+	middle_align:set_left(tasklist[s].layout)
 
 	-- Now bring it all together (with the tasklist in the middle)
 	local layout = wibox.layout.align.horizontal()

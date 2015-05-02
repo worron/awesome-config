@@ -284,7 +284,7 @@ theme.gauge.dashcontrol = {
 -- Dotcount
 ------------------------------------------------------------
 theme.gauge.dotcount = {
-	border_gap_v = 5,
+	border_gap_v = 6,
 	column_num   = { 3, 5 },  -- { min, max }
 	row_num      = 3,
 	dot_size     = 5,
@@ -312,25 +312,21 @@ theme.gauge.monitor = {
 -- Tag
 ------------------------------------------------------------
 theme.gauge.bluetag = {
-	width        = 80,
-	font         = theme.gauge.monitor.font,
-	point        = { width = 60, height = 3, gap = 28, dx = 5 },
-	text_gap     = 21,
-	color        = theme.color
+	width    = 80,
+	font     = theme.gauge.monitor.font,
+	point    = { width = 60, height = 3, gap = 28, dx = 5 },
+	text_gap = 21,
+	color    = theme.color
 }
 
--- geometry for state marks
-theme.gauge.bluetag.geometry = { active = { height = 4 } }
-theme.gauge.bluetag.geometry.active.y = theme.panel_height - theme.gauge.bluetag.geometry.active.height
-
--- Task
+-- Task (the same widget as tag)
 ------------------------------------------------------------
-theme.gauge.task = {
-	width    = 50,
+theme.gauge.bluetask = {
+	width    = 60,
+	show_min = true,
 	font     = theme.gauge.monitor.font,
-	text_gap = theme.gauge.monitor.text_gap,
-	line     = { width = 4, v_gap = 36 },
-	counter  = { size = 13, gap = 3 },
+	point    = { width = 60, height = 3, gap = 28, dx = 5 },
+	text_gap = 21,
 	color    = theme.color
 }
 
@@ -350,6 +346,7 @@ theme.widget.margin = {
 	single_sep  = { 0, 0, 3, 3 },
 	double_sep  = { { 0, 5, 3, 3 }, { 5, 0, 3, 3 } },
 	taglist     = { 3, 0, 0, 0 },
+	tasklist    = { 3, 0, 0, 3 },
 	upgrades    = { 8, 8, 5, 5 },
 	kbindicator = { 5, 5, 5, 5 },
 	volume      = { 3, 3, 3, 3 },
@@ -443,7 +440,9 @@ theme.widget.layoutbox.name_alias = {
 -- Tasklist
 ------------------------------------------------------------
 theme.widget.tasklist = {
-	width = 50
+	width      = 60,
+	char_digit = 5,
+	task       = theme.gauge.bluetask
 }
 
 -- main
@@ -476,19 +475,16 @@ theme.widget.tasklist.winmenu.icon = {
 
 -- task aliases
 theme.widget.tasklist.appnames = {}
-theme.widget.tasklist.appnames["Nemo"                ] = "NFM"
-theme.widget.tasklist.appnames["Terminator"          ] = "TRM"
-theme.widget.tasklist.appnames["Firefox"             ] = "FFX"
-theme.widget.tasklist.appnames["Gnome-terminal"      ] = "TER"
-theme.widget.tasklist.appnames["Gnome-system-monitor"] = "GSM"
-theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GMP"
-theme.widget.tasklist.appnames["Gimp"                ] = "GMP"
-theme.widget.tasklist.appnames["Goldendict"          ] = "DIC"
-theme.widget.tasklist.appnames["Transmission-gtk"    ] = "TMN"
-theme.widget.tasklist.appnames["Steam"               ] = "STM"
-theme.widget.tasklist.appnames["Easytag"             ] = "TAG"
-theme.widget.tasklist.appnames["Mcomix"              ] = "CMX"
-theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
+theme.widget.tasklist.appnames["Exaile"              ] = "EXALE"
+theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
+theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
+theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"
+theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GIMP"
+theme.widget.tasklist.appnames["Goldendict"          ] = "GDIC"
+theme.widget.tasklist.appnames["Easytag"             ] = "ETAG"
+theme.widget.tasklist.appnames["Mcomix"              ] = "COMIX"
+theme.widget.tasklist.appnames["Claws-mail"          ] = "CMAIL"
+theme.widget.tasklist.appnames["URxvt"               ] = "RXVT"
 
 -- Minitray
 ------------------------------------------------------------
