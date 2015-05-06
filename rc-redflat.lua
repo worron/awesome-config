@@ -716,7 +716,7 @@ do
 		set_slave = not set_slave
 		redflat.float.notify:show({
 			text = (set_slave and "Slave" or "Master") .. " placement",
-			icon = beautiful.icon.warning
+			icon = beautiful.icon and beautiful.icon.warning
 		})
 	end
 

@@ -343,13 +343,12 @@ theme.widget = {}
 --------------------------------------------------------------------------------
 theme.widget.margin = {
 	single_sep  = { 0, 0, 3, 3 },
-	double_sep  = { { 0, 5, 3, 3 }, { 5, 0, 3, 3 } },
 	taglist     = { 3, 0, 0, 0 },
 	tasklist    = { 3, 0, 0, 3 },
 	upgrades    = { 8, 8, 5, 5 },
-	kbindicator = { 5, 5, 5, 5 },
+	kbindicator = { 8, 8, 4, 4 },
 	volume      = { 8, 8, 5, 5 },
-	mail        = { 5, 5, 5, 5 },
+	mail        = { 8, 8, 4, 4 },
 	layoutbox   = { 10, 10, 6, 6 },
 	tray        = { 8, 8, 0, 0 },
 	textclock   = { 12, 12, 0, 0 }
@@ -475,6 +474,7 @@ theme.widget.tasklist.winmenu.icon = {
 -- task aliases
 theme.widget.tasklist.appnames = {}
 theme.widget.tasklist.appnames["Exaile"              ] = "EXALE"
+theme.widget.tasklist.appnames["Geany"               ] = "GENY"
 theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
 theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
 theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"

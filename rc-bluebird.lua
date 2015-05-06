@@ -132,7 +132,7 @@ local mainmenu
 do
 	-- Menu configuration
 	--------------------------------------------------------------------------------
-	local icon_style = { custom_only = false, scalable_only = false }
+	local icon_style = { custom_only = true, scalable_only = true }
 
 	-- icon finder
 	local function micon(name)
@@ -149,7 +149,9 @@ do
 	}
 
 	-- run commands
-	local ed_command = editor_cmd .. " " .. awesome.conffile
+	local ranger_command   = "urxvt -e ranger"
+	local suspend_command  = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
+	                          /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
 
 	-- Build menu
 	--------------------------------------------------------------------------------
@@ -161,20 +163,50 @@ do
 	-- Awesome submenu
 	------------------------------------------------------------
 	local awesomemenu = {
-		{ "Manual",          terminal .. " -e man awesome", micon("help") },
-		{ "Edit config",     ed_command,                    micon("gnome-system-config")  },
+		{ "Edit config",     "geany " .. awesome.conffile,  micon("gnome-system-config")  },
 		{ "Restart",         awesome.restart,               micon("gnome-session-reboot") },
 		{ "Quit",            awesome.quit,                  micon("exit")                 },
+		menu_sep,
+		{ "Awesome config",  "nemo .config/awesome",        micon("folder-bookmarks") },
+		{ "Awesome lib",     "nemo /usr/share/awesome/lib", micon("folder-bookmarks") }
+	}
+
+	-- Exit submenu
+	------------------------------------------------------------
+	local exitmenu = {
+		{ "Reboot",          "user-shutdown -r now",      micon("gnome-session-reboot")  },
+		{ "Switch user",     "dm-tool switch-to-greeter", micon("gnome-session-switch")  },
+		{ "Suspend",         suspend_command ,            micon("gnome-session-suspend") }
+	}
+
+	-- Places submenu
+	------------------------------------------------------------
+	local placesmenu = {
+		{ "Documents",   fm .. " Documents", micon("folder-documents") },
+		{ "Downloads",   fm .. " Downloads", micon("folder-download")  },
+		{ "Music",       fm .. " Music",     micon("folder-music")     },
+		{ "Pictures",    fm .. " Pictures",  micon("folder-pictures")  },
+		{ "Videos",      fm .. " Videos",    micon("folder-videos")    },
+		menu_sep,
+		{ "AMV",         fm .. " /mnt/media/video/AMV", micon("folder-bookmarks") }
 	}
 
 	-- Main menu
 	------------------------------------------------------------
 	mainmenu = redflat.menu({ hide_timeout = 1, theme = menu_theme,
 		items = {
-			{ "Awesome",       awesomemenu, beautiful.icon and beautiful.icon.awesome },
-			{ "Applications",  appmenu,     micon("distributor-logo") },
+			{ "Awesome",         awesomemenu,            beautiful.icon.awesome },
+			{ "Applications",    appmenu,                micon("distributor-logo")        },
+			{ "Places",          placesmenu,             micon("folder_home"), key = "c"  },
 			menu_sep,
-			{ "Open terminal", terminal,    micon("gnome-terminal") }
+			{ "Firefox",         "firefox",              micon("firefox")                 },
+			{ "Nemo",            "nemo",                 micon("folder")                  },
+			{ "Ranger",          ranger_command,         micon("folder")                  },
+			{ "Geany",           "geany",                micon("geany")                   },
+			{ "Exaile",          "exaile",               micon("exaile")                  },
+			menu_sep,
+			{ "Exit",            exitmenu,               micon("exit")                    },
+			{ "Shutdown",        "user-shutdown -h now", micon("system-shutdown")         }
 		}
 	})
 end
@@ -195,9 +227,9 @@ end
 --------------------------------------------------------------------------------
 local single_sep = separator.vertical({ margin = pmargin.single_sep })
 
-local double_sep = wibox.layout.fixed.horizontal()
-double_sep:add(separator.vertical({ margin = pmargin.double_sep[1] }))
-double_sep:add(separator.vertical({ margin = pmargin.double_sep[2] }))
+--local double_sep = wibox.layout.fixed.horizontal()
+--double_sep:add(separator.vertical({ margin = pmargin.double_sep[1] }))
+--double_sep:add(separator.vertical({ margin = pmargin.double_sep[2] }))
 
 -- Taglist configure
 --------------------------------------------------------------------------------
@@ -220,12 +252,14 @@ taglist.buttons = awful.util.table.join(
 --------------------------------------------------------------------------------
 local upgrades = {}
 upgrades.widget = redflat.widget.upgrades()
+--[[
 upgrades.layout = wibox.layout.margin(upgrades.widget, unpack(pmargin.upgrades or {}))
 
 upgrades.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () mainmenu:toggle()           end),
 	awful.button({}, 2, function () redflat.widget.upgrades:update() end)
 ))
+--]]
 
 -- PA volume control
 -- also this widget used for exaile control
@@ -255,6 +289,34 @@ layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 4, function () awful.layout.inc(layouts, 1)  end),
 	awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
 )
+
+-- Keyboard widget
+--------------------------------------------------------------------------------
+local kbindicator = {}
+kbindicator.widget = redflat.widget.keyboard({ layouts = { "English", "Russian" } })
+kbindicator.layout = wibox.layout.margin(kbindicator.widget, unpack(pmargin.kbindicator or {}))
+
+kbindicator.widget:buttons(awful.util.table.join(
+	awful.button({}, 1, function () redflat.widget.keyboard:toggle_menu() end),
+	awful.button({}, 3, function () awful.util.spawn_with_shell("sleep 0.1 && xdotool key 133+64+65") end),
+	awful.button({}, 4, function () redflat.widget.keyboard:toggle()      end),
+	awful.button({}, 5, function () redflat.widget.keyboard:toggle(true)  end)
+))
+
+-- Mail
+--------------------------------------------------------------------------------
+local mail_scripts      = { "mail1.py", "mail2.py" }
+local mail_scripts_path = "/home/vorron/Documents/scripts/"
+
+local mail = {}
+mail.widget = redflat.widget.mail({ path = mail_scripts_path, scripts = mail_scripts })
+mail.layout = wibox.layout.margin(mail.widget, unpack(pmargin.mail or {}))
+
+-- buttons
+mail.widget:buttons(awful.util.table.join(
+	awful.button({ }, 1, function () awful.util.spawn_with_shell("claws-mail") end),
+	awful.button({ }, 2, function () redflat.widget.mail:update()                   end)
+))
 
 -- Tasklist
 --------------------------------------------------------------------------------
@@ -314,10 +376,9 @@ for s = 1, screen.count() do
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
 	local left_elements = {
-		taglist[s].layout,   double_sep,
-		--upgrades.layout,     single_sep,
-		layoutbox[s].layout, double_sep,
-		volume.layout,       single_sep,
+		taglist[s].layout,   single_sep,
+		layoutbox[s].layout, single_sep,
+		--upgrades.layout,   single_sep,
 	}
 	for _, element in ipairs(left_elements) do
 		left_layout:add(element)
@@ -326,7 +387,10 @@ for s = 1, screen.count() do
 	-- Widgets that are aligned to the right
 	local right_layout = wibox.layout.fixed.horizontal()
 	local right_elements = {
-		double_sep, tray.layout,
+		single_sep, kbindicator.layout,
+		single_sep, mail.layout,
+		single_sep, volume.layout,
+		single_sep, tray.layout,
 		single_sep, textclock.layout
 	}
 	for _, element in ipairs(right_elements) do
@@ -432,6 +496,7 @@ do
 	local sw = redflat.float.appswitcher
 	local current = redflat.widget.tasklist.filter.currenttags
 	local allscreen = redflat.widget.tasklist.filter.allscreen
+	local br = redflat.float.brightness
 	local laybox = redflat.widget.layoutbox
 
 	-- key functions
@@ -467,7 +532,7 @@ do
 
 	local function kill_all()
 		for _, c in ipairs(client.get()) do
-			if current(c, mouse.screen) then c:kill() end
+			if current(c, mouse.screen) and not c.sticky then c:kill() end
 		end
 	end
 
@@ -481,12 +546,17 @@ do
 		end
 	end
 
+	-- volume functions
+	local volume_raise = function() redflat.widget.pulse:change_volume({ show_notify = true })              end
+	local volume_lower = function() redflat.widget.pulse:change_volume({ show_notify = true, down = true }) end
+	local volume_mute  = function() redflat.widget.pulse:mute() end
+
 	--other
 	local function toggle_placement()
 		set_slave = not set_slave
 		redflat.float.notify:show({
 			text = (set_slave and "Slave" or "Master") .. " placement",
-			icon = beautiful.icon.warning
+			icon = beautiful.icon and beautiful.icon.warning
 		})
 	end
 
@@ -539,11 +609,11 @@ do
 		},
 		{ comment = "Tag navigation" },
 		{
-			args = { { modkey, "Shift"   }, "Left", awful.tag.viewprev },
+			args = { { modkey, "Shift" }, "Left", awful.tag.viewprev },
 			comment = "View previous tag"
 		},
 		{
-			args = { { modkey, "Shift"   }, "Right", awful.tag.viewnext },
+			args = { { modkey, "Shift" }, "Right", awful.tag.viewnext },
 			comment = "View next tag"
 		},
 		{
@@ -576,8 +646,20 @@ do
 			comment = "Show minitray"
 		},
 		{
+			args = { { modkey            }, "e", function() redflat.float.exaile:show() end },
+			comment = "Show exaile widget"
+		},
+		{
 			args = { { modkey,           }, "F1", function() redflat.float.hotkeys:show() end },
 			comment = "Show hotkeys helper"
+		},
+		{
+			args = { { modkey, "Control" }, "u", function () redflat.widget.upgrades:update() end },
+			comment = "Check available upgrades"
+		},
+		{
+			args = { { modkey, "Control" }, "m", function () redflat.widget.mail:update() end },
+			comment = "Check new mail"
 		},
 		{ comment = "Application switcher" },
 		{
@@ -596,11 +678,46 @@ do
 			args = { { modkey, "Shift"   }, "q", nil, function() sw:show({ filter = allscreen, reverse = true }) end },
 			comment = "Switch to previous through all tags"
 		},
+		{ comment = "Exaile music player" },
+		{
+			args = { {                   }, "XF86AudioPlay", function() redflat.float.exaile:action("PlayPause") end },
+			comment = "Play/Pause"
+		},
+		{
+			args = { {                   }, "XF86AudioNext", function() redflat.float.exaile:action("Next") end },
+			comment = "Next track"
+		},
+		{
+			args = { {                   }, "XF86AudioPrev", function() redflat.float.exaile:action("Prev") end },
+			comment = "Previous track"
+		},
+		{ comment = "Volume control" },
+		{
+			args = { {                   }, "XF86AudioRaiseVolume", volume_raise },
+			comment = "Increase volume"
+		},
+		{
+			args = { {                   }, "XF86AudioLowerVolume", volume_lower },
+			comment = "Reduce volume"
+		},
+		{
+			args = { { modkey,            }, "v", volume_mute },
+			comment = "Toggle mute"
+		},
+		{ comment = "Brightness control" },
+		{
+			args = { {                   }, "XF86MonBrightnessUp", function() br:change({ step = 0 }) end },
+			comment = "Increase brightness"
+		},
+		{
+			args = { {                   }, "XF86MonBrightnessDown", function() br:change({ step = 0, down = 1 }) end},
+			comment = "Reduce brightness"
+		},
 		{ comment = "Window manipulation" },
-		--{
-		--	args = { { modkey,           }, "F3", toggle_placement },
-		--	comment = "Toggle master/slave placement"
-		--},
+		{
+			args = { { modkey,           }, "F3", toggle_placement },
+			comment = "Toggle master/slave placement"
+		},
 		{
 			args = { { modkey, "Control" }, "Return", swap_with_master },
 			comment = "Swap focused client with master"
@@ -623,11 +740,11 @@ do
 		},
 		{ comment = "Layouts" },
 		{
-			args = { { modkey,           }, "space", function () awful.layout.inc(layouts, 1) end },
+			args = { { modkey, "Control" }, "Right", function () awful.layout.inc(layouts, 1) end },
 			comment = "Switch to next layout"
 		},
 		{
-			args = { { modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, - 1) end },
+			args = { { modkey, "Control" }, "Left", function () awful.layout.inc(layouts, - 1) end },
 			comment = "Switch to previous layout"
 		},
 		{ comment = "Titlebar" },
@@ -656,22 +773,6 @@ do
 			comment = "Toggle all titlebar visible"
 		},
 		{ comment = "Tile control" },
-		{
-			args = { { modkey,           }, "l", function () awful.tag.incmwfact(0.05) end },
-			comment = "Increase master width factor by 5%"
-		},
-		{
-			args = { { modkey,           }, "h", function () awful.tag.incmwfact(-0.05) end },
-			comment = "Decrease master width factor by 5%"
-		},
-		{
-			args = { { modkey, "Control" }, "j", function () awful.client.incwfact(0.05) end },
-			comment = "Increase window height factor by 5%"
-		},
-		{
-			args = { { modkey, "Control" }, "k", function () awful.client.incwfact(-0.05) end },
-			comment = "Decrease window height factor by 5%"
-		},
 		{
 			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
 			comment = "Increase number of master windows by 1"
