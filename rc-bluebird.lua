@@ -231,7 +231,7 @@ upgrades.widget:buttons(awful.util.table.join(
 -- also this widget used for exaile control
 --------------------------------------------------------------------------------
 local volume = {}
-volume.widget = redflat.widget.pulse()
+volume.widget = redflat.widget.pulse(nil, { widget = redflat.gauge.blueaudio.new })
 volume.layout = wibox.layout.margin(volume.widget, unpack(pmargin.volume or {}))
 
 volume.widget:buttons(awful.util.table.join(

@@ -255,17 +255,16 @@ theme.gauge = {}
 
 -- Audio
 ------------------------------------------------------------
-theme.gauge.audio = {
-	icon = {
-		ready = theme.path .. "/widget/audio.svg",
-		mute  = theme.path .. "/widget/mute.svg"
-	}
+theme.gauge.blueaudio = {
+	width   = 75,
+	dash    = { bar = { num = 5, width = 4 } },
+	dmargin = { 10, 0, 2, 2 },
+	icon    = theme.path .. "/widget/headphones.svg",
 }
 
-theme.gauge.audio.color = {
-	main = theme.color.main,
+theme.gauge.blueaudio.color = {
 	icon = theme.color.icon,
-	mute = theme.color.gray
+	mute = theme.color.urgent
 }
 
 -- Progressbar
@@ -349,7 +348,7 @@ theme.widget.margin = {
 	tasklist    = { 3, 0, 0, 3 },
 	upgrades    = { 8, 8, 5, 5 },
 	kbindicator = { 5, 5, 5, 5 },
-	volume      = { 3, 3, 3, 3 },
+	volume      = { 8, 8, 5, 5 },
 	mail        = { 5, 5, 5, 5 },
 	layoutbox   = { 10, 10, 6, 6 },
 	tray        = { 8, 8, 0, 0 },
