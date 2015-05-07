@@ -359,6 +359,7 @@ theme.widget.margin = {
 	kbindicator = { 5, 5, 5, 5 },
 	volume      = { 3, 3, 3, 3 },
 	mail        = { 5, 5, 5, 5 },
+	tray        = { 0, 0, 7, 7 },
 	layoutbox   = { 8, 8, 8, 8 },
 	textclock   = { 5, 15, 0, 0 }
 }

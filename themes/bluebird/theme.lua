@@ -350,7 +350,7 @@ theme.widget.margin = {
 	volume      = { 8, 8, 5, 5 },
 	mail        = { 8, 8, 4, 4 },
 	layoutbox   = { 10, 10, 6, 6 },
-	tray        = { 8, 8, 0, 0 },
+	tray        = { 8, 8, 6, 6 },
 	textclock   = { 12, 12, 0, 0 }
 }
 

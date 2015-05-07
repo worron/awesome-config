@@ -341,9 +341,11 @@ tasklist.buttons = awful.util.table.join(
 
 -- Tray widget
 --------------------------------------------------------------------------------
-local tray = redflat.widget.minitray({ timeout = 10 })
+local tray = {}
+tray.widget = redflat.widget.minitray({ timeout = 10 })
+tray.layout = wibox.layout.margin(tray.widget, unpack(pmargin.tray or {}))
 
-tray:buttons(awful.util.table.join(
+tray.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)
 ))
 
@@ -411,7 +413,7 @@ for s = 1, screen.count() do
 	-- Widgets that are aligned to the right
 	local right_layout = wibox.layout.fixed.horizontal()
 	local right_elements = {
-		double_sep, tray,
+		double_sep, tray.layout,
 		single_sep, monitor.bat,
 		single_sep, monitor.mem,
 		single_sep, monitor.cpu,
@@ -1098,7 +1100,7 @@ awful.rules.rules = {
 -----------------------------------------------------------------------------------------------------------------------
 local titlebar = {
 	enabled    = true,
-	exceptions = { "Plugin-container", "Steam", "Key-mon" }
+	exceptions = { "Plugin-container", "Steam", "Key-mon", "Gvim" }
 }
 
 do
