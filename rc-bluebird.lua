@@ -654,7 +654,7 @@ do
 			comment = "Show hotkeys helper"
 		},
 		{
-			args = { { modkey, "Control" }, "u", function () redflat.widget.upgrades:update() end },
+			args = { { modkey, "Control" }, "u", function () redflat.widget.upgrades:update(true) end },
 			comment = "Check available upgrades"
 		},
 		{

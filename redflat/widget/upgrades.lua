@@ -46,6 +46,7 @@ function upgrades.new(update_timeout, style)
 	--------------------------------------------------------------------------------
 	local object = {}
 	local update_timeout = update_timeout or 3600
+	local force_notify = false
 	local style = redutil.table.merge(default_style(), style or {})
 
 	object.widget = svgbox(style.icon)
@@ -65,12 +66,13 @@ function upgrades.new(update_timeout, style)
 		local color = tonumber(c) > 0 and style.color.main or style.color.icon
 		object.widget:set_color(color)
 
-		if style.need_notify and tonumber(c) > 0 then
+		if style.need_notify and (tonumber(c) > 0 or force_notify) then
 			rednotify:show({ text = c .. " updates available", icon = style.notify_icon })
 		end
 	end
 
-	function object.update()
+	function object.update(is_force)
+		force_notify = is_force
 		asyncshell.request("apt-get --just-print upgrade", update_count, 30)
 	end
 
@@ -88,8 +90,8 @@ end
 
 -- Update upgrades info for every widget
 -----------------------------------------------------------------------------------------------------------------------
-function upgrades:update()
-	for _, o in ipairs(upgrades.objects) do o.update() end
+function upgrades:update(is_force)
+	for _, o in ipairs(upgrades.objects) do o.update(is_force) end
 end
 
 -- Config metatable to call upgrades module as function
