@@ -71,8 +71,9 @@ function upgrades.new(update_timeout, style)
 		end
 	end
 
-	function object.update(is_force)
-		force_notify = is_force
+	function object.update(args)
+		local args = args or {}
+		force_notify = args.is_force
 		asyncshell.request("apt-get --just-print upgrade", update_count, 30)
 	end
 
@@ -91,7 +92,7 @@ end
 -- Update upgrades info for every widget
 -----------------------------------------------------------------------------------------------------------------------
 function upgrades:update(is_force)
-	for _, o in ipairs(upgrades.objects) do o.update(is_force) end
+	for _, o in ipairs(upgrades.objects) do o.update({ is_force = is_force }) end
 end
 
 -- Config metatable to call upgrades module as function
