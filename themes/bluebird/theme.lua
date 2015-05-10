@@ -219,7 +219,7 @@ theme.service.navigator = {
 theme.menu = {
 	border_width = 4,
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	height       = 35,
+	height       = 32,
 	width        = 300,
 	icon_margin  = { 10, 10, 10, 10 },
 	ricon_margin = { 10, 10, 10, 10 },
@@ -488,9 +488,9 @@ theme.widget.tasklist.appnames["URxvt"               ] = "RXVT"
 -- Minitray
 ------------------------------------------------------------
 theme.widget.minitray = {
-	border_width = 4,
-	geometry     = { height = 50 },
-	screen_pos   = { { x = 1530, y = 960 } },
+	border_width = 0,
+	geometry     = { height = 40 },
+	screen_pos   = { { x = 1800, y = 1110 } },
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
 	color        = { wibox = theme.color.wibox, border = theme.color.wibox }
 }
@@ -580,7 +580,7 @@ theme.float.hotkeys = {
 theme.float.exaile = {
 	geometry     = { width = 520, height = 150 },
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 580, y = 868 } },
+	screen_pos   = { { x = 1400, y = 1970 } },
 	titlefont    = theme.font_exaile_main,
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
@@ -602,7 +602,7 @@ theme.float.exaile.icon = {
 theme.float.notify = {
 	geometry     = { width = 484, height = 106 },
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 1424, y = 12 } },
+	screen_pos   = { { x = 1428, y = 8 } },
 	font         = theme.font_notify,
 	border_width = 0,
 	color        = theme.color
@@ -626,7 +626,7 @@ theme.float.prompt = {
 theme.float.top = {
 	geometry      = { width = 460, height = 400 },
 	screen_gap    = theme.useless_gap_width + theme.global_border_width,
-	screen_pos    = { { x =1448, y = 618 } },
+	screen_pos    = { { x =1460, y = 640 } },
 	border_margin = { 20, 20, 10, 0 },
 	button_margin = { 140, 140, 18, 18 },
 	title_height  = 40,
