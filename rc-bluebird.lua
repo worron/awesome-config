@@ -104,7 +104,7 @@ red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard
 redflat.util.floating_layout = { redflat.layout.grid }
 
 -- Set layouts prop
---redflat.layout.map.autoaim = true
+redflat.layout.map.autoaim = true
 
 -- Tags
 -----------------------------------------------------------------------------------------------------------------------
@@ -333,6 +333,51 @@ tasklist.buttons = awful.util.table.join(
 	awful.button({}, 5, redflat.widget.tasklist.action.switch_prev)
 )
 
+-- System resource monitoring widgets
+--------------------------------------------------------------------------------
+local cpu_storage = { cpu_total = {}, cpu_active = {} }
+local cpu_icon = redflat.util.check(beautiful, "icon.monitor")
+local net_icon = redflat.util.check(beautiful, "icon.wireless")
+
+local net_speed = { up = 60 * 1024, down = 650 * 1024 }
+local net_alert = { up = 55 * 1024, down = 600 * 1024 }
+
+-- functions
+local cpumem_func = function()
+	local cpu_usage = redflat.system.cpu_usage(cpu_storage).total
+	local mem_usage = redflat.system.memory_info().usep
+
+	return {
+		text = "CPU: " .. cpu_usage .. "%  " .. "RAM: " .. mem_usage .. "%",
+		value = { cpu_usage / 100,  mem_usage / 100},
+		alert = cpu_usage > 80 or mem_usage > 70
+	}
+end
+
+-- widgets
+local monitor = {}
+
+monitor.widget = {
+	cpumem = redflat.widget.sysmon(
+		{ func = cpumem_func },
+		{ timeout = 2,  widget = redflat.gauge.doublemonitor, monitor = { icon = cpu_icon } }
+	),
+	net = redflat.widget.net(
+		{ interface = "wlan0", alert = net_alert, speed = net_speed, autoscale = false },
+		{ timeout = 2, widget = redflat.gauge.doublemonitor, monitor = { icon = net_icon } }
+	),
+}
+
+monitor.layout = {
+	cpumem = wibox.layout.margin(monitor.widget.cpumem, unpack(pmargin.cpumem or {})),
+	net    = wibox.layout.margin(monitor.widget.net, unpack(pmargin.cpumem or {})),
+}
+
+-- buttons
+monitor.widget.cpumem:buttons(awful.util.table.join(
+	awful.button({ }, 1, function() redflat.float.top:show("cpu") end)
+))
+
 -- Tray widget
 --------------------------------------------------------------------------------
 local tray = {}
@@ -389,6 +434,8 @@ for s = 1, screen.count() do
 	local right_elements = {
 		single_sep, kbindicator.layout,
 		single_sep, mail.layout,
+		single_sep, monitor.layout.net,
+		single_sep, monitor.layout.cpumem,
 		single_sep, volume.layout,
 		single_sep, tray.layout,
 		single_sep, textclock.layout

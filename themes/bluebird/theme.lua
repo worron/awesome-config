@@ -60,7 +60,7 @@ theme.font_helper_title = "Play bold 16" -- hotkeys helper title font
 
 -- cairo formated fonts
 theme.cf_appswitcher = { font = "Play", size = 22, face = 1 } -- application switcher font
-theme.cf_monitor     = { font = "Play", size = 16, face = 1 } -- monitoring widget font
+theme.cf_tag         = { font = "Play", size = 16, face = 1 } -- tag widget font
 
 -- environment vars
 theme.panel_height        = 36 -- panel height
@@ -74,10 +74,12 @@ theme.cellnum = { x = 100, y = 62 }
 -- Shared icons
 --------------------------------------------------------------------------------
 theme.icon = {
-	check   = theme.path .. "/common/check.svg",
-	blank   = theme.path .. "/common/blank.svg",
-	warning = theme.path .. "/common/warning.svg",
-	awesome = theme.path .. "/awesome.svg",
+	check    = theme.path .. "/common/check.svg",
+	blank    = theme.path .. "/common/blank.svg",
+	warning  = theme.path .. "/common/warning.svg",
+	monitor  = theme.path .. "/widget/monitor.svg",
+	wireless = theme.path .. "/widget/wireless.svg",
+	awesome  = theme.path .. "/awesome.svg",
 }
 
 -- Desktop config
@@ -301,10 +303,10 @@ theme.gauge.doublebar = {
 
 -- Monitor
 --------------------------------------------------------------
-theme.gauge.monitor = {
-	font     = theme.cf_monitor,
-	text_gap = 28,
-	line     = { width = 4, v_gap = 36 },
+theme.gauge.doublemonitor = {
+	width    = 90,
+	line     = { v_gap = 8 },
+	icon     = theme.path .. "/widget/fav.svg",
 	color    = theme.color
 }
 
@@ -312,7 +314,7 @@ theme.gauge.monitor = {
 ------------------------------------------------------------
 theme.gauge.bluetag = {
 	width    = 80,
-	font     = theme.gauge.monitor.font,
+	font     = theme.cf_tag,
 	point    = { width = 60, height = 3, gap = 28, dx = 5 },
 	text_gap = 21,
 	color    = theme.color
@@ -323,7 +325,7 @@ theme.gauge.bluetag = {
 theme.gauge.bluetask = {
 	width    = 60,
 	show_min = true,
-	font     = theme.gauge.monitor.font,
+	font     = theme.cf_tag,
 	point    = { width = 60, height = 3, gap = 28, dx = 5 },
 	text_gap = 21,
 	color    = theme.color
@@ -348,6 +350,7 @@ theme.widget.margin = {
 	upgrades    = { 8, 8, 5, 5 },
 	kbindicator = { 8, 8, 4, 4 },
 	volume      = { 8, 8, 5, 5 },
+	cpumem      = { 8, 8, 5, 5 },
 	mail        = { 8, 8, 4, 4 },
 	layoutbox   = { 10, 10, 6, 6 },
 	tray        = { 8, 8, 6, 6 },

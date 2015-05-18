@@ -114,7 +114,7 @@ red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard
 redflat.util.floating_layout = { redflat.layout.grid }
 
 -- Set layouts prop
---redflat.layout.map.autoaim = true
+redflat.layout.map.autoaim = true
 
 -- Tags
 -----------------------------------------------------------------------------------------------------------------------
@@ -354,10 +354,13 @@ tray.widget:buttons(awful.util.table.join(
 local netspeed  = { up   = 60 * 1024, down = 650 * 1024 }
 
 local monitor = {
-	cpu = redflat.widget.sysmon({ label = "CPU", func = system.pformatted.cpu(80) }, { timeout = 2 }),
-	mem = redflat.widget.sysmon({ label = "RAM", func = system.pformatted.mem(80) }, { timeout = 10 }),
-	bat = redflat.widget.sysmon({ label = "BAT", func = system.pformatted.bat(15), arg = "BAT1" }, { timeout = 60 }),
-	net = redflat.widget.net({ timeout = 2, interface = "wlan0", speed  = netspeed, autoscale = false })
+	cpu = redflat.widget.sysmon({ func = system.pformatted.cpu(80) }, { timeout = 2,  monitor = { label = "CPU" } }),
+	mem = redflat.widget.sysmon({ func = system.pformatted.mem(80) }, { timeout = 10, monitor = { label = "RAM" } }),
+	bat = redflat.widget.sysmon(
+		{ func = system.pformatted.bat(15), arg = "BAT1" },
+		{ timeout = 60, monitor = { label = "BAT" } }
+	),
+	net = redflat.widget.net({ interface = "wlan0", speed  = netspeed, autoscale = false }, { timeout = 2 })
 }
 
 monitor.cpu:buttons(awful.util.table.join(

@@ -24,7 +24,9 @@ local sysmon = { mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		timeout = 5
+		timeout = 5,
+		width   = nil,
+		widget = monitor.new
 	}
 	return redutil.table.merge(style, redutil.check(beautiful, "widget.sysmon") or {})
 end
@@ -40,9 +42,7 @@ function sysmon.new(args, style)
 
 	-- Create monitor widget
 	--------------------------------------------------------------------------------
-	local widg = monitor(style.monitor)
-	widg:set_label(args.label)
-	if args.width then widg:set_width(args.width) end
+	local widg = style.widget(style.monitor)
 
 	-- Set tooltip
 	--------------------------------------------------------------------------------

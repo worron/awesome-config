@@ -22,7 +22,6 @@ local net = { mt = {} }
 
 local default_args = {
 	speed     = { up = 10*1024, down = 10*1024 },
-	timeout   = 5,
 	autoscale = true,
 	interface = "eth0"
 }
@@ -31,6 +30,8 @@ local default_args = {
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
+		widget    = doublebar.new,
+		timeout   = 5,
 		digit_num = 2
 	}
 	return redutil.table.merge(style, beautiful.widget.net or {})
@@ -55,7 +56,7 @@ function net.new(args, style)
 
 	-- Create monitor widget
 	--------------------------------------------------------------------------------
-	local widg = doublebar(style.monitor)
+	local widg = style.widget(style.monitor)
 
 	-- Set tooltip
 	--------------------------------------------------------------------------------
@@ -63,7 +64,7 @@ function net.new(args, style)
 
 	-- Set update timer
 	--------------------------------------------------------------------------------
-	local t = timer({ timeout = args.timeout })
+	local t = timer({ timeout = style.timeout })
 	t:connect_signal("timeout",
 		function()
 			local state = system.net_speed(args.interface, storage)
@@ -71,6 +72,10 @@ function net.new(args, style)
 			if args.autoscale then
 				if state[1] > args.speed.up then args.speed.up = state[1] end
 				if state[2] > args.speed.down then args.speed.down = state[2] end
+			end
+
+			if args.alert then
+				widg:set_alert(state[1] > args.alert.up or state[2] > args.alert.down)
 			end
 
 			widg:set_value({ state[2]/args.speed.down, state[1]/args.speed.up })

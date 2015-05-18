@@ -25,6 +25,8 @@ local function default_style()
 		line     = { width = 4, v_gap = 30 },
 		font     = { font = "Sans", size = 16, face = 0, slant = 0 },
 		text_gap = 22,
+		label    = "MON",
+		width    = nil,
 		color    = { main = "#b1222b", gray = "#575757", icon = "#a0a0a0" }
 	}
 	return redutil.table.merge(style, redutil.check(beautiful, "gauge.monitor") or {})
@@ -42,7 +44,8 @@ function monitor.new(style)
 	-- updating values
 	local data = {
 		value = 0,
-		label = "MON",
+		label = style.label,
+		width = style.width,
 		color = style.color.icon
 	}
 
