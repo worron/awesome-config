@@ -84,7 +84,11 @@ function bluetag.new(style)
 		local n = #data.state.list
 
 		-- text
-		cr:set_source(color(data.state.active and style.color.main or n == 0 and style.color.gray or style.color.icon))
+		cr:set_source(color(
+			data.state.active and style.color.main
+			or (n == 0 or data.state.minimized) and style.color.gray
+			or style.color.icon
+		))
 		redutil.cairo.set_font(cr, style.font)
 		redutil.cairo.tcenter_horizontal(cr, { width / 2, style.text_gap }, data.state.text)
 

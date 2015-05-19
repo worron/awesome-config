@@ -304,8 +304,8 @@ theme.gauge.doublebar = {
 -- Monitor
 --------------------------------------------------------------
 theme.gauge.doublemonitor = {
-	width    = 90,
-	line     = { v_gap = 8 },
+	width    = 100,
+	line     = { v_gap = 6 },
 	icon     = theme.path .. "/widget/fav.svg",
 	color    = theme.color
 }
@@ -313,21 +313,21 @@ theme.gauge.doublemonitor = {
 -- Tag
 ------------------------------------------------------------
 theme.gauge.bluetag = {
-	width    = 80,
+	width    = 100,
 	font     = theme.cf_tag,
-	point    = { width = 60, height = 3, gap = 28, dx = 5 },
-	text_gap = 21,
+	point    = { width = 80, height = 3, gap = 27, dx = 5 },
+	text_gap = 20,
 	color    = theme.color
 }
 
 -- Task (the same widget as tag)
 ------------------------------------------------------------
 theme.gauge.bluetask = {
-	width    = 60,
+	width    = 80,
 	show_min = true,
 	font     = theme.cf_tag,
-	point    = { width = 60, height = 3, gap = 28, dx = 5 },
-	text_gap = 21,
+	point    = { width = 70, height = 3, gap = 27, dx = 5 },
+	text_gap = 20,
 	color    = theme.color
 }
 
@@ -441,9 +441,9 @@ theme.widget.layoutbox.name_alias = {
 -- Tasklist
 ------------------------------------------------------------
 theme.widget.tasklist = {
-	width      = 60,
-	char_digit = 5,
-	task       = theme.gauge.bluetask
+	width       = 70,
+	char_digit  = 5,
+	task        = theme.gauge.bluetask
 }
 
 -- main
@@ -476,8 +476,7 @@ theme.widget.tasklist.winmenu.icon = {
 
 -- task aliases
 theme.widget.tasklist.appnames = {}
-theme.widget.tasklist.appnames["Exaile"              ] = "EXALE"
-theme.widget.tasklist.appnames["Geany"               ] = "GENY"
+theme.widget.tasklist.appnames["Exaile"              ] = "EXAILE"
 theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
 theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
 theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"

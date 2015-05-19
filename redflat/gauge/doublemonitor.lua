@@ -27,7 +27,7 @@ local function default_style()
 		icon    = nil,
 		dmargin = { 10, 0, 0, 0 },
 		width   = 100,
-		color   = { main = "#b1222b", gray = "#575757", icon = "#a0a0a0" }
+		color   = { main = "#b1222b", gray = "#575757", icon = "#a0a0a0", urgent = "#32882d" }
 	}
 	return redutil.table.merge(style, redutil.check(beautiful, "gauge.doublemonitor") or {})
 end
@@ -111,7 +111,7 @@ function doublemonitor.new(style)
 	end
 
 	function layout:set_alert(alert)
-		icon:set_color(alert and style.color.main or style.color.icon)
+		icon:set_color(alert and style.color.urgent or style.color.icon)
 	end
 
 	--------------------------------------------------------------------------------

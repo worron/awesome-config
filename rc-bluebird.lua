@@ -445,13 +445,14 @@ for s = 1, screen.count() do
 	end
 
 	-- Center widgets are aligned to the left
-	local middle_align = wibox.layout.align.horizontal()
-	middle_align:set_left(tasklist[s].layout)
+	--local middle_align = wibox.layout.align.horizontal()
+	--middle_align:set_left(tasklist[s].layout)
 
 	-- Now bring it all together (with the tasklist in the middle)
 	local layout = wibox.layout.align.horizontal()
 	layout:set_left(left_layout)
-	layout:set_middle(middle_align)
+	layout:set_middle(tasklist[s].layout)
+	--layout:set_middle(middle_align)
 	layout:set_right(right_layout)
 
 	panel[s]:set_widget(layout)
