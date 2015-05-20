@@ -79,6 +79,7 @@ theme.icon = {
 	warning  = theme.path .. "/common/warning.svg",
 	monitor  = theme.path .. "/widget/monitor.svg",
 	wireless = theme.path .. "/widget/wireless.svg",
+	battery  = theme.path .. "/widget/battery.svg",
 	awesome  = theme.path .. "/awesome.svg",
 }
 
@@ -223,8 +224,8 @@ theme.menu = {
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
 	height       = 32,
 	width        = 300,
-	icon_margin  = { 10, 10, 10, 10 },
-	ricon_margin = { 10, 10, 10, 10 },
+	icon_margin  = { 8, 8, 8, 8 },
+	ricon_margin = { 9, 9, 9, 9 },
 	font         = theme.font,
 	submenu_icon = theme.path .. "/common/submenu.svg"
 }
@@ -301,11 +302,19 @@ theme.gauge.doublebar = {
 	color = theme.color
 }
 
+-- Icon indicator
+--------------------------------------------------------------
+theme.gauge.gicon = {
+	icon  = theme.path .. "/widget/fav.svg",
+	color = theme.color
+}
+
 -- Monitor
 --------------------------------------------------------------
 theme.gauge.doublemonitor = {
-	width    = 100,
+	width    = 90,
 	line     = { v_gap = 6 },
+	dmargin  = { 10, 0, 0, 0 },
 	icon     = theme.path .. "/widget/fav.svg",
 	color    = theme.color
 }
@@ -313,7 +322,7 @@ theme.gauge.doublemonitor = {
 -- Tag
 ------------------------------------------------------------
 theme.gauge.bluetag = {
-	width    = 100,
+	width    = 103,
 	font     = theme.cf_tag,
 	point    = { width = 80, height = 3, gap = 27, dx = 5 },
 	text_gap = 20,
@@ -347,13 +356,14 @@ theme.widget.margin = {
 	single_sep  = { 0, 0, 3, 3 },
 	taglist     = { 3, 0, 0, 0 },
 	tasklist    = { 3, 0, 0, 3 },
-	upgrades    = { 8, 8, 5, 5 },
-	kbindicator = { 8, 8, 4, 4 },
-	volume      = { 8, 8, 5, 5 },
-	cpumem      = { 8, 8, 5, 5 },
-	mail        = { 8, 8, 4, 4 },
+	kbindicator = { 10, 10, 4, 4 },
+	volume      = { 9, 9, 5, 5 },
+	cpumem      = { 10, 10, 5, 5 },
+	net         = { 10, 10, 5, 5 },
+	bat         = { 9, 9, 5, 5 },
+	mail        = { 10, 10, 4, 4 },
 	layoutbox   = { 10, 10, 6, 6 },
-	tray        = { 8, 8, 6, 6 },
+	tray        = { 9, 9, 6, 6 },
 	textclock   = { 12, 12, 0, 0 }
 }
 
@@ -418,7 +428,7 @@ theme.widget.layoutbox.icon = {
 }
 
 theme.widget.layoutbox.menu = {
-	icon_margin = { 10, 14, 10, 10 },
+	icon_margin = { 9, 12, 9, 9 },
 	width       = 260,
 	auto_hotkey = true,
 	nohide      = false,
@@ -448,12 +458,13 @@ theme.widget.tasklist = {
 
 -- main
 theme.widget.tasklist.winmenu = {
-	micon       = theme.icon,
-	titleline   = { font = theme.font_title, height = 35 },
-	menu        = { width = 280, color = { right_icon = theme.color.icon } },
-	tagmenu     = { width = 200, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
-	layout_icon = theme.widget.layoutbox.icon,
-	color       = theme.color
+	micon          = theme.icon,
+	titleline      = { font = theme.font_title, height = 30 },
+	menu           = { width = 240, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
+	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
+	state_iconsize = { 18, 18 },
+	layout_icon    = theme.widget.layoutbox.icon,
+	color          = theme.color
 }
 
 -- tasktip

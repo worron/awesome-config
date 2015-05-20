@@ -338,6 +338,7 @@ tasklist.buttons = awful.util.table.join(
 local cpu_storage = { cpu_total = {}, cpu_active = {} }
 local cpu_icon = redflat.util.check(beautiful, "icon.monitor")
 local net_icon = redflat.util.check(beautiful, "icon.wireless")
+local bat_icon = redflat.util.check(beautiful, "icon.battery")
 
 local net_speed = { up = 60 * 1024, down = 650 * 1024 }
 local net_alert = { up = 55 * 1024, down = 600 * 1024 }
@@ -366,11 +367,16 @@ monitor.widget = {
 		{ interface = "wlan0", alert = net_alert, speed = net_speed, autoscale = false },
 		{ timeout = 2, widget = redflat.gauge.doublemonitor, monitor = { icon = net_icon } }
 	),
+	bat = redflat.widget.sysmon(
+		{ func = redflat.system.pformatted.bat(25), arg = "BAT1" },
+		{ timeout = 60, widget = redflat.gauge.gicon, monitor = { icon = bat_icon } }
+	),
 }
 
 monitor.layout = {
 	cpumem = wibox.layout.margin(monitor.widget.cpumem, unpack(pmargin.cpumem or {})),
-	net    = wibox.layout.margin(monitor.widget.net, unpack(pmargin.cpumem or {})),
+	net    = wibox.layout.margin(monitor.widget.net, unpack(pmargin.net or {})),
+	bat    = wibox.layout.margin(monitor.widget.bat, unpack(pmargin.bat or {})),
 }
 
 -- buttons
@@ -438,6 +444,7 @@ for s = 1, screen.count() do
 		single_sep, monitor.layout.cpumem,
 		single_sep, volume.layout,
 		single_sep, tray.layout,
+		single_sep, monitor.layout.bat,
 		single_sep, textclock.layout
 	}
 	for _, element in ipairs(right_elements) do
