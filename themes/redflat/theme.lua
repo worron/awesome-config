@@ -256,14 +256,14 @@ theme.gauge = {}
 
 -- Audio
 ------------------------------------------------------------
-theme.gauge.audio = {
+theme.gauge.redaudio = {
 	icon = {
 		ready = theme.path .. "/widget/audio.svg",
 		mute  = theme.path .. "/widget/mute.svg"
 	}
 }
 
-theme.gauge.audio.color = {
+theme.gauge.redaudio.color = {
 	main = theme.color.main,
 	icon = theme.color.icon,
 	mute = theme.color.gray
@@ -312,7 +312,7 @@ theme.gauge.monitor = {
 
 -- Tag
 ------------------------------------------------------------
-theme.gauge.tag = {
+theme.gauge.redtag = {
 	width        = 100,
 	font         = theme.gauge.monitor.font,
 	text_gap     = theme.gauge.monitor.text_gap,
@@ -322,7 +322,7 @@ theme.gauge.tag = {
 }
 
 -- geometry for state marks
-theme.gauge.tag.geometry = {
+theme.gauge.redtag.geometry = {
 	active   = {         y = 36,             height = 4  },
 	focus    = { x = 4,  y = 14, width = 13, height = 13 },
 	occupied = { x = 85, y = 8,  width = 9,  height = 15 }

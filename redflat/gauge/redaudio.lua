@@ -28,7 +28,7 @@ local function default_style()
 		icon  = {},
 		color = { main = "#b1222b", icon = "#a0a0a0", mute = "#404040" }
 	}
-	return redutil.table.merge(style, redutil.check(beautiful, "gauge.audio") or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.redaudio") or {})
 end
 
 -- Support functions
