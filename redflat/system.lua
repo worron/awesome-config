@@ -351,7 +351,7 @@ function system.thermal.nvoptimus()
 		temp = string.match(awful.util.pread("optirun -b none nvidia-settings -c :8 -q gpucoretemp -t"), "[^\n]+")
 	end
 
-	return { tonumber(temp) }
+	return { tonumber(temp), off = nvidia_on == nil }
 end
 
 -- Get info from transmission-remote client

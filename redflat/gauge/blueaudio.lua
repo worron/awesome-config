@@ -15,6 +15,7 @@ local color = require("gears.color")
 
 local redutil = require("redflat.util")
 local svgbox = require("redflat.gauge.svgbox")
+local reddash = require("redflat.gauge.dashcontrol")
 
 
 -- Initialize tables for module
@@ -25,16 +26,13 @@ local audio = { mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		icon  = {},
-		color = { main = "#b1222b", icon = "#a0a0a0", mute = "#404040" }
+		width   = 100,
+		icon    = nil,
+		dash    = {},
+		dmargin = { 10, 0, 0, 0 },
+		color   = { icon = "#a0a0a0", mute = "#404040" }
 	}
-	return redutil.table.merge(style, redutil.check(beautiful, "gauge.audio") or {})
-end
-
--- Support functions
------------------------------------------------------------------------------------------------------------------------
-local function pattern_string(height, value, c1, c2)
-	return string.format("linear:0,%s:0,0:0,%s:%s,%s:%s,%s:1,%s", height, c1, value, c1, value, c2, c2)
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.blueaudio") or {})
 end
 
 -- Create a new audio widget
@@ -46,31 +44,23 @@ function audio.new(style)
 	--------------------------------------------------------------------------------
 	local style = redutil.table.merge(default_style(), style or {})
 
-	-- Icon widgets
-	------------------------------------------------------------
-	local icon = {}
-	icon.ready = svgbox(style.icon.ready)
-	icon.ready:set_color(style.color.icon)
-	icon.mute = svgbox(style.icon.mute)
-	icon.mute:set_color(style.color.mute)
-
-	-- Create widget
+	-- Construct widget
 	--------------------------------------------------------------------------------
-	local widg = wibox.widget.background(icon.ready)
+	local icon = svgbox(style.icon)
+	local dash = reddash(style.dash)
+
+	local layout = wibox.layout.fixed.horizontal()
+	layout:add(icon)
+	layout:add(wibox.layout.margin(dash, unpack(style.dmargin)))
+
+	local widg = wibox.layout.constraint(layout, "exact", style.width)
 
 	-- User functions
 	------------------------------------------------------------
-	function widg:set_value(x)
-		if x > 1 then x = 1 end
-
-		if self.widget._image then
-			local h = self.widget._image.height
-			icon.ready:set_color(pattern_string(h, x, style.color.main, style.color.icon))
-		end
-	end
+	function widg:set_value(x) dash:set_value(x) end
 
 	function widg:set_mute(mute)
-		widg:set_widget(mute and icon.mute or icon.ready)
+		icon:set_color(mute and style.color.mute or style.color.icon)
 	end
 
 	--------------------------------------------------------------------------------

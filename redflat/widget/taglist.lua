@@ -21,7 +21,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local redutil = require("redflat.util")
-local redtag = require("redflat.gauge.tag")
+local redtag = require("redflat.gauge.redtag")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------

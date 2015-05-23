@@ -22,7 +22,7 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 
 local tooltip = require("redflat.float.tooltip")
-local audio = require("redflat.gauge.audio")
+local audio = require("redflat.gauge.redaudio")
 local rednotify = require("redflat.float.notify")
 local redutil = require("redflat.util")
 
@@ -38,6 +38,7 @@ pulse.startup_time = 4
 local function default_style()
 	local style = {
 		notify_icon = nil,
+		widget      = audio.new,
 		audio       = {}
 	}
 	return redutil.table.merge(style, redutil.check(beautiful, "widget.pulse") or {})
@@ -131,7 +132,7 @@ end
 -- Create a new pulse widget
 -- @param timeout Update interval
 -----------------------------------------------------------------------------------------------------------------------
-function pulse.new(args)
+function pulse.new(args, style)
 
 	-- Initialize vars
 	--------------------------------------------------------------------------------
@@ -144,7 +145,7 @@ function pulse.new(args)
 
 	-- create widget
 	--------------------------------------------------------------------------------
-	widg = audio(style.audio)
+	widg = style.widget(style.audio)
 	table.insert(pulse.widgets, widg)
 
 	-- Set tooltip
