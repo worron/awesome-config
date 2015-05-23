@@ -87,7 +87,7 @@ theme.icon = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop = { common = {} }
 
-theme.wallpaper = theme.path .. "/wallpaper/clear.png"
+theme.wallpaper = theme.path .. "/wallpaper/forwidgets.png"
 
 -- Common
 --------------------------------------------------------------------------------
@@ -114,11 +114,11 @@ theme.desktop.common.dashbar = {
 -- Barpack
 ------------------------------------------------------------
 theme.desktop.common.barpack = {
-	label_style = { width = 78, draw = "by_width" },
-	text_style  = { width = 88, draw = "by_edges" },
+	label_style = { width = 80, draw = "by_width" },
+	text_style  = { width = 92, draw = "by_edges" },
 	line_height = theme.desktop.line_height,
-	text_gap    = 20,
-	label_gap   = 20,
+	text_gap    = 22,
+	label_gap   = 16,
 	color       = theme.desktop.color
 }
 
@@ -132,20 +132,20 @@ theme.desktop.speedmeter = {
 	dashbar          = { bar = { width = 16, gap = 6 }, height = 6 },
 	chart            = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 },
 	barvalue_height  = 32,
-	fullchart_height = 78,
+	fullchart_height = 80,
 	images           = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" },
-	image_gap        = 20,
+	image_gap        = 16,
 	color            = theme.desktop.color
 }
 
 -- CPU and memory
 ------------------------------------------------------------
 theme.desktop.multim = {
-	corner       = { width = 34, corner = { height = 17, num = 10, line = 5 } },
-	state_height = 60,
-	prog_height  = 98,
-	image_gap    = 20,
-	image        = theme.path .. "/desktop/ed2.svg",
+	corner       = { width = 34, corner = { height = 17, num = 10, line = 4 } },
+	state_height = 58,
+	prog_height  = 80,
+	image_gap    = 16,
+	image        = theme.path .. "/desktop/bstar.svg",
 	color        = theme.desktop.color
 }
 
@@ -155,12 +155,23 @@ theme.desktop.dashpack = {
 	color = theme.desktop.color
 }
 
+-- Thermal
+------------------------------------------------------------
+theme.desktop.sline = {
+	digit_num = 2,
+	lbox      = { draw = "by_width", width = 50 },
+	rbox      = { draw = "by_edges", width = 60 },
+	icon      = theme.path .. "/desktop/star.svg",
+	iwidth    = 142,
+	color     = theme.desktop.color
+}
+
 -- Widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 520, 520, 520 },
-	height = { 180, 182, 102, 144 },
-	edge   = { width = { 60, 60 }, height = { 60, 60 } }
+	height = { 180, 160, 160, 138, 18 },
+	edge   = { width = { 60, 60 }, height = { 40, 40 } }
 }
 
 theme.desktop.places = {
@@ -168,9 +179,9 @@ theme.desktop.places = {
 	ssdspeed = { 2, 1 },
 	hddspeed = { 3, 1 },
 	cpumem   = { 1, 2 },
-	transm   = { 2, 2 },
+	transm   = { 1, 3 },
 	disks    = { 1, 4 },
-	thermal  = { 1, 3 }
+	thermal  = { 1, 5 }
 }
 
 -- Naughty config
@@ -488,6 +499,7 @@ theme.widget.tasklist.winmenu.icon = {
 -- task aliases
 theme.widget.tasklist.appnames = {}
 theme.widget.tasklist.appnames["Exaile"              ] = "EXAILE"
+theme.widget.tasklist.appnames["Smplayer"            ] = "SMPL"
 theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
 theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
 theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"
