@@ -28,6 +28,7 @@ local function default_style()
 		lbox      = { draw = "by_left", width = 50 },
 		rbox      = { draw = "by_right", width = 50 },
 		digit_num = 3,
+		icon      = nil,
 		iwidth    = 120,
 		unit      = { { "B", -1 }, { "KB", 1024 }, { "MB", 1024^2 }, { "GB", 1024^3 } },
 		color     = { main = "#b1222b", wibox = "#161616", gray = "#404040" }
@@ -64,7 +65,7 @@ function sline.new(args, geometry, style)
 
 	-- construct line
 	for i, name in ipairs(args.sensors) do
-		local l = textbox(args.names[i] or "MON", style.lbox)
+		local l = textbox(string.upper(args.names[i] or "mon"), style.lbox)
 		local boxlayout = wibox.layout.align.horizontal()
 		dwidget.item[i] = textbox("", style.rbox)
 

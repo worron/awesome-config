@@ -591,7 +591,7 @@ do
 			{ meter_function = system.thermal.hddtemp, args = {disk = "/dev/sdc"}, maxm = 60, crit = 45 },
 			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
 		},
-		names   = {"CPU", "HDD", "GPU"},
+		names   = {"cpu", "hdd", "gpu"},
 		timeout = 5
 	}
 
