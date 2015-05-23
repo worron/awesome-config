@@ -1,75 +1,76 @@
 -----------------------------------------------------------------------------------------------------------------------
---                                                 RedFlat sysmon widget                                             --
+--                                        RedFlat volume indicator widget                                            --
 -----------------------------------------------------------------------------------------------------------------------
--- Monitoring widget
+-- Indicator with audio icon
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
 -----------------------------------------------------------------------------------------------------------------------
 local setmetatable = setmetatable
+local math = math
+local string = string
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local util = require("awful.util")
+local color = require("gears.color")
 
-local monitor = require("redflat.gauge.monitor")
-local tooltip = require("redflat.float.tooltip")
-local system = require("redflat.system")
 local redutil = require("redflat.util")
+local svgbox = require("redflat.gauge.svgbox")
+local reddash = require("redflat.gauge.dashcontrol")
 
--- Initialize tables and vars for module
+
+-- Initialize tables for module
 -----------------------------------------------------------------------------------------------------------------------
-local sysmon = { mt = {} }
+local audio = { mt = {} }
 
 -- Generate default theme vars
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		timeout = 5,
-		width   = nil,
-		widget = monitor.new
+		width   = 100,
+		icon    = nil,
+		dash    = {},
+		dmargin = { 10, 0, 0, 0 },
+		color   = { icon = "#a0a0a0", mute = "#404040" }
 	}
-	return redutil.table.merge(style, redutil.check(beautiful, "widget.sysmon") or {})
+	return redutil.table.merge(style, redutil.check(beautiful, "gauge.blueaudio") or {})
 end
 
--- Create a new cpu monitor widget
+-- Create a new audio widget
+-- @param style Table containing colors and geometry parameters for all elemets
 -----------------------------------------------------------------------------------------------------------------------
-function sysmon.new(args, style)
+function audio.new(style)
 
 	-- Initialize vars
 	--------------------------------------------------------------------------------
-	local args = args or {}
 	local style = redutil.table.merge(default_style(), style or {})
 
-	-- Create monitor widget
+	-- Construct widget
 	--------------------------------------------------------------------------------
-	local widg = style.widget(style.monitor)
+	local icon = svgbox(style.icon)
+	local dash = reddash(style.dash)
 
-	-- Set tooltip
-	--------------------------------------------------------------------------------
-	local tp = tooltip({ widg }, style.tooltip)
+	local layout = wibox.layout.fixed.horizontal()
+	layout:add(icon)
+	layout:add(wibox.layout.margin(dash, unpack(style.dmargin)))
 
-	-- Set update timer
-	--------------------------------------------------------------------------------
-	local t = timer({ timeout = style.timeout })
-	t:connect_signal("timeout",
-		function()
-			local state = args.func(args.arg)
-			widg:set_value(state.value)
-			widg:set_alert(state.alert)
-			tp:set_text(state.text)
-		end
-	)
-	t:start()
-	t:emit_signal("timeout")
+	local widg = wibox.layout.constraint(layout, "exact", style.width)
+
+	-- User functions
+	------------------------------------------------------------
+	function widg:set_value(x) dash:set_value(x) end
+
+	function widg:set_mute(mute)
+		icon:set_color(mute and style.color.mute or style.color.icon)
+	end
 
 	--------------------------------------------------------------------------------
 	return widg
 end
 
--- Config metatable to call module as function
+-- Config metatable to call audio module as function
 -----------------------------------------------------------------------------------------------------------------------
-function sysmon.mt:__call(...)
-	return sysmon.new(...)
+function audio.mt:__call(...)
+	return audio.new(...)
 end
 
-return setmetatable(sysmon, sysmon.mt)
+return setmetatable(audio, audio.mt)

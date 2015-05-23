@@ -23,7 +23,6 @@ local counter = { mt = {} }
 -----------------------------------------------------------------------------------------------------------------------
 local function default_style()
 	local style = {
-		border_gap_v = 7,
 		column_num   = { 2, 5 },  -- {min, max}
 		row_num      = 3,
 		dot_size     = 5,
@@ -78,9 +77,9 @@ function counter.new(style)
 	------------------------------------------------------------
 	widg.draw = function(mcountwidg, wibox, cr, width, height)
 		local maxnum = style.row_num * data.column_num
-		local gap_v = (height - style.row_num * style.dot_size - 2 * style.border_gap_v) / (style.row_num - 1)
+		local gap_v = (height - style.row_num * style.dot_size) / (style.row_num - 1)
 
-		cr:translate(0, height - style.border_gap_v)
+		cr:translate(0, height)
 		for i = 1, style.row_num do
 			for j = 1, data.column_num do
 

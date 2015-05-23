@@ -12,8 +12,7 @@ local awful = require("awful")
 awful.rules = require("awful.rules")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
---local naughty = require("naughty")
-naughty = require("naughty")
+local naughty = require("naughty")
 
 require("awful.autofocus")
 
@@ -22,10 +21,9 @@ require("awful.autofocus")
 timestamp = require("redflat.timestamp")
 asyncshell = require("redflat.asyncshell")
 
-local lain = require("lain")
 local redflat = require("redflat")
+local lain = require("lain")
 
-local system = redflat.system
 local separator = redflat.gauge.separator
 
 -- Error handling
@@ -57,8 +55,9 @@ end
 
 -- Environment
 -----------------------------------------------------------------------------------------------------------------------
-local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/redflat"
+local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/bluebird"
 beautiful.init(theme_path .. "/theme.lua")
+--beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 local terminal = "urxvt"
 local editor   = os.getenv("EDITOR") or "geany"
@@ -80,15 +79,6 @@ local layouts = {
 	redflat.layout.map,
 	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
-
-	--awful.layout.suit.fair,
-	--awful.layout.suit.tile,
-	--awful.layout.suit.fair.horizontal,
-	--awful.layout.suit.spiral,
-	--awful.layout.suit.spiral.dwindle,
-	--awful.layout.suit.magnifier
-	--lain.layout.uselesstile.left,
-	--lain.layout.uselessfair
 }
 
 -- Set handlers for user layouts
@@ -159,7 +149,6 @@ do
 	}
 
 	-- run commands
-	--local ranger_command   = "urxvt -fn 'xft:Ubuntu Mono:pixelsize=20' -e ranger"
 	local ranger_command   = "urxvt -e ranger"
 	local suspend_command  = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
 	                          /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
@@ -238,14 +227,14 @@ end
 --------------------------------------------------------------------------------
 local single_sep = separator.vertical({ margin = pmargin.single_sep })
 
-local double_sep = wibox.layout.fixed.horizontal()
-double_sep:add(separator.vertical({ margin = pmargin.double_sep[1] }))
-double_sep:add(separator.vertical({ margin = pmargin.double_sep[2] }))
+--local double_sep = wibox.layout.fixed.horizontal()
+--double_sep:add(separator.vertical({ margin = pmargin.double_sep[1] }))
+--double_sep:add(separator.vertical({ margin = pmargin.double_sep[2] }))
 
 -- Taglist configure
 --------------------------------------------------------------------------------
 local taglist = {}
-taglist.style  = { separator = single_sep }
+taglist.style  = { separator = single_sep, widget = redflat.gauge.bluetag.new }
 taglist.margin = pmargin.taglist
 
 taglist.buttons = awful.util.table.join(
@@ -263,12 +252,43 @@ taglist.buttons = awful.util.table.join(
 --------------------------------------------------------------------------------
 local upgrades = {}
 upgrades.widget = redflat.widget.upgrades()
+--[[
 upgrades.layout = wibox.layout.margin(upgrades.widget, unpack(pmargin.upgrades or {}))
 
 upgrades.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function () mainmenu:toggle()           end),
 	awful.button({}, 2, function () redflat.widget.upgrades:update() end)
 ))
+--]]
+
+-- PA volume control
+-- also this widget used for exaile control
+--------------------------------------------------------------------------------
+local volume = {}
+volume.widget = redflat.widget.pulse(nil, { widget = redflat.gauge.blueaudio.new })
+volume.layout = wibox.layout.margin(volume.widget, unpack(pmargin.volume or {}))
+
+volume.widget:buttons(awful.util.table.join(
+	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
+	awful.button({}, 5, function() redflat.widget.pulse:change_volume({ down = true }) end),
+	awful.button({}, 3, function() redflat.float.exaile:show()                         end),
+	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end),
+	awful.button({}, 1, function() redflat.float.exaile:action("PlayPause") end),
+	awful.button({}, 8, function() redflat.float.exaile:action("Prev")      end),
+	awful.button({}, 9, function() redflat.float.exaile:action("Next")      end)
+))
+
+-- Layoutbox configure
+--------------------------------------------------------------------------------
+local layoutbox = {}
+layoutbox.margin = pmargin.layoutbox
+
+layoutbox.buttons = awful.util.table.join(
+	awful.button({ }, 1, function () awful.layout.inc(layouts, 1)  end),
+	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(awful.tag.selected(mouse.screen)) end),
+	awful.button({ }, 4, function () awful.layout.inc(layouts, 1)  end),
+	awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
+)
 
 -- Keyboard widget
 --------------------------------------------------------------------------------
@@ -281,23 +301,6 @@ kbindicator.widget:buttons(awful.util.table.join(
 	awful.button({}, 3, function () awful.util.spawn_with_shell("sleep 0.1 && xdotool key 133+64+65") end),
 	awful.button({}, 4, function () redflat.widget.keyboard:toggle()      end),
 	awful.button({}, 5, function () redflat.widget.keyboard:toggle(true)  end)
-))
-
--- PA volume control
--- also this widget used for exaile control
---------------------------------------------------------------------------------
-local volume = {}
-volume.widget = redflat.widget.pulse()
-volume.layout = wibox.layout.margin(volume.widget, unpack(pmargin.volume or {}))
-
-volume.widget:buttons(awful.util.table.join(
-	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
-	awful.button({}, 5, function() redflat.widget.pulse:change_volume({ down = true }) end),
-	awful.button({}, 3, function() redflat.float.exaile:show()                         end),
-	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end),
-	awful.button({}, 1, function() redflat.float.exaile:action("PlayPause") end),
-	awful.button({}, 8, function() redflat.float.exaile:action("Prev")      end),
-	awful.button({}, 9, function() redflat.float.exaile:action("Next")      end)
 ))
 
 -- Mail
@@ -315,21 +318,12 @@ mail.widget:buttons(awful.util.table.join(
 	awful.button({ }, 2, function () redflat.widget.mail:update()                   end)
 ))
 
--- Layoutbox configure
---------------------------------------------------------------------------------
-local layoutbox = {}
-layoutbox.margin = pmargin.layoutbox
-
-layoutbox.buttons = awful.util.table.join(
-	awful.button({ }, 1, function () awful.layout.inc(layouts, 1)  end),
-	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(awful.tag.selected(mouse.screen)) end),
-	awful.button({ }, 4, function () awful.layout.inc(layouts, 1)  end),
-	awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
-)
-
 -- Tasklist
 --------------------------------------------------------------------------------
 local tasklist = {}
+tasklist.filter = redflat.widget.tasklist.filter.currenttags
+tasklist.style  = { widget = redflat.gauge.bluetag.new }
+tasklist.margin = pmargin.tasklist
 
 tasklist.buttons = awful.util.table.join(
 	awful.button({}, 1, redflat.widget.tasklist.action.select),
@@ -339,6 +333,57 @@ tasklist.buttons = awful.util.table.join(
 	awful.button({}, 5, redflat.widget.tasklist.action.switch_prev)
 )
 
+-- System resource monitoring widgets
+--------------------------------------------------------------------------------
+local cpu_storage = { cpu_total = {}, cpu_active = {} }
+local cpu_icon = redflat.util.check(beautiful, "icon.monitor")
+local net_icon = redflat.util.check(beautiful, "icon.wireless")
+local bat_icon = redflat.util.check(beautiful, "icon.battery")
+
+local net_speed = { up = 60 * 1024, down = 650 * 1024 }
+local net_alert = { up = 55 * 1024, down = 600 * 1024 }
+
+-- functions
+local cpumem_func = function()
+	local cpu_usage = redflat.system.cpu_usage(cpu_storage).total
+	local mem_usage = redflat.system.memory_info().usep
+
+	return {
+		text = "CPU: " .. cpu_usage .. "%  " .. "RAM: " .. mem_usage .. "%",
+		value = { cpu_usage / 100,  mem_usage / 100},
+		alert = cpu_usage > 80 or mem_usage > 70
+	}
+end
+
+-- widgets
+local monitor = {}
+
+monitor.widget = {
+	cpumem = redflat.widget.sysmon(
+		{ func = cpumem_func },
+		{ timeout = 2,  widget = redflat.gauge.doublemonitor, monitor = { icon = cpu_icon } }
+	),
+	net = redflat.widget.net(
+		{ interface = "wlan0", alert = net_alert, speed = net_speed, autoscale = false },
+		{ timeout = 2, widget = redflat.gauge.doublemonitor, monitor = { icon = net_icon } }
+	),
+	bat = redflat.widget.sysmon(
+		{ func = redflat.system.pformatted.bat(25), arg = "BAT1" },
+		{ timeout = 60, widget = redflat.gauge.gicon, monitor = { icon = bat_icon } }
+	),
+}
+
+monitor.layout = {
+	cpumem = wibox.layout.margin(monitor.widget.cpumem, unpack(pmargin.cpumem or {})),
+	net    = wibox.layout.margin(monitor.widget.net, unpack(pmargin.net or {})),
+	bat    = wibox.layout.margin(monitor.widget.bat, unpack(pmargin.bat or {})),
+}
+
+-- buttons
+monitor.widget.cpumem:buttons(awful.util.table.join(
+	awful.button({ }, 1, function() redflat.float.top:show("cpu") end)
+))
+
 -- Tray widget
 --------------------------------------------------------------------------------
 local tray = {}
@@ -347,28 +392,6 @@ tray.layout = wibox.layout.margin(tray.widget, unpack(pmargin.tray or {}))
 
 tray.widget:buttons(awful.util.table.join(
 	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)
-))
-
--- System resource monitoring widgets
---------------------------------------------------------------------------------
-local netspeed  = { up   = 60 * 1024, down = 650 * 1024 }
-
-local monitor = {
-	cpu = redflat.widget.sysmon({ func = system.pformatted.cpu(80) }, { timeout = 2,  monitor = { label = "CPU" } }),
-	mem = redflat.widget.sysmon({ func = system.pformatted.mem(80) }, { timeout = 10, monitor = { label = "RAM" } }),
-	bat = redflat.widget.sysmon(
-		{ func = system.pformatted.bat(15), arg = "BAT1" },
-		{ timeout = 60, monitor = { label = "BAT" } }
-	),
-	net = redflat.widget.net({ interface = "wlan0", speed  = netspeed, autoscale = false }, { timeout = 2 })
-}
-
-monitor.cpu:buttons(awful.util.table.join(
-	awful.button({ }, 1, function() redflat.float.top:show("cpu") end)
-))
-
-monitor.mem:buttons(awful.util.table.join(
-	awful.button({ }, 1, function() redflat.float.top:show("mem") end)
 ))
 
 -- Textclock widget
@@ -394,7 +417,9 @@ for s = 1, screen.count() do
 	taglist[s].layout = wibox.layout.margin(taglist[s].widget, unpack(taglist.margin or {}))
 
 	-- Create a tasklist widget
-	tasklist[s] = redflat.widget.tasklist(s, redflat.widget.tasklist.filter.currenttags, tasklist.buttons)
+	tasklist[s] = {}
+	tasklist[s].widget = redflat.widget.tasklist(s, tasklist.filter, tasklist.buttons, tasklist.style)
+	tasklist[s].layout = wibox.layout.margin(tasklist[s].widget, unpack(tasklist.margin or {}))
 
 	-- Create the wibox
 	panel[s] = awful.wibox({ type = "normal", position = "bottom", screen = s , height = beautiful.panel_height or 50})
@@ -402,12 +427,9 @@ for s = 1, screen.count() do
 	-- Widgets that are aligned to the left
 	local left_layout = wibox.layout.fixed.horizontal()
 	local left_elements = {
-		taglist[s].layout,   double_sep,
-		upgrades.layout,     single_sep,
-		kbindicator.layout,  single_sep,
-		volume.layout,       single_sep,
-		mail.layout,         single_sep,
-		layoutbox[s].layout, double_sep
+		taglist[s].layout,   single_sep,
+		layoutbox[s].layout, single_sep,
+		--upgrades.layout,   single_sep,
 	}
 	for _, element in ipairs(left_elements) do
 		left_layout:add(element)
@@ -416,11 +438,13 @@ for s = 1, screen.count() do
 	-- Widgets that are aligned to the right
 	local right_layout = wibox.layout.fixed.horizontal()
 	local right_elements = {
-		double_sep, tray.layout,
-		single_sep, monitor.bat,
-		single_sep, monitor.mem,
-		single_sep, monitor.cpu,
-		single_sep, monitor.net,
+		single_sep, kbindicator.layout,
+		single_sep, mail.layout,
+		single_sep, monitor.layout.net,
+		single_sep, monitor.layout.cpumem,
+		single_sep, volume.layout,
+		single_sep, tray.layout,
+		single_sep, monitor.layout.bat,
 		single_sep, textclock.layout
 	}
 	for _, element in ipairs(right_elements) do
@@ -428,13 +452,14 @@ for s = 1, screen.count() do
 	end
 
 	-- Center widgets are aligned to the left
-	local middle_align = wibox.layout.align.horizontal()
-	middle_align:set_left(tasklist[s])
+	--local middle_align = wibox.layout.align.horizontal()
+	--middle_align:set_left(tasklist[s].layout)
 
 	-- Now bring it all together (with the tasklist in the middle)
 	local layout = wibox.layout.align.horizontal()
 	layout:set_left(left_layout)
-	layout:set_middle(middle_align)
+	layout:set_middle(tasklist[s].layout)
+	--layout:set_middle(middle_align)
 	layout:set_right(right_layout)
 
 	panel[s]:set_widget(layout)
@@ -457,6 +482,7 @@ do
 	-- desktop aliases
 	local wgeometry = redflat.util.desktop.wgeometry
 	local workarea = screen[mouse.screen].workarea
+	local system = redflat.system
 
 	-- placement
 	local grid = beautiful.desktop.grid
@@ -487,7 +513,9 @@ do
 		label     = "SOLID DRIVE"
 	}
 
-	ssdspeed.style = { unit = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } } }
+	ssdspeed.style = {
+		unit   = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } },
+	}
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
@@ -530,7 +558,7 @@ do
 
 	transm.style = {
 		digit_num = 1,
-		image     = theme_path .. "/desktop/ed1.svg"
+		image     = theme_path .. "/desktop/skull.svg"
 	}
 
 	-- Disks
@@ -563,13 +591,12 @@ do
 			{ meter_function = system.thermal.hddtemp, args = {disk = "/dev/sdc"}, maxm = 60, crit = 45 },
 			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
 		},
-		names   = {"cpu", "hdd", "gpu"},
+		names   = {"CPU", "HDD", "GPU"},
 		timeout = 5
 	}
 
 	thermal.style = {
 		unit      = { { "°C", -1 } },
-		show_text = true
 	}
 
 	-- Initialize all desktop widgets
@@ -582,9 +609,9 @@ do
 	transm.widget = redflat.desktop.multim(transm.args, transm.geometry, transm.style)
 
 	disks.widget   = redflat.desktop.dashpack(disks.args, disks.geometry, disks.style)
-	thermal.widget = redflat.desktop.dashpack(thermal.args, thermal.geometry, thermal.style)
-end
 
+	thermal.widget = redflat.desktop.simpleline(thermal.args, thermal.geometry, thermal.style)
+end
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
@@ -980,7 +1007,7 @@ do
 			comment = "Toggle client floating status"
 		},
 		{
-			args = { { modkey, "Control" }, "p", function (c) c.ontop = not c.ontop end },
+			args = { { modkey,           }, "t", function (c) c.ontop = not c.ontop end },
 			comment = "Toggle client ontop status"
 		},
 		{
@@ -1080,30 +1107,19 @@ awful.rules.rules = {
 		properties = { floating = true }
 	},
     {
-		rule       = { class = "Key-mon" },
-		properties = { sticky = true }
-	},
-    {
-		rule = { class = "Exaile" },
+		rule = { class = "Exaile", type = "normal" },
 		callback = function(c)
-			for _, exist in ipairs(awful.client.visible(c.screen)) do
-				if c ~= exist and c.class == exist.class then
-					awful.client.floating.set(c, true)
-					return
-				end
-			end
 			awful.client.movetotag(tags[1][2], c)
 			c.minimized = true
 		end
 	}
 }
 
-
 -- Windows titlebar config
 -----------------------------------------------------------------------------------------------------------------------
 local titlebar = {
 	enabled    = true,
-	exceptions = { "Plugin-container", "Steam", "Key-mon", "Gvim" }
+	exceptions = { "Plugin-container", "Steam", "Gvim" }
 }
 
 do
@@ -1184,9 +1200,9 @@ client.connect_signal("manage",
 		-- only if they does not set an initial position
 		------------------------------------------------------------
 		if not startup then
-			if set_slave then awful.client.setslave(c) end
+			awful.client.setslave(c)
 			if not c.size_hints.user_position and not c.size_hints.program_position then
-				awful.placement.no_overlap(c, { awful.layout.suit.floating, redflat.layout.grid })
+				awful.placement.no_overlap(c)
 				awful.placement.no_offscreen(c)
 			end
 		end
@@ -1209,34 +1225,15 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awesome.connect_signal("exit",
 	function()
 		redflat.titlebar.hide_all()
-		--for _, c in ipairs(client:get(mouse.screen)) do c.hidden = false end
 	end
 )
 
 -----------------------------------------------------------------------------------------------------------------------
 
----[[
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
 local stamp = timestamp.get()
 
 if not stamp or (os.time() - tonumber(stamp)) > 5 then
-	-- utils
-	awful.util.spawn_with_shell("compton")
-	awful.util.spawn_with_shell("pulseaudio")
-	awful.util.spawn_with_shell("/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
-	awful.util.spawn_with_shell("nm-applet")
-	awful.util.spawn_with_shell("bash /home/vorron/Documents/scripts/tmpfs_firefox.sh")
-	awful.util.spawn_with_shell("xrdb -merge /home/vorron/.Xdefaults")
-
-	-- keyboard layouts
-	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")
-	awful.util.spawn_with_shell("xkbcomp $DISPLAY - | egrep -v 'group . = AltGr;' | xkbcomp - $DISPLAY")
-	awful.util.spawn_with_shell("kbdd")
-
-	-- apps
-	awful.util.spawn_with_shell("parcellite")
-	awful.util.spawn_with_shell("exaile")
-	awful.util.spawn_with_shell("sleep 0.5 && transmission-gtk -m")
+	--awful.util.spawn_with_shell("compton")
 end
---]]

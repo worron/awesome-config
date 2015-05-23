@@ -48,6 +48,7 @@ local last = {
 local function default_style()
 	local style = {
 		appnames    = {},
+		widget      = redtask.new,
 		width       = 40,
 		char_digit  = 3,
 		need_group  = true,
@@ -88,12 +89,14 @@ end
 local function get_state(c_group, chars, names)
 
 	local names = names or {}
-	local state = { focus = false, urgent = false, minimized = true }
+	local state = { focus = false, urgent = false, minimized = true, list = {} }
 
 	for _, c in pairs(c_group) do
 		state.focus     = state.focus or client.focus == c
 		state.urgent    = state.urgent or c.urgent
 		state.minimized = state.minimized and c.minimized
+
+		table.insert(state.list, { focus = client.focus == c, urgent = c.urgent, minimized = c.minimized })
 	end
 
 	local class = c_group[1].class or "Untitled"
@@ -194,7 +197,7 @@ end
 --------------------------------------------------------------------------------
 local function new_task(c_group, style)
 	local task = {}
-	task.widg  = redtask(style.task)
+	task.widg  = style.widget(style.task)
 	task.group = c_group
 	task.l     = wibox.layout.margin(task.widg, unpack(style.task_margin))
 
