@@ -482,6 +482,7 @@ theme.widget.tasklist.winmenu.icon = {
 -- task aliases
 theme.widget.tasklist.appnames = {}
 theme.widget.tasklist.appnames["Nemo"                ] = "NFM"
+theme.widget.tasklist.appnames["Gvim"                ] = "VIM"
 theme.widget.tasklist.appnames["Terminator"          ] = "TRM"
 theme.widget.tasklist.appnames["Firefox"             ] = "FFX"
 theme.widget.tasklist.appnames["Gnome-terminal"      ] = "TER"
