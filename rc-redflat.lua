@@ -20,7 +20,7 @@ require("awful.autofocus")
 -- User modules
 ------------------------------------------------------------
 timestamp = require("redflat.timestamp")
-asyncshell = require("redflat.asyncshell")
+-- asyncshell = require("redflat.asyncshell")
 
 local lain = require("lain")
 local redflat = require("redflat")
