@@ -13,7 +13,6 @@ Dependencies
 ######Main
 * Awesome WM 3.5.6
 * Lain module
-* librsvg2-bin
 
 ######Widgets
 *Under construction*
