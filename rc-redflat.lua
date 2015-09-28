@@ -749,19 +749,19 @@ do
 		},
 		{ comment = "Window focus" },
 		{
-			args = { { modkey,           }, "Right", focus_switch_byd("right"), },
+			args = { { modkey,           }, "l", focus_switch_byd("right"), },
 			comment = "Focus right client"
 		},
 		{
-			args = { { modkey,           }, "Left", focus_switch_byd("left"), },
+			args = { { modkey,           }, "j", focus_switch_byd("left"), },
 			comment = "Focus left client"
 		},
 		{
-			args = { { modkey,           }, "Up", focus_switch_byd("up"), },
+			args = { { modkey,           }, "i", focus_switch_byd("up"), },
 			comment = "Focus client above"
 		},
 		{
-			args = { { modkey,           }, "Down", focus_switch_byd("down"), },
+			args = { { modkey,           }, "k", focus_switch_byd("down"), },
 			comment = "Focus client below"
 		},
 		{
@@ -774,11 +774,11 @@ do
 		},
 		{ comment = "Tag navigation" },
 		{
-			args = { { modkey, "Shift" }, "Left", awful.tag.viewprev },
+			args = { { modkey,         }, "Left", awful.tag.viewprev },
 			comment = "View previous tag"
 		},
 		{
-			args = { { modkey, "Shift" }, "Right", awful.tag.viewnext },
+			args = { { modkey,         }, "Right", awful.tag.viewnext },
 			comment = "View next tag"
 		},
 		{
@@ -807,7 +807,7 @@ do
 			comment = "Allication launcher"
 		},
 		{
-			args = { { modkey,           }, "i", function() redflat.widget.minitray:toggle() end },
+			args = { { modkey, "Control" }, "i", function() redflat.widget.minitray:toggle() end },
 			comment = "Show minitray"
 		},
 		{
@@ -905,20 +905,20 @@ do
 		},
 		{ comment = "Layouts" },
 		{
-			args = { { modkey, "Control" }, "Right", function () awful.layout.inc(layouts, 1) end },
+			args = { { modkey,           }, "Up", function () awful.layout.inc(layouts, 1) end },
 			comment = "Switch to next layout"
 		},
 		{
-			args = { { modkey, "Control" }, "Left", function () awful.layout.inc(layouts, - 1) end },
+			args = { { modkey,           }, "Down", function () awful.layout.inc(layouts, - 1) end },
 			comment = "Switch to previous layout"
 		},
 		{ comment = "Titlebar" },
 		{
-			args = { { modkey,           }, "k", function (c) redflat.titlebar.toggle_group(client.focus) end },
+			args = { { modkey,           }, "comma", function (c) redflat.titlebar.toggle_group(client.focus) end },
 			comment = "Switch to next client in group"
 		},
 		{
-			args = { { modkey,           }, "j", function (c) redflat.titlebar.toggle_group(client.focus, true) end },
+			args = { { modkey,           }, "period", function (c) redflat.titlebar.toggle_group(client.focus, true) end },
 			comment = "Switch to previous client in group"
 		},
 		{
@@ -939,7 +939,7 @@ do
 		},
 		{ comment = "Tile control" },
 		{
-			args = { { modkey, "Shift"   }, "h", function () awful.tag.incnmaster(1) end },
+			args = { { modkey, "Shift"   }, "j", function () awful.tag.incnmaster(1) end },
 			comment = "Increase number of master windows by 1"
 		},
 		{
@@ -947,7 +947,7 @@ do
 			comment = "Decrease number of master windows by 1"
 		},
 		{
-			args = { { modkey, "Control" }, "h", function () awful.tag.incncol(1) end },
+			args = { { modkey, "Control" }, "j", function () awful.tag.incncol(1) end },
 			comment = "Increase number of non-master columns by 1"
 		},
 		{
@@ -958,6 +958,20 @@ do
 
 	-- format raw keys to key objects
 	globalkeys = redflat.util.table.join_raw(raw_globalkeys, awful.key)
+
+	-- Layout keys
+	--------------------------------------------------------------------------------
+	local resize_keys = {
+		resize_up    = { "i", "I", },
+		resize_down  = { "k", "K", },
+		resize_left  = { "j", "J", },
+		resize_right = { "l", "L", },
+	}
+
+	redflat.layout.common.keys = redflat.util.table.merge(redflat.layout.common.keys, resize_keys)
+	redflat.layout.grid.keys = redflat.util.table.merge(redflat.layout.grid.keys, resize_keys)
+	redflat.layout.map.keys = redflat.util.table.merge(redflat.layout.map.keys, resize_keys)
+	redflat.layout.map.keys = redflat.util.table.merge(redflat.layout.map.keys, { last = { "p", "P" } })
 
 	-- Client keys
 	--------------------------------------------------------------------------------
@@ -1230,8 +1244,10 @@ if not stamp or (os.time() - tonumber(stamp)) > 5 then
 	awful.util.spawn_with_shell("xrdb -merge /home/vorron/.Xdefaults")
 
 	-- keyboard layouts
-	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")
+	--awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")
+	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:alt_shift_toggle")
 	awful.util.spawn_with_shell("xkbcomp $DISPLAY - | egrep -v 'group . = AltGr;' | xkbcomp - $DISPLAY")
+	awful.util.spawn_with_shell("sleep 1 && bash /home/vorron/Documents/scripts/swapctrl.sh")
 	awful.util.spawn_with_shell("kbdd")
 
 	-- apps
