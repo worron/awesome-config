@@ -506,69 +506,15 @@ do
 	thermal.widget = redflat.desktop.dashpack(thermal.args, thermal.geometry, thermal.style)
 end
 
-
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
-do
-	-- edge aliases
-	local workarea = screen[mouse.screen].workarea
-	local ew = 1 -- edge width
+local edges = require("edges-config") -- load file with edges configuration
 
-	local switcher = redflat.float.appswitcher
-	local currenttags = redflat.widget.tasklist.filter.currenttags
-	local allscreen   = redflat.widget.tasklist.filter.allscreen
-
-	-- edge geometry
-	local egeometry = {
-		top   = { width = workarea.width - 2 * ew, height = ew , x = ew, y = 0 },
-		right = { width = ew, height = workarea.height - ew, x = workarea.width - ew, y = ew },
-		left  = { width = ew, height = workarea.height, x = 0, y = 0 }
-	}
-
-	-- Top
-	--------------------------------------------------------------------------------
-	local top = redflat.util.desktop.edge("horizontal")
-	top.wibox:geometry(egeometry["top"])
-
-	top.layout:buttons(awful.util.table.join(
-		awful.button({}, 1, function() client.focus.maximized = not client.focus.maximized end),
-		awful.button({}, 4, function() awful.tag.incmwfact( 0.05) end),
-		awful.button({}, 5, function() awful.tag.incmwfact(-0.05) end)
-	))
-
-	-- Right
-	--------------------------------------------------------------------------------
-	local right = redflat.util.desktop.edge("vertical")
-	right.wibox:geometry(egeometry["right"])
-
-	right.layout:buttons(awful.util.table.join(
-		awful.button({}, 5, function() awful.tag.viewnext(mouse.screen) end),
-		awful.button({}, 4, function() awful.tag.viewprev(mouse.screen) end)
-	))
-
-	-- Left
-	--------------------------------------------------------------------------------
-	local left = redflat.util.desktop.edge("vertical", { ew, workarea.height - ew })
-	left.wibox:geometry(egeometry["left"])
-
-	left.area[1]:buttons(awful.util.table.join(
-		awful.button({}, 4, function() switcher:show({ filter = allscreen })                 end),
-		awful.button({}, 5, function() switcher:show({ filter = allscreen, reverse = true }) end)
-	))
-
-	left.area[2]:buttons(awful.util.table.join(
-		awful.button({}, 9, function() if client.focus then client.focus.minimized = true end  end),
-		awful.button({}, 4, function() switcher:show({ filter = currenttags })                 end),
-		awful.button({}, 5, function() switcher:show({ filter = currenttags, reverse = true }) end)
-	))
-
-	left.wibox:connect_signal("mouse::leave", function() redflat.float.appswitcher:hide() end)
-end
-
+edges:init({ width = 1})
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
-local hotkeys = require("keys-config") -- load file with hotkets configuration
+local hotkeys = require("keys-config") -- load file with hotkeys configuration
 
 hotkeys:init({ terminal = terminal, menu = mainmenu, mod = modkey })
 
@@ -578,52 +524,25 @@ root.keys(hotkeys.global)
 -- set global(desktop) mouse buttons
 root.buttons(hotkeys.mouse.global)
 
-
 -- Rules
 -----------------------------------------------------------------------------------------------------------------------
-awful.rules.rules = {
-	{
-		rule = {},
-		properties = {
-			border_width     = beautiful.border_width,
-			border_color     = beautiful.border_normal,
-			focus            = awful.client.focus.filter,
-			keys             = hotkeys.client,
-			buttons          = hotkeys.mouse.client,
-			size_hints_honor = false
-		}
-	},
-	{
-		rule       = { class = "Gimp" }, except = { role = "gimp-image-window" },
-		properties = { floating = true }
-	},
-	{
-		rule       = { class = "Firefox" }, except = { role = "browser" },
-		properties = { floating = true }
-	},
-	{
-		rule_any   = { class = { "pinentry", "Plugin-container" } },
-		properties = { floating = true }
-	},
-	{
-		rule       = { class = "Key-mon" },
-		properties = { sticky = true }
-	},
-	{
-		rule = { class = "Exaile" },
-		callback = function(c)
-			for _, exist in ipairs(awful.client.visible(c.screen)) do
-				if c ~= exist and c.class == exist.class then
-					awful.client.floating.set(c, true)
-					return
-				end
-			end
-			awful.client.movetotag(tags[1][2], c)
-			c.minimized = true
-		end
+local rules = require("rules-config") -- load file with rules configuration
+local custom_rules = rules:build({ tags = tags })
+
+local base_rule = {
+	rule = {},
+	properties = {
+		border_width     = beautiful.border_width,
+		border_color     = beautiful.border_normal,
+		focus            = awful.client.focus.filter,
+		keys             = hotkeys.client,
+		buttons          = hotkeys.mouse.client,
+		size_hints_honor = false
 	}
 }
 
+table.insert(custom_rules, 1, base_rule)
+awful.rules.rules = custom_rules
 
 -- Windows titlebar config
 -----------------------------------------------------------------------------------------------------------------------
