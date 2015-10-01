@@ -135,7 +135,7 @@ end
 
 -- Main menu configuration
 -----------------------------------------------------------------------------------------------------------------------
-local mymenu = require("menu-config") -- load file with menu configuration
+local mymenu = require("red.menu-config") -- load file with menu configuration
 
 local menu_icon_style = { custom_only = true, scalable_only = true }
 local menu_sep = { widget = separator.horizontal({ margin = { 3, 3, 5, 5 } }) }
@@ -361,7 +361,6 @@ for s = 1, screen.count() do
 	panel[s]:set_widget(layout)
 end
 
-
 -- Wallpaper setup
 -----------------------------------------------------------------------------------------------------------------------
 if beautiful.wallpaper and awful.util.file_readable(beautiful.wallpaper) then
@@ -508,13 +507,13 @@ end
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
-local edges = require("edges-config") -- load file with edges configuration
+local edges = require("red.edges-config") -- load file with edges configuration
 
 edges:init({ width = 1})
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
-local hotkeys = require("keys-config") -- load file with hotkeys configuration
+local hotkeys = require("red.keys-config") -- load file with hotkeys configuration
 
 hotkeys:init({ terminal = terminal, menu = mainmenu, mod = modkey })
 
@@ -526,7 +525,7 @@ root.buttons(hotkeys.mouse.global)
 
 -- Rules
 -----------------------------------------------------------------------------------------------------------------------
-local rules = require("rules-config") -- load file with rules configuration
+local rules = require("red.rules-config") -- load file with rules configuration
 local custom_rules = rules:build({ tags = tags })
 
 local base_rule = {
