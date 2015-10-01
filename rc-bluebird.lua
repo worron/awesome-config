@@ -57,7 +57,6 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/bluebird"
 beautiful.init(theme_path .. "/theme.lua")
---beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 local terminal = "urxvt"
 local editor   = os.getenv("EDITOR") or "geany"
@@ -98,7 +97,7 @@ red_key_handler[lain.layout.uselesstile]        = redflat.layout.common.keyboard
 red_key_handler[lain.layout.uselesstile.left]   = redflat.layout.common.keyboard.handler.tile.left
 red_key_handler[lain.layout.uselesstile.bottom] = redflat.layout.common.keyboard.handler.tile.bottom
 
--- Set floating layouts for sawp util
+-- Set floating layouts for swap util
 redflat.util.floating_layout = { redflat.layout.grid }
 
 -- Set layouts prop
@@ -125,89 +124,13 @@ end
 
 -- Main menu configuration
 -----------------------------------------------------------------------------------------------------------------------
-local mainmenu
+local mymenu = require("menu-config") -- load file with menu configuration
 
-do
-	-- Menu configuration
-	--------------------------------------------------------------------------------
-	local icon_style = { custom_only = true, scalable_only = true }
+local menu_icon_style = { custom_only = true, scalable_only = true }
+local menu_sep = { widget = separator.horizontal({ margin = { 3, 3, 5, 5 } }) }
+local menu_theme = { icon_margin = { 7, 10, 7, 7 }, auto_hotkey = true }
 
-	-- icon finder
-	local function micon(name)
-		return redflat.service.dfparser.lookup_icon(name, icon_style)
-	end
-
-	-- menu separator
-	local menu_sep = { widget = separator.horizontal({ margin = { 3, 3, 5, 5 } }) }
-
-	-- menu theme
-	local menu_theme = {
-		icon_margin = { 7, 10, 7, 7 },
-		auto_hotkey = true
-	}
-
-	-- run commands
-	local ranger_command   = "urxvt -e ranger"
-	local suspend_command  = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
-	                          /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
-
-	-- Build menu
-	--------------------------------------------------------------------------------
-
-	-- Application submenu
-	------------------------------------------------------------
-	local appmenu = redflat.service.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
-
-	-- Awesome submenu
-	------------------------------------------------------------
-	local awesomemenu = {
-		{ "Edit config",     "geany " .. awesome.conffile,  micon("gnome-system-config")  },
-		{ "Restart",         awesome.restart,               micon("gnome-session-reboot") },
-		{ "Quit",            awesome.quit,                  micon("exit")                 },
-		menu_sep,
-		{ "Awesome config",  "nemo .config/awesome",        micon("folder-bookmarks") },
-		{ "Awesome lib",     "nemo /usr/share/awesome/lib", micon("folder-bookmarks") }
-	}
-
-	-- Exit submenu
-	------------------------------------------------------------
-	local exitmenu = {
-		{ "Reboot",          "user-shutdown -r now",      micon("gnome-session-reboot")  },
-		{ "Switch user",     "dm-tool switch-to-greeter", micon("gnome-session-switch")  },
-		{ "Suspend",         suspend_command ,            micon("gnome-session-suspend") }
-	}
-
-	-- Places submenu
-	------------------------------------------------------------
-	local placesmenu = {
-		{ "Documents",   fm .. " Documents", micon("folder-documents") },
-		{ "Downloads",   fm .. " Downloads", micon("folder-download")  },
-		{ "Music",       fm .. " Music",     micon("folder-music")     },
-		{ "Pictures",    fm .. " Pictures",  micon("folder-pictures")  },
-		{ "Videos",      fm .. " Videos",    micon("folder-videos")    },
-		menu_sep,
-		{ "AMV",         fm .. " /mnt/media/video/AMV", micon("folder-bookmarks") }
-	}
-
-	-- Main menu
-	------------------------------------------------------------
-	mainmenu = redflat.menu({ hide_timeout = 1, theme = menu_theme,
-		items = {
-			{ "Awesome",         awesomemenu,            beautiful.icon.awesome },
-			{ "Applications",    appmenu,                micon("distributor-logo")        },
-			{ "Places",          placesmenu,             micon("folder_home"), key = "c"  },
-			menu_sep,
-			{ "Firefox",         "firefox",              micon("firefox")                 },
-			{ "Nemo",            "nemo",                 micon("folder")                  },
-			{ "Ranger",          ranger_command,         micon("folder")                  },
-			{ "Geany",           "geany",                micon("geany")                   },
-			{ "Exaile",          "exaile",               micon("exaile")                  },
-			menu_sep,
-			{ "Exit",            exitmenu,               micon("exit")                    },
-			{ "Shutdown",        "user-shutdown -h now", micon("system-shutdown")         }
-		}
-	})
-end
+mainmenu = mymenu.build({ separator = menu_sep, fm = fm, theme = menu_theme, icon_style = menu_icon_style })
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
@@ -224,10 +147,6 @@ end
 -- Separators
 --------------------------------------------------------------------------------
 local single_sep = separator.vertical({ margin = pmargin.single_sep })
-
---local double_sep = wibox.layout.fixed.horizontal()
---double_sep:add(separator.vertical({ margin = pmargin.double_sep[1] }))
---double_sep:add(separator.vertical({ margin = pmargin.double_sep[2] }))
 
 -- Taglist configure
 --------------------------------------------------------------------------------
@@ -450,8 +369,8 @@ for s = 1, screen.count() do
 	end
 
 	-- Center widgets are aligned to the left
-	--local middle_align = wibox.layout.align.horizontal()
-	--middle_align:set_left(tasklist[s].layout)
+	-- local middle_align = wibox.layout.align.horizontal()
+	-- middle_align:set_left(tasklist[s].layout)
 
 	-- Now bring it all together (with the tasklist in the middle)
 	local layout = wibox.layout.align.horizontal()
@@ -704,11 +623,11 @@ awful.rules.rules = {
 		rule       = { class = "Firefox" }, except = { role = "browser" },
 		properties = { floating = true }
 	},
-    {
+	{
 		rule_any   = { class = { "pinentry", "Plugin-container" } },
 		properties = { floating = true }
 	},
-    {
+	{
 		rule = { class = "Exaile", type = "normal" },
 		callback = function(c)
 			awful.client.movetotag(tags[1][2], c)
