@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------------------------------
---                                                  RedFlat config                                                   --
+--                                                    Blue config                                                    --
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
@@ -55,7 +55,7 @@ end
 
 -- Environment
 -----------------------------------------------------------------------------------------------------------------------
-local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/bluebird"
+local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/blue"
 beautiful.init(theme_path .. "/theme.lua")
 
 local terminal = "urxvt"

@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------------------------------
---                                                  BlueBird theme                                                   --
+--                                                   Red theme                                                       --
 -----------------------------------------------------------------------------------------------------------------------
 
 local theme = {}
@@ -7,14 +7,15 @@ local theme = {}
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
 theme.color = {
-	main      = "#246b99",
+	main      = "#b1222b",
+	--main      = "#246b99",
 	gray      = "#575757",
 	bg        = "#161616",
 	bg_second = "#181818",
 	wibox     = "#202020",
 	icon      = "#a0a0a0",
 	text      = "#aaaaaa",
-	urgent    = "#a22814",
+	urgent    = "#32882d",
 	highlight = "#ffffff",
 
 	border    = "#404040",
@@ -42,7 +43,7 @@ theme.border_marked = theme.color.main
 
 -- Common
 -----------------------------------------------------------------------------------------------------------------------
-theme.path = os.getenv("HOME") .. "/.config/awesome/themes/bluebird"
+theme.path = os.getenv("HOME") .. "/.config/awesome/themes/red"
 
 -- Main config
 --------------------------------------------------------------------------------
@@ -60,12 +61,12 @@ theme.font_helper_title = "Play bold 16" -- hotkeys helper title font
 
 -- cairo formated fonts
 theme.cf_appswitcher = { font = "Play", size = 22, face = 1 } -- application switcher font
-theme.cf_tag         = { font = "Play", size = 16, face = 1 } -- tag widget font
+theme.cf_monitor     = { font = "Play", size = 20, face = 1 } -- monitoring widget font
 
 -- environment vars
-theme.panel_height        = 36 -- panel height
+theme.panel_height        = 50 -- panel height
 theme.border_width        = 4  -- window border width
-theme.useless_gap_width   = 8  -- Lain useless gap
+theme.useless_gap_width   = 12 -- Lain useless gap
 theme.global_border_width = 0  -- Lain global border gap
 
 -- grid layout prop
@@ -74,13 +75,10 @@ theme.cellnum = { x = 100, y = 62 }
 -- Shared icons
 --------------------------------------------------------------------------------
 theme.icon = {
-	check    = theme.path .. "/common/check.svg",
-	blank    = theme.path .. "/common/blank.svg",
-	warning  = theme.path .. "/common/warning.svg",
-	monitor  = theme.path .. "/widget/monitor.svg",
-	wireless = theme.path .. "/widget/wireless.svg",
-	battery  = theme.path .. "/widget/battery.svg",
-	awesome  = theme.path .. "/awesome.svg",
+	check   = theme.path .. "/common/check.svg",
+	blank   = theme.path .. "/common/blank.svg",
+	warning = theme.path .. "/common/warning.svg",
+	awesome = theme.path .. "/awesome.svg",
 }
 
 -- Desktop config
@@ -114,11 +112,11 @@ theme.desktop.common.dashbar = {
 -- Barpack
 ------------------------------------------------------------
 theme.desktop.common.barpack = {
-	label_style = { width = 80, draw = "by_width" },
-	text_style  = { width = 92, draw = "by_edges" },
+	label_style = { width = 78, draw = "by_width" },
+	text_style  = { width = 88, draw = "by_edges" },
 	line_height = theme.desktop.line_height,
-	text_gap    = 22,
-	label_gap   = 16,
+	text_gap    = 20,
+	label_gap   = 20,
 	color       = theme.desktop.color
 }
 
@@ -132,20 +130,20 @@ theme.desktop.speedmeter = {
 	dashbar          = { bar = { width = 16, gap = 6 }, height = 6 },
 	chart            = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 },
 	barvalue_height  = 32,
-	fullchart_height = 80,
+	fullchart_height = 78,
 	images           = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" },
-	image_gap        = 16,
+	image_gap        = 20,
 	color            = theme.desktop.color
 }
 
 -- CPU and memory
 ------------------------------------------------------------
 theme.desktop.multim = {
-	corner       = { width = 34, corner = { height = 17, num = 10, line = 4 } },
-	state_height = 58,
-	prog_height  = 80,
-	image_gap    = 16,
-	image        = theme.path .. "/desktop/bstar.svg",
+	corner       = { width = 34, corner = { height = 17, num = 10, line = 5 } },
+	state_height = 60,
+	prog_height  = 98,
+	image_gap    = 20,
+	image        = theme.path .. "/desktop/ed2.svg",
 	color        = theme.desktop.color
 }
 
@@ -155,23 +153,12 @@ theme.desktop.dashpack = {
 	color = theme.desktop.color
 }
 
--- Thermal
-------------------------------------------------------------
-theme.desktop.sline = {
-	digit_num = 2,
-	lbox      = { draw = "by_width", width = 50 },
-	rbox      = { draw = "by_edges", width = 60 },
-	icon      = theme.path .. "/desktop/star.svg",
-	iwidth    = 142,
-	color     = theme.desktop.color
-}
-
 -- Widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 520, 520, 520 },
-	height = { 180, 160, 160, 138, 18 },
-	edge   = { width = { 60, 60 }, height = { 40, 40 } }
+	height = { 180, 182, 102, 144 },
+	edge   = { width = { 60, 60 }, height = { 60, 60 } }
 }
 
 theme.desktop.places = {
@@ -179,9 +166,9 @@ theme.desktop.places = {
 	ssdspeed = { 2, 1 },
 	hddspeed = { 3, 1 },
 	cpumem   = { 1, 2 },
-	transm   = { 1, 3 },
+	transm   = { 2, 2 },
 	disks    = { 1, 4 },
-	thermal  = { 1, 5 }
+	thermal  = { 1, 3 }
 }
 
 -- Naughty config
@@ -233,10 +220,10 @@ theme.service.navigator = {
 theme.menu = {
 	border_width = 4,
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	height       = 32,
+	height       = 35,
 	width        = 300,
-	icon_margin  = { 8, 8, 8, 8 },
-	ricon_margin = { 9, 9, 9, 9 },
+	icon_margin  = { 10, 10, 10, 10 },
+	ricon_margin = { 10, 10, 10, 10 },
 	font         = theme.font,
 	submenu_icon = theme.path .. "/common/submenu.svg"
 }
@@ -269,16 +256,17 @@ theme.gauge = {}
 
 -- Audio
 ------------------------------------------------------------
-theme.gauge.blueaudio = {
-	width   = 75,
-	dash    = { bar = { num = 5, width = 4 } },
-	dmargin = { 10, 0, 2, 2 },
-	icon    = theme.path .. "/widget/headphones.svg",
+theme.gauge.redaudio = {
+	icon = {
+		ready = theme.path .. "/widget/audio.svg",
+		mute  = theme.path .. "/widget/mute.svg"
+	}
 }
 
-theme.gauge.blueaudio.color = {
+theme.gauge.redaudio.color = {
+	main = theme.color.main,
 	icon = theme.color.icon,
-	mute = theme.color.urgent
+	mute = theme.color.gray
 }
 
 -- Progressbar
@@ -297,9 +285,9 @@ theme.gauge.dashcontrol = {
 -- Dotcount
 ------------------------------------------------------------
 theme.gauge.dotcount = {
-	border_gap_v = 6,
-	column_num   = { 3, 5 },  -- { min, max }
-	row_num      = 3,
+	border_gap_v = 7,
+	column_num   = { 2, 3 },  -- { min, max }
+	row_num      = 4,
 	dot_size     = 5,
 	dot_gap_h    = 5,
 	color        = theme.color
@@ -313,41 +301,41 @@ theme.gauge.doublebar = {
 	color = theme.color
 }
 
--- Icon indicator
---------------------------------------------------------------
-theme.gauge.gicon = {
-	icon  = theme.path .. "/widget/fav.svg",
-	color = theme.color
-}
-
 -- Monitor
 --------------------------------------------------------------
-theme.gauge.doublemonitor = {
-	width    = 90,
-	line     = { v_gap = 6 },
-	dmargin  = { 10, 0, 0, 0 },
-	icon     = theme.path .. "/widget/fav.svg",
+theme.gauge.monitor = {
+	font     = theme.cf_monitor,
+	text_gap = 28,
+	line     = { width = 4, v_gap = 36 },
 	color    = theme.color
 }
 
 -- Tag
 ------------------------------------------------------------
-theme.gauge.bluetag = {
-	width    = 103,
-	font     = theme.cf_tag,
-	point    = { width = 80, height = 3, gap = 27, dx = 5 },
-	text_gap = 20,
-	color    = theme.color
+theme.gauge.redtag = {
+	width        = 100,
+	font         = theme.gauge.monitor.font,
+	text_gap     = theme.gauge.monitor.text_gap,
+	counter      = { size = 13, gap = 3, coord = { 50, 38 } },
+	show_counter = false,
+	color        = theme.color
 }
 
--- Task (the same widget as tag)
+-- geometry for state marks
+theme.gauge.redtag.geometry = {
+	active   = {         y = 36,             height = 4  },
+	focus    = { x = 4,  y = 14, width = 13, height = 13 },
+	occupied = { x = 85, y = 8,  width = 9,  height = 15 }
+}
+
+-- Task
 ------------------------------------------------------------
-theme.gauge.bluetask = {
-	width    = 80,
-	show_min = true,
-	font     = theme.cf_tag,
-	point    = { width = 70, height = 3, gap = 27, dx = 5 },
-	text_gap = 20,
+theme.gauge.task = {
+	width    = 50,
+	font     = theme.gauge.monitor.font,
+	text_gap = theme.gauge.monitor.text_gap,
+	line     = { width = 4, v_gap = 36 },
+	counter  = { size = 13, gap = 3 },
 	color    = theme.color
 }
 
@@ -364,18 +352,16 @@ theme.widget = {}
 -- Widgets placement
 --------------------------------------------------------------------------------
 theme.widget.margin = {
-	single_sep  = { 0, 0, 3, 3 },
-	taglist     = { 3, 0, 0, 0 },
-	tasklist    = { 3, 0, 0, 3 },
-	kbindicator = { 10, 10, 4, 4 },
-	volume      = { 9, 9, 5, 5 },
-	cpumem      = { 10, 10, 5, 5 },
-	net         = { 10, 10, 5, 5 },
-	bat         = { 9, 9, 5, 5 },
-	mail        = { 10, 10, 4, 4 },
-	layoutbox   = { 10, 10, 6, 6 },
-	tray        = { 9, 9, 6, 6 },
-	textclock   = { 12, 12, 0, 0 }
+	single_sep  = { 12, 12, 5, 5 },
+	double_sep  = { { 12, 7, 5, 5 }, { 7, 12, 5, 5 } },
+	taglist     = { 10, 0, 0, 0 },
+	upgrades    = { 7, 7, 7, 7 },
+	kbindicator = { 5, 5, 5, 5 },
+	volume      = { 3, 3, 3, 3 },
+	mail        = { 5, 5, 5, 5 },
+	tray        = { 0, 0, 7, 7 },
+	layoutbox   = { 8, 8, 8, 8 },
+	textclock   = { 5, 15, 0, 0 }
 }
 
 -- Widgets
@@ -439,7 +425,7 @@ theme.widget.layoutbox.icon = {
 }
 
 theme.widget.layoutbox.menu = {
-	icon_margin = { 9, 12, 9, 9 },
+	icon_margin = { 10, 14, 10, 10 },
 	width       = 260,
 	auto_hotkey = true,
 	nohide      = false,
@@ -462,20 +448,17 @@ theme.widget.layoutbox.name_alias = {
 -- Tasklist
 ------------------------------------------------------------
 theme.widget.tasklist = {
-	width       = 70,
-	char_digit  = 5,
-	task        = theme.gauge.bluetask
+	width = 50
 }
 
 -- main
 theme.widget.tasklist.winmenu = {
-	micon          = theme.icon,
-	titleline      = { font = theme.font_title, height = 30 },
-	menu           = { width = 240, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
-	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
-	state_iconsize = { 18, 18 },
-	layout_icon    = theme.widget.layoutbox.icon,
-	color          = theme.color
+	micon       = theme.icon,
+	titleline   = { font = theme.font_title, height = 35 },
+	menu        = { width = 280, color = { right_icon = theme.color.icon } },
+	tagmenu     = { width = 200, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
+	layout_icon = theme.widget.layoutbox.icon,
+	color       = theme.color
 }
 
 -- tasktip
@@ -498,24 +481,27 @@ theme.widget.tasklist.winmenu.icon = {
 
 -- task aliases
 theme.widget.tasklist.appnames = {}
-theme.widget.tasklist.appnames["Exaile"              ] = "EXAILE"
-theme.widget.tasklist.appnames["Smplayer"            ] = "SMPL"
-theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
-theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
-theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"
-theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GIMP"
-theme.widget.tasklist.appnames["Goldendict"          ] = "GDIC"
-theme.widget.tasklist.appnames["Easytag"             ] = "ETAG"
-theme.widget.tasklist.appnames["Mcomix"              ] = "COMIX"
-theme.widget.tasklist.appnames["Claws-mail"          ] = "CMAIL"
-theme.widget.tasklist.appnames["URxvt"               ] = "RXVT"
+theme.widget.tasklist.appnames["Nemo"                ] = "NFM"
+theme.widget.tasklist.appnames["Gvim"                ] = "VIM"
+theme.widget.tasklist.appnames["Terminator"          ] = "TRM"
+theme.widget.tasklist.appnames["Firefox"             ] = "FFX"
+theme.widget.tasklist.appnames["Gnome-terminal"      ] = "TER"
+theme.widget.tasklist.appnames["Gnome-system-monitor"] = "GSM"
+theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GMP"
+theme.widget.tasklist.appnames["Gimp"                ] = "GMP"
+theme.widget.tasklist.appnames["Goldendict"          ] = "DIC"
+theme.widget.tasklist.appnames["Transmission-gtk"    ] = "TMN"
+theme.widget.tasklist.appnames["Steam"               ] = "STM"
+theme.widget.tasklist.appnames["Easytag"             ] = "TAG"
+theme.widget.tasklist.appnames["Mcomix"              ] = "CMX"
+theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
 
 -- Minitray
 ------------------------------------------------------------
 theme.widget.minitray = {
-	border_width = 0,
-	geometry     = { height = 40 },
-	screen_pos   = { { x = 1800, y = 1110 } },
+	border_width = 4,
+	geometry     = { height = 50 },
+	screen_pos   = { { x = 1530, y = 960 } },
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
 	color        = { wibox = theme.color.wibox, border = theme.color.wibox }
 }
@@ -605,7 +591,7 @@ theme.float.hotkeys = {
 theme.float.exaile = {
 	geometry     = { width = 520, height = 150 },
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 1400, y = 1970 } },
+	screen_pos   = { { x = 580, y = 868 } },
 	titlefont    = theme.font_exaile_main,
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
@@ -627,7 +613,7 @@ theme.float.exaile.icon = {
 theme.float.notify = {
 	geometry     = { width = 484, height = 106 },
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 1428, y = 8 } },
+	screen_pos   = { { x = 1424, y = 12 } },
 	font         = theme.font_notify,
 	border_width = 0,
 	color        = theme.color
@@ -651,7 +637,7 @@ theme.float.prompt = {
 theme.float.top = {
 	geometry      = { width = 460, height = 400 },
 	screen_gap    = theme.useless_gap_width + theme.global_border_width,
-	screen_pos    = { { x =1460, y = 640 } },
+	screen_pos    = { { x =1448, y = 618 } },
 	border_margin = { 20, 20, 10, 0 },
 	button_margin = { 140, 140, 18, 18 },
 	title_height  = 40,
