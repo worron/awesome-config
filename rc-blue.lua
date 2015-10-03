@@ -404,60 +404,11 @@ awful.rules.rules = custom_rules
 
 -- Windows titlebar config
 -----------------------------------------------------------------------------------------------------------------------
-local titlebar = {
-	enabled    = true,
-	exceptions = { "Plugin-container", "Steam", "Gvim" }
-}
+local titlebar = require("red.titlebar-config") -- load file with titlebar configuration
 
-do
-	-- Support functions
-	--------------------------------------------------------------------------------
-	local function titlebar_action(c, action)
-		return function()
-			client.focus = c
-			c:raise()
-			action(c)
-		end
-	end
+local t_exceptions = { "Plugin-container", "Steam", "Key-mon", "Gvim" }
 
-	local function on_maximize(c)
-		if c.maximized_vertical then
-			redflat.titlebar.hide(c)
-		else
-			redflat.titlebar.show(c)
-		end
-	end
-
-	-- Function to check if titlebar needed for given window
-	--------------------------------------------------------------------------------
-	titlebar.allowed = function(c)
-		return titlebar.enabled and (c.type == "normal")
-		       and not awful.util.table.hasitem(titlebar.exceptions, c.class)
-	end
-
-	-- Function to construct titlebar
-	--------------------------------------------------------------------------------
-	titlebar.create = function(c)
-
-		-- Create titlebar
-		------------------------------------------------------------
-		local full_style =  { size = 28, icon = { gap = 0, size = 25, angle = 0.50 } }
-		local model = redflat.titlebar.model(c, { "floating", "sticky", "ontop" }, nil, full_style)
-		redflat.titlebar(c, model):set_widget(model.widget)
-
-		-- Mouse actions setup
-		------------------------------------------------------------
-		model.widget:buttons(awful.util.table.join(
-			awful.button({}, 1, titlebar_action(c, redflat.service.mouse.move)),
-			awful.button({}, 3, titlebar_action(c, redflat.service.mouse.resize))
-		))
-
-		-- Hide titlebar when window maximized
-		------------------------------------------------------------
-		if c.maximized_vertical then redflat.titlebar.hide(c) end
-		c:connect_signal("property::maximized_vertical", on_maximize)
-	end
-end
+titlebar:init({ enable = true, exceptions = t_exceptions })
 
 -- Signals setup
 -----------------------------------------------------------------------------------------------------------------------
