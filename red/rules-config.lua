@@ -26,7 +26,7 @@ function rules:build(args)
 			properties = { floating = true }
 		},
 		{
-			rule_any   = { class = { "pinentry", "Plugin-container" } },
+			rule_any   = { class = { "pinentry", "Plugin-container", "Acyl.py" } },
 			properties = { floating = true }
 		},
 		{

@@ -55,7 +55,7 @@ end
 
 -- Environment
 -----------------------------------------------------------------------------------------------------------------------
-local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/redflat"
+local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/red"
 beautiful.init(theme_path .. "/theme.lua")
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
@@ -335,7 +335,11 @@ do
 	top.wibox:geometry(egeometry["top"])
 
 	top.layout:buttons(awful.util.table.join(
-		awful.button({}, 1, function() client.focus.maximized = not client.focus.maximized end),
+		awful.button({}, 1,
+			function()
+				if client.focus then client.focus.maximized = not client.focus.maximized end
+			end
+		),
 		awful.button({}, 4, function() awful.tag.incmwfact( 0.05) end),
 		awful.button({}, 5, function() awful.tag.incmwfact(-0.05) end)
 	))

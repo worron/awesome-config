@@ -116,6 +116,7 @@ function hotkeys:init(args)
 	self.terminal = args.terminal or "x-terminal-emulator"
 	self.mod = args.mod or "Mod4"
 	self.need_helper = args.need_helper or true
+	self.layouts = args.layouts
 
 	-- Global keys
 	--------------------------------------------------------------------------------
@@ -291,11 +292,11 @@ function hotkeys:init(args)
 		},
 		{ comment = "Layouts" },
 		{
-			args = { { self.mod,           }, "Up", function () awful.layout.inc(layouts, 1) end },
+			args = { { self.mod,           }, "Up", function () awful.layout.inc(self.layouts, 1) end },
 			comment = "Switch to next layout"
 		},
 		{
-			args = { { self.mod,           }, "Down", function () awful.layout.inc(layouts, - 1) end },
+			args = { { self.mod,           }, "Down", function () awful.layout.inc(self.layouts, - 1) end },
 			comment = "Switch to previous layout"
 		},
 		{ comment = "Titlebar" },

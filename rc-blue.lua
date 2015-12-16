@@ -374,7 +374,7 @@ edges:init({ width = 1})
 -----------------------------------------------------------------------------------------------------------------------
 local hotkeys = require("red.keys-config") -- load file with hotkeys configuration
 
-hotkeys:init({ terminal = terminal, menu = mainmenu, mod = modkey })
+hotkeys:init({ terminal = terminal, menu = mainmenu, mod = modkey, layouts = layouts })
 
 -- set global keys
 root.keys(hotkeys.global)

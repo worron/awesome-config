@@ -343,7 +343,7 @@ edges:init({ width = 1})
 -----------------------------------------------------------------------------------------------------------------------
 local hotkeys = require("red.keys-config") -- load file with hotkeys configuration
 
-hotkeys:init({ terminal = terminal, menu = mainmenu, mod = modkey })
+hotkeys:init({ terminal = terminal, menu = mainmenu, mod = modkey, layouts = layouts })
 
 -- set global keys
 root.keys(hotkeys.global)
@@ -454,7 +454,7 @@ if not stamp or (os.time() - tonumber(stamp)) > 5 then
 
 	-- keyboard layouts
 	--awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")
-	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:rshift_toggle")
+	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:rctrl_toggle")
 	awful.util.spawn_with_shell("xkbcomp $DISPLAY - | egrep -v 'group . = AltGr;' | xkbcomp - $DISPLAY")
 	awful.util.spawn_with_shell("sleep 1 && bash /home/vorron/Documents/scripts/swapctrl.sh")
 	awful.util.spawn_with_shell("kbdd")
