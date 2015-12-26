@@ -570,7 +570,7 @@ theme.float.appswitcher = {
 	preview_format = 16 / 10,
 	title_font     = theme.font_title,
 	--icon_style     = { icons = { custom_only = true, scalable_only = true } },
-	icon_style     = { icons = { theme = os.getenv("HOME") .. "/.config/awesome/icons" } },
+	-- icon_style     = { icons = { theme = os.getenv("HOME") .. "/.config/awesome/icons" } },
 	border_width   = 0,
 	update_timeout = 1 / 12,
 	font           = theme.cf_appswitcher,
@@ -686,9 +686,8 @@ theme.float.dfparser.desktop_file_dirs = {
 }
 
 theme.float.dfparser.icons = {
-	df_icon       = "/home/vorron/.icons/ACYL_Icon_Theme_0.9.4.3/scalable/mimetypes/application-x-executable.svg",
-	theme         = "/home/vorron/.icons/ACYL_Icon_Theme_0.9.4.3",
-	--theme         = os.getenv("HOME") .. "/.config/awesome/icons",
+	df_icon       = "/home/vorron/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
+	theme         = "/home/vorron/.icons/ACYLS",
 	custom_only   = false,
 	scalable_only = false
 }
