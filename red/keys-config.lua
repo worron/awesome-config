@@ -61,6 +61,29 @@ local function kill_all()
 	end
 end
 
+local function minimize_all_else(c)
+    thisScreen = client.focus.screen
+    for _, cc in ipairs(client.get(c.screen)) do
+        if current(cc, thisScreen) and cc.window ~= c.window then
+                cc.minimized = true
+        end
+    end
+end
+
+local function has_minimized_one_else(c)
+    for _, cc in ipairs(client.get(c.screen)) do
+        if current(cc, client.focus.screen) and cc.minimized == true then
+            return true
+        end
+    end
+end
+
+local function restore_all_else(c)
+    for _, cc in ipairs(client.get(c.screen)) do
+        if current(cc, client.focus.screen) and cc.minimized then cc.minimized = false end
+    end
+end
+
 -- numeric key function
 local function naction(i, handler, is_tag)
 	return function ()
@@ -433,8 +456,14 @@ function hotkeys:init(args)
 		awful.button({                     }, 1, function (c) client.focus = c; c:raise() end),
 		awful.button({                     }, 2, redflat.service.mouse.move),
 		awful.button({ self.mod            }, 3, redflat.service.mouse.resize),
-		awful.button({                     }, 8, function(c) c:kill() end)
-	)
+                awful.button({                     }, 8, function(c) c:kill() end),
+                awful.button({ self.mod            }, 4, function (c) minimize_all_else(c) end),
+                awful.button({ self.mod            }, 5, function (c)
+                    if has_minimized_one_else(c) then
+                        restore_all_else(c)
+                    end
+                end
+                )
 
 
 	-- Hotkeys helper setup
