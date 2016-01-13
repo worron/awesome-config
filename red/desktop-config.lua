@@ -33,10 +33,10 @@ function desktop:init(args)
 
 	netspeed.args = {
 		interface    = "wlan0",
-		maxspeed     = { up = 65*1024, down = 650*1024 },
-		crit         = { up = 60*1024, down = 600*1024 },
+		maxspeed     = { up = 5*1024^2, down = 5*1024^2 },
+		crit         = { up = 5*1024^2, down = 5*1024^2 },
 		timeout      = 2,
-		autoscale    = false
+		autoscale    = true
 	}
 
 	netspeed.style  = {}

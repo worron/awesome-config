@@ -5,6 +5,7 @@
 -- Grab environment
 local beautiful = require("beautiful")
 local redflat = require("redflat")
+local awful = require("awful")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -19,8 +20,7 @@ local function micon(name)
 end
 
 -- run commands
---local ranger_command   = "urxvt -fn 'xft:Ubuntu Mono:pixelsize=20' -e ranger"
-local ranger_command  = "urxvt -e ranger"
+local ranger_command  = function() awful.util.spawn_with_shell("urxvt -e $SHELL -ci 'ranger'") end
 local suspend_command = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
                           /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
 

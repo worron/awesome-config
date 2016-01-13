@@ -228,7 +228,7 @@ tray.widget:buttons(awful.util.table.join(
 
 -- System resource monitoring widgets
 --------------------------------------------------------------------------------
-local netspeed  = { up   = 60 * 1024, down = 650 * 1024 }
+local netspeed  = { up   = 5 * 1024^2, down = 5 * 1024^2 }
 
 local monitor = {
 	cpu = redflat.widget.sysmon({ func = system.pformatted.cpu(80) }, { timeout = 2,  monitor = { label = "CPU" } }),
