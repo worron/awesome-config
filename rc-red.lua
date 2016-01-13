@@ -384,7 +384,7 @@ titlebar:init({ enable = true, exceptions = t_exceptions })
 
 -- Sloppy focus config
 --------------------------------------------------------------------------------
-local sloppy_focus_enabled = false
+local sloppy_focus_enabled = true
 
 local function catch_focus(c)
 	if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier and awful.client.focus.filter(c) then
