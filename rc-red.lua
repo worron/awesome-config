@@ -57,7 +57,8 @@ end
 
 -- Environment
 -----------------------------------------------------------------------------------------------------------------------
-local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/red"
+local homedir = os.getenv("HOME")
+local theme_path = homedir .. "/.config/awesome/themes/red"
 beautiful.init(theme_path .. "/theme.lua")
 
 local terminal = "urxvt"
@@ -180,7 +181,7 @@ volume.widget:buttons(awful.util.table.join(
 -- Mail
 --------------------------------------------------------------------------------
 local mail_scripts      = { "mail1.py", "mail2.py" }
-local mail_scripts_path = "/home/vorron/Documents/scripts/"
+local mail_scripts_path = homedir .. "/Documents/scripts/"
 
 local mail = {}
 mail.widget = redflat.widget.mail({ path = mail_scripts_path, scripts = mail_scripts })
@@ -449,14 +450,14 @@ if not stamp or (os.time() - tonumber(stamp)) > 5 then
 	awful.util.spawn_with_shell("pulseaudio")
 	awful.util.spawn_with_shell("/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
 	awful.util.spawn_with_shell("nm-applet")
-	awful.util.spawn_with_shell("bash /home/vorron/Documents/scripts/tmpfs_firefox.sh")
-	awful.util.spawn_with_shell("xrdb -merge /home/vorron/.Xdefaults")
+	awful.util.spawn_with_shell("bash ~/Documents/scripts/tmpfs_firefox.sh")
+	awful.util.spawn_with_shell("xrdb -merge ~/.Xdefaults")
 
 	-- keyboard layouts
 	--awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")
 	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:rctrl_toggle")
 	awful.util.spawn_with_shell("xkbcomp $DISPLAY - | egrep -v 'group . = AltGr;' | xkbcomp - $DISPLAY")
-	awful.util.spawn_with_shell("sleep 1 && bash /home/vorron/Documents/scripts/swapctrl.sh")
+	awful.util.spawn_with_shell("sleep 1 && bash ~/Documents/scripts/swapctrl.sh")
 	awful.util.spawn_with_shell("kbdd")
 
 	-- apps

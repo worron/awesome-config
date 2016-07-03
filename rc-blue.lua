@@ -55,7 +55,8 @@ end
 
 -- Environment
 -----------------------------------------------------------------------------------------------------------------------
-local theme_path = os.getenv("HOME") .. "/.config/awesome/themes/blue"
+local homedir = os.getenv("HOME")
+local theme_path = homedir .. "/.config/awesome/themes/blue"
 beautiful.init(theme_path .. "/theme.lua")
 
 local terminal = "urxvt"
@@ -188,7 +189,7 @@ kbindicator.widget:buttons(awful.util.table.join(
 -- Mail
 --------------------------------------------------------------------------------
 local mail_scripts      = { "mail1.py", "mail2.py" }
-local mail_scripts_path = "/home/vorron/Documents/scripts/"
+local mail_scripts_path = homedir .. "/Documents/scripts/"
 
 local mail = {}
 mail.widget = redflat.widget.mail({ path = mail_scripts_path, scripts = mail_scripts })

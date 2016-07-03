@@ -43,7 +43,8 @@ theme.border_marked = theme.color.main
 
 -- Common
 -----------------------------------------------------------------------------------------------------------------------
-theme.path = os.getenv("HOME") .. "/.config/awesome/themes/red"
+local homedir = os.getenv("HOME")
+theme.path = homedir .. "/.config/awesome/themes/red"
 
 -- Main config
 --------------------------------------------------------------------------------
@@ -672,8 +673,8 @@ theme.float.dfparser.desktop_file_dirs = {
 }
 
 theme.float.dfparser.icons = {
-	df_icon       = "/home/vorron/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
-	theme         = "/home/vorron/.icons/ACYLS",
+	df_icon       = homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
+	theme         = homedir .. "/.icons/ACYLS",
 	custom_only   = false,
 	scalable_only = false
 }
