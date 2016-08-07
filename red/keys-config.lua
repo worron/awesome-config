@@ -22,7 +22,7 @@ local redbar = redflat.titlebar
 
 -- key functions
 local br = function(args)
-	redflat.float.brightness:change(args)
+	redflat.float.brightness:change_with_gsd(args)
 end
 
 local focus_switch_byd = function(dir)
@@ -281,11 +281,11 @@ function hotkeys:init(args)
 		},
 		{ comment = "Brightness control" },
 		{
-			args = { {                     }, "XF86MonBrightnessUp", function() br({ step = 0 }) end },
+			args = { {                     }, "XF86MonBrightnessUp", function() br({ step = 1 }) end },
 			comment = "Increase brightness"
 		},
 		{
-			args = { {                     }, "XF86MonBrightnessDown", function() br({ step = 0, down = 1 }) end },
+			args = { {                     }, "XF86MonBrightnessDown", function() br({ step = 1, down = true }) end },
 			comment = "Reduce brightness"
 		},
 		{ comment = "Window manipulation" },

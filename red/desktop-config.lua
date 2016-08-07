@@ -32,7 +32,7 @@ function desktop:init(args)
 	local netspeed = { geometry = wgeometry(grid, places.netspeed, workarea) }
 
 	netspeed.args = {
-		interface    = "wlan0",
+		interface    = "wlp3s0",
 		maxspeed     = { up = 5*1024^2, down = 5*1024^2 },
 		crit         = { up = 5*1024^2, down = 5*1024^2 },
 		timeout      = 2,
@@ -126,10 +126,10 @@ function desktop:init(args)
 		sensors = {
 			{ meter_function = system.thermal.sensors, args = "'Physical id 0'", maxm = 100, crit = 75 },
 			{ meter_function = system.thermal.hddtemp, args = {disk = "/dev/sdc"}, maxm = 60, crit = 45 },
-			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
+			{ meter_function = system.thermal.nvprime, maxm = 105, crit = 80 }
 		},
-		names   = {"cpu", "hdd", "gpu"},
-		timeout = 5
+		names   = { "cpu", "hdd", "gpu" },
+		timeout = 10
 	}
 
 	thermal.style = {

@@ -12,7 +12,7 @@ local awful = require("awful")
 awful.rules = require("awful.rules")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
---local naughty = require("naughty")
+-- local naughty = require("naughty")
 naughty = require("naughty")
 
 require("awful.autofocus")
@@ -178,10 +178,12 @@ volume.widget:buttons(awful.util.table.join(
 	awful.button({}, 9, function() redflat.float.exaile:action("Next")      end)
 ))
 
+-- redflat.float.exaile:start()
+
 -- Mail
 --------------------------------------------------------------------------------
 local mail_scripts      = { "mail1.py", "mail2.py" }
-local mail_scripts_path = homedir .. "/Documents/scripts/"
+local mail_scripts_path = homedir .. "/Documents/scripts/mail/"
 
 local mail = {}
 mail.widget = redflat.widget.mail({ path = mail_scripts_path, scripts = mail_scripts })
@@ -238,7 +240,7 @@ local monitor = {
 		{ func = system.pformatted.bat(15), arg = "BAT1" },
 		{ timeout = 60, monitor = { label = "BAT" } }
 	),
-	net = redflat.widget.net({ interface = "wlan0", speed  = netspeed, autoscale = false }, { timeout = 2 })
+	net = redflat.widget.net({ interface = "wlp3s0", speed  = netspeed, autoscale = false }, { timeout = 2 })
 }
 
 monitor.cpu:buttons(awful.util.table.join(
@@ -437,32 +439,13 @@ awesome.connect_signal("exit",
 	end
 )
 
------------------------------------------------------------------------------------------------------------------------
 
----[[
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
+local autostart = require("red.autostart-config") -- load file with autostart application list
 local stamp = timestamp.get()
+local start_trigger = 5 -- sec delay between sessions which will trigger off autostart apps
 
-if not stamp or (os.time() - tonumber(stamp)) > 5 then
-	-- utils
-	awful.util.spawn_with_shell("compton")
-	awful.util.spawn_with_shell("pulseaudio")
-	awful.util.spawn_with_shell("/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1")
-	awful.util.spawn_with_shell("nm-applet")
-	awful.util.spawn_with_shell("bash ~/Documents/scripts/tmpfs_firefox.sh")
-	awful.util.spawn_with_shell("xrdb -merge ~/.Xdefaults")
-
-	-- keyboard layouts
-	--awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:caps_toggle")
-	awful.util.spawn_with_shell("setxkbmap -layout 'us,ru' -variant ',winkeys,winkeys' -option grp:rctrl_toggle")
-	awful.util.spawn_with_shell("xkbcomp $DISPLAY - | egrep -v 'group . = AltGr;' | xkbcomp - $DISPLAY")
-	awful.util.spawn_with_shell("sleep 1 && bash ~/Documents/scripts/swapctrl.sh")
-	awful.util.spawn_with_shell("kbdd")
-
-	-- apps
-	awful.util.spawn_with_shell("parcellite")
-	awful.util.spawn_with_shell("exaile")
-	awful.util.spawn_with_shell("sleep 0.5 && transmission-gtk -m")
+if not stamp or (os.time() - tonumber(stamp)) > start_trigger then
+	autostart.run()
 end
---]]

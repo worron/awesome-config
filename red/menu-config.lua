@@ -52,7 +52,7 @@ function menu.build(args)
 	-- Exit submenu
 	------------------------------------------------------------
 	local exitmenu = {
-		{ "Reboot",          "user-shutdown -r now",      micon("gnome-session-reboot")  },
+		{ "Reboot",          "reboot",      micon("gnome-session-reboot")  },
 		{ "Switch user",     "dm-tool switch-to-greeter", micon("gnome-session-switch")  },
 		{ "Suspend",         suspend_command ,            micon("gnome-session-suspend") }
 	}
@@ -84,7 +84,7 @@ function menu.build(args)
 			{ "Exaile",          "exaile",               micon("exaile")                  },
 			separator,
 			{ "Exit",            exitmenu,               micon("exit")                    },
-			{ "Shutdown",        "user-shutdown -h now", micon("system-shutdown")         }
+			{ "Shutdown",        "shutdown now", micon("system-shutdown")         }
 		}
 	})
 

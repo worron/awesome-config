@@ -161,6 +161,8 @@ volume.widget:buttons(awful.util.table.join(
 	awful.button({}, 9, function() redflat.float.exaile:action("Next")      end)
 ))
 
+-- redflat.float.exaile:start()
+
 -- Layoutbox configure
 --------------------------------------------------------------------------------
 local layoutbox = {}
@@ -189,7 +191,7 @@ kbindicator.widget:buttons(awful.util.table.join(
 -- Mail
 --------------------------------------------------------------------------------
 local mail_scripts      = { "mail1.py", "mail2.py" }
-local mail_scripts_path = homedir .. "/Documents/scripts/"
+local mail_scripts_path = homedir .. "/Documents/scripts/mail/"
 
 local mail = {}
 mail.widget = redflat.widget.mail({ path = mail_scripts_path, scripts = mail_scripts })
@@ -223,8 +225,8 @@ local cpu_icon = redflat.util.check(beautiful, "icon.monitor")
 local net_icon = redflat.util.check(beautiful, "icon.wireless")
 local bat_icon = redflat.util.check(beautiful, "icon.battery")
 
-local net_speed = { up = 60 * 1024, down = 650 * 1024 }
-local net_alert = { up = 55 * 1024, down = 600 * 1024 }
+local net_speed  = { up   = 5 * 1024^2, down = 5 * 1024^2 }
+local net_alert  = { up   = 4 * 1024^2, down = 4 * 1024^2 }
 
 -- functions
 local cpumem_func = function()
@@ -247,7 +249,7 @@ monitor.widget = {
 		{ timeout = 2,  widget = redflat.gauge.doublemonitor, monitor = { icon = cpu_icon } }
 	),
 	net = redflat.widget.net(
-		{ interface = "wlan0", alert = net_alert, speed = net_speed, autoscale = false },
+		{ interface = "wlp3s0", alert = net_alert, speed = net_speed, autoscale = false },
 		{ timeout = 2, widget = redflat.gauge.doublemonitor, monitor = { icon = net_icon } }
 	),
 	bat = redflat.widget.sysmon(
@@ -467,12 +469,13 @@ awesome.connect_signal("exit",
 	end
 )
 
------------------------------------------------------------------------------------------------------------------------
 
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
+local autostart = require("red.autostart-config") -- load file with autostart application list
 local stamp = timestamp.get()
+local start_trigger = 5 -- sec delay between sessions which will trigger off autostart apps
 
-if not stamp or (os.time() - tonumber(stamp)) > 5 then
-	--awful.util.spawn_with_shell("compton")
+if not stamp or (os.time() - tonumber(stamp)) > start_trigger then
+	autostart.run()
 end
