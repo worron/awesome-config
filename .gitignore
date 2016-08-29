@@ -1,0 +1,7 @@
+# Default rc.lua is actually a link to specific config
+rc.lua
+# Wallpapers
+themes/*/wallpaper/
+# Private mail settings
+red/mail-config.lua
+
