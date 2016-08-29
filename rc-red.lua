@@ -182,17 +182,24 @@ volume.widget:buttons(awful.util.table.join(
 
 -- Mail
 --------------------------------------------------------------------------------
-local mail_scripts      = { "mail1.py", "mail2.py" }
-local mail_scripts_path = homedir .. "/Documents/scripts/mail/"
+-- local mymails_example = {
+-- 	{ checker = "script", script = homedir .. "/Documents/scripts/mail/" .. "mail-script.py" },
+-- 	{ checker = "curl_imap", mail = "username@gmail.com", password = "userpass", server = "imap.gmail.com" },
+-- }
 
+-- safe load private mail settings
+local my_mails = {}
+pcall(function() my_mails = require("red.mail-config") end)
+
+-- widget setup
 local mail = {}
-mail.widget = redflat.widget.mail({ path = mail_scripts_path, scripts = mail_scripts })
+mail.widget = redflat.widget.mail({ maillist = my_mails })
 mail.layout = wibox.layout.margin(mail.widget, unpack(pmargin.mail or {}))
 
 -- buttons
 mail.widget:buttons(awful.util.table.join(
 	awful.button({ }, 1, function () awful.util.spawn_with_shell("claws-mail") end),
-	awful.button({ }, 2, function () redflat.widget.mail:update()                   end)
+	awful.button({ }, 2, function () redflat.widget.mail:update()              end)
 ))
 
 -- Layoutbox configure

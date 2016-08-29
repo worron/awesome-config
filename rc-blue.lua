@@ -190,11 +190,13 @@ kbindicator.widget:buttons(awful.util.table.join(
 
 -- Mail
 --------------------------------------------------------------------------------
-local mail_scripts      = { "mail1.py", "mail2.py" }
-local mail_scripts_path = homedir .. "/Documents/scripts/mail/"
+-- safe load private mail settings
+local my_mails = {}
+pcall(function() my_mails = require("red.mail-config") end)
 
+-- widget setup
 local mail = {}
-mail.widget = redflat.widget.mail({ path = mail_scripts_path, scripts = mail_scripts })
+mail.widget = redflat.widget.mail({ maillist = my_mails })
 mail.layout = wibox.layout.margin(mail.widget, unpack(pmargin.mail or {}))
 
 -- buttons
