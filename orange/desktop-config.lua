@@ -13,7 +13,6 @@ local wibox = require("wibox")
 local desktop = {}
 
 -- desktop aliases
-local wgeometry = redflat.util.desktop.wgeometry
 local workarea = screen[mouse.screen].workarea
 local system = redflat.system
 

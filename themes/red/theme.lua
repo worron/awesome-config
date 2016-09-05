@@ -3,12 +3,12 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 local theme = {}
+local wa = screen[mouse.screen].workarea
 
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
 theme.color = {
 	main      = "#b1222b",
-	--main      = "#246b99",
 	gray      = "#575757",
 	bg        = "#161616",
 	bg_second = "#181818",
@@ -50,10 +50,11 @@ theme.path = homedir .. "/.config/awesome/themes/red"
 --------------------------------------------------------------------------------
 
 -- fonts
-theme.font        = "Play 14"      -- main theme font
-theme.font_title  = "Play bold 14" -- title font for widgets
-theme.font_clock  = "Play bold 12" -- font for textclock widget
-theme.font_notify = "Play bold 16" -- font for notify widget
+theme.font          = "Play 14"      -- main theme font
+theme.font_title    = "Play bold 14" -- title font for widgets
+theme.font_titlebar = "Play bold 14" -- title font for windows
+theme.font_clock    = "Play bold 12" -- font for textclock widget
+theme.font_notify   = "Play bold 16" -- font for notify widget
 
 theme.font_exaile_main = "Play bold 14" -- main font for exaile widget
 theme.font_exaile_time = "Play bold 16" -- time status font for exaile widget
@@ -61,8 +62,10 @@ theme.font_exaile_time = "Play bold 16" -- time status font for exaile widget
 theme.font_helper_title = "Play bold 16" -- hotkeys helper title font
 
 -- cairo formated fonts
-theme.cf_appswitcher = { font = "Play", size = 22, face = 1 } -- application switcher font
-theme.cf_monitor     = { font = "Play", size = 20, face = 1 } -- monitoring widget font
+theme.cf_appswitcher     = { font = "Play", size = 22, face = 1 } -- application switcher font
+theme.cf_monitor         = { font = "Play", size = 20, face = 1 } -- monitoring widget font
+theme.cf_navigator_title = { font = "Play", size = 28, face = 1, slant = 0 } -- window navigation title font
+theme.cf_navigator_main  = { font = "Play", size = 22, face = 1, slant = 0 } -- window navigation font
 
 -- environment vars
 theme.panel_height        = 50 -- panel height
@@ -209,8 +212,8 @@ theme.service.navigator = {
 	gradstep     = 60,
 	marksize     = { width = 160, height = 80, r = 20 },
 	linegap      = 32,
-	titlefont    = { font = "Play", size = 28, face = 1, slant = 0 },
-	font         = { font = "Play", size = 22, face = 1, slant = 0 },
+	titlefont    = cf_navigator_title,
+	font         = cf_navigator_main,
 	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
 	                 fbg1 = theme.color.main .. "40", fbg2 = theme.color.main .. "20",
 	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
@@ -243,7 +246,7 @@ theme.menu.color = {
 theme.titlebar = {
 	size          = 8,
 	position      = "top",
-	font          = "Play Bold 14",
+	font          = theme.font_titlebar,
 	icon          = { size = 30, gap = 10 },
 	border_margin = { 0, 0, 0, 4 },
 	--color         = theme.color
@@ -589,10 +592,11 @@ theme.float.hotkeys = {
 
 -- Exaile music player
 ------------------------------------------------------------
+local exaile_size = { width = 520, height = 150 }
 theme.float.exaile = {
-	geometry     = { width = 520, height = 150 },
+	geometry     = exaile_size,
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 580, y = 868 } },
+	screen_pos   = { { x = 580, y = wa.y + wa.height - theme.useless_gap_width - exaile_size.height } },
 	titlefont    = theme.font_exaile_main,
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
@@ -611,10 +615,11 @@ theme.float.exaile.icon = {
 
 -- Notify
 ------------------------------------------------------------
+local notify_size = { width = 484, height = 106 }
 theme.float.notify = {
-	geometry     = { width = 484, height = 106 },
+	geometry     = notify_size,
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 1424, y = 12 } },
+	screen_pos   = {{ x = wa.x + wa.width - notify_size.width - theme.useless_gap_width, y = theme.useless_gap_width }},
 	font         = theme.font_notify,
 	border_width = 0,
 	color        = theme.color
@@ -635,10 +640,12 @@ theme.float.prompt = {
 
 -- Top processes
 ------------------------------------------------------------
+local top_size = { width = 460, height = 400 }
 theme.float.top = {
-	geometry      = { width = 460, height = 400 },
+	geometry      = top_size,
 	screen_gap    = theme.useless_gap_width + theme.global_border_width,
-	screen_pos    = { { x =1448, y = 618 } },
+	screen_pos    = { { x = wa.x + wa.width  - theme.useless_gap_width - top_size.width,
+	                    y = wa.y + wa.height - theme.useless_gap_width - top_size.height } },
 	border_margin = { 20, 20, 10, 0 },
 	button_margin = { 140, 140, 18, 18 },
 	title_height  = 40,

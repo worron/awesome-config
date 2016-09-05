@@ -21,8 +21,6 @@ end
 
 -- run commands
 local ranger_command  = function() awful.util.spawn_with_shell("urxvt -e $SHELL -ci 'ranger'") end
-local suspend_command = [[dbus-send --print-reply --system --dest='org.freedesktop.UPower'
-                          /org/freedesktop/UPower org.freedesktop.UPower.Suspend]]
 
 -- Build function
 --------------------------------------------------------------------------------
@@ -41,9 +39,7 @@ function menu.build(args)
 	-- Awesome submenu
 	------------------------------------------------------------
 	local awesomemenu = {
-		{ "Edit config",     "geany " .. awesome.conffile,  micon("gnome-system-config")  },
 		{ "Restart",         awesome.restart,               micon("gnome-session-reboot") },
-		{ "Quit",            awesome.quit,                  micon("exit")                 },
 		separator,
 		{ "Awesome config",  fm .. " .config/awesome",        micon("folder-bookmarks") },
 		{ "Awesome lib",     fm .. " /usr/share/awesome/lib", micon("folder-bookmarks") }
@@ -52,9 +48,10 @@ function menu.build(args)
 	-- Exit submenu
 	------------------------------------------------------------
 	local exitmenu = {
-		{ "Reboot",          "reboot",      micon("gnome-session-reboot")  },
+		{ "Reboot",          "reboot",                    micon("gnome-session-reboot")  },
 		{ "Switch user",     "dm-tool switch-to-greeter", micon("gnome-session-switch")  },
-		{ "Suspend",         suspend_command ,            micon("gnome-session-suspend") }
+		{ "Suspend",         "systemctl suspend" ,        micon("gnome-session-suspend") },
+		{ "Log out",         awesome.quit,                micon("exit")                },
 	}
 
 	-- Places submenu
@@ -66,7 +63,8 @@ function menu.build(args)
 		{ "Pictures",    fm .. " Pictures",  micon("folder-pictures")  },
 		{ "Videos",      fm .. " Videos",    micon("folder-videos")    },
 		separator,
-		{ "AMV",         fm .. " /mnt/media/video/AMV", micon("folder-bookmarks") }
+		{ "Media",       fm .. " /mnt/media", micon("folder-bookmarks") },
+		{ "Storage",     fm .. " /opt",       micon("folder-bookmarks") },
 	}
 
 	-- Main menu

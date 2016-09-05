@@ -3,6 +3,7 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 local theme = {}
+local wa = screen[mouse.screen].workarea
 
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
@@ -61,9 +62,10 @@ theme.font_exaile_time = "Play bold 16" -- time status font for exaile widget
 theme.font_helper_title = "Play bold 16" -- hotkeys helper title font
 
 -- cairo formated fonts
-theme.cf_appswitcher = { font = "Play", size = 22, face = 1 } -- application switcher font
-theme.cf_tag         = { font = "Play", size = 16, face = 1 } -- tag widget font
-
+theme.cf_appswitcher     = { font = "Play", size = 22, face = 1 } -- application switcher font
+theme.cf_tag             = { font = "Play", size = 16, face = 1 } -- tag widget font
+theme.cf_navigator_title = { font = "Play", size = 28, face = 1, slant = 0 } -- window navigation title font
+theme.cf_navigator_main  = { font = "Play", size = 22, face = 1, slant = 0 } -- window navigation font
 -- environment vars
 theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
@@ -140,8 +142,8 @@ theme.service.navigator = {
 	gradstep     = 60,
 	marksize     = { width = 160, height = 80, r = 20 },
 	linegap      = 32,
-	titlefont    = { font = "Play", size = 28, face = 1, slant = 0 },
-	font         = { font = "Play", size = 22, face = 1, slant = 0 },
+	titlefont    = cf_navigator_title,
+	font         = cf_navigator_main,
 	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
 	                 fbg1 = theme.color.main .. "40", fbg2 = theme.color.main .. "20",
 	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
@@ -419,6 +421,8 @@ theme.widget.tasklist.appnames["Easytag"             ] = "ETAG"
 theme.widget.tasklist.appnames["Mcomix"              ] = "COMIX"
 theme.widget.tasklist.appnames["Claws-mail"          ] = "CMAIL"
 theme.widget.tasklist.appnames["URxvt"               ] = "RXVT"
+theme.widget.tasklist.appnames["VirtualBox"          ] = "VBOX"
+theme.widget.tasklist.appnames["Keepassx"            ] = "KPASS"
 
 -- Minitray
 ------------------------------------------------------------
@@ -510,10 +514,11 @@ theme.float.hotkeys = {
 
 -- Exaile music player
 ------------------------------------------------------------
+local exaile_size = { width = 520, height = 150 }
 theme.float.exaile = {
-	geometry     = { width = 520, height = 150 },
+	geometry     = exaile_size,
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 1400, y = 1970 } },
+	screen_pos   = { { x = 1400, y = wa.y + wa.height - theme.useless_gap_width - exaile_size.height } },
 	titlefont    = theme.font_exaile_main,
 	artistfont   = theme.font_exaile_main,
 	timefont     = theme.font_exaile_time,
@@ -532,10 +537,11 @@ theme.float.exaile.icon = {
 
 -- Notify
 ------------------------------------------------------------
+local notify_size = { width = 484, height = 106 }
 theme.float.notify = {
-	geometry     = { width = 484, height = 106 },
+	geometry     = notify_size,
 	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 1428, y = theme.useless_gap_width } },
+	screen_pos   = {{ x = wa.x + wa.width - notify_size.width - theme.useless_gap_width, y = theme.useless_gap_width }},
 	font         = theme.font_notify,
 	border_width = 0,
 	color        = theme.color
@@ -556,10 +562,12 @@ theme.float.prompt = {
 
 -- Top processes
 ------------------------------------------------------------
+local top_size = { width = 460, height = 400 }
 theme.float.top = {
-	geometry      = { width = 460, height = 400 },
+	geometry      = top_size,
 	screen_gap    = theme.useless_gap_width + theme.global_border_width,
-	screen_pos    = { { x =1460, y = 640 } },
+	screen_pos    = { { x = wa.x + wa.width  - theme.useless_gap_width - top_size.width,
+	                    y = wa.y + wa.height - theme.useless_gap_width - top_size.height } },
 	border_margin = { 20, 20, 10, 0 },
 	button_margin = { 140, 140, 18, 18 },
 	title_height  = 40,
