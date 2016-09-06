@@ -4,9 +4,11 @@ Custom config for [Awesome WM](http://awesome.naquadah.org). All stuff like self
 Screenshots
 ----------
 [//]: # (TODO:relative link to image)
-![](https://github.com/worron/awesome-config/wiki/images/desktop_widgets.png)
+![](https://github.com/worron/awesome-config/wiki/images/red-1.png)
 ---
-![](https://github.com/worron/awesome-config/wiki/images/blue.png)
+![](https://github.com/worron/awesome-config/wiki/images/blue-1.png)
+---
+![](https://github.com/worron/awesome-config/wiki/images/orange-1.png)
 
 Dependencies
 ------------
