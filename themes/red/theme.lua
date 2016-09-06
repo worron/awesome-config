@@ -8,14 +8,14 @@ local wa = screen[mouse.screen].workarea
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
 theme.color = {
-	main      = "#b1222b",
+	main      = "#A90017",
 	gray      = "#575757",
 	bg        = "#161616",
 	bg_second = "#181818",
 	wibox     = "#202020",
 	icon      = "#a0a0a0",
 	text      = "#aaaaaa",
-	urgent    = "#32882d",
+	urgent    = "#00725B",
 	highlight = "#ffffff",
 
 	border    = "#404040",
@@ -89,7 +89,7 @@ theme.icon = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop = { common = {} }
 
-theme.wallpaper = theme.path .. "/wallpaper/forwidgets.png"
+theme.wallpaper = theme.path .. "/wallpaper/custom.png"
 
 -- Common
 --------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ theme.desktop.common.dashbar = {
 -- Barpack
 ------------------------------------------------------------
 theme.desktop.common.barpack = {
-	label_style = { width = 78, draw = "by_width" },
+	label_style = { width = 88, draw = "by_width" },
 	text_style  = { width = 88, draw = "by_edges" },
 	line_height = theme.desktop.line_height,
 	text_gap    = 20,
@@ -161,8 +161,8 @@ theme.desktop.dashpack = {
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 520, 520, 520 },
-	height = { 180, 182, 102, 144 },
-	edge   = { width = { 60, 60 }, height = { 60, 60 } }
+	height = { 190, 188, 144, 18 },
+	edge   = { width = { 80, 80 }, height = { 80, 60 } }
 }
 
 theme.desktop.places = {
@@ -171,8 +171,10 @@ theme.desktop.places = {
 	hddspeed = { 3, 1 },
 	cpumem   = { 1, 2 },
 	transm   = { 2, 2 },
-	disks    = { 1, 4 },
-	thermal  = { 1, 3 }
+	disks    = { 2, 3 },
+	thermalc = { 1, 3 },
+	thermald = { 1, 4 },
+	thermalg = { 2, 4 },
 }
 
 -- Naughty config

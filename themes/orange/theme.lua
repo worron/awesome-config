@@ -88,7 +88,7 @@ theme.icon = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop = { common = {} }
 
-theme.wallpaper = theme.path .. "/wallpaper/clear.png"
+theme.wallpaper = theme.path .. "/wallpaper/custom.png"
 
 theme.desktop.color = {
 	main  = theme.color.main,

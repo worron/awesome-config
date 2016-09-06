@@ -8,14 +8,14 @@ local wa = screen[mouse.screen].workarea
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
 theme.color = {
-	main      = "#246b99",
+	main      = "#064E71",
 	gray      = "#575757",
 	bg        = "#161616",
 	bg_second = "#181818",
 	wibox     = "#202020",
 	icon      = "#a0a0a0",
 	text      = "#aaaaaa",
-	urgent    = "#a22814",
+	urgent    = "#B32601",
 	highlight = "#ffffff",
 
 	border    = "#404040",
@@ -92,7 +92,7 @@ theme.icon = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop = { common = {} }
 
-theme.wallpaper = theme.path .. "/wallpaper/forwidgets.png"
+theme.wallpaper = theme.path .. "/wallpaper/custom.png"
 
 -- Common
 --------------------------------------------------------------------------------

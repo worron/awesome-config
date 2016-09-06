@@ -115,27 +115,51 @@ function desktop:init(args)
 
 	disks.style = {
 		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-		show_text = false
+		show_text = true
 	}
 
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
-	local thermal = { geometry = wgeometry(grid, places.thermal, workarea) }
 
-	thermal.args = {
+	-- cpu cores
+	local thermalc = { geometry = wgeometry(grid, places.thermalc, workarea) }
+
+	thermalc.args = {
 		sensors = {
-			{ meter_function = system.thermal.sensors, args = "'Physical id 0'", maxm = 100, crit = 75 },
-			{ meter_function = system.thermal.hddtemp, args = {disk = "/dev/sdc"}, maxm = 60, crit = 45 },
-			{ meter_function = system.thermal.nvprime, maxm = 105, crit = 80 }
+			{ meter_function = system.thermal.sensors_core, args = { index = 0, main = true }, maxm = 100, crit = 75 },
+			{ meter_function = system.thermal.sensors_core, args = { index = 1 }, maxm = 100, crit = 75 },
+			{ meter_function = system.thermal.sensors_core, args = { index = 2 }, maxm = 100, crit = 75 },
+			{ meter_function = system.thermal.sensors_core, args = { index = 3 }, maxm = 100, crit = 75 },
 		},
-		names   = { "cpu", "hdd", "gpu" },
+		names   = { "core1", "core2", "core3", "core4" },
 		timeout = 10
 	}
 
-	thermal.style = {
+	thermalc.style = {
 		unit      = { { "°C", -1 } },
 		show_text = true
 	}
+
+	-- hdd
+	local thermald = { geometry = wgeometry(grid, places.thermald, workarea) }
+
+	thermald.args = {
+		sensors = { { meter_function = system.thermal.hddtemp, args = {disk = "/dev/sdc"}, maxm = 60, crit = 45 } },
+		names   = { "hdd" },
+		timeout = 10
+	}
+
+	thermald.style = thermalc.style
+
+	-- gpu
+	local thermalg = { geometry = wgeometry(grid, places.thermalg, workarea) }
+	thermalg.args = {
+		sensors = { { meter_function = system.thermal.nvprime, maxm = 105, crit = 80 } },
+		names   = { "gpu" },
+		timeout = 10
+	}
+
+	thermalg.style = thermalc.style
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
@@ -147,7 +171,9 @@ function desktop:init(args)
 	transm.widget = redflat.desktop.multim(transm.args, transm.geometry, transm.style)
 
 	disks.widget   = redflat.desktop.dashpack(disks.args, disks.geometry, disks.style)
-	thermal.widget = redflat.desktop.dashpack(thermal.args, thermal.geometry, thermal.style)
+	thermalc.widget = redflat.desktop.dashpack(thermalc.args, thermalc.geometry, thermalc.style)
+	thermald.widget = redflat.desktop.dashpack(thermald.args, thermald.geometry, thermald.style)
+	thermalg.widget = redflat.desktop.dashpack(thermalg.args, thermalg.geometry, thermalg.style)
 end
 
 -- End
