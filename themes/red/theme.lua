@@ -550,6 +550,21 @@ theme.float.apprunner = {
 	color         = theme.color
 }
 
+-- Quick launcher
+------------------------------------------------------------
+theme.float.qlaunch = {
+	geometry      = { width = 1400, height = 170 },
+	border_margin = { 5, 5, 12, 15 },
+	border_width  = 0,
+	notify_icon   = theme.icon.warning,
+	appline       = { iwidth = 140, im = { 5, 5, 0, 0 }, igap = { 0, 0, 5, 15 }, lheight = 25 },
+	state         = { gap = 5, radius = 5, size = 10,  height = 14 },
+	df_icon       = homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
+	no_icon       = homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
+	label_font    = theme.font_title,
+	color         = theme.color,
+}
+
 -- Application switcher
 ------------------------------------------------------------
 theme.float.appswitcher = {

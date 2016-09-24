@@ -114,7 +114,7 @@ end
 -- custom widget keys
 redflat.float.appswitcher.keys.next  = { "a", "A", "Tab" }
 redflat.float.appswitcher.keys.prev  = { "q", "Q", }
-redflat.float.appswitcher.keys.close = { "Super_L" }
+redflat.float.appswitcher.keys.close = { "Super_L", "Return", "Escape" }
 
 -- layout keys
 local resize_keys = {
@@ -129,17 +129,33 @@ redflat.layout.grid.keys = redflat.util.table.merge(redflat.layout.grid.keys, re
 redflat.layout.map.keys = redflat.util.table.merge(redflat.layout.map.keys, resize_keys)
 redflat.layout.map.keys = redflat.util.table.merge(redflat.layout.map.keys, { last = { "p", "P" } })
 
+-- quick launcher settings
+local launcher_keys = {}
+for i = 1, 9 do launcher_keys["#" .. tostring(i + 9)] = { app = "", run = "" } end
+local launcher_style = { service_hotkeys = { close = { "Escape" }, switch = { "Return" }} }
 
 -- Build hotkeys depended on config parameters
 -----------------------------------------------------------------------------------------------------------------------
 function hotkeys:init(args)
 
+	-- init vars
 	local args = args or {}
 	self.menu = args.menu or redflat.menu({ items = { {"Empty menu"} } })
 	self.terminal = args.terminal or "x-terminal-emulator"
 	self.mod = args.mod or "Mod4"
+	self.qmod = args.qmod or "Mod1"
 	self.need_helper = args.need_helper or true
 	self.layouts = args.layouts
+
+	-- quick launcher settings
+	local launcher_settings = {
+		keys = launcher_keys,
+		switchmod = { self.mod, self.qmod            },
+		setupmod  = { self.mod, self.qmod, "Control" },
+		runmod    = { self.mod, self.qmod, "Shift"   }
+	}
+
+	redflat.float.qlaunch:init(launcher_settings, launcher_style)
 
 	-- Global keys
 	--------------------------------------------------------------------------------
@@ -205,6 +221,10 @@ function hotkeys:init(args)
 			comment = "Open main menu"
 		},
 		{
+			args = { { self.mod, self.qmod }, "w", function() redflat.float.qlaunch:show() end },
+			comment = "Show quick launch widget"
+		},
+		{
 			args = { { self.mod,           }, "y", function () laybox:toggle_menu(tagsel(mouse.screen)) end },
 			comment = "Open layout menu"
 		},
@@ -266,6 +286,15 @@ function hotkeys:init(args)
 			args = { {                     }, "XF86AudioPrev", function() exaile:action("Prev") end },
 			comment = "Previous track"
 		},
+		{ comment = "Brightness control" },
+		{
+			args = { {                     }, "XF86MonBrightnessUp", function() br({ step = 1 }) end },
+			comment = "Increase brightness"
+		},
+		{
+			args = { {                     }, "XF86MonBrightnessDown", function() br({ step = 1, down = true }) end },
+			comment = "Reduce brightness"
+		},
 		{ comment = "Volume control" },
 		{
 			args = { {                     }, "XF86AudioRaiseVolume", volume_raise },
@@ -278,15 +307,6 @@ function hotkeys:init(args)
 		{
 			args = { { self.mod,            }, "v", volume_mute },
 			comment = "Toggle mute"
-		},
-		{ comment = "Brightness control" },
-		{
-			args = { {                     }, "XF86MonBrightnessUp", function() br({ step = 1 }) end },
-			comment = "Increase brightness"
-		},
-		{
-			args = { {                     }, "XF86MonBrightnessDown", function() br({ step = 1, down = true }) end },
-			comment = "Reduce brightness"
 		},
 		{ comment = "Window manipulation" },
 		{
@@ -387,7 +407,7 @@ function hotkeys:init(args)
 			comment = "Toggle client floating status"
 		},
 		{
-			args = { { self.mod, "Control" }, "p", function (c) c.ontop = not c.ontop end },
+			args = { { self.mod,           }, "o", function (c) c.ontop = not c.ontop end },
 			comment = "Toggle client ontop status"
 		},
 		{
@@ -466,7 +486,6 @@ function hotkeys:init(args)
 		)
 	)
 
-
 	-- Hotkeys helper setup
 	--------------------------------------------------------------------------------
 	if self.need_helper then
@@ -476,6 +495,7 @@ function hotkeys:init(args)
 	self.client = redflat.util.table.join_raw(hotkeys.raw_client, awful.key)
 	self.global = redflat.util.table.join_raw(hotkeys.raw_global, awful.key)
 	self.global = awful.util.table.join(self.global, hotkeys.num)
+	self.global = awful.util.table.join(self.global, redflat.float.qlaunch.hotkeys)
 end
 
 -- End
