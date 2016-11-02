@@ -3,6 +3,8 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
+local table = table
+
 local beautiful = require("beautiful")
 local awful = require("awful")
 local redflat = require("redflat")
@@ -138,7 +140,8 @@ local launcher_style = { service_hotkeys = { close = { "Escape" }, switch = { "R
 -----------------------------------------------------------------------------------------------------------------------
 function hotkeys:init(args)
 
-	-- init vars
+	-- Init vars
+	------------------------------------------------------------
 	local args = args or {}
 	self.menu = args.menu or redflat.menu({ items = { {"Empty menu"} } })
 	self.terminal = args.terminal or "x-terminal-emulator"
@@ -147,15 +150,39 @@ function hotkeys:init(args)
 	self.need_helper = args.need_helper or true
 	self.layouts = args.layouts
 
-	-- quick launcher settings
+	-- Quick launcher settings
+	------------------------------------------------------------
 	local launcher_settings = {
-		keys = launcher_keys,
+		keys      = launcher_keys,
+		no_bind   = true, -- disable default keybinding, prefix keys will be used instead
 		switchmod = { self.mod, self.qmod            },
 		setupmod  = { self.mod, self.qmod, "Control" },
 		runmod    = { self.mod, self.qmod, "Shift"   }
 	}
 
 	redflat.float.qlaunch:init(launcher_settings, launcher_style)
+
+	-- Prefix keys
+	------------------------------------------------------------
+	local pkeys = {
+		user = { label = "M-c", mod = { self.mod }, key = "c", root = true, items = {
+			{ mod = {}, key = "r", root = true, label = "r", items = {} },              -- fill up this later
+			{ mod = { "Shift" }, key = "R", root = true, label = "S-r", items = {} },   -- fill up this later
+			{ mod = { "Control" }, key = "r", root = true, label = "C-r", items = {} }, -- fill up this later
+			{ mod = {}, key = "w", action = function() redflat.float.qlaunch:show() end },
+		} },
+	}
+
+	-- set prefix keys for quick launcher
+	local ql = redflat.float.qlaunch
+	for i, _ in pairs(launcher_keys) do
+		local ik = tostring(i:sub(2) - 9)
+		table.insert(pkeys.user.items[1].items, { mod = {}, key = ik, action = function() ql:run_or_raise(i) end })
+		table.insert(pkeys.user.items[2].items, { mod = {}, key = ik, action = function() ql:run_or_raise(i, true) end})
+		table.insert(pkeys.user.items[3].items, { mod = {}, key = ik, action = function() ql:set_new_app(i) end})
+	end
+
+	redflat.float.prekey:init()
 
 	-- Global keys
 	--------------------------------------------------------------------------------
@@ -172,6 +199,10 @@ function hotkeys:init(args)
 		{
 			args = { { self.mod,           }, "F2", function () redflat.service.keyboard.handler() end },
 			comment = "Window control mode"
+		},
+		{
+			args = { pkeys.user.mod, pkeys.user.key, function () redflat.float.prekey:activate(pkeys.user) end},
+			comment = "User command set prefix"
 		},
 		{ comment = "Window focus" },
 		{
@@ -200,11 +231,11 @@ function hotkeys:init(args)
 		},
 		{ comment = "Tag navigation" },
 		{
-			args = { { self.mod,         }, "Left", awful.tag.viewprev },
+			args = { { self.mod,           }, "Left", awful.tag.viewprev },
 			comment = "View previous tag"
 		},
 		{
-			args = { { self.mod,         }, "Right", awful.tag.viewnext },
+			args = { { self.mod,           }, "Right", awful.tag.viewnext },
 			comment = "View next tag"
 		},
 		{
@@ -213,16 +244,12 @@ function hotkeys:init(args)
 		},
 		{ comment = "Widgets" },
 		{
-			args = { { self.mod,           }, "x", function() redflat.float.top:show() end },
+			args = { { self.mod, "Shift"   }, "x", function() redflat.float.top:show() end },
 			comment = "Show top widget"
 		},
 		{
 			args = { { self.mod,           }, "w", function() hotkeys.menu:toggle() end },
 			comment = "Open main menu"
-		},
-		{
-			args = { { self.mod, self.qmod }, "w", function() redflat.float.qlaunch:show() end },
-			comment = "Show quick launch widget"
 		},
 		{
 			args = { { self.mod,           }, "y", function () laybox:toggle_menu(tagsel(mouse.screen)) end },

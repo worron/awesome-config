@@ -55,6 +55,7 @@ theme.font_title    = "Play bold 14" -- title font for widgets
 theme.font_titlebar = "Play bold 14" -- title font for windows
 theme.font_clock    = "Play bold 12" -- font for textclock widget
 theme.font_notify   = "Play bold 16" -- font for notify widget
+theme.font_keytip   = "Play bold 14" -- font for prefix key tip widget
 
 theme.font_exaile_main = "Play bold 14" -- main font for exaile widget
 theme.font_exaile_time = "Play bold 16" -- time status font for exaile widget
@@ -563,6 +564,16 @@ theme.float.qlaunch = {
 	no_icon       = homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
 	label_font    = theme.font_title,
 	color         = theme.color,
+}
+
+-- Prefix hotkeys tip
+------------------------------------------------------------
+theme.float.prekey = {
+	notify_icon     = theme.icon.warning,
+	geometry        = { x = (wa.width - 220) / 2, y = wa.y + theme.useless_gap_width, width = 220, height = 40 },
+	label_font      = theme.font_keytip,
+	border_width    = 0,
+	color           = theme.color,
 }
 
 -- Application switcher
