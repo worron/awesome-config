@@ -50,23 +50,24 @@ theme.path = homedir .. "/.config/awesome/themes/orange"
 --------------------------------------------------------------------------------
 
 -- fonts
-theme.font          = "Play 14"      -- main theme font
-theme.font_title    = "Play bold 14" -- title font for widgets
-theme.font_titlebar = "Play bold 14" -- title font for windows
+theme.font          = "Roboto 14"      -- main theme font
+theme.font_title    = "Roboto bold 14" -- title font for widgets
+theme.font_titlebar = "Roboto bold 14" -- title font for windows
 theme.font_clock    = "Play bold 12" -- font for textclock widget
 theme.font_notify   = "Play bold 16" -- font for notify widget
-theme.font_keytip   = "Play bold 14" -- font for prefix key tip widget
+theme.font_keytip   = "Roboto bold 14" -- font for prefix key tip widget
 
 theme.font_exaile_main = "Play bold 14" -- main font for exaile widget
 theme.font_exaile_time = "Play bold 16" -- time status font for exaile widget
 
-theme.font_helper_title = "Play bold 16" -- hotkeys helper title font
+theme.font_helper_title = "Roboto bold 16" -- hotkeys helper title font
 
 -- cairo formated fonts
 theme.cf_appswitcher     = { font = "Play", size = 22, face = 1 } -- application switcher font
 theme.cf_tag             = { font = "Play", size = 16, face = 1 } -- tag widget font
 theme.cf_navigator_title = { font = "Play", size = 28, face = 1, slant = 0 } -- window navigation title font
 theme.cf_navigator_main  = { font = "Play", size = 22, face = 1, slant = 0 } -- window navigation font
+
 -- environment vars
 theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
@@ -143,8 +144,8 @@ theme.service.navigator = {
 	gradstep     = 60,
 	marksize     = { width = 160, height = 80, r = 20 },
 	linegap      = 32,
-	titlefont    = cf_navigator_title,
-	font         = cf_navigator_main,
+	titlefont    = theme.cf_navigator_title,
+	font         = theme.cf_navigator_main,
 	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
 	                 fbg1 = theme.color.main .. "40", fbg2 = theme.color.main .. "20",
 	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
