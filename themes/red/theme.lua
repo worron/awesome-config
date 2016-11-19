@@ -704,7 +704,8 @@ theme.float.dfparser = {}
 
 theme.float.dfparser.desktop_file_dirs = {
 	'/usr/share/applications/',
-	'/usr/local/share/applications/'
+	'/usr/local/share/applications/',
+	'~/.local/share/applications',
 }
 
 theme.float.dfparser.icons = {
