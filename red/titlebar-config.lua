@@ -33,8 +33,9 @@ end
 function titlebar:init(args)
 
 	local args = args or {}
+	self.default_exeptions = { "Plugin-container", "Steam", "Key-mon", "Cavalcade" }
 	self.enabled = args.enable or false
-	self.exceptions = args.exceptions or {}
+	self.exceptions = args.exceptions or self.default_exeptions
 
 	-- Function to check if titlebar needed for given window
 	--------------------------------------------------------------------------------

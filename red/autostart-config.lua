@@ -28,7 +28,7 @@ function autostart.run()
 	awful.util.spawn_with_shell("sleep 1.5 && bash ~/Documents/scripts/swap-ctrl-caps.sh")
 
 	-- apps
-	awful.util.spawn_with_shell("parcellite")
+	awful.util.spawn_with_shell("clipflap")
 	awful.util.spawn_with_shell("sleep 0.5 && transmission-gtk -m")
 end
 

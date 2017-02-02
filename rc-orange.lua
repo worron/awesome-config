@@ -144,10 +144,10 @@ kbindicator.widget = redflat.widget.keyboard({ layouts = { "English", "Russian" 
 kbindicator.layout = wibox.layout.margin(kbindicator.widget, unpack(pmargin.kbindicator or {}))
 
 kbindicator.widget:buttons(awful.util.table.join(
-	awful.button({}, 1, function () redflat.widget.keyboard:toggle_menu() end),
-	awful.button({}, 3, function () awful.util.spawn_with_shell("sleep 0.1 && xdotool key 133+64+65") end),
-	awful.button({}, 4, function () redflat.widget.keyboard:toggle()      end),
-	awful.button({}, 5, function () redflat.widget.keyboard:toggle(true)  end)
+	awful.button({}, 1, function () redflat.widget.keyboard:toggle_menu()          end),
+	awful.button({}, 3, function () awful.util.spawn_with_shell("clipflap --show") end),
+	awful.button({}, 4, function () redflat.widget.keyboard:toggle()               end),
+	awful.button({}, 5, function () redflat.widget.keyboard:toggle(true)           end)
 ))
 
 -- PA volume control
@@ -385,9 +385,7 @@ awful.rules.rules = custom_rules
 -----------------------------------------------------------------------------------------------------------------------
 local titlebar = require("red.titlebar-config") -- load file with titlebar configuration
 
-local t_exceptions = { "Plugin-container", "Steam", "Key-mon", "Gvim" }
-
-titlebar:init({ enable = true, exceptions = t_exceptions })
+titlebar:init({ enable = true })
 
 -- Signals setup
 -----------------------------------------------------------------------------------------------------------------------

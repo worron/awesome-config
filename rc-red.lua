@@ -385,8 +385,6 @@ awful.rules.rules = custom_rules
 -----------------------------------------------------------------------------------------------------------------------
 local titlebar = require("red.titlebar-config") -- load file with titlebar configuration
 
-local t_exceptions = { "Plugin-container", "Steam", "Key-mon", "Gvim" }
-
 titlebar:init({ enable = true, exceptions = t_exceptions })
 
 -- Signals setup

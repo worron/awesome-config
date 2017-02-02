@@ -489,6 +489,12 @@ function hotkeys:init(args)
 		end
 	end
 
+	-- Some hidden no discription keys
+	--------------------------------------------------------------------------------
+	self.hidden = awful.util.table.join(
+		awful.key({ self.mod, self.qmod }, "space", function () awful.util.spawn_with_shell("clipflap --show") end)
+	)
+
 	-- Mouse bindings
 	--------------------------------------------------------------------------------
 
@@ -521,7 +527,7 @@ function hotkeys:init(args)
 
 	self.client = redflat.util.table.join_raw(hotkeys.raw_client, awful.key)
 	self.global = redflat.util.table.join_raw(hotkeys.raw_global, awful.key)
-	self.global = awful.util.table.join(self.global, hotkeys.num)
+	self.global = awful.util.table.join(self.global, hotkeys.num, self.hidden)
 	self.global = awful.util.table.join(self.global, redflat.float.qlaunch.hotkeys)
 end
 

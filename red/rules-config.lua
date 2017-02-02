@@ -34,6 +34,10 @@ function rules:build(args)
 			properties = { sticky = true }
 		},
 		{
+			rule       = { class = "Cavalcade" },
+			properties = { floating = true, border_width = 0 }
+		},
+		{
 			rule = { class = "Exaile" },
 			callback = function(c)
 				for _, exist in ipairs(awful.client.visible(c.screen)) do
