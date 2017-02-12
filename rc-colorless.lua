@@ -11,30 +11,63 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local naughty = require("naughty")
-local menubar = require("menubar")
+
+-- make this global temporary, fix later
+naughty = require("naughty")
 
 require("debian.menu")
 require("awful.autofocus")
 
 -- User modules
 ------------------------------------------------------------
-
+local redflat = require("redflat")
 
 -- Error handling
 -----------------------------------------------------------------------------------------------------------------------
 require("colorless.ercheck-config") -- load file with error handling
 
--- Environment setup
+-- Common functions variables
 -----------------------------------------------------------------------------------------------------------------------
+
+-- vars
 local env = {
 	terminal = "x-terminal-emulator",
 	mod = "Mod4",
+	home = os.getenv("HOME"),
 }
 
 env.editor_cmd = env.terminal .. " -e " .. (os.getenv("EDITOR") or "editor")
+env.themedir = env.home .. "/.config/awesome/themes/colorless"
 
-beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
+-- wallpaper setup
+env.wallpaper = function(s)
+	if beautiful.wallname then
+		local wallpaper = env.themedir .. "/wallpaper/" .. beautiful.wallname
+
+		if awful.util.file_readable(wallpaper) then
+			gears.wallpaper.maximized(wallpaper, s, true)
+		else
+			gears.wallpaper.set(beautiful.color.bg)
+		end
+	end
+end
+
+-- panel widgets wrapper
+env.wrapper = function(widget, name, buttons)
+	local margin = { 2, 2, 2, 2 }
+
+	if redflat.util.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name] then
+		margin = beautiful.widget.wrapper[name]
+	end
+	if buttons then
+		widget:buttons(buttons)
+	end
+
+	return wibox.container.margin(widget, unpack(margin))
+end
+
+-- load theme
+beautiful.init(env.themedir .. "/theme.lua")
 
 -- Layouts setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -70,10 +103,8 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = myma
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
--- Menubar configuration
-menubar.utils.terminal = env.terminal -- Set the terminal for applications that require it
 
--- Keyboard map indicator and switcher
+-- keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
@@ -122,16 +153,16 @@ local tasklist_buttons = awful.util.table.join(
 	awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
 )
 
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-local function set_wallpaper(s)
-	if beautiful.wallpaper then
-		local wallpaper = beautiful.wallpaper
-		if type(wallpaper) == "function" then
-			wallpaper = wallpaper(s)
-		end
-		gears.wallpaper.maximized(wallpaper, s, true)
-	end
-end
+-- Layoutbox configure
+--------------------------------------------------------------------------------
+local layoutbox = {}
+
+layoutbox.buttons = awful.util.table.join(
+	awful.button({ }, 1, function () awful.layout.inc( 1) end),
+	awful.button({ }, 3, function () awful.layout.inc(-1) end),
+	awful.button({ }, 4, function () awful.layout.inc( 1) end),
+	awful.button({ }, 5, function () awful.layout.inc(-1) end)
+)
 
 
 -- Screen setup
@@ -139,20 +170,16 @@ end
 awful.screen.connect_for_each_screen(
 	function(s)
 		-- wallpaper
-		set_wallpaper(s)
+		env.wallpaper(s)
 
 		-- tags
 		awful.tag({ "1", "2", "3", "4", "5", "6" }, s, awful.layout.layouts[1])
 
 		-- Create a promptbox for each screen
 		s.mypromptbox = awful.widget.prompt()
-		s.mylayoutbox = awful.widget.layoutbox(s)
-		s.mylayoutbox:buttons(awful.util.table.join(
-			awful.button({ }, 1, function () awful.layout.inc( 1) end),
-			awful.button({ }, 3, function () awful.layout.inc(-1) end),
-			awful.button({ }, 4, function () awful.layout.inc( 1) end),
-			awful.button({ }, 5, function () awful.layout.inc(-1) end)
-		))
+
+		-- layoutbox
+		layoutbox[s] = env.wrapper(redflat.widget.layoutbox({ screen = s }), "layoutbox", layoutbox.buttons)
 
 		-- taglist widget
 		s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
@@ -161,7 +188,7 @@ awful.screen.connect_for_each_screen(
 		s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
 		-- panel wibox
-		s.panel = awful.wibar({ position = "top", screen = s })
+		s.panel = awful.wibar({ position = "bottom", screen = s, height = beautiful.panel_height or 36 })
 
 		-- add widgets to the wibox
 		s.panel:setup {
@@ -178,7 +205,7 @@ awful.screen.connect_for_each_screen(
 				mykeyboardlayout,
 				wibox.widget.systray(),
 				mytextclock,
-				s.mylayoutbox,
+				layoutbox[s],
 			},
 		}
 	end
@@ -274,4 +301,4 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
-screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry", env.wallpaper)

@@ -7,6 +7,7 @@ local table = table
 
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+local menubar = require("menubar")
 -- local redflat = require("redflat")
 
 -- Initialize tables and vars for module
@@ -27,6 +28,8 @@ function hotkeys:init(args)
 	local args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
+
+	menubar.utils.terminal = env.terminal -- Set the terminal for applications that require it
 
 	self.mouse.root = (awful.util.table.join(
 		awful.button({ }, 3, function () mainmenu:toggle() end),

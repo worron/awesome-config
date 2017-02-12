@@ -15,8 +15,7 @@ rules.base_properties = {
 	border_color = beautiful.border_normal,
 	focus        = awful.client.focus.filter,
 	raise        = true,
-	-- keys         = clientkeys,
-	-- buttons      = clientbuttons,
+	size_hints_honor = false,
 	screen       = awful.screen.preferred,
 	placement    = awful.placement.no_overlap + awful.placement.no_offscreen
 }
