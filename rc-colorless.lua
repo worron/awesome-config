@@ -95,13 +95,6 @@ local launcher = awful.widget.launcher({ image = menuicon, menu = mainmenu })
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 
--- keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
--- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
-
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
 	awful.button({         }, 1, function(t) t:view_only() end),
@@ -144,6 +137,11 @@ local tasklist_buttons = awful.util.table.join(
 	awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
 )
 
+-- Textclock widget
+--------------------------------------------------------------------------------
+local textclock = {}
+textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
+
 -- Layoutbox configure
 --------------------------------------------------------------------------------
 local layoutbox = {}
@@ -170,7 +168,8 @@ awful.screen.connect_for_each_screen(
 		s.mypromptbox = awful.widget.prompt()
 
 		-- layoutbox
-		layoutbox[s] = env.wrapper(redflat.widget.layoutbox({ screen = s }), "layoutbox", layoutbox.buttons)
+		-- layoutbox[s] = env.wrapper(redflat.widget.layoutbox({ screen = s }), "layoutbox", layoutbox.buttons)
+		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
 
 		-- taglist widget
 		s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
@@ -186,7 +185,7 @@ awful.screen.connect_for_each_screen(
 			layout = wibox.layout.align.horizontal,
 			{ -- left widgets
 				layout = wibox.layout.fixed.horizontal,
-				-- launcher,
+
 				env.wrapper(launcher, "mainmenu"),
 				s.mytaglist,
 				s.mypromptbox,
@@ -194,10 +193,10 @@ awful.screen.connect_for_each_screen(
 			s.mytasklist, -- middle widget
 			{ -- right widgets
 				layout = wibox.layout.fixed.horizontal,
-				mykeyboardlayout,
+
 				wibox.widget.systray(),
-				mytextclock,
-				layoutbox[s],
+				env.wrapper(layoutbox[s], "layoutbox", layoutbox.buttons),
+				env.wrapper(textclock.widget, "textclock"),
 			},
 		}
 	end
