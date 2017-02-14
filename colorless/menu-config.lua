@@ -15,13 +15,18 @@ local menu = {}
 
 -- Build function
 --------------------------------------------------------------------------------
-function menu.build(args)
+function menu:build(args)
 
+	-- vars
 	local args = args or {}
 	local env = args.env or {} -- fix this?
 	local separator = args.separator or { widget = redflat.gauge.separator.horizontal() }
 	local theme = args.theme or { auto_hotkey = true }
 	local icon_style = args.icon_style or {}
+
+	-- theme vars
+	self.color = redflat.util.check(beautiful, "color.icon") and beautiful.color.icon or nil
+	self.icon = redflat.util.check(beautiful, "icon.awesome") and beautiful.icon.awesome or nil
 
 	-- Application submenu
 	------------------------------------------------------------

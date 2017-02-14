@@ -86,11 +86,14 @@ awful.layout.layouts = {
 -- Main menu configuration
 -----------------------------------------------------------------------------------------------------------------------
 local mymenu = require("colorless.menu-config") -- load file with menu configuration
+local mainmenu = mymenu:build({ env = env })
 
-local menuicon = redflat.util.check(beautiful, "icon.awesome") and beautiful.icon.awesome or nil -- fix this
-local mainmenu = mymenu.build({ env = env })
+local launcher = {}
+launcher.widget = redflat.gauge.svgbox(mymenu.icon, nil, mymenu.color)
+launcher.buttons = awful.util.table.join(
+	awful.button({ }, 1, function () mainmenu:toggle() end)
+)
 
-local launcher = awful.widget.launcher({ image = menuicon, menu = mainmenu })
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
@@ -154,6 +157,10 @@ layoutbox.buttons = awful.util.table.join(
 )
 
 
+-- Separator
+--------------------------------------------------------------------------------
+local separator = redflat.gauge.separator.vertical()
+
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
 awful.screen.connect_for_each_screen(
@@ -186,7 +193,7 @@ awful.screen.connect_for_each_screen(
 			{ -- left widgets
 				layout = wibox.layout.fixed.horizontal,
 
-				env.wrapper(launcher, "mainmenu"),
+				env.wrapper(launcher.widget, "mainmenu", launcher.buttons),
 				s.mytaglist,
 				s.mypromptbox,
 			},
@@ -196,6 +203,7 @@ awful.screen.connect_for_each_screen(
 
 				wibox.widget.systray(),
 				env.wrapper(layoutbox[s], "layoutbox", layoutbox.buttons),
+				separator,
 				env.wrapper(textclock.widget, "textclock"),
 			},
 		}
