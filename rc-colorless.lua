@@ -79,6 +79,7 @@ awful.layout.layouts = {
 	awful.layout.suit.tile.bottom,
 	awful.layout.suit.tile.top,
 	awful.layout.suit.fair,
+	awful.layout.suit.max,
 	awful.layout.suit.max.fullscreen,
 }
 
@@ -149,7 +150,7 @@ local layoutbox = {}
 
 layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () awful.layout.inc( 1) end),
-	awful.button({ }, 3, function () awful.layout.inc(-1) end),
+	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(mouse.screen.selected_tags[1]) end),
 	awful.button({ }, 4, function () awful.layout.inc( 1) end),
 	awful.button({ }, 5, function () awful.layout.inc(-1) end)
 )

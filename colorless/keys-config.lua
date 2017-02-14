@@ -8,7 +8,7 @@ local table = table
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local menubar = require("menubar")
--- local redflat = require("redflat")
+local redflat = require("redflat")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -28,6 +28,7 @@ function hotkeys:init(args)
 	local args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
+	local laybox = redflat.widget.layoutbox
 
 	menubar.utils.terminal = env.terminal -- Set the terminal for applications that require it
 
@@ -91,6 +92,8 @@ function hotkeys:init(args)
 		awful.key({ env.mod, "Shift"   }, "q", awesome.quit,
 				  {description = "quit awesome", group = "awesome"}),
 
+		awful.key({ env.mod,           }, "y",     function () laybox:toggle_menu(mouse.screen.selected_tags[1]) end,
+				  {description = "Show layout menu", group = "layout"}),
 		awful.key({ env.mod,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
 				  {description = "increase master width factor", group = "layout"}),
 		awful.key({ env.mod,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,

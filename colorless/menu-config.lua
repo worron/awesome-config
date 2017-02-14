@@ -29,7 +29,7 @@ function menu.build(args)
 
 	-- Main menu
 	------------------------------------------------------------
-	local mainmenu = redflat.menu({ hide_timeout = 1, theme = theme,
+	local mainmenu = redflat.menu({ theme = theme,
 		items = {
 			{ "Applications",  appmenu,      },
 			{ "Terminal",      env.terminal, },
