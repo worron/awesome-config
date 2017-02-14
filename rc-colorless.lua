@@ -15,7 +15,7 @@ local beautiful = require("beautiful")
 -- make this global temporary, fix later
 naughty = require("naughty")
 
-require("debian.menu")
+-- require("debian.menu")
 require("awful.autofocus")
 
 -- User modules
@@ -33,6 +33,7 @@ require("colorless.ercheck-config") -- load file with error handling
 local env = {
 	terminal = "x-terminal-emulator",
 	mod = "Mod4",
+	fm = "nautilus",
 	home = os.getenv("HOME"),
 }
 
@@ -83,23 +84,12 @@ awful.layout.layouts = {
 
 -- Main menu configuration
 -----------------------------------------------------------------------------------------------------------------------
-myawesomemenu = {
-	{ "hotkeys", function() return false, hotkeys_popup.show_help end},
-	{ "manual", env.terminal .. " -e man awesome" },
-	{ "edit config", env.editor_cmd .. " " .. awesome.conffile },
-	{ "restart", awesome.restart },
-	{ "quit", function() awesome.quit() end}
-}
+local mymenu = require("colorless.menu-config") -- load file with menu configuration
 
-mymainmenu = awful.menu({
-	items = {
-		{ "awesome", myawesomemenu, beautiful.awesome_icon },
-		{ "Debian", debian.menu.Debian_menu.Debian },
-		{ "open terminal", env.terminal }
-	}
-})
+local menuicon = redflat.util.check(beautiful, "icon.awesome") and beautiful.icon.awesome or nil -- fix this
+local mainmenu = mymenu.build({ env = env })
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
+local launcher = awful.widget.launcher({ image = menuicon, menu = mainmenu })
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
@@ -195,7 +185,8 @@ awful.screen.connect_for_each_screen(
 			layout = wibox.layout.align.horizontal,
 			{ -- left widgets
 				layout = wibox.layout.fixed.horizontal,
-				mylauncher,
+				-- launcher,
+				env.wrapper(launcher, "mainmenu"),
 				s.mytaglist,
 				s.mypromptbox,
 			},
@@ -216,7 +207,7 @@ awful.screen.connect_for_each_screen(
 -----------------------------------------------------------------------------------------------------------------------
 local hotkeys = require("colorless.keys-config") -- load file with hotkeys configuration
 
-hotkeys:init({ env = env, menu = mymainmenu })
+hotkeys:init({ env = env, menu = mainmenu })
 
 -- set global keys
 root.keys(hotkeys.keys.root)
