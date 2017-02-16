@@ -38,7 +38,8 @@ local env = {
 }
 
 env.editor_cmd = env.terminal .. " -e " .. (os.getenv("EDITOR") or "editor")
-env.themedir = env.home .. "/.config/awesome/themes/colorless"
+-- env.themedir = env.home .. "/.config/awesome/themes/colorless"
+env.themedir = awful.util.get_configuration_dir() .. "themes/colorless"
 
 -- wallpaper setup
 env.wallpaper = function(s)
@@ -55,7 +56,7 @@ end
 
 -- panel widgets wrapper
 env.wrapper = function(widget, name, buttons)
-	local margin = { 2, 2, 2, 2 }
+	local margin = { 0, 0, 0, 0 }
 
 	if redflat.util.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name] then
 		margin = beautiful.widget.wrapper[name]
@@ -98,28 +99,24 @@ launcher.buttons = awful.util.table.join(
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 
--- Create a wibox for each screen and add it
-local taglist_buttons = awful.util.table.join(
-	awful.button({         }, 1, function(t) t:view_only() end),
-	awful.button({ env.mod }, 1, function(t) if client.focus then client.focus:move_to_tag(t) end end),
-	awful.button({         }, 3, awful.tag.viewtoggle),
-	awful.button({ env.mod }, 3, function(t) if client.focus then client.focus:toggle_tag(t) end end),
-	awful.button({         }, 4, function(t) awful.tag.viewnext(t.screen) end),
-	awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-)
+-- Separator
+--------------------------------------------------------------------------------
+local separator = redflat.gauge.separator.vertical()
 
-local function client_menu_toggle_fn()
-	local instance = nil
+-- Tasklist
+--------------------------------------------------------------------------------
+-- local function client_menu_toggle_fn()
+-- 	local instance = nil
 
-	return function ()
-		if instance and instance.wibox.visible then
-			instance:hide()
-			instance = nil
-		else
-			instance = awful.menu.clients({ theme = { width = 250 } })
-		end
-	end
-end
+-- 	return function ()
+-- 		if instance and instance.wibox.visible then
+-- 			instance:hide()
+-- 			instance = nil
+-- 		else
+-- 			instance = awful.menu.clients({ theme = { width = 250 } })
+-- 		end
+-- 	end
+-- end
 
 
 local tasklist_buttons = awful.util.table.join(
@@ -135,9 +132,23 @@ local tasklist_buttons = awful.util.table.join(
 			end
 		end
 	),
-	awful.button({ }, 3, client_menu_toggle_fn()),
+	-- awful.button({ }, 3, client_menu_toggle_fn()),
 	awful.button({ }, 4, function () awful.client.focus.byidx(1) end),
 	awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
+)
+
+-- Taglist widget
+--------------------------------------------------------------------------------
+local taglist = {}
+taglist.style = { separator = separator, widget = redflat.gauge.tag.blue.new, show_tip = true }
+taglist.buttons = awful.util.table.join(
+	awful.button({         }, 1, function(t) t:view_only() end),
+	awful.button({ env.mod }, 1, function(t) if client.focus then client.focus:move_to_tag(t) end end),
+	awful.button({         }, 2, awful.tag.viewtoggle),
+	awful.button({         }, 3, function(t) redflat.widget.layoutbox:toggle_menu(t) end),
+	awful.button({ env.mod }, 3, function(t) if client.focus then client.focus:toggle_tag(t) end end),
+	awful.button({         }, 4, function(t) awful.tag.viewnext(t.screen) end),
+	awful.button({         }, 5, function(t) awful.tag.viewprev(t.screen) end)
 )
 
 -- Textclock widget
@@ -151,15 +162,11 @@ local layoutbox = {}
 
 layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () awful.layout.inc( 1) end),
-	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(mouse.screen.selected_tags[1]) end),
+	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(mouse.screen.selected_tag) end),
 	awful.button({ }, 4, function () awful.layout.inc( 1) end),
 	awful.button({ }, 5, function () awful.layout.inc(-1) end)
 )
 
-
--- Separator
---------------------------------------------------------------------------------
-local separator = redflat.gauge.separator.vertical()
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -169,17 +176,16 @@ awful.screen.connect_for_each_screen(
 		env.wallpaper(s)
 
 		-- tags
-		awful.tag({ "1", "2", "3", "4", "5", "6" }, s, awful.layout.layouts[1])
+		awful.tag({ "Tag1", "Tag2", "Tag3", "Tag4", "Tag5" }, s, awful.layout.layouts[1])
 
 		-- Create a promptbox for each screen
 		s.mypromptbox = awful.widget.prompt()
 
 		-- layoutbox
-		-- layoutbox[s] = env.wrapper(redflat.widget.layoutbox({ screen = s }), "layoutbox", layoutbox.buttons)
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
 
 		-- taglist widget
-		s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
+		taglist[s] = redflat.widget.taglist({screen = s, buttons = taglist.buttons}, taglist.style)
 
 		-- tasklist widget
 		s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
@@ -194,7 +200,10 @@ awful.screen.connect_for_each_screen(
 				layout = wibox.layout.fixed.horizontal,
 
 				env.wrapper(launcher.widget, "mainmenu", launcher.buttons),
-				s.mytaglist,
+				separator,
+				env.wrapper(taglist[s], "taglist"),
+				-- taglist[s],
+				separator,
 				s.mypromptbox,
 			},
 			s.mytasklist, -- middle widget

@@ -92,7 +92,7 @@ function hotkeys:init(args)
 		awful.key({ env.mod, "Shift"   }, "q", awesome.quit,
 				  {description = "quit awesome", group = "awesome"}),
 
-		awful.key({ env.mod,           }, "y",     function () laybox:toggle_menu(mouse.screen.selected_tags[1]) end,
+		awful.key({ env.mod,           }, "y",     function () laybox:toggle_menu(mouse.screen.selected_tag) end,
 				  {description = "Show layout menu", group = "layout"}),
 		awful.key({ env.mod,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
 				  {description = "increase master width factor", group = "layout"}),
