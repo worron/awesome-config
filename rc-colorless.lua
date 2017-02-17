@@ -11,11 +11,8 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local naughty = require("naughty")
 
--- make this global temporary, fix later
-naughty = require("naughty")
-
--- require("debian.menu")
 require("awful.autofocus")
 
 -- User modules
@@ -26,7 +23,7 @@ local redflat = require("redflat")
 -----------------------------------------------------------------------------------------------------------------------
 require("colorless.ercheck-config") -- load file with error handling
 
--- Common functions variables
+-- Common functions and variables
 -----------------------------------------------------------------------------------------------------------------------
 
 -- vars
@@ -38,7 +35,6 @@ local env = {
 }
 
 env.editor_cmd = env.terminal .. " -e " .. (os.getenv("EDITOR") or "editor")
--- env.themedir = env.home .. "/.config/awesome/themes/colorless"
 env.themedir = awful.util.get_configuration_dir() .. "themes/colorless"
 
 -- wallpaper setup
@@ -105,36 +101,14 @@ local separator = redflat.gauge.separator.vertical()
 
 -- Tasklist
 --------------------------------------------------------------------------------
--- local function client_menu_toggle_fn()
--- 	local instance = nil
+local tasklist = {}
 
--- 	return function ()
--- 		if instance and instance.wibox.visible then
--- 			instance:hide()
--- 			instance = nil
--- 		else
--- 			instance = awful.menu.clients({ theme = { width = 250 } })
--- 		end
--- 	end
--- end
-
-
-local tasklist_buttons = awful.util.table.join(
-	awful.button({ }, 1,
-		function (c)
-			if c == client.focus then
-				c.minimized = true
-			else
-				c.minimized = false
-				if not c:isvisible() and c.first_tag then c.first_tag:view_only() end
-				client.focus = c
-				c:raise()
-			end
-		end
-	),
-	-- awful.button({ }, 3, client_menu_toggle_fn()),
-	awful.button({ }, 4, function () awful.client.focus.byidx(1) end),
-	awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
+tasklist.buttons = awful.util.table.join(
+	awful.button({}, 1, redflat.widget.tasklist.action.select),
+	awful.button({}, 2, redflat.widget.tasklist.action.close),
+	awful.button({}, 3, redflat.widget.tasklist.action.menu),
+	awful.button({}, 4, redflat.widget.tasklist.action.switch_next),
+	awful.button({}, 5, redflat.widget.tasklist.action.switch_prev)
 )
 
 -- Taglist widget
@@ -181,14 +155,14 @@ awful.screen.connect_for_each_screen(
 		-- Create a promptbox for each screen
 		s.mypromptbox = awful.widget.prompt()
 
-		-- layoutbox
+		-- layoutbox widget
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
 
 		-- taglist widget
-		taglist[s] = redflat.widget.taglist({screen = s, buttons = taglist.buttons}, taglist.style)
+		taglist[s] = redflat.widget.taglist({ screen = s, buttons = taglist.buttons }, taglist.style)
 
 		-- tasklist widget
-		s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+		tasklist[s] = redflat.widget.tasklist({ screen = s, buttons = tasklist.buttons })
 
 		-- panel wibox
 		s.panel = awful.wibar({ position = "bottom", screen = s, height = beautiful.panel_height or 36 })
@@ -202,12 +176,18 @@ awful.screen.connect_for_each_screen(
 				env.wrapper(launcher.widget, "mainmenu", launcher.buttons),
 				separator,
 				env.wrapper(taglist[s], "taglist"),
-				-- taglist[s],
 				separator,
 				s.mypromptbox,
 			},
-			s.mytasklist, -- middle widget
+			{ -- middle widget
+				layout = wibox.layout.align.horizontal,
+				expand = "outside",
+
+				nil,
+				env.wrapper(tasklist[s], "tasklist"),
+			},
 			{ -- right widgets
+				separator,
 				layout = wibox.layout.fixed.horizontal,
 
 				wibox.widget.systray(),
