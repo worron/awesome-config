@@ -261,7 +261,7 @@ function hotkeys:init(args)
 		},
 		{
 			args = { { self.mod            }, "r", function() redflat.float.apprunner:show() end },
-			comment = "Allication launcher"
+			comment = "Application launcher"
 		},
 		{
 			args = { { self.mod, "Control" }, "i", function() redflat.widget.minitray:toggle() end },

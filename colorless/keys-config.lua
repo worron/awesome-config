@@ -121,8 +121,8 @@ function hotkeys:init(args)
 				  {description = "restore minimized", group = "client"}),
 
 		-- Prompt
-		awful.key({ env.mod },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-				  {description = "run prompt", group = "launcher"}),
+		awful.key({ env.mod },            "r",     function() redflat.float.apprunner:show() end,
+				  {description = "Application launcher", group = "launcher"}),
 
 		awful.key({ env.mod }, "x",
 				  function ()
