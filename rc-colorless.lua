@@ -141,6 +141,15 @@ layoutbox.buttons = awful.util.table.join(
 	awful.button({ }, 5, function () awful.layout.inc(-1) end)
 )
 
+-- Tray widget
+--------------------------------------------------------------------------------
+local tray = {}
+tray.widget = redflat.widget.minitray({ timeout = 10 })
+
+tray.buttons = awful.util.table.join(
+	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)
+)
+
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -190,10 +199,11 @@ awful.screen.connect_for_each_screen(
 				separator,
 				layout = wibox.layout.fixed.horizontal,
 
-				wibox.widget.systray(),
 				env.wrapper(layoutbox[s], "layoutbox", layoutbox.buttons),
 				separator,
 				env.wrapper(textclock.widget, "textclock"),
+				separator,
+				env.wrapper(tray.widget, "tray", tray.buttons),
 			},
 		}
 	end
