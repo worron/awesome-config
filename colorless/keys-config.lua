@@ -7,7 +7,7 @@ local table = table
 
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-local menubar = require("menubar")
+
 local redflat = require("redflat")
 
 -- Initialize tables and vars for module
@@ -29,8 +29,6 @@ function hotkeys:init(args)
 	local env = args.env
 	local mainmenu = args.menu
 	local laybox = redflat.widget.layoutbox
-
-	menubar.utils.terminal = env.terminal -- Set the terminal for applications that require it
 
 	self.mouse.root = (awful.util.table.join(
 		awful.button({ }, 3, function () mainmenu:toggle() end),
@@ -136,9 +134,8 @@ function hotkeys:init(args)
 					  }
 				  end,
 				  {description = "lua execute prompt", group = "awesome"}),
-		-- Menubar
-		awful.key({ env.mod }, "p", function() menubar.show() end,
-				  {description = "show the menubar", group = "launcher"})
+		awful.key({ env.mod }, "p", function () redflat.float.prompt:run() end,
+				  {description = "show the prompt box", group = "launcher"})
 	)
 
 	self.keys.client = awful.util.table.join(

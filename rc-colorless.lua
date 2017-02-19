@@ -196,9 +196,9 @@ awful.screen.connect_for_each_screen(
 				env.wrapper(tasklist[s], "tasklist"),
 			},
 			{ -- right widgets
-				separator,
 				layout = wibox.layout.fixed.horizontal,
 
+				separator,
 				env.wrapper(layoutbox[s], "layoutbox", layoutbox.buttons),
 				separator,
 				env.wrapper(textclock.widget, "textclock"),
