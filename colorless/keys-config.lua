@@ -9,14 +9,47 @@ local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
 local redflat = require("redflat")
+local apprunner = require("redflat.float.apprunner")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
-local hotkeys = { mouse = {}, keys = {} }
+local hotkeys = { mouse = {}, raw = {}, keys = {}, fake = {} }
 
 
--- Set key for widgets, layouts and other secondary stuff
+-- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
+local function focus_to_previous()
+	awful.client.focus.history.previous()
+	if client.focus then client.focus:raise() end
+end
+
+local function restore_client()
+	local c = awful.client.restore()
+	if c then client.focus = c; c:raise() end
+end
+
+local function tag_numkey(i, mod, action)
+	return awful.key(
+		mod, "#" .. i + 9,
+		function ()
+			local screen = awful.screen.focused()
+			local tag = screen.tags[i]
+			if tag then action(tag) end
+		end
+	)
+end
+
+local function client_numkey(i, mod, action)
+	return awful.key(
+		mod, "#" .. i + 9,
+		function ()
+			if client.focus then
+				local tag = client.focus.screen.tags[i]
+				if tag then action(tag) end
+			end
+		end
+	)
+end
 
 
 -- Build hotkeys depended on config parameters
@@ -36,190 +69,167 @@ function hotkeys:init(args)
 		awful.button({ }, 5, awful.tag.viewprev)
 	))
 
-	-- {{{ Key bindings
-	self.keys.root = awful.util.table.join(
-		awful.key({ env.mod,           }, "s",      hotkeys_popup.show_help,
-				  {description="show help", group="awesome"}),
-		awful.key({ env.mod,           }, "Left",   awful.tag.viewprev,
-				  {description = "view previous", group = "tag"}),
-		awful.key({ env.mod,           }, "Right",  awful.tag.viewnext,
-				  {description = "view next", group = "tag"}),
-		awful.key({ env.mod,           }, "Escape", awful.tag.history.restore,
-				  {description = "go back", group = "tag"}),
+	-- Keys for widgets, layouts and other secondary stuff
+	--------------------------------------------------------------------------------
 
-		awful.key({ env.mod,           }, "j",
-			function ()
-				awful.client.focus.byidx( 1)
-			end,
-			{description = "focus next by index", group = "client"}
-		),
-		awful.key({ env.mod,           }, "k",
-			function ()
-				awful.client.focus.byidx(-1)
-			end,
-			{description = "focus previous by index", group = "client"}
-		),
-		awful.key({ env.mod,           }, "w", function () mymainmenu:show() end,
-				  {description = "show main menu", group = "awesome"}),
+	-- apprunner widget
+	local apprunner_keys = {
+		{
+			{ env.mod }, "k", function() apprunner:down() end,
+			{ description = "Select next item", group = "Navigation" }
+		},
+		{
+			{ env.mod }, "i", function() apprunner:up() end,
+			{ description = "Select previous item", group = "Navigation" }
+		},
+	}
 
-		-- Layout manipulation
-		awful.key({ env.mod, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
-				  {description = "swap with next client by index", group = "client"}),
-		awful.key({ env.mod, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
-				  {description = "swap with previous client by index", group = "client"}),
-		awful.key({ env.mod, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
-				  {description = "focus the next screen", group = "screen"}),
-		awful.key({ env.mod, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
-				  {description = "focus the previous screen", group = "screen"}),
-		awful.key({ env.mod,           }, "u", awful.client.urgent.jumpto,
-				  {description = "jump to urgent client", group = "client"}),
-		awful.key({ env.mod,           }, "Tab",
-			function ()
-				awful.client.focus.history.previous()
-				if client.focus then
-					client.focus:raise()
-				end
-			end,
-			{description = "go back", group = "client"}),
+	apprunner:set_keys(awful.util.table.join(apprunner.keys, apprunner_keys))
 
-		-- Standard program
-		awful.key({ env.mod,           }, "Return", function () awful.spawn(env.terminal) end,
-				  {description = "open a terminal", group = "launcher"}),
-		awful.key({ env.mod, "Control" }, "r", awesome.restart,
-				  {description = "reload awesome", group = "awesome"}),
-		awful.key({ env.mod, "Shift"   }, "q", awesome.quit,
-				  {description = "quit awesome", group = "awesome"}),
 
-		awful.key({ env.mod,           }, "y",     function () laybox:toggle_menu(mouse.screen.selected_tag) end,
-				  {description = "Show layout menu", group = "layout"}),
-		awful.key({ env.mod,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
-				  {description = "increase master width factor", group = "layout"}),
-		awful.key({ env.mod,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
-				  {description = "decrease master width factor", group = "layout"}),
-		awful.key({ env.mod, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
-				  {description = "increase the number of master clients", group = "layout"}),
-		awful.key({ env.mod, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
-				  {description = "decrease the number of master clients", group = "layout"}),
-		awful.key({ env.mod, "Control" }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
-				  {description = "increase the number of columns", group = "layout"}),
-		awful.key({ env.mod, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
-				  {description = "decrease the number of columns", group = "layout"}),
-		awful.key({ env.mod,           }, "space", function () awful.layout.inc( 1)                end,
-				  {description = "select next", group = "layout"}),
-		awful.key({ env.mod, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
-				  {description = "select previous", group = "layout"}),
+	-- Global keys
+	--------------------------------------------------------------------------------
+	self.raw.root = {
+		{
+			{ env.mod }, "F1", function() redflat.float.hotkeys:show() end,
+			{ description = "Show hotkeys helper", group = "Main" }
+		},
+		{
+			{ env.mod }, "Left", awful.tag.viewprev,
+			{ description = "View previous tag", group = "Tags" }
+		},
+		{
+			{ env.mod }, "Right", awful.tag.viewnext,
+			{ description = "View next tag", group = "Tags" }
+		},
+		{
+			{ env.mod }, "Escape", awful.tag.history.restore,
+			{ description = "Go previos tag", group = "Tags" }
+		},
+		{
+			{ env.mod }, "w", function() mainmenu:show() end,
+			{ description = "Show main menu", group = "Main" }
+		},
+		{
+			{ env.mod }, "u", awful.client.urgent.jumpto,
+			{ description = "Jump to urgent client", group = "Clients" }
+		},
+		{
+			{ env.mod }, "Tab", focus_to_previous,
+			{ description = "Go previos client", group = "Clients" }
+		},
+		{
+			{ env.mod }, "Return", function() awful.spawn(env.terminal) end,
+			{ description = "Open a terminal", group = "Launcher" }
+		},
+		{
+			{ env.mod, "Control" }, "r", awesome.restart,
+			{ description = "Reload awesome", group = "Main" }
+		},
+		{
+			{ env.mod, "Shift" }, "q", awesome.quit,
+			{ description = "Quit awesome", group = "Main" }
+		},
+		{
+			{ env.mod }, "y", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
+			{ description = "Show layout menu", group = "Layouts" }
+		},
+		{
+			{ env.mod }, "space", function() awful.layout.inc(1) end,
+			{ description = "Select next layout", group = "Layouts" }
+		},
+		{
+			{ env.mod, "Shift" }, "space", function() awful.layout.inc(-1) end,
+			{ description = "Select previous layout", group = "Layouts" }
+		},
+		{
+			{ env.mod, "Control" }, "n", restore_client,
+			{ description = "Restore minimized client", group = "Clients" }
+		},
+		{
+			{ env.mod }, "r", function() apprunner:show() end,
+			{ description = "Application launcher", group = "Launcher" }
+		},
+		{
+			{ env.mod }, "p", function() redflat.float.prompt:run() end,
+			{ description = "Show the prompt box", group = "Launcher" }
+		},
+	}
 
-		awful.key({ env.mod, "Control" }, "n",
-				  function ()
-					  local c = awful.client.restore()
-					  -- Focus restored client
-					  if c then
-						  client.focus = c
-						  c:raise()
-					  end
-				  end,
-				  {description = "restore minimized", group = "client"}),
+	-- Client keys
+	--------------------------------------------------------------------------------
+	self.raw.client = {
+		{
+			{ env.mod }, "f", function(c) c.fullscreen = not c.fullscreen; c:raise() end,
+			{ description = "Toggle fullscreen", group = "Clients" }
+		},
+		{
+			{ env.mod }, "F4", function(c) c:kill() end,
+			{ description = "Close", group = "Clients" }
+		},
+		{
+			{ env.mod, "Control" }, "space", awful.client.floating.toggle,
+			{ description = "Toggle floating", group = "Clients" }
+		},
+		{
+			{ env.mod }, "o", function(c) c.ontop = not c.ontop end,
+			{ description = "Toggle keep on top", group = "Clients" }
+		},
+		{
+			{ env.mod }, "n", function(c) c.minimized = true end,
+			{ description = "Minimize", group = "Clients" }
+		},
+		{
+			{ env.mod }, "m", function(c) c.maximized = not c.maximized; c:raise() end,
+			{ description = "Maximize", group = "Clients" }
+		}
+	}
 
-		-- Prompt
-		awful.key({ env.mod },            "r",     function() redflat.float.apprunner:show() end,
-				  {description = "Application launcher", group = "launcher"}),
+	self.keys.root = redflat.util.key.build(self.raw.root)
+	self.keys.client = redflat.util.key.build(self.raw.client)
 
-		awful.key({ env.mod }, "x",
-				  function ()
-					  awful.prompt.run {
-						prompt       = "Run Lua code: ",
-						textbox      = awful.screen.focused().mypromptbox.widget,
-						exe_callback = awful.util.eval,
-						history_path = awful.util.get_cache_dir() .. "/history_eval"
-					  }
-				  end,
-				  {description = "lua execute prompt", group = "awesome"}),
-		awful.key({ env.mod }, "p", function () redflat.float.prompt:run() end,
-				  {description = "show the prompt box", group = "launcher"})
-	)
+	-- Numkeys
+	--------------------------------------------------------------------------------
 
-	self.keys.client = awful.util.table.join(
-		awful.key({ env.mod,           }, "f",
-			function (c)
-				c.fullscreen = not c.fullscreen
-				c:raise()
-			end,
-			{description = "toggle fullscreen", group = "client"}),
-		awful.key({ env.mod, "Shift"   }, "c",      function (c) c:kill()                         end,
-				  {description = "close", group = "client"}),
-		awful.key({ env.mod, "Control" }, "space",  awful.client.floating.toggle                     ,
-				  {description = "toggle floating", group = "client"}),
-		awful.key({ env.mod, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-				  {description = "move to master", group = "client"}),
-		awful.key({ env.mod,           }, "o",      function (c) c:move_to_screen()               end,
-				  {description = "move to screen", group = "client"}),
-		awful.key({ env.mod,           }, "t",      function (c) c.ontop = not c.ontop            end,
-				  {description = "toggle keep on top", group = "client"}),
-		awful.key({ env.mod,           }, "n",
-			function (c)
-				-- The client currently has the input focus, so it cannot be
-				-- minimized, since minimized clients can't have the focus.
-				c.minimized = true
-			end ,
-			{description = "minimize", group = "client"}),
-		awful.key({ env.mod,           }, "m",
-			function (c)
-				c.maximized = not c.maximized
-				c:raise()
-			end ,
-			{description = "maximize", group = "client"})
-	)
-
-	-- Bind all key numbers to tags.
-	-- Be careful: we use keycodes to make it works on any keyboard layout.
-	-- This should map on the top row of your keyboard, usually 1 to 9.
+	-- add real keys without description here
 	for i = 1, 9 do
-		self.keys.root = awful.util.table.join(self.keys.root,
-			-- View tag only.
-			awful.key({ env.mod }, "#" .. i + 9,
-					  function ()
-							local screen = awful.screen.focused()
-							local tag = screen.tags[i]
-							if tag then
-							   tag:view_only()
-							end
-					  end,
-					  {description = "view tag #"..i, group = "tag"}),
-			-- Toggle tag display.
-			awful.key({ env.mod, "Control" }, "#" .. i + 9,
-					  function ()
-						  local screen = awful.screen.focused()
-						  local tag = screen.tags[i]
-						  if tag then
-							 awful.tag.viewtoggle(tag)
-						  end
-					  end,
-					  {description = "toggle tag #" .. i, group = "tag"}),
-			-- Move client to tag.
-			awful.key({ env.mod, "Shift" }, "#" .. i + 9,
-					  function ()
-						  if client.focus then
-							  local tag = client.focus.screen.tags[i]
-							  if tag then
-								  client.focus:move_to_tag(tag)
-							  end
-						 end
-					  end,
-					  {description = "move focused client to tag #"..i, group = "tag"}),
-			-- Toggle tag on focused client.
-			awful.key({ env.mod, "Control", "Shift" }, "#" .. i + 9,
-					  function ()
-						  if client.focus then
-							  local tag = client.focus.screen.tags[i]
-							  if tag then
-								  client.focus:toggle_tag(tag)
-							  end
-						  end
-					  end,
-					  {description = "toggle focused client on tag #" .. i, group = "tag"})
+		self.keys.root = awful.util.table.join(
+			self.keys.root,
+			tag_numkey(i,    { env.mod },                     function(t) t:view_only()               end),
+			tag_numkey(i,    { env.mod, "Control" },          function(t) awful.tag.viewtoggle(t)     end),
+			client_numkey(i, { env.mod, "Shift" },            function(t) client.focus:move_to_tag(t) end),
+			client_numkey(i, { env.mod, "Control", "Shift" }, function(t) client.focus:toggle_tag(t)  end)
 		)
 	end
 
+	-- make fake keys with description special for key helper widget
+	local numkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+
+	self.fake.numkeys = {
+		{
+			{ env.mod }, "1 .. 9", nil,
+			{ description = "Switch to tag", group = "Numkeys", keyset = numkeys }
+		},
+		{
+			{ env.mod, "Control" }, "1 .. 9", nil,
+			{ description = "Toggle tag", group = "Numkeys", keyset = numkeys }
+		},
+		{
+			{ env.mod, "Shift" }, "1 .. 9", nil,
+			{ description = "Move focused client to tag", group = "Numkeys", keyset = numkeys }
+		},
+		{
+			{ env.mod, "Control", "Shift" }, "1 .. 9", nil,
+			{ description = "Toggle focused client on tag", group = "Numkeys", keyset = numkeys }
+		},
+	}
+
+	-- Hotkeys helper setup
+	--------------------------------------------------------------------------------
+	redflat.float.hotkeys:set_pack("Main", awful.util.table.join(self.raw.root, self.raw.client, self.fake.numkeys), 2)
+
+	-- Mouse buttons
+	--------------------------------------------------------------------------------
 	self.mouse.client = awful.util.table.join(
 		awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
 		awful.button({ env.mod }, 1, awful.mouse.client.move),
