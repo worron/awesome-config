@@ -4,17 +4,20 @@
 
 -- Grab environment
 local table = table
-
 local awful = require("awful")
-local hotkeys_popup = require("awful.hotkeys_popup").widget
-
 local redflat = require("redflat")
-local apprunner = require("redflat.float.apprunner")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
 local hotkeys = { mouse = {}, raw = {}, keys = {}, fake = {} }
 
+-- key aliases
+local apprunner = redflat.float.apprunner
+local appswitcher = redflat.float.appswitcher
+local current = redflat.widget.tasklist.filter.currenttags
+local allscr = redflat.widget.tasklist.filter.allscreen
+local laybox = redflat.widget.layoutbox
+local redtip = redflat.float.hotkeys
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
@@ -61,7 +64,6 @@ function hotkeys:init(args)
 	local args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
-	local laybox = redflat.widget.layoutbox
 
 	self.mouse.root = (awful.util.table.join(
 		awful.button({ }, 3, function () mainmenu:toggle() end),
@@ -72,7 +74,8 @@ function hotkeys:init(args)
 	-- Keys for widgets, layouts and other secondary stuff
 	--------------------------------------------------------------------------------
 
-	-- apprunner widget
+	-- Apprunner widget
+	------------------------------------------------------------
 	local apprunner_keys = {
 		{
 			{ env.mod }, "k", function() apprunner:down() end,
@@ -86,7 +89,8 @@ function hotkeys:init(args)
 
 	apprunner:set_keys(awful.util.table.join(apprunner.keys, apprunner_keys))
 
-	-- menu
+	-- Menu widget
+	------------------------------------------------------------
 	local menu_keys = {
 		{
 			{ env.mod }, "k", redflat.menu.action.down,
@@ -108,11 +112,39 @@ function hotkeys:init(args)
 
 	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys, menu_keys))
 
+	-- Appswitcher
+	------------------------------------------------------------
+	appswitcher_keys = {
+		{
+			{ env.mod }, "a", function() appswitcher:switch() end,
+			{ description = "Select next app", group = "Navigation" }
+		},
+		{
+			{ env.mod }, "q", function() appswitcher:switch({ reverse = true }) end,
+			{ description = "Select previous app", group = "Navigation" }
+		},
+		{
+			{ env.mod }, "Super_L", function() appswitcher:hide() end,
+			{ description = "Exit", group = "Action" }
+		},
+		{
+			{}, "Escape", function() appswitcher:hide() end,
+			{ description = "Exit", group = "Action" }
+		},
+		{
+			{ env.mod }, "F1", function() redtip:show()  end,
+			{ description = "Show hotkeys helper", group = "Help" }
+		},
+	}
+
+	appswitcher:set_keys(appswitcher_keys)
+
+
 	-- Global keys
 	--------------------------------------------------------------------------------
 	self.raw.root = {
 		{
-			{ env.mod }, "F1", function() redflat.float.hotkeys:show() end,
+			{ env.mod }, "F1", function() redtip:show() end,
 			{ description = "Show hotkeys helper", group = "Main" }
 		},
 		{
@@ -132,6 +164,22 @@ function hotkeys:init(args)
 			{ description = "Show main menu", group = "Main" }
 		},
 		{
+			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
+			{ description = "Switch to next with current tag", group = "Launcher" }
+		},
+		{
+			{ env.mod }, "q", nil, function() appswitcher:show({ filter = current, reverse = true }) end,
+			{ description = "Switch to previous with current tag", group = "Launcher" }
+		},
+		{
+			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
+			{ description = "Switch to next through all tags", group = "Launcher" }
+		},
+		{
+			{ env.mod, "Shift" }, "q", nil, function() appswitcher:show({ filter = allscr, reverse = true }) end,
+			{ description = "Switch to previous through all tags", group = "Launcher" }
+		},
+		{
 			{ env.mod }, "u", awful.client.urgent.jumpto,
 			{ description = "Jump to urgent client", group = "Clients" }
 		},
@@ -148,7 +196,7 @@ function hotkeys:init(args)
 			{ description = "Reload awesome", group = "Main" }
 		},
 		{
-			{ env.mod, "Shift" }, "q", awesome.quit,
+			{ env.mod, "Control" }, "q", awesome.quit,
 			{ description = "Quit awesome", group = "Main" }
 		},
 		{
