@@ -86,6 +86,27 @@ function hotkeys:init(args)
 
 	apprunner:set_keys(awful.util.table.join(apprunner.keys, apprunner_keys))
 
+	-- menu
+	local menu_keys = {
+		{
+			{ env.mod }, "k", redflat.menu.action.down,
+			{ description = "Select next item", group = "Navigation" }
+		},
+		{
+			{ env.mod }, "i", redflat.menu.action.up,
+			{ description = "Select previous item", group = "Navigation" }
+		},
+		{
+			{ env.mod }, "j", redflat.menu.action.back,
+			{ description = "Go back", group = "Navigation" }
+		},
+		{
+			{ env.mod }, "l", redflat.menu.action.enter,
+			{ description = "Open submenu", group = "Navigation" }
+		},
+	}
+
+	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys, menu_keys))
 
 	-- Global keys
 	--------------------------------------------------------------------------------
