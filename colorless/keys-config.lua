@@ -18,6 +18,7 @@ local current = redflat.widget.tasklist.filter.currenttags
 local allscr = redflat.widget.tasklist.filter.allscreen
 local laybox = redflat.widget.layoutbox
 local redtip = redflat.float.hotkeys
+local laycom = redflat.layout.common
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
@@ -73,6 +74,45 @@ function hotkeys:init(args)
 
 	-- Keys for widgets, layouts and other secondary stuff
 	--------------------------------------------------------------------------------
+
+	-- Layouts
+	------------------------------------------------------------
+	local layout_tile = {
+		{
+			{ env.mod }, "l", function () awful.tag.incmwfact( 0.05) end,
+			{ description = "Increase master width factor", group = "Layout" }
+		},
+		{
+			{ env.mod }, "j", function () awful.tag.incmwfact(-0.05) end,
+			{ description = "Decrease master width factor", group = "Layout" }
+		},
+		{
+			{ env.mod }, "i", function () awful.client.incwfact( 0.05) end,
+			{ description = "Increase window factor of a client", group = "Layout" }
+		},
+		{
+			{ env.mod }, "k", function () awful.client.incwfact(-0.05) end,
+			{ description = "Decrease window factor of a client", group = "Layout" }
+		},
+		{
+			{ env.mod, }, "+", function () awful.tag.incnmaster( 1, nil, true) end,
+			{ description = "Increase the number of master clients", group = "Layout" }
+		},
+		{
+			{ env.mod }, "-", function () awful.tag.incnmaster(-1, nil, true) end,
+			{ description = "Decrease the number of master clients", group = "Layout" }
+		},
+		{
+			{ env.mod, "Control" }, "+", function () awful.tag.incncol( 1, nil, true) end,
+			{ description = "Increase the number of columns", group = "Layout" }
+		},
+		{
+			{ env.mod, "Control" }, "-", function () awful.tag.incncol(-1, nil, true) end,
+			{ description = "Decrease the number of columns", group = "Layout" }
+		},
+	}
+
+	laycom:set_keys("tile", layout_tile)
 
 	-- Apprunner widget
 	------------------------------------------------------------
@@ -146,6 +186,11 @@ function hotkeys:init(args)
 		{
 			{ env.mod }, "F1", function() redtip:show() end,
 			{ description = "Show hotkeys helper", group = "Main" }
+		},
+		{
+			-- { env.mod }, "F2", function () redflat.service.keyboard.handler() end,
+			{ env.mod }, "F2", function () redflat.service.navigator:run() end,
+			{ description = "Window control mode", group = "Main" }
 		},
 		{
 			{ env.mod }, "Left", awful.tag.viewprev,
