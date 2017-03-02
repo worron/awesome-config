@@ -23,49 +23,10 @@ local redflat = require("redflat")
 -----------------------------------------------------------------------------------------------------------------------
 require("colorless.ercheck-config") -- load file with error handling
 
--- Common functions and variables
+-- Setup theme and environment vars
 -----------------------------------------------------------------------------------------------------------------------
-
--- vars
-local env = {
-	terminal = "x-terminal-emulator",
-	mod = "Mod4",
-	fm = "nautilus",
-	home = os.getenv("HOME"),
-}
-
-env.editor_cmd = env.terminal .. " -e " .. (os.getenv("EDITOR") or "editor")
-env.themedir = awful.util.get_configuration_dir() .. "themes/colorless"
-
--- wallpaper setup
-env.wallpaper = function(s)
-	if beautiful.wallname then
-		local wallpaper = env.themedir .. "/wallpaper/" .. beautiful.wallname
-
-		if awful.util.file_readable(wallpaper) then
-			gears.wallpaper.maximized(wallpaper, s, true)
-		else
-			gears.wallpaper.set(beautiful.color.bg)
-		end
-	end
-end
-
--- panel widgets wrapper
-env.wrapper = function(widget, name, buttons)
-	local margin = { 0, 0, 0, 0 }
-
-	if redflat.util.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name] then
-		margin = beautiful.widget.wrapper[name]
-	end
-	if buttons then
-		widget:buttons(buttons)
-	end
-
-	return wibox.container.margin(widget, unpack(margin))
-end
-
--- load theme
-beautiful.init(env.themedir .. "/theme.lua")
+local env = require("colorless.env-config") -- load file with environment
+env:init()
 
 -- Layouts setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -208,12 +169,10 @@ awful.screen.connect_for_each_screen(
 		}
 	end
 )
--- }}}
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
 local hotkeys = require("colorless.keys-config") -- load file with hotkeys configuration
-
 hotkeys:init({ env = env, menu = mainmenu })
 
 -- set global keys
