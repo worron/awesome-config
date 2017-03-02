@@ -15,7 +15,7 @@ local menu = {}
 
 -- Build function
 --------------------------------------------------------------------------------
-function menu:build(args)
+function menu:init(args)
 
 	-- vars
 	local args = args or {}
@@ -24,17 +24,13 @@ function menu:build(args)
 	local theme = args.theme or { auto_hotkey = true }
 	local icon_style = args.icon_style or {}
 
-	-- theme vars
-	self.color = redflat.util.check(beautiful, "color.icon") and beautiful.color.icon or nil
-	self.icon = redflat.util.check(beautiful, "icon.awesome") and beautiful.icon.awesome or nil
-
 	-- Application submenu
 	------------------------------------------------------------
 	local appmenu = redflat.service.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
 
 	-- Main menu
 	------------------------------------------------------------
-	local mainmenu = redflat.menu({ theme = theme,
+	self.mainmenu = redflat.menu({ theme = theme,
 		items = {
 			{ "Applications",  appmenu,      },
 			{ "Terminal",      env.terminal, },
@@ -48,7 +44,19 @@ function menu:build(args)
 		}
 	})
 
-	return mainmenu
+	-- Menu panel widget
+	------------------------------------------------------------
+
+	-- theme vars
+	local deficon = redflat.util.placeholder()
+	local icon = redflat.util.check(beautiful, "icon.awesome") and beautiful.icon.awesome or deficon
+	local color = redflat.util.check(beautiful, "color.icon") and beautiful.color.icon or nil
+
+	-- widget
+	self.widget = redflat.gauge.svgbox(icon, nil, color)
+	self.buttons = awful.util.table.join(
+		awful.button({ }, 1, function () self.mainmenu:toggle() end)
+	)
 end
 
 -- End

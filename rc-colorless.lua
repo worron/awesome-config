@@ -44,14 +44,8 @@ awful.layout.layouts = {
 -- Main menu configuration
 -----------------------------------------------------------------------------------------------------------------------
 local mymenu = require("colorless.menu-config") -- load file with menu configuration
-local mainmenu = mymenu:build({ env = env })
-
-local launcher = {}
-launcher.widget = redflat.gauge.svgbox(mymenu.icon, nil, mymenu.color)
-launcher.buttons = awful.util.table.join(
-	awful.button({ }, 1, function () mainmenu:toggle() end)
-)
-
+mymenu:init({ env = env })
+local mainmenu = mymenu.mainmenu
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
@@ -143,7 +137,7 @@ awful.screen.connect_for_each_screen(
 			{ -- left widgets
 				layout = wibox.layout.fixed.horizontal,
 
-				env.wrapper(launcher.widget, "mainmenu", launcher.buttons),
+				env.wrapper(mymenu.widget, "mainmenu", mymenu.buttons),
 				separator,
 				env.wrapper(taglist[s], "taglist"),
 				separator,
