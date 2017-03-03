@@ -27,6 +27,9 @@ function env:init(args)
 	self.home = os.getenv("HOME")
 	self.themedir = awful.util.get_configuration_dir() .. "themes/" .. theme
 
+	self.sloppy_focus = false
+	self.color_border = false
+
 	-- theme setup
 	beautiful.init(env.themedir .. "/theme.lua")
 end

@@ -19,6 +19,7 @@ local allscr = redflat.widget.tasklist.filter.allscreen
 local laybox = redflat.widget.layoutbox
 local redtip = redflat.float.hotkeys
 local laycom = redflat.layout.common
+local redtitle = redflat.titlebar
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
@@ -188,13 +189,20 @@ function hotkeys:init(args)
 			{ description = "Show hotkeys helper", group = "Main" }
 		},
 		{
-			-- { env.mod }, "F2", function () redflat.service.keyboard.handler() end,
 			{ env.mod }, "F2", function () redflat.service.navigator:run() end,
 			{ description = "Window control mode", group = "Main" }
 		},
 		{
 			{ env.mod }, "Left", awful.tag.viewprev,
 			{ description = "View previous tag", group = "Tags" }
+		},
+		{
+			{ env.mod }, "t", function() redtitle.toggle(client.focus) end,
+			{ description = "Test title hide", group = "Main" }
+		},
+		{
+			{ env.mod, "Control" }, "t", function() redtitle.switch_layout(client.focus) end,
+			{ description = "Test title switch", group = "Main" }
 		},
 		{
 			{ env.mod }, "Right", awful.tag.viewnext,
@@ -350,6 +358,10 @@ function hotkeys:init(args)
 		awful.button({ env.mod }, 3, awful.mouse.client.resize)
 	)
 
+	-- Set root hotkeys
+	--------------------------------------------------------------------------------
+	root.keys(self.keys.root)
+	root.buttons(self.mouse.root)
 end
 
 -- End

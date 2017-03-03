@@ -40,6 +40,8 @@ function rules:init(args)
 	self.base_properties.buttons = args.hotkeys.mouse.client
 
 
+	-- Build rules
+	--------------------------------------------------------------------------------
 	self.rules = {
 		{
 			rule       = {},
@@ -54,6 +56,11 @@ function rules:init(args)
 			properties = { titlebars_enabled = true }
 		},
 	}
+
+
+	-- Set rules
+	--------------------------------------------------------------------------------
+	awful.rules.rules = rules.rules
 end
 
 -- End

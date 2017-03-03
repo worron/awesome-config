@@ -174,19 +174,11 @@ awful.screen.connect_for_each_screen(
 local hotkeys = require("colorless.keys-config") -- load file with hotkeys configuration
 hotkeys:init({ env = env, menu = mymenu.mainmenu })
 
--- set global keys
-root.keys(hotkeys.keys.root)
-
--- set global(desktop) mouse buttons
-root.buttons(hotkeys.mouse.root)
-
 
 -- Rules
 -----------------------------------------------------------------------------------------------------------------------
 local rules = require("colorless.rules-config") -- load file with rules configuration
 rules:init({ hotkeys = hotkeys})
-
-awful.rules.rules = rules.rules
 
 
 -- Titlebar setup
@@ -194,31 +186,8 @@ awful.rules.rules = rules.rules
 local titlebar = require("colorless.titlebar-config") -- load file with titlebar configuration
 titlebar:init()
 
--- Signals setup
+
+-- Base signal set for awesome wm
 -----------------------------------------------------------------------------------------------------------------------
-client.connect_signal(
-	"manage",
-	function(c)
-		if awesome.startup
-		   and not c.size_hints.user_position
-		   and not c.size_hints.program_position
-		then
-			awful.placement.no_offscreen(c)
-		end
-	end
-)
-
--- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal(
-	"mouse::enter",
-	function(c)
-		if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier and awful.client.focus.filter(c) then
-			client.focus = c
-		end
-	end
-)
-
-client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
-screen.connect_signal("property::geometry", env.wallpaper)
+local signals = require("colorless.signals-config") -- load file with signals configuration
+signals:init({ env = env })

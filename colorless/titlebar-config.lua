@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
-local awful =require("awful")
+local awful = require("awful")
 local wibox = require("wibox")
 
 -- local redflat = require("redflat")
@@ -27,8 +27,12 @@ local function title_buttons(c)
 	)
 end
 
+local function on_maximize(c)
+	local action = (c.maximized_vertical or c.maximized) and "cut_all" or "restore_all"
+	redtitle[action]({ c })
+end
 
--- Build rule table
+-- Connect titlebar building signal
 -----------------------------------------------------------------------------------------------------------------------
 function titlebar:init(args)
 
@@ -82,6 +86,10 @@ function titlebar:init(args)
 			-- Set both models to titlebar
 			redtitle.add_layout(c, nil, light)
 			redtitle.add_layout(c, nil, full, style.full.size)
+
+			-- hide titlebar when window maximized
+			c:connect_signal("property::maximized_vertical", on_maximize)
+			c:connect_signal("property::maximized", on_maximize)
 		end
 	)
 end
