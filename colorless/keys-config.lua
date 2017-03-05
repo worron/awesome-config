@@ -5,6 +5,8 @@
 -- Grab environment
 local table = table
 local awful = require("awful")
+local beautiful = require("beautiful")
+
 local redflat = require("redflat")
 
 -- Initialize tables and vars for module
@@ -23,6 +25,37 @@ local redtitle = redflat.titlebar
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
+local focus_switch_byd = function(dir)
+	return function()
+		awful.client.focus.bydirection(dir)
+		if client.focus then client.focus:raise() end
+	end
+end
+
+local function minimize_all()
+	for _, c in ipairs(client.get()) do
+		if current(c, mouse.screen) then c.minimized = true end
+	end
+end
+
+local function minimize_all_except_focused()
+	for _, c in ipairs(client.get()) do
+		if current(c, mouse.screen) and c ~= client.focus then c.minimized = true end
+	end
+end
+
+local function restore_all()
+	for _, c in ipairs(client.get()) do
+		if current(c, mouse.screen) and c.minimized then c.minimized = false end
+	end
+end
+
+local function kill_all()
+	for _, c in ipairs(client.get()) do
+		if current(c, mouse.screen) and not c.sticky then c:kill() end
+	end
+end
+
 local function focus_to_previous()
 	awful.client.focus.history.previous()
 	if client.focus then client.focus:raise() end
@@ -31,6 +64,14 @@ end
 local function restore_client()
 	local c = awful.client.restore()
 	if c then client.focus = c; c:raise() end
+end
+
+local function toggle_placement(env)
+	env.set_slave = not env.set_slave
+	redflat.float.notify:show({
+		text = (env.set_slave and "Slave" or "Master") .. " placement",
+		icon = beautiful.icon and beautiful.icon.warning or nil
+	})
 end
 
 local function tag_numkey(i, mod, action)
@@ -193,88 +234,139 @@ function hotkeys:init(args)
 			{ description = "Window control mode", group = "Main" }
 		},
 		{
-			{ env.mod }, "Left", awful.tag.viewprev,
-			{ description = "View previous tag", group = "Tags" }
-		},
-		{
-			{ env.mod }, "t", function() redtitle.toggle(client.focus) end,
-			{ description = "Test title hide", group = "Main" }
-		},
-		{
-			{ env.mod, "Control" }, "t", function() redtitle.switch_layout(client.focus) end,
-			{ description = "Test title switch", group = "Main" }
-		},
-		{
-			{ env.mod }, "Right", awful.tag.viewnext,
-			{ description = "View next tag", group = "Tags" }
-		},
-		{
-			{ env.mod }, "Escape", awful.tag.history.restore,
-			{ description = "Go previos tag", group = "Tags" }
-		},
-		{
-			{ env.mod }, "w", function() mainmenu:show() end,
-			{ description = "Show main menu", group = "Main" }
-		},
-		{
-			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
-			{ description = "Switch to next with current tag", group = "Launcher" }
-		},
-		{
-			{ env.mod }, "q", nil, function() appswitcher:show({ filter = current, reverse = true }) end,
-			{ description = "Switch to previous with current tag", group = "Launcher" }
-		},
-		{
-			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
-			{ description = "Switch to next through all tags", group = "Launcher" }
-		},
-		{
-			{ env.mod, "Shift" }, "q", nil, function() appswitcher:show({ filter = allscr, reverse = true }) end,
-			{ description = "Switch to previous through all tags", group = "Launcher" }
-		},
-		{
-			{ env.mod }, "u", awful.client.urgent.jumpto,
-			{ description = "Jump to urgent client", group = "Clients" }
-		},
-		{
-			{ env.mod }, "Tab", focus_to_previous,
-			{ description = "Go previos client", group = "Clients" }
-		},
-		{
-			{ env.mod }, "Return", function() awful.spawn(env.terminal) end,
-			{ description = "Open a terminal", group = "Launcher" }
+			{ env.mod }, "F3", function () toggle_placement(env) end,
+			{ description = "Switch master/slave window placement", group = "Main" }
 		},
 		{
 			{ env.mod, "Control" }, "r", awesome.restart,
 			{ description = "Reload awesome", group = "Main" }
 		},
 		{
-			{ env.mod, "Control" }, "q", awesome.quit,
-			{ description = "Quit awesome", group = "Main" }
+			{ env.mod }, "Return", function() awful.spawn(env.terminal) end,
+			{ description = "Open a terminal", group = "Main" }
 		},
+
+		{
+			{ env.mod }, "l", focus_switch_byd("right"),
+			{ description = "Go to right client", group = "Client focus" }
+		},
+		{
+			{ env.mod }, "j", focus_switch_byd("left"),
+			{ description = "Go to left client", group = "Client focus" }
+		},
+		{
+			{ env.mod }, "i", focus_switch_byd("up"),
+			{ description = "Go to upper client", group = "Client focus" }
+		},
+		{
+			{ env.mod }, "k", focus_switch_byd("down"),
+			{ description = "Go to lower client", group = "Client focus" }
+		},
+		{
+			{ env.mod }, "u", awful.client.urgent.jumpto,
+			{ description = "Go to urgent client", group = "Client focus" }
+		},
+		{
+			{ env.mod }, "Tab", focus_to_previous,
+			{ description = "Go to previos client", group = "Client focus" }
+		},
+
+		{
+			{ env.mod }, "w", function() mainmenu:show() end,
+			{ description = "Show main menu", group = "Widgets" }
+		},
+		{
+			{ env.mod }, "r", function() apprunner:show() end,
+			{ description = "Application launcher", group = "Widgets" }
+		},
+		{
+			{ env.mod }, "p", function() redflat.float.prompt:run() end,
+			{ description = "Show the prompt box", group = "Widgets" }
+		},
+		{
+			{ env.mod, "Control" }, "i", function() redflat.widget.minitray:toggle() end,
+			{ description = "Show minitray", group = "Widgets" }
+		},
+
+		{
+			{ env.mod }, "Escape", awful.tag.history.restore,
+			{ description = "Go previos tag", group = "Tag navigation" }
+		},
+		{
+			{ env.mod }, "Right", awful.tag.viewnext,
+			{ description = "View next tag", group = "Tag navigation" }
+		},
+		{
+			{ env.mod }, "Left", awful.tag.viewprev,
+			{ description = "View previous tag", group = "Tag navigation" }
+		},
+
+		{
+			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
+			{ description = "Switch to next with current tag", group = "Application switcher" }
+		},
+		{
+			{ env.mod }, "q", nil, function() appswitcher:show({ filter = current, reverse = true }) end,
+			{ description = "Switch to previous with current tag", group = "Application switcher" }
+		},
+		{
+			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
+			{ description = "Switch to next through all tags", group = "Application switcher" }
+		},
+		{
+			{ env.mod, "Shift" }, "q", nil, function() appswitcher:show({ filter = allscr, reverse = true }) end,
+			{ description = "Switch to previous through all tags", group = "Application switcher" }
+		},
+
+		{
+			{ env.mod }, "t", function() redtitle.toggle(client.focus) end,
+			{ description = "Show/hide titlebar for focused client", group = "Titlebar" }
+		},
+		{
+			{ env.mod, "Control" }, "t", function() redtitle.switch(client.focus) end,
+			{ description = "Switch titlebar view for focused client", group = "Titlebar" }
+		},
+		{
+			{ env.mod, "Shift" }, "t", function() redtitle.toggle_all() end,
+			{ description = "Show/hide titlebar for all clients", group = "Titlebar" }
+		},
+		{
+			{ env.mod, "Control", "Shift" }, "t", function() redtitle.switch_all() end,
+			{ description = "Switch titlebar view for all clients", group = "Titlebar" }
+		},
+
 		{
 			{ env.mod }, "y", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
 			{ description = "Show layout menu", group = "Layouts" }
 		},
 		{
-			{ env.mod }, "space", function() awful.layout.inc(1) end,
+			{ env.mod, "Control"}, "Right", function() awful.layout.inc(1) end,
 			{ description = "Select next layout", group = "Layouts" }
 		},
 		{
-			{ env.mod, "Shift" }, "space", function() awful.layout.inc(-1) end,
+			{ env.mod, "Control" }, "Left", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
 		},
+
 		{
 			{ env.mod, "Control" }, "n", restore_client,
-			{ description = "Restore minimized client", group = "Clients" }
+			{ description = "Restore minimized client", group = "Clients manipulation" }
 		},
 		{
-			{ env.mod }, "r", function() apprunner:show() end,
-			{ description = "Application launcher", group = "Launcher" }
+			{ env.mod }, "Down", minimize_all,
+			{ description = "Minimized all clients with current tag", group = "Clients manipulation" }
 		},
 		{
-			{ env.mod }, "p", function() redflat.float.prompt:run() end,
-			{ description = "Show the prompt box", group = "Launcher" }
+			{ env.mod, "Control" }, "Down", minimize_all_except_focused,
+			{ description = "Minimized all clients except focused", group = "Clients manipulation" }
+		},
+		{
+			{ env.mod }, "Up", restore_all,
+			{ description = "Restore all clients with current tag", group = "Clients manipulation" }
+		},
+		{
+			{ env.mod, "Shift" }, "F4", kill_all,
+			{ description = "Kill all clients with current tag", group = "Clients manipulation" }
 		},
 	}
 
@@ -283,27 +375,27 @@ function hotkeys:init(args)
 	self.raw.client = {
 		{
 			{ env.mod }, "f", function(c) c.fullscreen = not c.fullscreen; c:raise() end,
-			{ description = "Toggle fullscreen", group = "Clients" }
+			{ description = "Toggle fullscreen", group = "Client keys" }
 		},
 		{
 			{ env.mod }, "F4", function(c) c:kill() end,
-			{ description = "Close", group = "Clients" }
+			{ description = "Close", group = "Client keys" }
 		},
 		{
-			{ env.mod, "Control" }, "space", awful.client.floating.toggle,
-			{ description = "Toggle floating", group = "Clients" }
+			{ env.mod, "Control" }, "f", awful.client.floating.toggle,
+			{ description = "Toggle floating", group = "Client keys" }
 		},
 		{
-			{ env.mod }, "o", function(c) c.ontop = not c.ontop end,
-			{ description = "Toggle keep on top", group = "Clients" }
+			{ env.mod, "Control" }, "o", function(c) c.ontop = not c.ontop end,
+			{ description = "Toggle keep on top", group = "Client keys" }
 		},
 		{
 			{ env.mod }, "n", function(c) c.minimized = true end,
-			{ description = "Minimize", group = "Clients" }
+			{ description = "Minimize", group = "Client keys" }
 		},
 		{
 			{ env.mod }, "m", function(c) c.maximized = not c.maximized; c:raise() end,
-			{ description = "Maximize", group = "Clients" }
+			{ description = "Maximize", group = "Client keys" }
 		}
 	}
 
@@ -329,20 +421,20 @@ function hotkeys:init(args)
 
 	self.fake.numkeys = {
 		{
-			{ env.mod }, "1 .. 9", nil,
-			{ description = "Switch to tag", group = "Numkeys", keyset = numkeys }
+			{ env.mod }, "1..9", nil,
+			{ description = "Switch to tag", group = "Numeric keys", keyset = numkeys }
 		},
 		{
-			{ env.mod, "Control" }, "1 .. 9", nil,
-			{ description = "Toggle tag", group = "Numkeys", keyset = numkeys }
+			{ env.mod, "Control" }, "1..9", nil,
+			{ description = "Toggle tag", group = "Numeric keys", keyset = numkeys }
 		},
 		{
-			{ env.mod, "Shift" }, "1 .. 9", nil,
-			{ description = "Move focused client to tag", group = "Numkeys", keyset = numkeys }
+			{ env.mod, "Shift" }, "1..9", nil,
+			{ description = "Move focused client to tag", group = "Numeric keys", keyset = numkeys }
 		},
 		{
-			{ env.mod, "Control", "Shift" }, "1 .. 9", nil,
-			{ description = "Toggle focused client on tag", group = "Numkeys", keyset = numkeys }
+			{ env.mod, "Control", "Shift" }, "1..9", nil,
+			{ description = "Toggle focused client on tag", group = "Numeric keys", keyset = numkeys }
 		},
 	}
 

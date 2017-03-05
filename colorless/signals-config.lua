@@ -30,6 +30,9 @@ function signals:init(args)
 	client.connect_signal(
 		"manage",
 		function(c)
+			-- put client at the end of list
+			if env.set_slave then awful.client.setslave(c) end
+
 			-- startup placement
 			if awesome.startup
 			   and not c.size_hints.user_position

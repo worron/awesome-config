@@ -29,6 +29,7 @@ function env:init(args)
 
 	self.sloppy_focus = false
 	self.color_border = false
+	self.set_slave = true
 
 	-- theme setup
 	beautiful.init(env.themedir .. "/theme.lua")
