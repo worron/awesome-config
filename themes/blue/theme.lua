@@ -1,9 +1,10 @@
 -----------------------------------------------------------------------------------------------------------------------
---                                                    Blue theme                                                     --
+--                                                Colorless theme                                                    --
 -----------------------------------------------------------------------------------------------------------------------
+local awful = require("awful")
 
 local theme = {}
-local wa = screen[mouse.screen].workarea
+local wa = mouse.screen.workarea
 
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
@@ -25,57 +26,45 @@ theme.color = {
 	shadow4   = "#767676"
 }
 
--- colors for defaults widgets
-theme.bg_normal     = theme.color.wibox
-theme.bg_focus      = theme.color.main
-theme.bg_urgent     = theme.color.urgent
-theme.bg_minimize   = theme.color.gray
-
-theme.fg_normal     = theme.color.text
-theme.fg_focus      = theme.color.highlight
-theme.fg_urgent     = theme.color.highlight
-theme.fg_minimize   = theme.color.highlight
-
-theme.border_normal = theme.color.wibox
-theme.border_focus  = theme.color.wibox
-theme.border_marked = theme.color.main
-
-
 -- Common
 -----------------------------------------------------------------------------------------------------------------------
-local homedir = os.getenv("HOME")
-theme.path = homedir .. "/.config/awesome/themes/blue"
+theme.path = awful.util.get_configuration_dir() .. "themes/blue"
+theme.homedir = os.getenv("HOME")
 
 -- Main config
---------------------------------------------------------------------------------
+------------------------------------------------------------
 
--- fonts
-theme.font          = "Roboto 14"      -- main theme font
-theme.font_title    = "Roboto bold 14" -- title font for widgets
-theme.font_titlebar = "Roboto bold 14" -- title font for windows
-theme.font_clock    = "Play bold 12" -- font for textclock widget
-theme.font_notify   = "Play bold 16" -- font for notify widget
-theme.font_keytip   = "Roboto bold 14" -- font for prefix key tip widget
-
-theme.font_exaile_main = "Play bold 14" -- main font for exaile widget
-theme.font_exaile_time = "Play bold 16" -- time status font for exaile widget
-
-theme.font_helper_title = "Roboto bold 16" -- hotkeys helper title font
-
--- cairo formated fonts
-theme.cf_appswitcher     = { font = "Play", size = 22, face = 1 } -- application switcher font
-theme.cf_tag             = { font = "Play", size = 16, face = 1 } -- tag widget font
-theme.cf_navigator_title = { font = "Play", size = 28, face = 1, slant = 0 } -- window navigation title font
-theme.cf_navigator_main  = { font = "Play", size = 22, face = 1, slant = 0 } -- window navigation font
-
--- environment vars
 theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
-theme.useless_gap_width   = 8  -- Lain useless gap
-theme.global_border_width = 0  -- Lain global border gap
+theme.useless_gap         = 4  -- useless gap
 
--- grid layout prop
-theme.cellnum = { x = 100, y = 62 }
+theme.wallpaper = theme.path .. "/wallpaper/primary.png" -- wallpaper file
+
+-- Fonts
+------------------------------------------------------------
+theme.fonts = {
+	main     = "sans 12",      -- main font
+	menu     = "sans 12",      -- main menu font
+	tooltip  = "sans 12",      -- tooltip font
+	notify   = "sans bold 14", -- redflat notify popup font
+	clock    = "sans bold 12", -- textclock widget font
+	title    = "sans bold 12", -- widget titles font
+	titlebar = "sans bold 12", -- client titlebar font
+	hotkeys = {
+		main  = "sans 12",      -- hotkeys helper main font
+		key   = "mono 12",      -- hotkeys helper key font (use monospace for align)
+		title = "sans bold 14", -- hotkeys helper group title font
+	},
+}
+
+theme.cairo_fonts = {
+	tag         = { font = "Sans", size = 16, face = 1 }, -- tag widget font
+	appswitcher = { font = "Sans", size = 22, face = 1 }, -- appswitcher widget font
+	navigator   = {
+		title = { font = "Sans", size = 28, face = 1, slant = 0 }, -- window navigation title font
+		main  = { font = "Sans", size = 22, face = 1, slant = 0 }  -- window navigation  main font
+	},
+}
 
 -- Shared icons
 --------------------------------------------------------------------------------
@@ -83,167 +72,56 @@ theme.icon = {
 	check    = theme.path .. "/common/check.svg",
 	blank    = theme.path .. "/common/blank.svg",
 	warning  = theme.path .. "/common/warning.svg",
-	monitor  = theme.path .. "/widget/monitor.svg",
-	wireless = theme.path .. "/widget/wireless.svg",
-	battery  = theme.path .. "/widget/battery.svg",
-	awesome  = theme.path .. "/awesome.svg",
-}
-
--- Desktop config
------------------------------------------------------------------------------------------------------------------------
-theme.desktop = { common = {} }
-
-theme.wallpaper = theme.path .. "/wallpaper/custom.png"
-
--- Common
---------------------------------------------------------------------------------
-theme.desktop.line_height = 18
-
-theme.desktop.color = {
-	main  = theme.color.main,
-	gray  = theme.color.gray_desktop or "#404040",
-	wibox = theme.color.bg .. "00"
-}
-
--- Textbox
-------------------------------------------------------------
-theme.desktop.common.textbox = {
-	font = { font = "prototype", size = 24, face = 0 }
-}
-
--- Dashbar
-------------------------------------------------------------
-theme.desktop.common.dashbar = {
-	bar = { width = 6, gap = 6 }
-}
-
--- Barpack
-------------------------------------------------------------
-theme.desktop.common.barpack = {
-	label_style = { width = 80, draw = "by_width" },
-	text_style  = { width = 92, draw = "by_edges" },
-	line_height = theme.desktop.line_height,
-	text_gap    = 22,
-	label_gap   = 16,
-	color       = theme.desktop.color
-}
-
--- Widgets
---------------------------------------------------------------------------------
-
--- Network speed
-------------------------------------------------------------
-theme.desktop.speedmeter = {
-	label            = { height = theme.desktop.line_height },
-	dashbar          = { bar = { width = 16, gap = 6 }, height = 6 },
-	chart            = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 },
-	barvalue_height  = 32,
-	fullchart_height = 80,
-	images           = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" },
-	image_gap        = 16,
-	color            = theme.desktop.color
-}
-
--- CPU and memory
-------------------------------------------------------------
-theme.desktop.multim = {
-	corner       = { width = 34, corner = { height = 17, num = 10, line = 4 } },
-	state_height = 58,
-	prog_height  = 80,
-	image_gap    = 16,
-	image        = theme.path .. "/desktop/bstar.svg",
-	color        = theme.desktop.color
-}
-
--- Disks
-------------------------------------------------------------
-theme.desktop.dashpack = {
-	color = theme.desktop.color
-}
-
--- Thermal
-------------------------------------------------------------
-theme.desktop.sline = {
-	digit_num = 2,
-	lbox      = { draw = "by_width", width = 50 },
-	rbox      = { draw = "by_edges", width = 60 },
-	icon      = theme.path .. "/desktop/star.svg",
-	iwidth    = 142,
-	color     = theme.desktop.color
-}
-
--- Widgets placement
---------------------------------------------------------------------------------
-theme.desktop.grid = {
-	width  = { 520, 520, 520 },
-	height = { 180, 160, 160, 138, 18 },
-	edge   = { width = { 60, 60 }, height = { 40, 40 } }
-}
-
-theme.desktop.places = {
-	netspeed = { 1, 1 },
-	ssdspeed = { 2, 1 },
-	hddspeed = { 3, 1 },
-	cpumem   = { 1, 2 },
-	transm   = { 1, 3 },
-	disks    = { 1, 4 },
-	thermal  = { 1, 5 }
-}
-
--- Naughty config
------------------------------------------------------------------------------------------------------------------------
-theme.naughty_preset = {}
-
-theme.naughty_preset.normal = {
-	timeout      = 5,
-	margin       = 12,
-	icon_size    = 80,
-	font         = theme.font,
-	bg           = theme.color.wibox,
-	fg           = theme.color.text,
-	height       = 102,
-	width        = 480,
-	border_width = 2,
-	border_color = theme.color.wibox
-}
-
-theme.naughty_preset.critical = {
-	timeout      = 15,
-	margin       = 12,
-	icon_size    = 80,
-	font         = theme.font,
-	bg           = theme.color.wibox,
-	fg           = theme.color.text,
-	border_width = 2,
-	border_color = theme.color.main
+	awesome  = theme.path .. "/common/awesome.svg",
 }
 
 -- Service utils config
 -----------------------------------------------------------------------------------------------------------------------
 theme.service = {}
 
+-- Window control mode appearance
+--------------------------------------------------------------------------------
 theme.service.navigator = {
 	border_width = 0,
 	gradstep     = 60,
 	marksize     = { width = 160, height = 80, r = 20 },
 	linegap      = 32,
-	titlefont    = theme.cf_navigator_title,
-	font         = theme.cf_navigator_main,
+	titlefont    = theme.cairo_fonts.navigator.title,
+	font         = theme.cairo_fonts.navigator.main,
 	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
 	                 fbg1 = theme.color.main .. "40", fbg2 = theme.color.main .. "20",
 	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
 }
 
+-- Desktop file parser
+--------------------------------------------------------------------------------
+theme.service.dfparser = {
+	desktop_file_dirs = {
+		'/usr/share/applications/',
+		'/usr/local/share/applications/',
+		'~/.local/share/applications',
+	},
+	icons = {
+		-- df_icon       = "/usr/share/icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
+		-- theme         = "/usr/share/icons/ACYLS",
+		custom_only   = false,
+		scalable_only = false
+	}
+}
+
+
 -- Menu config
 -----------------------------------------------------------------------------------------------------------------------
 theme.menu = {
 	border_width = 4,
-	screen_gap   = theme.useless_gap_width + theme.global_border_width,
+	screen_gap   = theme.useless_gap + theme.border_width,
 	height       = 32,
-	width        = 300,
+	width        = 250,
 	icon_margin  = { 8, 8, 8, 8 },
 	ricon_margin = { 9, 9, 9, 9 },
-	font         = theme.font,
+	font         = theme.fonts.menu,
+	keytip       = { geometry = { width = 400, height = 460 } },
+	hide_timeout = 1,
 	submenu_icon = theme.path .. "/common/submenu.svg"
 }
 
@@ -256,172 +134,84 @@ theme.menu.color = {
 	submenu_icon = theme.color.icon
 }
 
--- Titlebar
------------------------------------------------------------------------------------------------------------------------
-theme.titlebar = {
-	size          = 8,
-	position      = "top",
-	font          = theme.font_titlebar,
-	icon          = { size = 30, gap = 10 },
-	border_margin = { 0, 0, 0, 4 },
-	--color         = theme.color
-	color         = { text = theme.color.text, main = theme.color.main, gray = theme.color.gray,
-	                  wibox = theme.color.wibox }
-}
 
 -- Gauge style
 -----------------------------------------------------------------------------------------------------------------------
-theme.gauge = {}
+theme.gauge = { tag = {}, task = {}}
 
--- Audio
+-- Separator
 ------------------------------------------------------------
-theme.gauge.blueaudio = {
-	width   = 75,
-	dash    = { bar = { num = 5, width = 4 } },
-	dmargin = { 10, 0, 2, 2 },
-	icon    = theme.path .. "/widget/headphones.svg",
-}
-
-theme.gauge.blueaudio.color = {
-	icon = theme.color.icon,
-	mute = theme.color.urgent
-}
-
--- Progressbar
-------------------------------------------------------------
-theme.gauge.progressbar = {
-	color = theme.color
-}
-
--- Volume controll indicator
-------------------------------------------------------------
-theme.gauge.dashcontrol = {
-	bar   = { width = 5, num = 6 },
-	color = theme.color
-}
-
--- Dotcount
-------------------------------------------------------------
-theme.gauge.dotcount = {
-	border_gap_v = 6,
-	column_num   = { 3, 5 },  -- { min, max }
-	row_num      = 3,
-	dot_size     = 5,
-	dot_gap_h    = 5,
-	color        = theme.color
-}
-
--- Doublebar
-------------------------------------------------------------
-theme.gauge.doublebar = {
-	line  = { width = 4, gap = 5 },
-	v_gap = 8,
-	color = theme.color
-}
-
--- Icon indicator
---------------------------------------------------------------
-theme.gauge.gicon = {
-	icon  = theme.path .. "/widget/fav.svg",
-	color = theme.color
-}
-
--- Monitor
---------------------------------------------------------------
-theme.gauge.doublemonitor = {
-	width    = 90,
-	line     = { v_gap = 6 },
-	dmargin  = { 10, 0, 0, 0 },
-	icon     = theme.path .. "/widget/fav.svg",
-	color    = theme.color
+theme.gauge.separator = {
+	marginv = { 2, 2, 4, 4 },
+	marginh = { 6, 6, 3, 3 },
+	color  = theme.color
 }
 
 -- Tag
 ------------------------------------------------------------
-theme.gauge.bluetag = {
+theme.gauge.tag.blue = {
 	width    = 103,
-	font     = theme.cf_tag,
+	font     = theme.cairo_fonts.tag,
 	point    = { width = 80, height = 3, gap = 27, dx = 5 },
 	text_gap = 20,
 	color    = theme.color
 }
 
--- Task (the same widget as tag)
+-- Task
 ------------------------------------------------------------
-theme.gauge.bluetask = {
+theme.gauge.task.blue = {
 	width    = 80,
 	show_min = true,
-	font     = theme.cf_tag,
+	font     = theme.cairo_fonts.tag,
 	point    = { width = 70, height = 3, gap = 27, dx = 5 },
 	text_gap = 20,
 	color    = theme.color
 }
 
--- Separator
+-- Dotcount
 ------------------------------------------------------------
-theme.gauge.separator = {
-	color  = theme.color
+theme.gauge.dotcount = {
+	column_num   = { 3, 5 }, -- { min, max }
+	row_num      = 3,
+	dot_size     = 5,
+	dot_gap_h    = 4,
+	color        = theme.color
 }
+
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 theme.widget = {}
 
--- Widgets placement
---------------------------------------------------------------------------------
-theme.widget.margin = {
-	single_sep  = { 0, 0, 3, 3 },
-	taglist     = { 3, 0, 0, 0 },
-	tasklist    = { 3, 0, 0, 3 },
-	kbindicator = { 10, 10, 4, 4 },
-	volume      = { 9, 9, 5, 5 },
-	cpumem      = { 10, 10, 5, 5 },
-	net         = { 10, 10, 5, 5 },
-	bat         = { 9, 9, 5, 5 },
-	mail        = { 10, 10, 4, 4 },
+-- individual margins for palnel widgets
+------------------------------------------------------------
+theme.widget.wrapper = {
 	layoutbox   = { 10, 10, 6, 6 },
-	tray        = { 9, 9, 6, 6 },
-	textclock   = { 12, 12, 0, 0 }
+	mainmenu    = { 4, 4, 3, 3 },
+	textclock   = { 12, 12, 0, 0 },
+	tray        = { 12, 12, 7, 7 },
 }
 
--- Widgets
---------------------------------------------------------------------------------
-
--- Upgrades
+-- Textclock
 ------------------------------------------------------------
-theme.widget.upgrades = {
-	icon        = theme.path .. "/widget/fav.svg",
-	notify_icon = theme.path .. "/widget/upgrades.svg",
-	color       = theme.color
+theme.widget.textclock = {
+	font  = theme.fonts.clock,
+	color = { text = theme.color.icon }
 }
 
--- Pulseaudio volume control
+-- Minitray
 ------------------------------------------------------------
-theme.widget.pulse = {
-	notify_icon = theme.path .. "/widget/audio.svg"
+theme.widget.minitray = {
+	border_width = 0,
+	geometry     = { height = 40 },
+	screen_gap   = 2 * theme.useless_gap,
+	color        = { wibox = theme.color.wibox, border = theme.color.wibox },
+	set_position = function()
+		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
+		         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+	end,
 }
 
--- Mail
-------------------------------------------------------------
-theme.widget.mail = {
-	icon        = theme.path .. "/widget/mail.svg",
-	notify_icon = theme.path .. "/widget/mail.svg",
-	color       = theme.color,
-}
-
--- Keyboard
-------------------------------------------------------------
-theme.widget.keyboard = {
-	icon         = theme.path .. "/widget/keyboard.svg",
-	micon        = theme.icon,
-	layout_color = { theme.color.icon, theme.color.main }
-}
-
-theme.widget.keyboard.menu = {
-	width        = 180,
-	color        = { right_icon = theme.color.icon },
-	nohide       = true
-}
 
 -- Layoutbox
 ------------------------------------------------------------
@@ -434,22 +224,22 @@ theme.widget.layoutbox.icon = {
 	floating          = theme.path .. "/layouts/floating.svg",
 	max               = theme.path .. "/layouts/max.svg",
 	fullscreen        = theme.path .. "/layouts/fullscreen.svg",
-	uselesstilebottom = theme.path .. "/layouts/tilebottom.svg",
-	uselesstileleft   = theme.path .. "/layouts/tileleft.svg",
-	uselesstile       = theme.path .. "/layouts/tile.svg",
-	uselesstiletop    = theme.path .. "/layouts/tiletop.svg",
-	uselessfair       = theme.path .. "/layouts/fair.svg",
+	tilebottom        = theme.path .. "/layouts/tilebottom.svg",
+	tileleft          = theme.path .. "/layouts/tileleft.svg",
+	tile              = theme.path .. "/layouts/tile.svg",
+	tiletop           = theme.path .. "/layouts/tiletop.svg",
+	fairv             = theme.path .. "/layouts/fair.svg",
 	grid              = theme.path .. "/layouts/grid.svg",
 	usermap           = theme.path .. "/layouts/map.svg",
 	unknown           = theme.path .. "/layouts/unknown.svg",
 }
 
 theme.widget.layoutbox.menu = {
-	icon_margin = { 9, 12, 9, 9 },
-	width       = 260,
-	auto_hotkey = true,
-	nohide      = false,
-	color =     { right_icon = theme.color.icon, left_icon = theme.color.icon }
+	icon_margin  = { 8, 12, 8, 8 },
+	width        = 260,
+	auto_hotkey  = true,
+	nohide       = false,
+	color        = { right_icon = theme.color.icon, left_icon = theme.color.icon }
 }
 
 theme.widget.layoutbox.name_alias = {
@@ -458,11 +248,11 @@ theme.widget.layoutbox.name_alias = {
 	max               = "Maximized",
 	grid              = "Grid",
 	usermap           = "User Map",
-	uselesstile       = "Right Tile",
-	uselessfair       = "Fair Tile",
-	uselesstileleft   = "Left Tile",
-	uselesstiletop    = "Top Tile",
-	uselesstilebottom = "Bottom Tile",
+	tile              = "Right Tile",
+	fairv             = "Fair Tile",
+	tileleft          = "Left Tile",
+	tiletop           = "Top Tile",
+	tilebottom        = "Bottom Tile",
 }
 
 -- Tasklist
@@ -470,16 +260,16 @@ theme.widget.layoutbox.name_alias = {
 theme.widget.tasklist = {
 	width       = 70,
 	char_digit  = 5,
-	task        = theme.gauge.bluetask
+	task        = theme.gauge.task.blue
 }
 
 -- main
 theme.widget.tasklist.winmenu = {
 	micon          = theme.icon,
-	titleline      = { font = theme.font_title, height = 30 },
+	titleline      = { font = theme.fonts.title, height = 30 },
 	menu           = { width = 240, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
 	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
-	state_iconsize = { 18, 18 },
+	state_iconsize = { width = 18, height = 18 },
 	layout_icon    = theme.widget.layoutbox.icon,
 	color          = theme.color
 }
@@ -504,49 +294,12 @@ theme.widget.tasklist.winmenu.icon = {
 
 -- task aliases
 theme.widget.tasklist.appnames = {}
-theme.widget.tasklist.appnames["Exaile"              ] = "EXAILE"
-theme.widget.tasklist.appnames["Smplayer"            ] = "SMPL"
 theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
 theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
-theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"
-theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GIMP"
-theme.widget.tasklist.appnames["Goldendict"          ] = "GDIC"
-theme.widget.tasklist.appnames["Easytag"             ] = "ETAG"
-theme.widget.tasklist.appnames["Mcomix"              ] = "COMIX"
-theme.widget.tasklist.appnames["Claws-mail"          ] = "CMAIL"
-theme.widget.tasklist.appnames["URxvt"               ] = "RXVT"
-theme.widget.tasklist.appnames["VirtualBox"          ] = "VBOX"
-theme.widget.tasklist.appnames["Keepassx"            ] = "KPASS"
-
--- Minitray
-------------------------------------------------------------
-theme.widget.minitray = {
-	border_width = 0,
-	geometry     = { height = 40 },
-	screen_pos   = { { x = 1800, y = 1110 } },
-	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	color        = { wibox = theme.color.wibox, border = theme.color.wibox }
-}
-
--- Textclock
-------------------------------------------------------------
-theme.widget.textclock = {
-	font  = theme.font_clock,
-	color = { text = theme.color.icon }
-}
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
 theme.float = {}
-
--- Tooltip
-------------------------------------------------------------
-theme.float.tooltip = {
-	margin       = { 6, 6, 4, 4 },
-	timeout      = 0,
-	border_width = 2,
-	color        = theme.color
-}
 
 -- Application runner
 ------------------------------------------------------------
@@ -558,37 +311,11 @@ theme.float.apprunner = {
 	title_height  = 48,
 	prompt_height = 35,
 	title_icon    = theme.path .. "/widget/search.svg",
-	--icon_style    = { icons = { custom_only = true, scalable_only = true } },
 	icon_style    = { wm_name = "awesome" },
 	border_width  = 0,
-	name_font     = theme.font_title,
-	comment_font  = theme.font,
+	name_font     = theme.fonts.title,
+	comment_font  = theme.fonts.main,
 	color         = theme.color
-}
-
--- Quick launcher
-------------------------------------------------------------
-theme.float.qlaunch = {
-	geometry      = { width = 1400, height = 170 },
-	border_margin = { 5, 5, 12, 15 },
-	border_width  = 0,
-	notify_icon   = theme.icon.warning,
-	appline       = { iwidth = 140, im = { 5, 5, 0, 0 }, igap = { 0, 0, 5, 15 }, lheight = 25 },
-	state         = { gap = 5, radius = 5, size = 10,  height = 14 },
-	df_icon       = homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
-	no_icon       = homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
-	label_font    = theme.font_title,
-	color         = theme.color,
-}
-
--- Prefix hotkeys tip
-------------------------------------------------------------
-theme.float.prekey = {
-	notify_icon     = theme.icon.warning,
-	geometry        = { x = (wa.width - 220) / 2, y = wa.y + theme.useless_gap_width, width = 220, height = 40 },
-	label_font      = theme.font_keytip,
-	border_width    = 0,
-	color           = theme.color,
 }
 
 -- Application switcher
@@ -601,12 +328,10 @@ theme.float.appswitcher = {
 	border_margin  = { 10, 10, 0, 10 },
 	preview_margin = { 15, 15, 15, 15 },
 	preview_format = 16 / 10,
-	title_font     = theme.font_title,
-	--icon_style     = { icons = { custom_only = true, scalable_only = true } },
-	-- icon_style     = { icons = { theme = os.getenv("HOME") .. "/.config/awesome/icons" } },
+	title_font     = theme.fonts.title,
 	border_width   = 0,
 	update_timeout = 1 / 12,
-	font           = theme.cf_appswitcher,
+	font           = theme.cairo_fonts.appswitcher,
 	color          = theme.color
 }
 
@@ -618,60 +343,28 @@ theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "
                                     "F1",  "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
                                     "F11", "F12" }
 
+
 -- Hotkeys helper
 ------------------------------------------------------------
 theme.float.hotkeys = {
-	geometry      = { width = 1540, height = 1000 },
-	border_margin = { 0, 0, 20, 20 },
-	sep_margin    = { 19, 29, 10, 10 },
+	geometry      = { width = wa.width * 0.9, height = wa.height * 0.9 },
+	border_margin = { 20, 20, 10, 10 },
 	border_width  = 0,
-	colnum        = 2,
-	keyf_width    = 300,
-	font          = theme.font,
-	keysfont      = theme.font_title,
-	titlefont     = theme.font_helper_title,
+	is_align      = true,
+	font          = theme.fonts.hotkeys.main,
+	keyfont       = theme.fonts.hotkeys.key,
+	titlefont     = theme.fonts.hotkeys.title,
 	color         = theme.color
 }
 
--- Exaile music player
+-- Tooltip
 ------------------------------------------------------------
-local exaile_size = { width = 520, height = 150 }
-theme.float.exaile = {
-	geometry     = exaile_size,
-	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = { { x = 1400, y = wa.y + wa.height - theme.useless_gap_width - exaile_size.height } },
-	titlefont    = theme.font_exaile_main,
-	artistfont   = theme.font_exaile_main,
-	timefont     = theme.font_exaile_time,
-	border_width = 0,
-	timeout      = 1,
+theme.float.tooltip = {
+	margin       = { 6, 6, 4, 4 },
+	timeout      = 0,
+	font         = theme.fonts.tooltip,
+	border_width = 2,
 	color        = theme.color
-}
-
-theme.float.exaile.icon = {
-	cover   = theme.path .. "/widget/music.svg",
-	next_tr = theme.path .. "/common/player_control/next.svg",
-	prev_tr = theme.path .. "/common/player_control/previous.svg",
-	play    = theme.path .. "/common/player_control/play.svg",
-	pause   = theme.path .. "/common/player_control/pause.svg"
-}
-
--- Notify
-------------------------------------------------------------
-local notify_size = { width = 484, height = 106 }
-theme.float.notify = {
-	geometry     = notify_size,
-	screen_gap   = theme.useless_gap_width + theme.global_border_width,
-	screen_pos   = {{ x = wa.x + wa.width - notify_size.width - theme.useless_gap_width, y = theme.useless_gap_width }},
-	font         = theme.font_notify,
-	border_width = 0,
-	color        = theme.color
-}
-
--- Brightness control
-------------------------------------------------------------
-theme.float.brightness = {
-	notify_icon = theme.path .. "/widget/brightness.svg"
 }
 
 -- Floating prompt
@@ -681,54 +374,51 @@ theme.float.prompt = {
 	color        = theme.color
 }
 
--- Top processes
+-- Notify
 ------------------------------------------------------------
-local top_size = { width = 460, height = 400 }
-theme.float.top = {
-	geometry      = top_size,
-	screen_gap    = theme.useless_gap_width + theme.global_border_width,
-	screen_pos    = { { x = wa.x + wa.width  - theme.useless_gap_width - top_size.width,
-	                    y = wa.y + wa.height - theme.useless_gap_width - top_size.height } },
-	border_margin = { 20, 20, 10, 0 },
-	button_margin = { 140, 140, 18, 18 },
-	title_height  = 40,
-	border_width  = 0,
-	bottom_height = 70,
-	title_font    = theme.font_title,
-	color         = theme.color
+theme.float.notify = {
+	geometry     = { width = 484, height = 106 },
+	screen_gap   = 2 * theme.useless_gap,
+	font         = theme.fonts.notify,
+	border_width = 0,
+	color        = theme.color,
+	set_position = function()
+		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width, y = mouse.screen.workarea.y }
+	end,
 }
 
--- Decoration elements
+-- Titlebar
 -----------------------------------------------------------------------------------------------------------------------
-theme.float.decoration = {}
-
-theme.float.decoration.button = {
-	color = theme.color
+theme.titlebar = {
+	size          = 8,
+	position      = "top",
+	font          = theme.fonts.titlebar,
+	icon          = { size = 30, gap = 10 },
+	border_margin = { 0, 0, 0, 4 },
+	color         = theme.color,
 }
 
-theme.float.decoration.button.color.text = "#cccccc"
-theme.float.decoration.button.color.shadow_down = theme.color.gray
-
-theme.float.decoration.field = {
-	color = theme.color
-}
-
--- Desktop file parser
+-- Default awesome theme vars
 -----------------------------------------------------------------------------------------------------------------------
-theme.float.dfparser = {}
 
-theme.float.dfparser.desktop_file_dirs = {
-	'/usr/share/applications/',
-	'/usr/local/share/applications/',
-	'~/.local/share/applications',
-}
+-- colors
+theme.bg_normal     = theme.color.wibox
+theme.bg_focus      = theme.color.main
+theme.bg_urgent     = theme.color.urgent
+theme.bg_minimize   = theme.color.gray
 
-theme.float.dfparser.icons = {
-	df_icon       = homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
-	theme         = homedir .. "/.icons/ACYLS",
-	custom_only   = false,
-	scalable_only = false
-}
+theme.fg_normal     = theme.color.text
+theme.fg_focus      = theme.color.highlight
+theme.fg_urgent     = theme.color.highlight
+theme.fg_minimize   = theme.color.highlight
 
+theme.border_normal = theme.color.wibox
+theme.border_focus  = theme.color.wibox
+theme.border_marked = theme.color.main
+
+-- font
+theme.font = theme.fonts.main
+
+-- End
 -----------------------------------------------------------------------------------------------------------------------
 return theme
