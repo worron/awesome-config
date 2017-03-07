@@ -33,16 +33,8 @@ env:init()
 
 -- Layouts setup
 -----------------------------------------------------------------------------------------------------------------------
-awful.layout.layouts = {
-	awful.layout.suit.floating,
-	awful.layout.suit.tile,
-	awful.layout.suit.tile.left,
-	awful.layout.suit.tile.bottom,
-	awful.layout.suit.tile.top,
-	awful.layout.suit.fair,
-	awful.layout.suit.max,
-	awful.layout.suit.max.fullscreen,
-}
+local layouts = require("colorless.layout-config") -- load file with tile layouts setup
+layouts:init()
 
 
 -- Main menu configuration
