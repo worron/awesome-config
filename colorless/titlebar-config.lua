@@ -28,8 +28,16 @@ local function title_buttons(c)
 end
 
 local function on_maximize(c)
-	local action = (c.maximized_vertical or c.maximized) and "cut_all" or "restore_all"
+	-- hide/show title bar
+	local is_max = c.maximized_vertical or c.maximized
+	local action = is_max and "cut_all" or "restore_all"
 	redtitle[action]({ c })
+
+	-- dirty size correction
+	local model = redtitle.get_model(c)
+	if model and not model.hidden then
+		c.height = c:geometry().height + (is_max and model.size or -model.size)
+	end
 end
 
 -- Connect titlebar building signal
