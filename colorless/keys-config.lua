@@ -210,7 +210,7 @@ function hotkeys:init(args)
 			{ description = "Exit", group = "Action" }
 		},
 		{
-			{}, "Escape", function() appswitcher:hide() end,
+			{}, "Escape", function() appswitcher:hide(true) end,
 			{ description = "Exit", group = "Action" }
 		},
 		{
