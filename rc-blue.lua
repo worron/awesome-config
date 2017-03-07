@@ -17,6 +17,8 @@ require("awful.autofocus")
 ------------------------------------------------------------
 local redflat = require("redflat")
 
+-- global module
+timestamp = require("redflat.timestamp")
 
 -- Error handling
 -----------------------------------------------------------------------------------------------------------------------
@@ -181,3 +183,12 @@ titlebar:init()
 -----------------------------------------------------------------------------------------------------------------------
 local signals = require("blue.signals-config") -- load file with signals configuration
 signals:init({ env = env })
+
+
+-- Autostart user applications
+-----------------------------------------------------------------------------------------------------------------------
+local autostart = require("blue.autostart-config") -- load file with autostart application list
+
+if timestamp.is_startup() then
+	autostart.run()
+end
