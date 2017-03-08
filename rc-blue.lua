@@ -86,7 +86,7 @@ textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat =
 local layoutbox = {}
 
 layoutbox.buttons = awful.util.table.join(
-	awful.button({ }, 1, function () awful.layout.inc( 1) end),
+	awful.button({ }, 1, function () mymenu.mainmenu:toggle() end),
 	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(mouse.screen.selected_tag) end),
 	awful.button({ }, 4, function () awful.layout.inc( 1) end),
 	awful.button({ }, 5, function () awful.layout.inc(-1) end)
@@ -144,7 +144,7 @@ awful.screen.connect_for_each_screen(
 			{ -- left widgets
 				layout = wibox.layout.fixed.horizontal,
 
-				env.wrapper(mymenu.widget, "mainmenu", mymenu.buttons),
+				env.wrapper(layoutbox[s], "layoutbox", layoutbox.buttons),
 				separator,
 				env.wrapper(taglist[s], "taglist"),
 				separator,
@@ -162,8 +162,6 @@ awful.screen.connect_for_each_screen(
 
 				separator,
 				env.wrapper(volume.widget, "volume", volume.buttons),
-				separator,
-				env.wrapper(layoutbox[s], "layoutbox", layoutbox.buttons),
 				separator,
 				env.wrapper(textclock.widget, "textclock"),
 				separator,

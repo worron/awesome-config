@@ -198,11 +198,10 @@ theme.widget = {}
 -- individual margins for palnel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
-	layoutbox   = { 10, 10, 6, 6 },
-	mainmenu    = { 4, 4, 3, 3 },
+	layoutbox   = { 14, 10, 6, 6 },
 	textclock   = { 12, 12, 0, 0 },
 	volume      = { 12, 12, 5, 5 },
-	tray        = { 12, 12, 7, 7 },
+	tray        = { 12, 14, 7, 7 },
 }
 
 -- Pulseaudio volume control
