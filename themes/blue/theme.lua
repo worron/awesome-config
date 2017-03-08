@@ -102,8 +102,8 @@ theme.service.dfparser = {
 		'~/.local/share/applications',
 	},
 	icons = {
-		-- df_icon       = "/usr/share/icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
-		-- theme         = "/usr/share/icons/ACYLS",
+		df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
+		theme         = theme.homedir .. "/.icons/ACYLS",
 		custom_only   = false,
 		scalable_only = false
 	}
@@ -117,7 +117,7 @@ theme.menu = {
 	screen_gap   = theme.useless_gap + theme.border_width,
 	height       = 32,
 	width        = 250,
-	icon_margin  = { 8, 8, 8, 8 },
+	icon_margin  = { 4, 7, 7, 8 },
 	ricon_margin = { 9, 9, 9, 9 },
 	font         = theme.fonts.menu,
 	keytip       = { geometry = { width = 400, height = 460 } },
