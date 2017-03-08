@@ -109,6 +109,12 @@ local volume_raise = function() redflat.widget.pulse:change_volume({ show_notify
 local volume_lower = function() redflat.widget.pulse:change_volume({ show_notify = true, down = true }) end
 local volume_mute  = function() redflat.widget.pulse:mute() end
 
+-- brightness functions
+local brightness = function(args)
+	-- redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight utility
+	redflat.float.brightness:change_with_gsd(args) -- use gnome settings deamon
+end
+
 -- Build hotkeys depended on config parameters
 -----------------------------------------------------------------------------------------------------------------------
 function hotkeys:init(args)
@@ -340,6 +346,15 @@ function hotkeys:init(args)
 		{
 			{ env.mod, "Shift" }, "q", nil, function() appswitcher:show({ filter = allscr, reverse = true }) end,
 			{ description = "Switch to previous through all tags", group = "Application switcher" }
+		},
+
+		{
+			{}, "XF86MonBrightnessUp", function() brightness({ step = 1 }) end,
+			{ description = "Increase brightness", group = "Brightness control" }
+		},
+		{
+			{}, "XF86MonBrightnessDown", function() brightness({ step = 1, down = true }) end,
+			{ description = "Reduce brightness", group = "Brightness control" }
 		},
 
 		{

@@ -210,6 +210,12 @@ theme.widget.pulse = {
 	notify_icon = theme.path .. "/widget/audio.svg"
 }
 
+-- Brightness control
+------------------------------------------------------------
+theme.widget.brightness = {
+	notify_icon = theme.path .. "/widget/brightness.svg"
+}
+
 -- Textclock
 ------------------------------------------------------------
 theme.widget.textclock = {
