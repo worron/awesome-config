@@ -161,6 +161,11 @@ awful.screen.connect_for_each_screen(
 )
 
 
+-- Active screen edges
+-----------------------------------------------------------------------------------------------------------------------
+local edges = require("blue.edges-config") -- load file with edges configuration
+edges:init()
+
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
 local hotkeys = require("blue.keys-config") -- load file with hotkeys configuration
