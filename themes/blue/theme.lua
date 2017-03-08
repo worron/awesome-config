@@ -104,8 +104,8 @@ theme.service.dfparser = {
 	icons = {
 		df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
 		theme         = theme.homedir .. "/.icons/ACYLS",
-		custom_only   = false,
-		scalable_only = false
+		custom_only   = true,
+		scalable_only = true
 	}
 }
 
@@ -178,6 +178,18 @@ theme.gauge.dotcount = {
 	color        = theme.color
 }
 
+-- Volume indicator
+------------------------------------------------------------
+theme.gauge.audio = {}
+
+theme.gauge.audio.blue = {
+	width   = 75,
+	dash    = { bar = { num = 5, width = 4 }, color = theme.color },
+	dmargin = { 10, 0, 2, 2 },
+	icon    = theme.path .. "/widget/headphones.svg",
+	color = { icon = theme.color.icon, mute = theme.color.urgent },
+}
+
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
@@ -189,7 +201,14 @@ theme.widget.wrapper = {
 	layoutbox   = { 10, 10, 6, 6 },
 	mainmenu    = { 4, 4, 3, 3 },
 	textclock   = { 12, 12, 0, 0 },
+	volume      = { 12, 12, 5, 5 },
 	tray        = { 12, 12, 7, 7 },
+}
+
+-- Pulseaudio volume control
+------------------------------------------------------------
+theme.widget.pulse = {
+	notify_icon = theme.path .. "/widget/audio.svg"
 }
 
 -- Textclock
@@ -311,7 +330,6 @@ theme.float.apprunner = {
 	title_height  = 48,
 	prompt_height = 35,
 	title_icon    = theme.path .. "/widget/search.svg",
-	icon_style    = { wm_name = "awesome" },
 	border_width  = 0,
 	name_font     = theme.fonts.title,
 	comment_font  = theme.fonts.main,
@@ -360,7 +378,7 @@ theme.float.hotkeys = {
 -- Tooltip
 ------------------------------------------------------------
 theme.float.tooltip = {
-	margin       = { 6, 6, 4, 4 },
+	margin       = { 6, 6, 3, 3 },
 	timeout      = 0,
 	font         = theme.fonts.tooltip,
 	border_width = 2,
@@ -382,6 +400,7 @@ theme.float.notify = {
 	font         = theme.fonts.notify,
 	border_width = 0,
 	color        = theme.color,
+	progressbar  = { color = theme.color },
 	set_position = function()
 		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width, y = mouse.screen.workarea.y }
 	end,

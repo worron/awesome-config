@@ -311,7 +311,6 @@ theme.float.apprunner = {
 	title_height  = 48,
 	prompt_height = 35,
 	title_icon    = theme.path .. "/widget/search.svg",
-	icon_style    = { wm_name = "awesome" },
 	border_width  = 0,
 	name_font     = theme.fonts.title,
 	comment_font  = theme.fonts.main,

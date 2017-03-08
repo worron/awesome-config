@@ -101,6 +101,17 @@ tray.buttons = awful.util.table.join(
 	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)
 )
 
+-- PA volume control
+--------------------------------------------------------------------------------
+local volume = {}
+volume.widget = redflat.widget.pulse(nil, { widget = redflat.gauge.audio.blue.new })
+
+volume.buttons = awful.util.table.join(
+	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
+	awful.button({}, 5, function() redflat.widget.pulse:change_volume({ down = true }) end),
+	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end)
+)
+
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -149,6 +160,8 @@ awful.screen.connect_for_each_screen(
 			{ -- right widgets
 				layout = wibox.layout.fixed.horizontal,
 
+				separator,
+				env.wrapper(volume.widget, "volume", volume.buttons),
 				separator,
 				env.wrapper(layoutbox[s], "layoutbox", layoutbox.buttons),
 				separator,

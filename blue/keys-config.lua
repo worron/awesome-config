@@ -25,6 +25,14 @@ local redtitle = redflat.titlebar
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
+
+-- change window focus by history
+local function focus_to_previous()
+	awful.client.focus.history.previous()
+	if client.focus then client.focus:raise() end
+end
+
+-- change window focus by direction
 local focus_switch_byd = function(dir)
 	return function()
 		awful.client.focus.bydirection(dir)
@@ -32,6 +40,7 @@ local focus_switch_byd = function(dir)
 	end
 end
 
+-- minimize and restore windows
 local function minimize_all()
 	for _, c in ipairs(client.get()) do
 		if current(c, mouse.screen) then c.minimized = true end
@@ -50,22 +59,19 @@ local function restore_all()
 	end
 end
 
+local function restore_client()
+	local c = awful.client.restore()
+	if c then client.focus = c; c:raise() end
+end
+
+-- close window
 local function kill_all()
 	for _, c in ipairs(client.get()) do
 		if current(c, mouse.screen) and not c.sticky then c:kill() end
 	end
 end
 
-local function focus_to_previous()
-	awful.client.focus.history.previous()
-	if client.focus then client.focus:raise() end
-end
-
-local function restore_client()
-	local c = awful.client.restore()
-	if c then client.focus = c; c:raise() end
-end
-
+-- new clients placement
 local function toggle_placement(env)
 	env.set_slave = not env.set_slave
 	redflat.float.notify:show({
@@ -74,6 +80,7 @@ local function toggle_placement(env)
 	})
 end
 
+-- numeric keys function builders
 local function tag_numkey(i, mod, action)
 	return awful.key(
 		mod, "#" .. i + 9,
@@ -97,6 +104,10 @@ local function client_numkey(i, mod, action)
 	)
 end
 
+-- volume functions
+local volume_raise = function() redflat.widget.pulse:change_volume({ show_notify = true })              end
+local volume_lower = function() redflat.widget.pulse:change_volume({ show_notify = true, down = true }) end
+local volume_mute  = function() redflat.widget.pulse:mute() end
 
 -- Build hotkeys depended on config parameters
 -----------------------------------------------------------------------------------------------------------------------
@@ -202,8 +213,16 @@ function hotkeys:init(args)
 			{ description = "Select next app", group = "Navigation" }
 		},
 		{
+			{ env.mod, "Shift" }, "a", function() appswitcher:switch() end,
+			{ group = "Navigation" }
+		},
+		{
 			{ env.mod }, "q", function() appswitcher:switch({ reverse = true }) end,
 			{ description = "Select previous app", group = "Navigation" }
+		},
+		{
+			{ env.mod, "Shift" }, "q", function() appswitcher:switch({ reverse = true }) end,
+			{ group = "Navigation" }
 		},
 		{
 			{ env.mod }, "Super_L", function() appswitcher:hide() end,
@@ -338,6 +357,19 @@ function hotkeys:init(args)
 		{
 			{ env.mod, "Control", "Shift" }, "t", function() redtitle.switch_all() end,
 			{ description = "Switch titlebar view for all clients", group = "Titlebar" }
+		},
+
+		{
+			{}, "XF86AudioRaiseVolume", volume_raise,
+			{ description = "Increase volume", group = "Volume control" }
+		},
+		{
+			{}, "XF86AudioLowerVolume", volume_lower,
+			{ description = "Reduce volume", group = "Volume control" }
+		},
+		{
+			{ env.mod }, "v", volume_mute,
+			{ description = "Toggle mute", group = "Volume control" }
 		},
 
 		{
