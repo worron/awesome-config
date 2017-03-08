@@ -112,6 +112,17 @@ volume.buttons = awful.util.table.join(
 	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end)
 )
 
+-- Keyboard layout indicator
+--------------------------------------------------------------------------------
+local kbindicator = {}
+kbindicator.widget = redflat.widget.keyboard({ layouts = { "English", "Russian" } })
+
+kbindicator.buttons = awful.util.table.join(
+	awful.button({}, 1, function () redflat.widget.keyboard:toggle_menu() end),
+	awful.button({}, 4, function () redflat.widget.keyboard:toggle()      end),
+	awful.button({}, 5, function () redflat.widget.keyboard:toggle(true)  end)
+)
+
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -160,6 +171,8 @@ awful.screen.connect_for_each_screen(
 			{ -- right widgets
 				layout = wibox.layout.fixed.horizontal,
 
+				separator,
+				env.wrapper(kbindicator.widget, "keyboard", kbindicator.buttons),
 				separator,
 				env.wrapper(volume.widget, "volume", volume.buttons),
 				separator,

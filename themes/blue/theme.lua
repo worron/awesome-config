@@ -201,6 +201,7 @@ theme.widget.wrapper = {
 	layoutbox   = { 14, 10, 6, 6 },
 	textclock   = { 12, 12, 0, 0 },
 	volume      = { 12, 12, 5, 5 },
+	keyboard    = { 12, 12, 4, 4 },
 	tray        = { 12, 14, 7, 7 },
 }
 
@@ -222,6 +223,21 @@ theme.widget.textclock = {
 	font  = theme.fonts.clock,
 	color = { text = theme.color.icon }
 }
+
+-- Keyboard layout indicator
+------------------------------------------------------------
+theme.widget.keyboard = {
+	icon         = theme.path .. "/widget/keyboard.svg",
+	micon        = theme.icon,
+	layout_color = { theme.color.icon, theme.color.main }
+}
+
+theme.widget.keyboard.menu = {
+	width        = 180,
+	color        = { right_icon = theme.color.icon },
+	nohide       = true
+}
+
 
 -- Minitray
 ------------------------------------------------------------
