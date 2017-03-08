@@ -43,26 +43,26 @@ theme.wallpaper = theme.path .. "/wallpaper/primary.png" -- wallpaper file
 -- Fonts
 ------------------------------------------------------------
 theme.fonts = {
-	main     = "sans 12",      -- main font
-	menu     = "sans 12",      -- main menu font
-	tooltip  = "sans 12",      -- tooltip font
-	notify   = "sans bold 14", -- redflat notify popup font
-	clock    = "sans bold 12", -- textclock widget font
-	title    = "sans bold 12", -- widget titles font
-	titlebar = "sans bold 12", -- client titlebar font
+	main     = "Roboto 13",      -- main font
+	menu     = "Roboto 13",      -- main menu font
+	tooltip  = "Roboto 13",      -- tooltip font
+	notify   = "Play bold 14",   -- redflat notify popup font
+	clock    = "Play bold 12",   -- textclock widget font
+	title    = "Roboto bold 13", -- widget titles font
+	titlebar = "Roboto bold 13", -- client titlebar font
 	hotkeys = {
-		main  = "sans 12",      -- hotkeys helper main font
-		key   = "mono 12",      -- hotkeys helper key font (use monospace for align)
-		title = "sans bold 14", -- hotkeys helper group title font
+		main  = "Roboto 14",             -- hotkeys helper main font
+		key   = "Iosevka Term Light 14", -- hotkeys helper key font (use monospace for align)
+		title = "Roboto bold 16",        -- hotkeys helper group title font
 	},
 }
 
 theme.cairo_fonts = {
-	tag         = { font = "Sans", size = 16, face = 1 }, -- tag widget font
-	appswitcher = { font = "Sans", size = 22, face = 1 }, -- appswitcher widget font
+	tag         = { font = "Play", size = 16, face = 1 }, -- tag widget font
+	appswitcher = { font = "Play", size = 20, face = 1 }, -- appswitcher widget font
 	navigator   = {
-		title = { font = "Sans", size = 28, face = 1, slant = 0 }, -- window navigation title font
-		main  = { font = "Sans", size = 22, face = 1, slant = 0 }  -- window navigation  main font
+		title = { font = "Play", size = 28, face = 1, slant = 0 }, -- window navigation title font
+		main  = { font = "Play", size = 22, face = 1, slant = 0 }  -- window navigation  main font
 	},
 }
 

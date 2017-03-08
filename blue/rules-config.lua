@@ -30,6 +30,10 @@ rules.titlebar_exeptions = {
 	class = { "Cavalcade", "Clipflap", "Steam" }
 }
 
+rules.maximized = {
+	class = { "Emacs24" }
+}
+
 -- Build rule table
 -----------------------------------------------------------------------------------------------------------------------
 function rules:init(args)
@@ -51,7 +55,8 @@ function rules:init(args)
 			properties = { floating = true }
 		},
 		{
-			properties = { floating = true }
+			rule_any   = self.maximized,
+			properties = { maximized = true }
 		},
 		{
 			rule_any   = { type = { "normal", "dialog" }},
