@@ -75,6 +75,15 @@ theme.icon = {
 	awesome  = theme.path .. "/common/awesome.svg",
 }
 
+-- Widget icons
+--------------------------------------------------------------------------------
+theme.icon.widget = {
+	battery  = theme.path .. "/widget/battery.svg",
+	wireless = theme.path .. "/widget/wireless.svg",
+	monitor  = theme.path .. "/widget/monitor.svg",
+}
+
+
 -- Service utils config
 -----------------------------------------------------------------------------------------------------------------------
 theme.service = {}
@@ -147,6 +156,21 @@ theme.gauge.separator = {
 	color  = theme.color
 }
 
+-- Icon indicator
+------------------------------------------------------------
+theme.gauge.gicon = {
+	color  = theme.color
+}
+
+-- Monitor
+--------------------------------------------------------------
+theme.gauge.doublemonitor = {
+	width    = 90,
+	line     = { v_gap = 6 },
+	dmargin  = { 10, 0, 0, 0 },
+	color    = theme.color
+}
+
 -- Tag
 ------------------------------------------------------------
 theme.gauge.tag.blue = {
@@ -201,9 +225,12 @@ theme.widget.wrapper = {
 	layoutbox   = { 14, 10, 6, 6 },
 	textclock   = { 12, 12, 0, 0 },
 	volume      = { 12, 12, 5, 5 },
+	network     = { 12, 12, 5, 5 },
+	cpuram      = { 12, 12, 5, 5 },
 	keyboard    = { 12, 12, 4, 4 },
 	mail        = { 12, 12, 4, 4 },
-	tray        = { 12, 14, 7, 7 },
+	battery     = { 8, 10, 6, 6 },
+	tray        = { 12, 12, 7, 7 },
 }
 
 -- Pulseaudio volume control

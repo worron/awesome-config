@@ -139,6 +139,51 @@ mail.buttons = awful.util.table.join(
 	awful.button({ }, 2, function () redflat.widget.mail:update() end)
 )
 
+-- System resource monitoring widgets
+--------------------------------------------------------------------------------
+local sysmon = { widget = {}, buttons = {}, icon = {} }
+
+-- icons
+sysmon.icon.battery = redflat.util.check(beautiful, "icon.widget.battery")
+sysmon.icon.network = redflat.util.check(beautiful, "icon.widget.wireless")
+sysmon.icon.cpuram = redflat.util.check(beautiful, "icon.widget.monitor")
+
+-- battery
+sysmon.widget.battery = redflat.widget.sysmon(
+	{ func = redflat.system.pformatted.bat(25), arg = "BAT1" },
+	{ timeout = 60, widget = redflat.gauge.gicon, monitor = { is_vertical = true, icon = sysmon.icon.battery } }
+)
+
+-- network speed
+sysmon.widget.network = redflat.widget.net(
+	{
+		interface = "wlp3s0",
+		alert = { up = 4 * 1024^2, down = 4 * 1024^2 },
+		speed = { up = 5 * 1024^2, down = 5 * 1024^2 },
+		autoscale = false
+	},
+	{ timeout = 2, widget = redflat.gauge.doublemonitor, monitor = { icon = sysmon.icon.network } }
+)
+
+-- CPU and RAM usage
+local cpu_storage = { cpu_total = {}, cpu_active = {} }
+
+local cpuram_func = function()
+	local cpu_usage = redflat.system.cpu_usage(cpu_storage).total
+	local mem_usage = redflat.system.memory_info().usep
+
+	return {
+		text = "CPU: " .. cpu_usage .. "%  " .. "RAM: " .. mem_usage .. "%",
+		value = { cpu_usage / 100,  mem_usage / 100},
+		alert = cpu_usage > 80 or mem_usage > 70
+	}
+end
+
+sysmon.widget.cpuram = redflat.widget.sysmon(
+	{ func = cpuram_func },
+	{ timeout = 2,  widget = redflat.gauge.doublemonitor, monitor = { icon = sysmon.icon.cpuram } }
+)
+
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -192,11 +237,17 @@ awful.screen.connect_for_each_screen(
 				separator,
 				env.wrapper(kbindicator.widget, "keyboard", kbindicator.buttons),
 				separator,
+				env.wrapper(sysmon.widget.network, "network"),
+				separator,
+				env.wrapper(sysmon.widget.cpuram, "cpuram"),
+				separator,
 				env.wrapper(volume.widget, "volume", volume.buttons),
 				separator,
 				env.wrapper(textclock.widget, "textclock"),
 				separator,
 				env.wrapper(tray.widget, "tray", tray.buttons),
+				separator,
+				env.wrapper(sysmon.widget.battery, "battery"),
 			},
 		}
 	end
