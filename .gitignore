@@ -2,6 +2,6 @@
 # Wallpapers
 themes/*/wallpaper/
 # Private mail settings
-red/mail-config.lua
+*/mail-config.lua
 # Default config
 rc-back.lua

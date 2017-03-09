@@ -123,6 +123,22 @@ kbindicator.buttons = awful.util.table.join(
 	awful.button({}, 5, function () redflat.widget.keyboard:toggle(true)  end)
 )
 
+-- Mail widget
+--------------------------------------------------------------------------------
+-- safe load private mail settings
+local my_mails = {}
+pcall(function() my_mails = require("blue.mail-config") end)
+
+-- widget setup
+local mail = {}
+mail.widget = redflat.widget.mail({ maillist = my_mails })
+
+-- buttons
+mail.buttons = awful.util.table.join(
+	awful.button({ }, 1, function () awful.spawn.with_shell("claws-mail") end),
+	awful.button({ }, 2, function () redflat.widget.mail:update() end)
+)
+
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -171,6 +187,8 @@ awful.screen.connect_for_each_screen(
 			{ -- right widgets
 				layout = wibox.layout.fixed.horizontal,
 
+				separator,
+				env.wrapper(mail.widget, "mail", mail.buttons),
 				separator,
 				env.wrapper(kbindicator.widget, "keyboard", kbindicator.buttons),
 				separator,

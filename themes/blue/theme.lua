@@ -202,6 +202,7 @@ theme.widget.wrapper = {
 	textclock   = { 12, 12, 0, 0 },
 	volume      = { 12, 12, 5, 5 },
 	keyboard    = { 12, 12, 4, 4 },
+	mail        = { 12, 12, 4, 4 },
 	tray        = { 12, 14, 7, 7 },
 }
 
@@ -236,6 +237,14 @@ theme.widget.keyboard.menu = {
 	width        = 180,
 	color        = { right_icon = theme.color.icon },
 	nohide       = true
+}
+
+-- Mail
+------------------------------------------------------------
+theme.widget.mail = {
+	icon        = theme.path .. "/widget/mail.svg",
+	notify_icon = theme.path .. "/widget/mail.svg",
+	color       = theme.color,
 }
 
 
