@@ -38,7 +38,7 @@ theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
 theme.useless_gap         = 4  -- useless gap
 
-theme.wallpaper = theme.path .. "/wallpaper/primary.png" -- wallpaper file
+theme.wallpaper = theme.path .. "/wallpaper/custom.png" -- wallpaper file
 
 -- Fonts
 ------------------------------------------------------------
@@ -81,6 +81,106 @@ theme.icon.widget = {
 	battery  = theme.path .. "/widget/battery.svg",
 	wireless = theme.path .. "/widget/wireless.svg",
 	monitor  = theme.path .. "/widget/monitor.svg",
+}
+
+
+-- Desktop config
+-----------------------------------------------------------------------------------------------------------------------
+theme.desktop = { common = {} }
+
+-- Common
+--------------------------------------------------------------------------------
+theme.desktop.line_height = 18
+
+theme.desktop.color = {
+	main  = theme.color.main,
+	gray  = theme.color.gray_desktop or "#404040",
+	wibox = theme.color.bg .. "00"
+}
+
+-- Textbox
+------------------------------------------------------------
+theme.desktop.common.textbox = {
+	font = { font = "prototype", size = 24, face = 0 }
+}
+
+-- Dashbar
+------------------------------------------------------------
+theme.desktop.common.dashbar = {
+	bar = { width = 6, gap = 6 }
+}
+
+-- Barpack
+------------------------------------------------------------
+theme.desktop.common.barpack = {
+	label_style = { width = 80, draw = "by_width" },
+	text_style  = { width = 92, draw = "by_edges" },
+	line_height = theme.desktop.line_height,
+	text_gap    = 22,
+	label_gap   = 16,
+	color       = theme.desktop.color
+}
+
+-- Widgets
+--------------------------------------------------------------------------------
+
+-- Network speed
+------------------------------------------------------------
+theme.desktop.speedmeter = {
+	label            = { height = theme.desktop.line_height },
+	dashbar          = { bar = { width = 16, gap = 6 }, height = 6 },
+	chart            = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 },
+	barvalue_height  = 32,
+	fullchart_height = 80,
+	images           = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" },
+	image_gap        = 16,
+	color            = theme.desktop.color
+}
+
+-- CPU and memory
+------------------------------------------------------------
+theme.desktop.multim = {
+	corner       = { width = 34, corner = { height = 17, num = 10, line = 4 } },
+	state_height = 58,
+	prog_height  = 80,
+	image_gap    = 16,
+	image        = theme.path .. "/desktop/bstar.svg",
+	color        = theme.desktop.color
+}
+
+-- Disks
+------------------------------------------------------------
+theme.desktop.dashpack = {
+	color = theme.desktop.color
+}
+
+-- Thermal
+------------------------------------------------------------
+theme.desktop.sline = {
+	digit_num = 2,
+	lbox      = { draw = "by_width", width = 50 },
+	rbox      = { draw = "by_edges", width = 60 },
+	icon      = theme.path .. "/desktop/star.svg",
+	iwidth    = 142,
+	color     = theme.desktop.color
+}
+
+-- Widgets placement
+--------------------------------------------------------------------------------
+theme.desktop.grid = {
+	width  = { 520, 520, 520 },
+	height = { 180, 160, 160, 138, 18 },
+	edge   = { width = { 60, 60 }, height = { 40, 40 } }
+}
+
+theme.desktop.places = {
+	netspeed = { 1, 1 },
+	ssdspeed = { 2, 1 },
+	hddspeed = { 3, 1 },
+	cpumem   = { 1, 2 },
+	transm   = { 1, 3 },
+	disks    = { 1, 4 },
+	thermal  = { 1, 5 }
 }
 
 

@@ -257,11 +257,17 @@ awful.screen.connect_for_each_screen(
 	end
 )
 
+-- Desktop widgets
+-----------------------------------------------------------------------------------------------------------------------
+local desktop = require("blue.desktop-config") -- load file with desktop widgets configuration
+desktop:init({ env = env })
+
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
 local edges = require("blue.edges-config") -- load file with edges configuration
 edges:init()
+
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------

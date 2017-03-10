@@ -24,7 +24,8 @@ rules.floating_any = {
 	class = {
 		"Clipflap",
 	},
-	role = { "AlarmWindow", "pop-up", }
+	role = { "AlarmWindow", "pop-up", },
+	type = { "dialog" }
 }
 
 rules.titlebar_exeptions = {
