@@ -449,6 +449,25 @@ theme.float.prompt = {
 	color        = theme.color
 }
 
+-- Top processes
+------------------------------------------------------------
+theme.float.top = {
+	geometry      = { width = 460, height = 400 },
+	screen_gap    = 2 * theme.useless_gap,
+	border_margin = { 20, 20, 10, 0 },
+	button_margin = { 140, 140, 18, 18 },
+	title_height  = 40,
+	border_width  = 0,
+	bottom_height = 70,
+	title_font    = theme.fonts.title,
+	color         = theme.color,
+	set_position  = function()
+		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
+		         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+	end,
+}
+
+
 -- Notify
 ------------------------------------------------------------
 theme.float.notify = {

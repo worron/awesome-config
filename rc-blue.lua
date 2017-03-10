@@ -184,6 +184,10 @@ sysmon.widget.cpuram = redflat.widget.sysmon(
 	{ timeout = 2,  widget = redflat.gauge.doublemonitor, monitor = { icon = sysmon.icon.cpuram } }
 )
 
+sysmon.buttons.cpuram = awful.util.table.join(
+	awful.button({ }, 1, function() redflat.float.top:show("cpu") end)
+)
+
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
@@ -239,7 +243,7 @@ awful.screen.connect_for_each_screen(
 				separator,
 				env.wrapper(sysmon.widget.network, "network"),
 				separator,
-				env.wrapper(sysmon.widget.cpuram, "cpuram"),
+				env.wrapper(sysmon.widget.cpuram, "cpuram", sysmon.buttons.cpuram),
 				separator,
 				env.wrapper(volume.widget, "volume", volume.buttons),
 				separator,

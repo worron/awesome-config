@@ -314,6 +314,10 @@ function hotkeys:init(args)
 			{ description = "Show the prompt box", group = "Widgets" }
 		},
 		{
+			{ env.mod }, "x", function() redflat.float.top:show("cpu") end,
+			{ description = "Show the top process list", group = "Widgets" }
+		},
+		{
 			{ env.mod, "Control" }, "m", function() redflat.widget.mail:update() end,
 			{ description = "Check new mail", group = "Widgets" }
 		},
