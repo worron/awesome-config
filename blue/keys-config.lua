@@ -325,6 +325,10 @@ function hotkeys:init(args)
 			{ env.mod, "Control" }, "i", function() redflat.widget.minitray:toggle() end,
 			{ description = "Show minitray", group = "Widgets" }
 		},
+		{
+			{ env.mod, "Control" }, "u", function() redflat.widget.upgrades:update(true) end,
+			{ description = "Check available upgrades", group = "Widgets" }
+		},
 
 		{
 			{ env.mod }, "Escape", awful.tag.history.restore,

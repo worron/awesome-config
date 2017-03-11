@@ -366,6 +366,13 @@ theme.widget.keyboard.menu = {
 	nohide       = true
 }
 
+-- Upgrades
+------------------------------------------------------------
+theme.widget.upgrades = {
+	notify_icon = theme.path .. "/widget/upgrades.svg",
+	color       = theme.color
+}
+
 -- Mail
 ------------------------------------------------------------
 theme.widget.mail = {
