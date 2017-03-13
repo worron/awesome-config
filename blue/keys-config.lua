@@ -259,7 +259,7 @@ function hotkeys:init(args)
 			{ description = "Window control mode", group = "Main" }
 		},
 		{
-			{ env.mod }, "F3", function () toggle_placement(env) end,
+			{ env.mod }, "F5", function () toggle_placement(env) end,
 			{ description = "Switch master/slave window placement", group = "Main" }
 		},
 		{
@@ -328,6 +328,10 @@ function hotkeys:init(args)
 		{
 			{ env.mod, "Control" }, "u", function() redflat.widget.upgrades:update(true) end,
 			{ description = "Check available upgrades", group = "Widgets" }
+		},
+		{
+			{ env.mod }, "F3", function() redflat.float.qlaunch:show() end,
+			{ description = "Application quick launcher", group = "Widgets" }
 		},
 
 		{

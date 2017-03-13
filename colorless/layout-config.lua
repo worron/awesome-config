@@ -25,6 +25,7 @@ function layouts:init(args)
 		awful.layout.suit.fair,
 		awful.layout.suit.max,
 		awful.layout.suit.max.fullscreen,
+    	awful.layout.suit.corner.nw,
 	}
 
 	awful.layout.layouts = layset

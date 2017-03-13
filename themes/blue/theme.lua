@@ -48,6 +48,7 @@ theme.fonts = {
 	tooltip  = "Roboto 13",      -- tooltip font
 	notify   = "Play bold 14",   -- redflat notify popup font
 	clock    = "Play bold 12",   -- textclock widget font
+	qlaunch  = "Play bold 14",   -- quick launch key label font
 	title    = "Roboto bold 13", -- widget titles font
 	titlebar = "Roboto bold 13", -- client titlebar font
 	hotkeys = {
@@ -414,7 +415,7 @@ theme.widget.layoutbox.icon = {
 	fairv             = theme.path .. "/layouts/fair.svg",
 	grid              = theme.path .. "/layouts/grid.svg",
 	usermap           = theme.path .. "/layouts/map.svg",
-	unknown           = theme.path .. "/layouts/unknown.svg",
+	unknown           = theme.path .. "/common/unknown.svg",
 }
 
 theme.widget.layoutbox.menu = {
@@ -513,6 +514,7 @@ theme.float.appswitcher = {
 	title_font     = theme.fonts.title,
 	border_width   = 0,
 	update_timeout = 1 / 12,
+	keytip         = { geometry = { width = 400, height = 320 }, exit = true },
 	font           = theme.cairo_fonts.appswitcher,
 	color          = theme.color
 }
@@ -525,6 +527,21 @@ theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "
                                     "F1",  "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
                                     "F11", "F12" }
 
+-- Quick launcher
+------------------------------------------------------------
+theme.float.qlaunch = {
+	geometry      = { width = 1400, height = 170 },
+	border_margin = { 5, 5, 12, 15 },
+	border_width  = 0,
+	notify_icon   = theme.icon.warning,
+	appline       = { iwidth = 140, im = { 5, 5, 0, 0 }, igap = { 0, 0, 5, 15 }, lheight = 26 },
+	state         = { gap = 5, radius = 5, size = 10,  height = 14 },
+	df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
+	no_icon       = theme.homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
+	recoloring    = true,
+	label_font    = theme.fonts.qlaunch,
+	color         = theme.color,
+}
 
 -- Hotkeys helper
 ------------------------------------------------------------
