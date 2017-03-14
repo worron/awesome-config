@@ -3,10 +3,12 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 local awful = require("awful")
-local redflat = require("redflat")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
+local naughty = require("naughty")
+
+local redflat = require("redflat")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -33,6 +35,15 @@ function env:init(args)
 
 	-- theme setup
 	beautiful.init(env.themedir .. "/theme.lua")
+
+	-- naughty config
+	naughty.config.padding = beautiful.useless_gap and 2 * beautiful.useless_gap or 0
+
+	if beautiful.naughty then
+		naughty.config.presets.normal   = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.normal)
+		naughty.config.presets.critical = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.critical)
+		naughty.config.presets.low      = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.low)
+	end
 end
 
 -- Common functions

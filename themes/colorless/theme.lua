@@ -415,6 +415,27 @@ theme.titlebar = {
 	color         = theme.color,
 }
 
+-- Naughty config
+-----------------------------------------------------------------------------------------------------------------------
+theme.naughty = {}
+
+theme.naughty.base = {
+	timeout      = 10,
+	margin       = 12,
+	icon_size    = 80,
+	font         = theme.fonts.main,
+	bg           = theme.color.wibox,
+	fg           = theme.color.text,
+	height       = theme.float.notify.geometry.height,
+	width        = theme.float.notify.geometry.width,
+	border_width = 4,
+	border_color = theme.color.wibox
+}
+
+theme.naughty.normal = {}
+theme.naughty.critical = { timeout = 0, border_color = theme.color.main }
+theme.naughty.low = { timeout = 5 }
+
 -- Default awesome theme vars
 -----------------------------------------------------------------------------------------------------------------------
 
