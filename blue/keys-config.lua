@@ -258,7 +258,7 @@ function hotkeys:init(args)
 	-- Emacs like key sequences
 	------------------------------------------------------------
 
-	-- base
+	-- initial key
 	local keyseq = { { env.mod }, "c", {}, {} }
 
 	-- group

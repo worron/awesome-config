@@ -196,13 +196,18 @@ sysmon.buttons.cpuram = awful.util.table.join(
 
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
+
+-- aliases for setup
+local al = awful.layout.layouts
+
+-- setup
 awful.screen.connect_for_each_screen(
 	function(s)
 		-- wallpaper
 		env.wallpaper(s)
 
 		-- tags
-		awful.tag({ "Tag1", "Tag2", "Tag3", "Tag4", "Tag5" }, s, awful.layout.layouts[1])
+		awful.tag({ "Main", "Full", "Edit", "Read", "Free" }, s, { al[2], al[7], al[7], al[6], al[1] })
 
 		-- layoutbox widget
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
