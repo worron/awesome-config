@@ -22,6 +22,7 @@ local laybox = redflat.widget.layoutbox
 local redtip = redflat.float.hotkeys
 local laycom = redflat.layout.common
 local redtitle = redflat.titlebar
+local qlaunch = redflat.float.qlaunch
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
@@ -131,6 +132,10 @@ function hotkeys:init(args)
 		awful.button({ }, 5, awful.tag.viewprev)
 	))
 
+	-- Init widgets
+	------------------------------------------------------------
+	redflat.float.qlaunch:init()
+
 	-- Keys for widgets, layouts and other secondary stuff
 	--------------------------------------------------------------------------------
 
@@ -232,7 +237,11 @@ function hotkeys:init(args)
 		},
 		{
 			{ env.mod }, "Super_L", function() appswitcher:hide() end,
-			{ description = "Exit", group = "Action" }
+			{ description = "Activate and exit", group = "Action" }
+		},
+		{
+			{}, "Return", function() appswitcher:hide() end,
+			{ description = "Activate and exit", group = "Action" }
 		},
 		{
 			{}, "Escape", function() appswitcher:hide(true) end,
@@ -245,6 +254,81 @@ function hotkeys:init(args)
 	}
 
 	appswitcher:set_keys(appswitcher_keys)
+
+	-- Emacs like key sequences
+	------------------------------------------------------------
+
+	-- base
+	local keyseq = { { env.mod }, "c", {}, {} }
+
+	-- group
+	keyseq[3] = {
+		{ {}, "k", {}, {} }, -- application kill group
+		{ {}, "c", {}, {} }, -- client managment group
+		{ {}, "r", {}, {} }, -- client managment group
+		{ {}, "n", {}, {} }, -- client managment group
+		{ {}, "g", {}, {} }, -- run or rise group
+		{ {}, "f", {}, {} }, -- launch application group
+	}
+
+	-- quick launch key sequence actions
+	for i = 1, 9 do
+		local ik = tostring(i)
+		table.insert(keyseq[3][5][3], {
+			{}, ik, function() qlaunch:run_or_raise(ik) end,
+			{ description = "Run or rise application №" .. ik, group = "Run or Rise", keyset = { ik } }
+		})
+		table.insert(keyseq[3][6][3], {
+			{}, ik, function() qlaunch:run_or_raise(ik, true) end,
+			{ description = "Launch application №".. ik, group = "Quick Launch", keyset = { ik } }
+		})
+	end
+
+	-- application kill sequence actions
+	keyseq[3][1][3] = {
+		{
+			{}, "f", function() if client.focus then client.focus:kill() end end,
+			{ description = "Kill focused client", group = "Kill application" }
+		},
+		{
+			{}, "a", kill_all,
+			{ description = "Kill all clients with current tag", group = "Kill application" }
+		},
+	}
+
+	-- client managment sequence actions
+	keyseq[3][2][3] = {
+		{
+			{}, "p", function () toggle_placement(env) end,
+			{ description = "Switch master/slave window placement", group = "Clients managment" }
+		},
+	}
+
+	keyseq[3][3][3] = {
+		{
+			{}, "f", restore_client,
+			{ description = "Restore minimized client", group = "Clients managment" }
+		},
+		{
+			{}, "a", restore_all,
+			{ description = "Restore all clients with current tag", group = "Clients managment" }
+		},
+	}
+
+	keyseq[3][4][3] = {
+		{
+			{}, "f", function() if client.focus then client.focus.minimized = true end end,
+			{ description = "Minimized focused client", group = "Clients managment" }
+		},
+		{
+			{}, "a", minimize_all,
+			{ description = "Minimized all clients with current tag", group = "Clients managment" }
+		},
+		{
+			{}, "e", minimize_all_except_focused,
+			{ description = "Minimized all clients except focused", group = "Clients managment" }
+		},
+	}
 
 
 	-- Global keys
@@ -259,12 +343,12 @@ function hotkeys:init(args)
 			{ description = "Window control mode", group = "Main" }
 		},
 		{
-			{ env.mod }, "F5", function () toggle_placement(env) end,
-			{ description = "Switch master/slave window placement", group = "Main" }
-		},
-		{
 			{ env.mod, "Control" }, "r", awesome.restart,
 			{ description = "Reload awesome", group = "Main" }
+		},
+		{
+			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
+			{ description = "User key sequence", group = "Main" }
 		},
 
 		{
@@ -330,7 +414,7 @@ function hotkeys:init(args)
 			{ description = "Check available upgrades", group = "Widgets" }
 		},
 		{
-			{ env.mod }, "F3", function() redflat.float.qlaunch:show() end,
+			{ env.mod }, "F3", function() qlaunch:show() end,
 			{ description = "Application quick launcher", group = "Widgets" }
 		},
 
@@ -414,27 +498,6 @@ function hotkeys:init(args)
 		{
 			{ env.mod, "Control" }, "Left", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
-		},
-
-		{
-			{ env.mod, "Control" }, "n", restore_client,
-			{ description = "Restore minimized client", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod }, "Down", minimize_all,
-			{ description = "Minimized all clients with current tag", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod, "Control" }, "Down", minimize_all_except_focused,
-			{ description = "Minimized all clients except focused", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod }, "Up", restore_all,
-			{ description = "Restore all clients with current tag", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod, "Shift" }, "F4", kill_all,
-			{ description = "Kill all clients with current tag", group = "Clients manipulation" }
 		},
 	}
 

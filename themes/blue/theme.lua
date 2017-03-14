@@ -49,6 +49,7 @@ theme.fonts = {
 	notify   = "Play bold 14",   -- redflat notify popup font
 	clock    = "Play bold 12",   -- textclock widget font
 	qlaunch  = "Play bold 14",   -- quick launch key label font
+	keychain = "Play bold 14",   -- key sequence tip font
 	title    = "Roboto bold 13", -- widget titles font
 	titlebar = "Roboto bold 13", -- client titlebar font
 	hotkeys = {
@@ -591,6 +592,15 @@ theme.float.top = {
 	end,
 }
 
+-- Key sequence tip
+------------------------------------------------------------
+theme.float.keychain = {
+	geometry        = { width = 250, height = 50 },
+	font            = theme.fonts.keychain,
+	border_width    = 0,
+	keytip          = { geometry = { width = 1200, height = 800 }, column = 2 },
+	color           = theme.color,
+}
 
 -- Notify
 ------------------------------------------------------------

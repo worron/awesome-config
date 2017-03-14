@@ -25,7 +25,6 @@ function autostart.run()
 	-- keyboard layouts
 	awful.util.spawn_with_shell("kbdd")
 	awful.util.spawn_with_shell("sleep 1 && bash ~/Documents/scripts/kbdd-setup.sh")
-	awful.util.spawn_with_shell("sleep 1.5 && bash ~/Documents/scripts/swap-ctrl-caps.sh")
 
 	-- apps
 	awful.util.spawn_with_shell("clipflap")
