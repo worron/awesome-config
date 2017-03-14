@@ -324,15 +324,16 @@ theme.widget = {}
 -- individual margins for palnel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
-	layoutbox   = { 14, 10, 6, 6 },
-	textclock   = { 12, 12, 0, 0 },
-	volume      = { 12, 12, 5, 5 },
-	network     = { 12, 12, 5, 5 },
-	cpuram      = { 12, 12, 5, 5 },
-	keyboard    = { 12, 12, 4, 4 },
-	mail        = { 12, 12, 4, 4 },
-	battery     = { 8, 10, 6, 6 },
-	tray        = { 12, 12, 7, 7 },
+	layoutbox   = { 12, 10, 6, 6 },
+	textclock   = { 10, 10, 0, 0 },
+	volume      = { 10, 10, 5, 5 },
+	network     = { 10, 10, 5, 5 },
+	cpuram      = { 10, 10, 5, 5 },
+	keyboard    = { 10, 10, 4, 4 },
+	mail        = { 10, 10, 4, 4 },
+	battery     = { 8, 10, 7, 7 },
+	tray        = { 8, 8, 7, 7 },
+	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
 }
 
 -- Pulseaudio volume control
@@ -420,7 +421,7 @@ theme.widget.layoutbox.icon = {
 }
 
 theme.widget.layoutbox.menu = {
-	icon_margin  = { 8, 12, 8, 8 },
+	icon_margin  = { 8, 12, 9, 9 },
 	width        = 260,
 	auto_hotkey  = true,
 	nohide       = false,
@@ -451,9 +452,8 @@ theme.widget.tasklist = {
 -- main
 theme.widget.tasklist.winmenu = {
 	micon          = theme.icon,
-	titleline      = { font = theme.fonts.title, height = 30 },
+	titleline      = { font = theme.fonts.title, height = 25 },
 	menu           = { width = 240, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
-	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
 	state_iconsize = { width = 18, height = 18 },
 	layout_icon    = theme.widget.layoutbox.icon,
 	color          = theme.color
@@ -461,7 +461,15 @@ theme.widget.tasklist.winmenu = {
 
 -- tasktip
 theme.widget.tasklist.tasktip = {
-	color = theme.color
+	margin = { 8, 8, 4, 4 },
+	color  = theme.color
+}
+
+-- tags submenu
+theme.widget.tasklist.winmenu.tagmenu = {
+	width       = 180,
+	icon_margin = { 9, 9, 9, 9 },
+	color       = { right_icon = theme.color.icon, left_icon = theme.color.icon },
 }
 
 -- menu
@@ -479,8 +487,20 @@ theme.widget.tasklist.winmenu.icon = {
 
 -- task aliases
 theme.widget.tasklist.appnames = {}
+theme.widget.tasklist.appnames["Exaile"              ] = "EXAILE"
+theme.widget.tasklist.appnames["Smplayer"            ] = "SMPL"
 theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
 theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
+theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"
+theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GIMP"
+theme.widget.tasklist.appnames["Goldendict"          ] = "GDIC"
+theme.widget.tasklist.appnames["Easytag"             ] = "ETAG"
+theme.widget.tasklist.appnames["Mcomix"              ] = "COMIX"
+theme.widget.tasklist.appnames["Claws-mail"          ] = "CMAIL"
+theme.widget.tasklist.appnames["URxvt"               ] = "RXVT"
+theme.widget.tasklist.appnames["VirtualBox"          ] = "VBOX"
+theme.widget.tasklist.appnames["Keepassx"            ] = "KPASS"
+
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
