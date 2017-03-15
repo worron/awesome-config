@@ -205,13 +205,13 @@ theme.service.navigator = {
 }
 
 theme.service.navigator.keytip = {}
-theme.service.navigator.keytip[awful.layout.suit.fair] = { geometry = { width = 600, height = 460 }, exit = true }
-theme.service.navigator.keytip[awful.layout.suit.tile] = { geometry = { width = 600, height = 660 }, exit = true }
-theme.service.navigator.keytip[awful.layout.suit.tile.right]  = theme.service.navigator.keytip[awful.layout.suit.tile]
-theme.service.navigator.keytip[awful.layout.suit.tile.left]   = theme.service.navigator.keytip[awful.layout.suit.tile]
-theme.service.navigator.keytip[awful.layout.suit.tile.top]    = theme.service.navigator.keytip[awful.layout.suit.tile]
-theme.service.navigator.keytip[awful.layout.suit.tile.bottom] = theme.service.navigator.keytip[awful.layout.suit.tile]
+theme.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 460 }, exit = true }
+theme.service.navigator.keytip["fairh"] = theme.service.navigator.keytip["fairv"]
 
+theme.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 660 }, exit = true }
+theme.service.navigator.keytip["tileleft"]   = theme.service.navigator.keytip["tile"]
+theme.service.navigator.keytip["tiletop"]    = theme.service.navigator.keytip["tile"]
+theme.service.navigator.keytip["tilebottom"] = theme.service.navigator.keytip["tile"]
 
 -- Desktop file parser
 --------------------------------------------------------------------------------
@@ -393,7 +393,6 @@ theme.widget.mail = {
 	color       = theme.color,
 }
 
-
 -- Minitray
 ------------------------------------------------------------
 theme.widget.minitray = {
@@ -406,7 +405,6 @@ theme.widget.minitray = {
 		         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
 	end,
 }
-
 
 -- Layoutbox
 ------------------------------------------------------------
