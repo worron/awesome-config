@@ -204,6 +204,15 @@ theme.service.navigator = {
 	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
 }
 
+theme.service.navigator.keytip = {}
+theme.service.navigator.keytip[awful.layout.suit.fair] = { geometry = { width = 600, height = 460 }, exit = true }
+theme.service.navigator.keytip[awful.layout.suit.tile] = { geometry = { width = 600, height = 660 }, exit = true }
+theme.service.navigator.keytip[awful.layout.suit.tile.right]  = theme.service.navigator.keytip[awful.layout.suit.tile]
+theme.service.navigator.keytip[awful.layout.suit.tile.left]   = theme.service.navigator.keytip[awful.layout.suit.tile]
+theme.service.navigator.keytip[awful.layout.suit.tile.top]    = theme.service.navigator.keytip[awful.layout.suit.tile]
+theme.service.navigator.keytip[awful.layout.suit.tile.bottom] = theme.service.navigator.keytip[awful.layout.suit.tile]
+
+
 -- Desktop file parser
 --------------------------------------------------------------------------------
 theme.service.dfparser = {
@@ -535,7 +544,7 @@ theme.float.appswitcher = {
 	title_font     = theme.fonts.title,
 	border_width   = 0,
 	update_timeout = 1 / 12,
-	keytip         = { geometry = { width = 400, height = 320 }, exit = true },
+	keytip         = { geometry = { width = 400, height = 380 }, exit = true },
 	font           = theme.cairo_fonts.appswitcher,
 	color          = theme.color
 }
@@ -560,6 +569,7 @@ theme.float.qlaunch = {
 	df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
 	no_icon       = theme.homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
 	recoloring    = true,
+	keytip        = { geometry = { width = 600, height = 340 } },
 	label_font    = theme.fonts.qlaunch,
 	color         = theme.color,
 }
@@ -567,10 +577,11 @@ theme.float.qlaunch = {
 -- Hotkeys helper
 ------------------------------------------------------------
 theme.float.hotkeys = {
-	geometry      = { width = wa.width * 0.9, height = wa.height * 0.9 },
-	border_margin = { 20, 20, 10, 10 },
+	geometry      = { width = 1800, height = 900 },
+	border_margin = { 20, 20, 8, 10 },
 	border_width  = 0,
 	is_align      = true,
+	separator     = { marginh = { 0, 0, 3, 6 } },
 	font          = theme.fonts.hotkeys.main,
 	keyfont       = theme.fonts.hotkeys.key,
 	titlefont     = theme.fonts.hotkeys.title,
@@ -618,7 +629,7 @@ theme.float.keychain = {
 	geometry        = { width = 250, height = 50 },
 	font            = theme.fonts.keychain,
 	border_width    = 0,
-	keytip          = { geometry = { width = 1200, height = 800 }, column = 2 },
+	keytip          = { geometry = { width = 1200, height = 580 }, column = 2 },
 	color           = theme.color,
 }
 

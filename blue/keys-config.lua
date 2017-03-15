@@ -225,7 +225,7 @@ function hotkeys:init(args)
 		},
 		{
 			{ env.mod, "Shift" }, "a", function() appswitcher:switch() end,
-			{ group = "Navigation" }
+			{} -- hidden key
 		},
 		{
 			{ env.mod }, "q", function() appswitcher:switch({ reverse = true }) end,
@@ -233,11 +233,19 @@ function hotkeys:init(args)
 		},
 		{
 			{ env.mod, "Shift" }, "q", function() appswitcher:switch({ reverse = true }) end,
-			{ group = "Navigation" }
+			{} -- hidden key
+		},
+		{
+			{}, "Super_L", function() appswitcher:hide() end,
+			{ description = "Activate and exit", group = "Action" }
 		},
 		{
 			{ env.mod }, "Super_L", function() appswitcher:hide() end,
-			{ description = "Activate and exit", group = "Action" }
+			{} -- hidden key
+		},
+		{
+			{ env.mod, "Shift" }, "Super_L", function() appswitcher:hide() end,
+			{}-- hidden key
 		},
 		{
 			{}, "Return", function() appswitcher:hide() end,
@@ -492,11 +500,11 @@ function hotkeys:init(args)
 			{ description = "Show layout menu", group = "Layouts" }
 		},
 		{
-			{ env.mod, "Control"}, "Right", function() awful.layout.inc(1) end,
+			{ env.mod}, "Up", function() awful.layout.inc(1) end,
 			{ description = "Select next layout", group = "Layouts" }
 		},
 		{
-			{ env.mod, "Control" }, "Left", function() awful.layout.inc(-1) end,
+			{ env.mod }, "Down", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
 		},
 	}
