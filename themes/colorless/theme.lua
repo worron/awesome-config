@@ -230,8 +230,14 @@ theme.widget.layoutbox.icon = {
 	tile              = theme.path .. "/layouts/tile.svg",
 	tiletop           = theme.path .. "/layouts/tiletop.svg",
 	fairv             = theme.path .. "/layouts/fair.svg",
+	fairh             = theme.path .. "/layouts/fair.svg",
 	grid              = theme.path .. "/layouts/grid.svg",
 	usermap           = theme.path .. "/layouts/map.svg",
+	magnifier         = theme.path .. "/layouts/magnifier.svg",
+	cornerne          = theme.path .. "/layouts/cornerne.svg",
+	cornernw          = theme.path .. "/layouts/cornernw.svg",
+	cornerse          = theme.path .. "/layouts/cornerse.svg",
+	cornersw          = theme.path .. "/layouts/cornersw.svg",
 	unknown           = theme.path .. "/common/unknown.svg",
 }
 
@@ -254,6 +260,11 @@ theme.widget.layoutbox.name_alias = {
 	tileleft          = "Left Tile",
 	tiletop           = "Top Tile",
 	tilebottom        = "Bottom Tile",
+	magnifier         = "Magnifier",
+	cornerne          = "Corner NE",
+	cornernw          = "Corner NW",
+	cornerse          = "Corner SE",
+	cornersw          = "Corner SW",
 }
 
 -- Tasklist
