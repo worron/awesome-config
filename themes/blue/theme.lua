@@ -498,9 +498,7 @@ theme.widget.tasklist.winmenu.icon = {
 	below                = theme.path .. "/common/window_control/below.svg",
 	close                = theme.path .. "/common/window_control/close.svg",
 	minimize             = theme.path .. "/common/window_control/minimize.svg",
-	maximize             = theme.path .. "/common/window_control/maximize.svg",
-	maximized_horizontal = theme.path .. "/common/window_control/maxh.svg",
-	maximized_vertical   = theme.path .. "/common/window_control/maxv.svg",
+	maximized            = theme.path .. "/common/window_control/maximized.svg",
 }
 
 -- task aliases

@@ -472,8 +472,8 @@ theme.widget.tasklist = {
 -- main
 theme.widget.tasklist.winmenu = {
 	micon       = theme.icon,
-	titleline   = { font = theme.fonts.title, height = 35 },
-	menu        = { width = 280, color = { right_icon = theme.color.icon } },
+	titleline   = { font = theme.fonts.title, height = 30 },
+	menu        = { width = 250, color = { right_icon = theme.color.icon } },
 	tagmenu     = { width = 200, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
 	layout_icon = theme.widget.layoutbox.icon,
 	color       = theme.color
@@ -492,9 +492,7 @@ theme.widget.tasklist.winmenu.icon = {
 	below                = theme.path .. "/common/window_control/below.svg",
 	close                = theme.path .. "/common/window_control/close.svg",
 	minimize             = theme.path .. "/common/window_control/minimize.svg",
-	maximize             = theme.path .. "/common/window_control/maximize.svg",
-	maximized_horizontal = theme.path .. "/common/window_control/maxh.svg",
-	maximized_vertical   = theme.path .. "/common/window_control/maxv.svg",
+	maximized            = theme.path .. "/common/window_control/maximized.svg",
 }
 
 -- task aliases
