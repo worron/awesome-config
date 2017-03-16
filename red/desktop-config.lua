@@ -19,9 +19,12 @@ local system = redflat.system
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
 function desktop:init(args)
+	if not beautiful.desktop then return end
 
 	local args = args or {}
-	local theme_path = args.tpath or "/usr/share/awesome/themes/default"
+	local env = args.env
+	-- local args = args or {}
+	-- local theme_path = args.tpath or "/usr/share/awesome/themes/default"
 
 	-- placement
 	local grid = beautiful.desktop.grid
@@ -95,7 +98,7 @@ function desktop:init(args)
 
 	transm.style = {
 		digit_num = 1,
-		image     = theme_path .. "/desktop/ed1.svg"
+		image     = env.themedir .. "/desktop/ed1.svg"
 	}
 
 	-- Disks
