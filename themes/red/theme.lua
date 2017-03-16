@@ -336,7 +336,7 @@ theme.widget.wrapper = {
 	textclock   = { 4, 20, 0, 0 },
 	layoutbox   = { 4, 4, 9, 9 },
 	volume      = { 4, 4, 5, 5 },
-	upgrades    = { 4, 4, 8, 8 },
+	upgrades    = { 4, 4, 9, 9 },
 	keyboard    = { 4, 4, 5, 5 },
 	mail        = { 4, 4, 5, 5 },
 	battery     = { 3, 3, 0, 0 },
@@ -384,7 +384,7 @@ theme.widget.keyboard.menu = {
 -- Upgrades
 ------------------------------------------------------------
 theme.widget.upgrades = {
-	icon        = theme.path .. "/widget/fav.svg",
+	icon        = theme.path .. "/common/awesome.svg",
 	notify_icon = theme.path .. "/widget/upgrades.svg",
 	color       = theme.color
 }

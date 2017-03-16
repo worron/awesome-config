@@ -187,8 +187,8 @@ theme.widget = {}
 -- individual margins for palnel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
+	mainmenu    = { 12, 12, 6, 6 },
 	layoutbox   = { 10, 10, 6, 6 },
-	mainmenu    = { 4, 4, 3, 3 },
 	textclock   = { 12, 12, 0, 0 },
 	tray        = { 12, 12, 7, 7 },
 }
