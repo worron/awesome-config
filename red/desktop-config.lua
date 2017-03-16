@@ -93,7 +93,7 @@ function desktop:init(args)
 		lines      = { { maxm = 55, unit = { { "SEED", - 1 } } }, { maxm = 600, unit = { { "DNLD", - 1 } } } },
 		meter      = { func = system.transmission_parse },
 		timeout    = 5,
-		asyncshell = "transmission-remote -l"
+		async      = "transmission-remote -l"
 	}
 
 	transm.style = {
