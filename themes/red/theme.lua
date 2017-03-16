@@ -40,7 +40,7 @@ theme.useless_gap         = 6  -- useless gap
 
 theme.wallpaper = theme.path .. "/wallpaper/custom.png" -- wallpaper file
 
--- Fonts
+-- Fontsk
 ------------------------------------------------------------
 theme.fonts = {
 	main     = "Roboto 13",      -- main font
@@ -51,6 +51,7 @@ theme.fonts = {
 	qlaunch  = "Play bold 14",   -- quick launch key label font
 	keychain = "Play bold 14",   -- key sequence tip font
 	title    = "Roboto bold 13", -- widget titles font
+	mtitle   = "Roboto bold 14", -- menu titles font
 	titlebar = "Roboto bold 13", -- client titlebar font
 	hotkeys = {
 		main  = "Roboto 14",             -- hotkeys helper main font
@@ -471,12 +472,15 @@ theme.widget.tasklist = {
 
 -- main
 theme.widget.tasklist.winmenu = {
-	micon       = theme.icon,
-	titleline   = { font = theme.fonts.title, height = 30 },
-	menu        = { width = 250, color = { right_icon = theme.color.icon } },
-	tagmenu     = { width = 200, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
-	layout_icon = theme.widget.layoutbox.icon,
-	color       = theme.color
+	micon          = theme.icon,
+	titleline      = { font = theme.fonts.mtitle, height = 32 },
+	stateline      = { height = 38 },
+	state_iconsize = { width = 22, height = 22 },
+	menu           = { width = 250, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
+	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon },
+	                   icon_margin = { 10, 12, 9, 9 } },
+	layout_icon    = theme.widget.layoutbox.icon,
+	color          = theme.color
 }
 
 -- tasktip
@@ -562,12 +566,12 @@ theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "
 -- Quick launcher
 ------------------------------------------------------------
 theme.float.qlaunch = {
-	geometry      = { width = 1400, height = 170 },
-	border_margin = { 5, 5, 12, 15 },
+	geometry      = { width = 1600, height = 200 },
+	border_margin = { 5, 5, 5, 10 },
 	border_width  = 0,
 	notify_icon   = theme.icon.warning,
-	appline       = { iwidth = 140, im = { 5, 5, 0, 0 }, igap = { 0, 0, 5, 15 }, lheight = 26 },
-	state         = { gap = 5, radius = 5, size = 10,  height = 14 },
+	appline       = { iwidth = 160, im = { 5, 5, 5, 5 }, igap = { 0, 0, 10, 10 }, lheight = 30 },
+	state         = { gap = 6, radius = 3, size = 10, height = 20, width = 20 },
 	df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
 	no_icon       = theme.homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
 	recoloring    = true,
