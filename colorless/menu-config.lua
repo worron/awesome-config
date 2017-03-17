@@ -48,9 +48,9 @@ function menu:init(args)
 	------------------------------------------------------------
 
 	-- theme vars
-	local deficon = redflat.util.placeholder()
-	local icon = redflat.util.check(beautiful, "icon.awesome") and beautiful.icon.awesome or deficon
-	local color = redflat.util.check(beautiful, "color.icon") and beautiful.color.icon or nil
+	local deficon = redflat.util.base.placeholder()
+	local icon = redflat.util.table.check(beautiful, "icon.awesome") and beautiful.icon.awesome or deficon
+	local color = redflat.util.table.check(beautiful, "color.icon") and beautiful.color.icon or nil
 
 	-- widget
 	self.widget = redflat.gauge.svgbox(icon, nil, color)

@@ -66,7 +66,7 @@ end
 env.wrapper = function(widget, name, buttons)
 	local margin = { 0, 0, 0, 0 }
 
-	if redflat.util.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name] then
+	if redflat.util.table.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name] then
 		margin = beautiful.widget.wrapper[name]
 	end
 	if buttons then

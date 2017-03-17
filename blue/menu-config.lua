@@ -26,9 +26,9 @@ function menu:init(args)
 	local icon_style = args.icon_style or { custom_only = true, scalable_only = true }
 
 	-- theme vars
-	local deficon = redflat.util.placeholder()
-	local icon = redflat.util.check(beautiful, "icon.awesome") and beautiful.icon.awesome or deficon
-	local color = redflat.util.check(beautiful, "color.icon") and beautiful.color.icon or nil
+	local deficon = redflat.util.base.placeholder()
+	local icon = redflat.util.table.check(beautiful, "icon.awesome") and beautiful.icon.awesome or deficon
+	local color = redflat.util.table.check(beautiful, "color.icon") and beautiful.color.icon or nil
 
 	-- icon finder
 	local function micon(name)
