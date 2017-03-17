@@ -248,7 +248,7 @@ theme.menu.color = {
 
 -- Gauge style
 -----------------------------------------------------------------------------------------------------------------------
-theme.gauge = { tag = {}, task = {}, audio = {} }
+theme.gauge = { tag = {}, task = {}, audio = {}, monitor = {}, graph = {} }
 
 -- Separator
 ------------------------------------------------------------
@@ -289,7 +289,7 @@ theme.gauge.task.red = {
 
 -- Monitor
 --------------------------------------------------------------
-theme.gauge.monitor = {
+theme.gauge.monitor.plain = {
 	font     = theme.cairo_fonts.tag,
 	text_gap = theme.gauge.tag.red.text_gap,
 	line     = { width = 4, v_gap = 36 },
@@ -298,14 +298,14 @@ theme.gauge.monitor = {
 
 -- Doublebar monitor
 ------------------------------------------------------------
-theme.gauge.doublebar = {
+theme.gauge.graph.doublebar = {
 	line  = { width = 4, gap = 5 },
 	color = theme.color
 }
 
 -- Dotcount
 ------------------------------------------------------------
-theme.gauge.dotcount = {
+theme.gauge.graph.dots = {
 	column_num   = { 2, 3 }, -- { min, max }
 	row_num      = 4,
 	dot_size     = 5,

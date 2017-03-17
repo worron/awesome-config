@@ -156,7 +156,7 @@ sysmon.icon.cpuram = redflat.util.table.check(beautiful, "icon.widget.monitor")
 -- battery
 sysmon.widget.battery = redflat.widget.sysmon(
 	{ func = redflat.system.pformatted.bat(25), arg = "BAT1" },
-	{ timeout = 60, widget = redflat.gauge.gicon, monitor = { is_vertical = true, icon = sysmon.icon.battery } }
+	{ timeout = 60, widget = redflat.gauge.icon.single, monitor = { is_vertical = true, icon = sysmon.icon.battery } }
 )
 
 -- network speed
@@ -167,7 +167,7 @@ sysmon.widget.network = redflat.widget.net(
 		speed = { up = 5 * 1024^2, down = 5 * 1024^2 },
 		autoscale = false
 	},
-	{ timeout = 2, widget = redflat.gauge.doublemonitor, monitor = { icon = sysmon.icon.network } }
+	{ timeout = 2, widget = redflat.gauge.monitor.double, monitor = { icon = sysmon.icon.network } }
 )
 
 -- CPU and RAM usage
@@ -186,7 +186,7 @@ end
 
 sysmon.widget.cpuram = redflat.widget.sysmon(
 	{ func = cpuram_func },
-	{ timeout = 2,  widget = redflat.gauge.doublemonitor, monitor = { icon = sysmon.icon.cpuram } }
+	{ timeout = 2,  widget = redflat.gauge.monitor.double, monitor = { icon = sysmon.icon.cpuram } }
 )
 
 sysmon.buttons.cpuram = awful.util.table.join(

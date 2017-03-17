@@ -257,7 +257,7 @@ theme.menu.color = {
 
 -- Gauge style
 -----------------------------------------------------------------------------------------------------------------------
-theme.gauge = { tag = {}, task = {}}
+theme.gauge = { tag = {}, task = {}, icon = {}, audio = {}, monitor = {}, graph = {} }
 
 -- Separator
 ------------------------------------------------------------
@@ -269,13 +269,13 @@ theme.gauge.separator = {
 
 -- Icon indicator
 ------------------------------------------------------------
-theme.gauge.gicon = {
+theme.gauge.icon.single = {
 	color  = theme.color
 }
 
 -- Monitor
 --------------------------------------------------------------
-theme.gauge.doublemonitor = {
+theme.gauge.monitor.double = {
 	width    = 90,
 	line     = { v_gap = 6 },
 	dmargin  = { 10, 0, 0, 0 },
@@ -305,7 +305,7 @@ theme.gauge.task.blue = {
 
 -- Dotcount
 ------------------------------------------------------------
-theme.gauge.dotcount = {
+theme.gauge.graph.dots = {
 	column_num   = { 3, 5 }, -- { min, max }
 	row_num      = 3,
 	dot_size     = 5,
@@ -315,8 +315,6 @@ theme.gauge.dotcount = {
 
 -- Volume indicator
 ------------------------------------------------------------
-theme.gauge.audio = {}
-
 theme.gauge.audio.blue = {
 	width   = 75,
 	dash    = { bar = { num = 5, width = 4 }, color = theme.color },

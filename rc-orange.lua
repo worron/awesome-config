@@ -151,7 +151,7 @@ local sysmon = { widget = {}, buttons = {} }
 -- battery
 sysmon.widget.battery = redflat.widget.sysmon(
 	{ func = redflat.system.pformatted.bat(25), arg = "BAT1" },
-	{ timeout = 60, widget = redflat.gauge.cirmon }
+	{ timeout = 60, widget = redflat.gauge.monitor.circle }
 )
 
 -- network speed
@@ -161,13 +161,13 @@ sysmon.widget.network = redflat.widget.net(
 		speed = { up = 5 * 1024^2, down = 5 * 1024^2 },
 		autoscale = false
 	},
-	{ timeout = 2, widget = redflat.gauge.dubgicon }
+	{ timeout = 2, widget = redflat.gauge.icon.double }
 )
 
 -- CPU usage
 sysmon.widget.cpu = redflat.widget.sysmon(
 	{ func = redflat.system.pformatted.cpu(80) },
-	{ timeout = 2, widget = redflat.gauge.cirmon }
+	{ timeout = 2, widget = redflat.gauge.monitor.circle }
 )
 
 sysmon.buttons.cpu = awful.util.table.join(
@@ -177,7 +177,7 @@ sysmon.buttons.cpu = awful.util.table.join(
 -- RAM usage
 sysmon.widget.ram = redflat.widget.sysmon(
 	{ func = redflat.system.pformatted.mem(80) },
-	{ timeout = 10, widget = redflat.gauge.cirmon }
+	{ timeout = 10, widget = redflat.gauge.monitor.circle }
 )
 
 sysmon.buttons.ram = awful.util.table.join(

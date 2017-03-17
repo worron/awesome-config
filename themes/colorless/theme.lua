@@ -138,7 +138,7 @@ theme.menu.color = {
 
 -- Gauge style
 -----------------------------------------------------------------------------------------------------------------------
-theme.gauge = { tag = {}, task = {}}
+theme.gauge = { tag = {}, task = {}, graph = {}}
 
 -- Separator
 ------------------------------------------------------------
@@ -171,7 +171,7 @@ theme.gauge.task.blue = {
 
 -- Dotcount
 ------------------------------------------------------------
-theme.gauge.dotcount = {
+theme.gauge.graph.dots = {
 	column_num   = { 3, 5 }, -- { min, max }
 	row_num      = 3,
 	dot_size     = 5,
