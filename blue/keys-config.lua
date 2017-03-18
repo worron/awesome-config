@@ -21,6 +21,7 @@ local allscr = redflat.widget.tasklist.filter.allscreen
 local laybox = redflat.widget.layoutbox
 local redtip = redflat.float.hotkeys
 local laycom = redflat.layout.common
+local grid = redflat.layout.grid
 local redtitle = redflat.titlebar
 local qlaunch = redflat.float.qlaunch
 
@@ -121,7 +122,6 @@ end
 function hotkeys:init(args)
 
 	-- Init vars
-	------------------------------------------------------------
 	local args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
@@ -133,50 +133,10 @@ function hotkeys:init(args)
 	))
 
 	-- Init widgets
-	------------------------------------------------------------
 	redflat.float.qlaunch:init()
 
-	-- Keys for widgets, layouts and other secondary stuff
+	-- Keys for widgets
 	--------------------------------------------------------------------------------
-
-	-- Layouts
-	------------------------------------------------------------
-	local layout_tile = {
-		{
-			{ env.mod }, "l", function () awful.tag.incmwfact( 0.05) end,
-			{ description = "Increase master width factor", group = "Layout" }
-		},
-		{
-			{ env.mod }, "j", function () awful.tag.incmwfact(-0.05) end,
-			{ description = "Decrease master width factor", group = "Layout" }
-		},
-		{
-			{ env.mod }, "i", function () awful.client.incwfact( 0.05) end,
-			{ description = "Increase window factor of a client", group = "Layout" }
-		},
-		{
-			{ env.mod }, "k", function () awful.client.incwfact(-0.05) end,
-			{ description = "Decrease window factor of a client", group = "Layout" }
-		},
-		{
-			{ env.mod, }, "+", function () awful.tag.incnmaster( 1, nil, true) end,
-			{ description = "Increase the number of master clients", group = "Layout" }
-		},
-		{
-			{ env.mod }, "-", function () awful.tag.incnmaster(-1, nil, true) end,
-			{ description = "Decrease the number of master clients", group = "Layout" }
-		},
-		{
-			{ env.mod, "Control" }, "+", function () awful.tag.incncol( 1, nil, true) end,
-			{ description = "Increase the number of columns", group = "Layout" }
-		},
-		{
-			{ env.mod, "Control" }, "-", function () awful.tag.incncol(-1, nil, true) end,
-			{ description = "Decrease the number of columns", group = "Layout" }
-		},
-	}
-
-	laycom:set_keys("tile", layout_tile)
 
 	-- Apprunner widget
 	------------------------------------------------------------
@@ -337,6 +297,155 @@ function hotkeys:init(args)
 			{ description = "Minimized all clients except focused", group = "Clients managment" }
 		},
 	}
+
+
+	-- Layouts
+	--------------------------------------------------------------------------------
+
+	-- shared layout keys
+	local layout_tile = {
+		{
+			{ env.mod }, "l", function () awful.tag.incmwfact( 0.05) end,
+			{ description = "Increase master width factor", group = "Layout" }
+		},
+		{
+			{ env.mod }, "j", function () awful.tag.incmwfact(-0.05) end,
+			{ description = "Decrease master width factor", group = "Layout" }
+		},
+		{
+			{ env.mod }, "i", function () awful.client.incwfact( 0.05) end,
+			{ description = "Increase window factor of a client", group = "Layout" }
+		},
+		{
+			{ env.mod }, "k", function () awful.client.incwfact(-0.05) end,
+			{ description = "Decrease window factor of a client", group = "Layout" }
+		},
+		{
+			{ env.mod, }, "+", function () awful.tag.incnmaster( 1, nil, true) end,
+			{ description = "Increase the number of master clients", group = "Layout" }
+		},
+		{
+			{ env.mod }, "-", function () awful.tag.incnmaster(-1, nil, true) end,
+			{ description = "Decrease the number of master clients", group = "Layout" }
+		},
+		{
+			{ env.mod, "Control" }, "+", function () awful.tag.incncol( 1, nil, true) end,
+			{ description = "Increase the number of columns", group = "Layout" }
+		},
+		{
+			{ env.mod, "Control" }, "-", function () awful.tag.incncol(-1, nil, true) end,
+			{ description = "Decrease the number of columns", group = "Layout" }
+		},
+	}
+
+	laycom:set_keys("tile", layout_tile)
+
+	-- grid layout keys
+	local layout_grid_move = {
+		{
+			{ "Mod4" }, "KP_Up", function() grid.move_to("up") end,
+			{ description = "Move window up", group = "Movement" }
+		},
+		{
+			{ "Mod4" }, "KP_Down", function() grid.move_to("down") end,
+			{ description = "Move window down", group = "Movement" }
+		},
+		{
+			{ "Mod4" }, "KP_Left", function() grid.move_to("left") end,
+			{ description = "Move window left", group = "Movement" }
+		},
+		{
+			{ "Mod4" }, "KP_right", function() grid.move_to("right") end,
+			{ description = "Move window right", group = "Movement" }
+		},
+		{
+			{ "Mod4", "Control" }, "KP_Up", function() grid.move_to("up", true) end,
+			{ description = "Move window up by bound", group = "Movement" }
+		},
+		{
+			{ "Mod4", "Control" }, "KP_Down", function() grid.move_to("down", true) end,
+			{ description = "Move window down by bound", group = "Movement" }
+		},
+		{
+			{ "Mod4", "Control" }, "KP_Left", function() grid.move_to("left", true) end,
+			{ description = "Move window left by bound", group = "Movement" }
+		},
+		{
+			{ "Mod4", "Control" }, "KP_Right", function() grid.move_to("right", true) end,
+			{ description = "Move window right by bound", group = "Movement" }
+		},
+	}
+
+
+	local layout_grid_resize = {
+		{
+			{ "Mod4" }, "i", function() grid.resize_to("up") end,
+			{ description = "Inrease window size to the up", group = "Resize" }
+		},
+		{
+			{ "Mod4" }, "k", function() grid.resize_to("down") end,
+			{ description = "Inrease window size to the down", group = "Resize" }
+		},
+		{
+			{ "Mod4" }, "j", function() grid.resize_to("left") end,
+			{ description = "Inrease window size to the left", group = "Resize" }
+		},
+		{
+			{ "Mod4" }, "l", function() grid.resize_to("right") end,
+			{ description = "Inrease window size to the right", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Shift" }, "i", function() grid.resize_to("up", nil, true) end,
+			{ description = "Decrease window size from the up", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Shift" }, "k", function() grid.resize_to("down", nil, true) end,
+			{ description = "Decrease window size from the down", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Shift" }, "j", function() grid.resize_to("left", nil, true) end,
+			{ description = "Decrease window size from the left", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Shift" }, "l", function() grid.resize_to("right", nil, true) end,
+			{ description = "Decrease window size from the right", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "i", function() grid.resize_to("up", true) end,
+			{ description = "Increase window size to the up by bound", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "k", function() grid.resize_to("down", true) end,
+			{ description = "Increase window size to the down by bound", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "j", function() grid.resize_to("left", true) end,
+			{ description = "Increase window size to the left by bound", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "l", function() grid.resize_to("right", true) end,
+			{ description = "Increase window size to the right by bound", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control", "Shift" }, "i", function() grid.resize_to("up", true, true) end,
+			{ description = "Decrease window size from the up by bound ", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control", "Shift" }, "k", function() grid.resize_to("down", true, true) end,
+			{ description = "Decrease window size from the down by bound ", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control", "Shift" }, "j", function() grid.resize_to("left", true, true) end,
+			{ description = "Decrease window size from the left by bound ", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control", "Shift" }, "l", function() grid.resize_to("right", true, true) end,
+			{ description = "Decrease window size from the right by bound ", group = "Resize" }
+		},
+	}
+
+	redflat.layout.grid:set_keys("move", layout_grid_move)
+	redflat.layout.grid:set_keys("resize", layout_grid_resize)
 
 
 	-- Global keys

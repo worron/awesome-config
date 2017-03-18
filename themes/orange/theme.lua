@@ -38,6 +38,8 @@ theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
 theme.useless_gap         = 4  -- useless gap
 
+theme.cellnum = { x = 96, y = 54 } -- grid layout property
+
 theme.wallpaper = theme.path .. "/wallpaper/custom.png" -- wallpaper file
 
 -- Fonts
@@ -125,6 +127,7 @@ theme.service.navigator.keytip["tileleft"]   = theme.service.navigator.keytip["t
 theme.service.navigator.keytip["tiletop"]    = theme.service.navigator.keytip["tile"]
 theme.service.navigator.keytip["tilebottom"] = theme.service.navigator.keytip["tile"]
 
+theme.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 560 }, column = 2, exit = true }
 
 -- Desktop file parser
 --------------------------------------------------------------------------------

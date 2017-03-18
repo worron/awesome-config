@@ -4,6 +4,7 @@
 
 -- Grab environment
 local awful = require("awful")
+local redflat = require("redflat")
 
 
 -- Initialize tables and vars for module
@@ -25,10 +26,15 @@ function layouts:init(args)
 		awful.layout.suit.fair,
 		awful.layout.suit.max,
 		awful.layout.suit.max.fullscreen,
+		redflat.layout.grid,
 	}
 
 	awful.layout.layouts = layset
 end
+
+
+client.disconnect_signal("request::geometry", awful.layout.move_handler)
+client.connect_signal("request::geometry", redflat.layout.common.mouse.move)
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------
