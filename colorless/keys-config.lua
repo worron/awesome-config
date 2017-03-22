@@ -114,11 +114,8 @@ function hotkeys:init(args)
 		awful.button({ }, 5, awful.tag.viewprev)
 	))
 
-	-- Keys for widgets, layouts and other secondary stuff
-	--------------------------------------------------------------------------------
-
 	-- Layouts
-	------------------------------------------------------------
+	--------------------------------------------------------------------------------
 	local layout_tile = {
 		{
 			{ env.mod }, "l", function () awful.tag.incmwfact( 0.05) end,
@@ -154,11 +151,14 @@ function hotkeys:init(args)
 		},
 	}
 
-	laycom:set_keys("tile", layout_tile)
+	laycom:set_keys(layout_tile, "tile")
+
+	-- Keys for widgets
+	--------------------------------------------------------------------------------
 
 	-- Apprunner widget
 	------------------------------------------------------------
-	local apprunner_keys = {
+	local apprunner_keys_move = {
 		{
 			{ env.mod }, "k", function() apprunner:down() end,
 			{ description = "Select next item", group = "Navigation" }
@@ -169,11 +169,11 @@ function hotkeys:init(args)
 		},
 	}
 
-	apprunner:set_keys(awful.util.table.join(apprunner.keys, apprunner_keys))
+	apprunner:set_keys(awful.util.table.join(apprunner.keys.move, apprunner_keys_move), "move")
 
 	-- Menu widget
 	------------------------------------------------------------
-	local menu_keys = {
+	local menu_keys_move = {
 		{
 			{ env.mod }, "k", redflat.menu.action.down,
 			{ description = "Select next item", group = "Navigation" }
@@ -192,7 +192,7 @@ function hotkeys:init(args)
 		},
 	}
 
-	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys, menu_keys))
+	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys, menu_keys_move), "move")
 
 	-- Appswitcher
 	------------------------------------------------------------

@@ -140,7 +140,7 @@ function hotkeys:init(args)
 
 	-- Apprunner widget
 	------------------------------------------------------------
-	local apprunner_keys = {
+	local apprunner_keys_move = {
 		{
 			{ env.mod }, "k", function() apprunner:down() end,
 			{ description = "Select next item", group = "Navigation" }
@@ -151,11 +151,12 @@ function hotkeys:init(args)
 		},
 	}
 
-	apprunner:set_keys(awful.util.table.join(apprunner.keys, apprunner_keys))
+	apprunner:set_keys(awful.util.table.join(apprunner.keys.move, apprunner_keys_move), "move")
+	-- apprunner:set_keys(apprunner_keys_move, "move")
 
 	-- Menu widget
 	------------------------------------------------------------
-	local menu_keys = {
+	local menu_keys_move = {
 		{
 			{ env.mod }, "k", redflat.menu.action.down,
 			{ description = "Select next item", group = "Navigation" }
@@ -174,9 +175,10 @@ function hotkeys:init(args)
 		},
 	}
 
-	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys, menu_keys))
+	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys.move, menu_keys_move), "move")
+	-- redflat.menu:set_keys(menu_keys_move, "move")
 
-	-- Appswitcher
+	-- Appswitcher widget
 	------------------------------------------------------------
 	appswitcher_keys = {
 		{
@@ -205,7 +207,7 @@ function hotkeys:init(args)
 		},
 		{
 			{ env.mod, "Shift" }, "Super_L", function() appswitcher:hide() end,
-			{}-- hidden key
+			{} -- hidden key
 		},
 		{
 			{}, "Return", function() appswitcher:hide() end,
@@ -216,6 +218,10 @@ function hotkeys:init(args)
 			{ description = "Exit", group = "Action" }
 		},
 		{
+			{ env.mod }, "Escape", function() appswitcher:hide(true) end,
+			{} -- hidden key
+		},
+		{
 			{ env.mod }, "F1", function() redtip:show()  end,
 			{ description = "Show hotkeys helper", group = "Help" }
 		},
@@ -224,7 +230,7 @@ function hotkeys:init(args)
 	appswitcher:set_keys(appswitcher_keys)
 
 	-- Emacs like key sequences
-	------------------------------------------------------------
+	--------------------------------------------------------------------------------
 
 	-- initial key
 	local keyseq = { { env.mod }, "c", {}, {} }
@@ -338,7 +344,7 @@ function hotkeys:init(args)
 		},
 	}
 
-	laycom:set_keys("tile", layout_tile)
+	laycom:set_keys(layout_tile, "tile")
 
 	-- grid layout keys
 	local layout_grid_move = {
@@ -444,8 +450,8 @@ function hotkeys:init(args)
 		},
 	}
 
-	redflat.layout.grid:set_keys("move", layout_grid_move)
-	redflat.layout.grid:set_keys("resize", layout_grid_resize)
+	redflat.layout.grid:set_keys(layout_grid_move, "move")
+	redflat.layout.grid:set_keys(layout_grid_resize, "resize")
 
 
 	-- Global keys
