@@ -76,10 +76,7 @@ end
 -- new clients placement
 local function toggle_placement(env)
 	env.set_slave = not env.set_slave
-	redflat.float.notify:show({
-		text = (env.set_slave and "Slave" or "Master") .. " placement",
-		icon = beautiful.icon and beautiful.icon.warning or nil
-	})
+	redflat.float.notify:show({ text = (env.set_slave and "Slave" or "Master") .. " placement" })
 end
 
 -- numeric keys function builders

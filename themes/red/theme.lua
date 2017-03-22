@@ -356,13 +356,13 @@ theme.widget.wrapper = {
 -- Pulseaudio volume control
 ------------------------------------------------------------
 theme.widget.pulse = {
-	notify_icon = theme.path .. "/widget/audio.svg"
+	notify      = { icon = theme.path .. "/widget/audio.svg" }
 }
 
 -- Brightness control
 ------------------------------------------------------------
 theme.widget.brightness = {
-	notify_icon = theme.path .. "/widget/brightness.svg"
+	notify      = { icon = theme.path .. "/widget/brightness.svg" }
 }
 
 -- Textclock
@@ -390,7 +390,7 @@ theme.widget.keyboard.menu = {
 ------------------------------------------------------------
 theme.widget.upgrades = {
 	icon        = theme.path .. "/common/awesome.svg",
-	notify_icon = theme.path .. "/widget/upgrades.svg",
+	notify      = { icon = theme.path .. "/widget/upgrades.svg" },
 	color       = theme.color
 }
 
@@ -398,7 +398,7 @@ theme.widget.upgrades = {
 ------------------------------------------------------------
 theme.widget.mail = {
 	icon        = theme.path .. "/widget/mail.svg",
-	notify_icon = theme.path .. "/widget/mail.svg",
+	notify      = { icon = theme.path .. "/widget/mail.svg" },
 	color       = theme.color,
 }
 
@@ -573,7 +573,6 @@ theme.float.qlaunch = {
 	geometry      = { width = 1600, height = 200 },
 	border_margin = { 5, 5, 5, 10 },
 	border_width  = 0,
-	notify_icon   = theme.icon.warning,
 	appline       = { iwidth = 160, im = { 5, 5, 5, 5 }, igap = { 0, 0, 10, 10 }, lheight = 30 },
 	state         = { gap = 6, radius = 3, size = 10, height = 20, width = 20 },
 	df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
@@ -649,6 +648,7 @@ theme.float.notify = {
 	geometry     = { width = 484, height = 106 },
 	screen_gap   = 2 * theme.useless_gap,
 	font         = theme.fonts.notify,
+	icon         = theme.icon.warning,
 	border_width = 0,
 	color        = theme.color,
 	progressbar  = { color = theme.color },

@@ -359,7 +359,6 @@ theme.float.qlaunch = {
 	geometry      = { width = 1400, height = 170 },
 	border_margin = { 5, 5, 12, 15 },
 	border_width  = 0,
-	notify_icon   = theme.icon.warning,
 	appline       = { iwidth = 140, im = { 5, 5, 0, 0 }, igap = { 0, 0, 5, 15 }, lheight = 26 },
 	state         = { gap = 5, radius = 5, size = 10,  height = 14 },
 	-- df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
@@ -406,6 +405,7 @@ theme.float.notify = {
 	geometry     = { width = 484, height = 106 },
 	screen_gap   = 2 * theme.useless_gap,
 	font         = theme.fonts.notify,
+	icon         = theme.icon.warning,
 	border_width = 0,
 	color        = theme.color,
 	set_position = function()
