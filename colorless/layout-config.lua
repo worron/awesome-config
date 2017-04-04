@@ -5,6 +5,7 @@
 -- Grab environment
 local awful = require("awful")
 local redflat = require("redflat")
+local beautiful = require("beautiful")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -24,6 +25,12 @@ function layouts:init(args)
 		awful.layout.suit.tile.bottom,
 		awful.layout.suit.tile.top,
 		awful.layout.suit.fair,
+		awful.layout.suit.corner.nw,
+		awful.layout.suit.corner.ne,
+		awful.layout.suit.corner.sw,
+		awful.layout.suit.corner.se,
+		awful.layout.suit.spiral,
+		awful.layout.suit.magnifier,
 		awful.layout.suit.max,
 		awful.layout.suit.max.fullscreen,
 		redflat.layout.grid,
@@ -34,7 +41,8 @@ function layouts:init(args)
 end
 
 -- some advanced layout settings
-redflat.layout.map.notification = false
+redflat.layout.map.notification = true
+redflat.layout.map.notification_style = { icon = redflat.util.table.check(beautiful, "widget.layoutbox.icon.usermap") }
 
 
 -- connect alternatve moving handler to allow using custom handler per layout

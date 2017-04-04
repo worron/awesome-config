@@ -1,1 +1,1 @@
-../colorless/layout-config.lua
+../blue/layout-config.lua
