@@ -33,6 +33,10 @@ function layouts:init(args)
 	awful.layout.layouts = layset
 end
 
+-- some advanced layout settings
+redflat.layout.map.notification = false
+
+
 -- connect alternatve moving handler to allow using custom handler per layout
 -- by now custom handler provided for 'redflat.layout.grid' only
 -- feel free to remove if you don't use this one

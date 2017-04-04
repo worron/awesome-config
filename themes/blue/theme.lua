@@ -216,6 +216,7 @@ theme.service.navigator.keytip["tiletop"]    = theme.service.navigator.keytip["t
 theme.service.navigator.keytip["tilebottom"] = theme.service.navigator.keytip["tile"]
 
 theme.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 560 }, column = 2, exit = true }
+theme.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 580 }, column = 2, exit = true }
 
 -- Desktop file parser
 --------------------------------------------------------------------------------

@@ -22,6 +22,7 @@ local laybox = redflat.widget.layoutbox
 local redtip = redflat.float.hotkeys
 local laycom = redflat.layout.common
 local grid = redflat.layout.grid
+local map = redflat.layout.map
 local redtitle = redflat.titlebar
 local qlaunch = redflat.float.qlaunch
 
@@ -379,7 +380,6 @@ function hotkeys:init(args)
 		},
 	}
 
-
 	local layout_grid_resize = {
 		{
 			{ "Mod4" }, "i", function() grid.resize_to("up") end,
@@ -449,6 +449,104 @@ function hotkeys:init(args)
 
 	redflat.layout.grid:set_keys(layout_grid_move, "move")
 	redflat.layout.grid:set_keys(layout_grid_resize, "resize")
+
+	-- user map layout keys
+	local layout_map_layout = {
+		{
+			{ "Mod4" }, "r", function() map.swap_group() end,
+			{ description = "Change placement direction for group", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "v", function() map.new_group(true) end,
+			{ description = "Create new vertical group", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "h", function() map.new_group(false) end,
+			{ description = "Create new horizontal group", group = "Layout" }
+		},
+		{
+			{ "Mod4", "Control" }, "v", function() map.insert_group(true) end,
+			{ description = "Insert new vertical group before active", group = "Layout" }
+		},
+		{
+			{ "Mod4", "Control" }, "h", function() map.insert_group(false) end,
+			{ description = "Insert new horizontal group before active", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "d", function() map.delete_group() end,
+			{ description = "Destroy group", group = "Layout" }
+		},
+		{
+			{ "Mod4", "Control" }, "d", function() map.clean_groups() end,
+			{ description = "Destroy group all empty groups", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "f", function() map.set_active() end,
+			{ description = "Set active group", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "g", function() map.move_to_active() end,
+			{ description = "Move focused client to active group", group = "Layout" }
+		},
+		{
+			{ "Mod4", "Control" }, "f", function() map.hilight_active() end,
+			{ description = "Hilight active group", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "a", function() map.switch_active(1) end,
+			{ description = "Activate next group", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "q", function() map.switch_active(-1) end,
+			{ description = "Activate previous group", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "]", function() map.move_group(1) end,
+			{ description = "Move active group to the top", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "[", function() map.move_group(-1) end,
+			{ description = "Move active group to the bottom", group = "Layout" }
+		},
+	}
+
+	local layout_map_resize = {
+		{
+			{ "Mod4" }, "j", function() map.incfactor(nil, 0.1, false) end,
+			{ description = "Increase window horizontal size factor", group = "Resize" }
+		},
+		{
+			{ "Mod4" }, "l", function() map.incfactor(nil, -0.1, false) end,
+			{ description = "Decrease window horizontal size factor", group = "Resize" }
+		},
+		{
+			{ "Mod4" }, "i", function() map.incfactor(nil, 0.1, true) end,
+			{ description = "Increase window vertical size factor", group = "Resize" }
+		},
+		{
+			{ "Mod4" }, "k", function() map.incfactor(nil, -0.1, true) end,
+			{ description = "Decrease window vertical size factor", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "j", function() map.incfactor(nil, 0.1, false, true) end,
+			{ description = "Increase group horizontal size factor", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "l", function() map.incfactor(nil, -0.1, false, true) end,
+			{ description = "Decrease group horizontal size factor", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "i", function() map.incfactor(nil, 0.1, true, true) end,
+			{ description = "Increase group vertical size factor", group = "Resize" }
+		},
+		{
+			{ "Mod4", "Control" }, "k", function() map.incfactor(nil, -0.1, true, true) end,
+			{ description = "Decrease group vertical size factor", group = "Resize" }
+		},
+	}
+
+	redflat.layout.map:set_keys(layout_map_layout, "layout")
+	redflat.layout.map:set_keys(layout_map_resize, "resize")
 
 
 	-- Global keys
