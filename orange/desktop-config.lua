@@ -16,15 +16,14 @@ local desktop = {}
 local workarea = screen[mouse.screen].workarea
 local system = redflat.system
 
-local style = {
-	color = beautiful.desktop.color
-}
-
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
 function desktop:init(args)
+	if not beautiful.desktop then return end
 
 	local args = args or {}
+	local env = args.env
+	local style = { color = beautiful.desktop.color }
 
 	-- Setting and placement
 	--------------------------------------------------------------------------------
@@ -221,7 +220,6 @@ function desktop:init(args)
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
 	local hardwareset = { args = { timeout = { 10, 10 }, actions = {} }, height = 240 }
-	-- hardwareset.unit = { { "Bps", -1 }, { "KBps", 2 }, { "MBps", 2048 } }
 	hardwareset.unit = { { "KBps", -1 }, { "MBps", 2048 } }
 
 	local thermal_sentences = {
@@ -325,8 +323,8 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	for _, field in ipairs({ cpuset, diskset, hardwareset, torrset }) do
 		field.box = redflat.desktop.textset(field.args)
-		field.layout = wibox.layout.constraint(field.box, "exact", nil, field.height)
-		main_layout:add(field.layout)
+		field.box:set_forced_height(field.height)
+		main_layout:add(field.box)
 	end
 
 	desktopbox:set_widget(main_layout)

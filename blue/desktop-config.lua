@@ -19,9 +19,10 @@ local system = redflat.system
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
 function desktop:init(args)
+	if not beautiful.desktop then return end
 
 	local args = args or {}
-	local theme_path = args.tpath or "/usr/share/awesome/themes/default"
+	local env = args.env
 
 	-- placement
 	local grid = beautiful.desktop.grid
@@ -89,15 +90,15 @@ function desktop:init(args)
 
 	transm.args = {
 		corners    = { num = 8, maxm = 100 },
-		lines      = { { maxm = 55, unit = { { "SEED", - 1 } } }, { maxm = 600, unit = { { "DNLD", - 1 } } } },
+		lines      = { { maxm = 4*1024, unit = { { "SEED", - 1 } } }, { maxm = 4*1024, unit = { { "DNLD", - 1 } } } },
 		meter      = { func = system.transmission_parse },
 		timeout    = 5,
-		asyncshell = "transmission-remote -l"
+		async      = "transmission-remote -l"
 	}
 
 	transm.style = {
 		digit_num = 1,
-		image     = theme_path .. "/desktop/skull.svg"
+		image     = env.themedir .. "/desktop/skull.svg"
 	}
 
 	-- Disks
