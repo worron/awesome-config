@@ -50,6 +50,7 @@ theme.fonts = {
 	clock    = "sans bold 12", -- textclock widget font
 	qlaunch  = "sans bold 14", -- quick launch key label font
 	title    = "sans bold 12", -- widget titles font
+	keychain = "sans bold 14", -- key sequence tip font
 	titlebar = "sans bold 12", -- client titlebar font
 	hotkeys = {
 		main  = "sans 12",      -- hotkeys helper main font
@@ -90,8 +91,9 @@ theme.service.navigator = {
 	titlefont    = theme.cairo_fonts.navigator.title,
 	font         = theme.cairo_fonts.navigator.main,
 	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
-	                 fbg1 = theme.color.main .. "40", fbg2 = theme.color.main .. "20",
-	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
+	                 fbg1 = theme.color.main .. "40",   fbg2 = theme.color.main .. "20",
+	                 hbg1 = theme.color.urgent .. "40", hbg2 = theme.color.urgent .. "20",
+	                 bg1  = theme.color.gray .. "40",   bg2  = theme.color.gray .. "20" }
 }
 
 -- Desktop file parser
@@ -150,12 +152,13 @@ theme.gauge.separator = {
 
 -- Tag
 ------------------------------------------------------------
-theme.gauge.tag.blue = {
-	width    = 103,
-	font     = theme.cairo_fonts.tag,
-	point    = { width = 80, height = 3, gap = 27, dx = 5 },
-	text_gap = 20,
-	color    = theme.color
+theme.gauge.tag.orange = {
+	width        = 38,
+	line_width   = 4,
+	iradius      = 5,
+	radius       = 11,
+	hilight_min  = false,
+	color        = theme.color
 }
 
 -- Task
@@ -187,10 +190,12 @@ theme.widget = {}
 -- individual margins for palnel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
-	mainmenu    = { 12, 12, 6, 6 },
+	mainmenu    = { 12, 10, 6, 6 },
 	layoutbox   = { 10, 10, 6, 6 },
 	textclock   = { 12, 12, 0, 0 },
-	tray        = { 12, 12, 7, 7 },
+	taglist     = { 4, 4, 0, 0 },
+	tray        = { 10, 12, 7, 7 },
+	-- tasklist    = { 0, 70, 0, 0 }, -- centering tasklist widget
 }
 
 -- Textclock
@@ -281,8 +286,9 @@ theme.widget.tasklist = {
 theme.widget.tasklist.winmenu = {
 	micon          = theme.icon,
 	titleline      = { font = theme.fonts.title, height = 30 },
-	menu           = { width = 240, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
-	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon } },
+	menu           = { width = 220, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 10, 10 } },
+	tagmenu        = { width = 160, color = { right_icon = theme.color.icon, left_icon = theme.color.icon },
+	                   icon_margin = { 8, 10, 8, 8 } },
 	state_iconsize = { width = 18, height = 18 },
 	layout_icon    = theme.widget.layoutbox.icon,
 	color          = theme.color
@@ -311,7 +317,7 @@ theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
-theme.float = {}
+theme.float = { decoration = {} }
 
 -- Application runner
 ------------------------------------------------------------
@@ -322,6 +328,7 @@ theme.float.apprunner = {
 	icon_margin   = { 8, 16, 0, 0 },
 	title_height  = 48,
 	prompt_height = 35,
+	keytip        = { geometry = { width = 400, height = 260 } },
 	title_icon    = theme.path .. "/widget/search.svg",
 	border_width  = 0,
 	name_font     = theme.fonts.title,
@@ -351,9 +358,8 @@ theme.float.appswitcher = {
 theme.float.appswitcher.color.preview_bg = theme.color.main .. "12"
 
 -- hotkeys
-theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9",  "0",
-                                    "F1",  "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
-                                    "F11", "F12" }
+theme.float.appswitcher.hotkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+                                    "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
 
 -- Quick launcher
 ------------------------------------------------------------
@@ -366,6 +372,7 @@ theme.float.qlaunch = {
 	-- df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
 	-- no_icon       = theme.homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
 	df_icon       = theme.icon.warning,
+	keytip        = { geometry = { width = 600, height = 260 } },
 	no_icon       = theme.path .. "/common/unknown.svg",
 	label_font    = theme.fonts.qlaunch,
 	color         = theme.color,
@@ -374,14 +381,25 @@ theme.float.qlaunch = {
 -- Hotkeys helper
 ------------------------------------------------------------
 theme.float.hotkeys = {
-	geometry      = { width = wa.width * 0.9, height = wa.height * 0.9 },
+	geometry      = { width = 1400, height = 600 },
 	border_margin = { 20, 20, 10, 10 },
 	border_width  = 0,
 	is_align      = true,
+	separator     = { marginh = { 0, 0, 2, 6 } },
 	font          = theme.fonts.hotkeys.main,
 	keyfont       = theme.fonts.hotkeys.key,
 	titlefont     = theme.fonts.hotkeys.title,
 	color         = theme.color
+}
+
+-- Key sequence tip
+------------------------------------------------------------
+theme.float.keychain = {
+	geometry        = { width = 250, height = 54 },
+	font            = theme.fonts.keychain,
+	-- border_width    = 0,
+	keytip          = { geometry = { width = 1200, height = 580 }, column = 2 },
+	color           = theme.color,
 }
 
 -- Tooltip
@@ -414,6 +432,20 @@ theme.float.notify = {
 		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width, y = mouse.screen.workarea.y }
 	end,
 }
+
+-- Decoration elements
+------------------------------------------------------------
+theme.float.decoration.button = {
+	color = theme.color
+}
+
+theme.float.decoration.button.color.text = "#cccccc"
+theme.float.decoration.button.color.shadow_down = theme.color.gray
+
+theme.float.decoration.field = {
+	color = theme.color
+}
+
 
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------

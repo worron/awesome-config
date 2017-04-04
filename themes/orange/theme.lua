@@ -393,7 +393,7 @@ theme.widget.tasklist = {
 theme.widget.tasklist.winmenu = {
 	micon          = theme.icon,
 	titleline      = { font = theme.fonts.title, height = 25 },
-	menu           = { width = 240, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
+	menu           = { width = 220, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
 	state_iconsize = { width = 18, height = 18 },
 	layout_icon    = theme.widget.layoutbox.icon,
 	color          = theme.color
@@ -442,7 +442,7 @@ theme.widget.tasklist.appnames["Keepassx"            ] = "KPASS"
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
-theme.float = {}
+theme.float = { decoration = {} }
 
 -- Application runner
 ------------------------------------------------------------
@@ -482,9 +482,8 @@ theme.float.appswitcher = {
 theme.float.appswitcher.color.preview_bg = theme.color.main .. "12"
 
 -- hotkeys
-theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9",  "0",
-                                    "F1",  "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
-                                    "F11", "F12" }
+theme.float.appswitcher.hotkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+                                    "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
 
 -- Quick launcher
 ------------------------------------------------------------
@@ -575,6 +574,20 @@ theme.float.notify = {
 		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width, y = mouse.screen.workarea.y }
 	end,
 }
+
+-- Decoration elements
+------------------------------------------------------------
+theme.float.decoration.button = {
+	color = theme.color
+}
+
+theme.float.decoration.button.color.text = "#cccccc"
+theme.float.decoration.button.color.shadow_down = theme.color.gray
+
+theme.float.decoration.field = {
+	color = theme.color
+}
+
 
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------

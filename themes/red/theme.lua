@@ -481,7 +481,7 @@ theme.widget.tasklist.winmenu = {
 	titleline      = { font = theme.fonts.mtitle, height = 32 },
 	stateline      = { height = 38 },
 	state_iconsize = { width = 22, height = 22 },
-	menu           = { width = 250, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
+	menu           = { width = 240, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
 	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon },
 	                   icon_margin = { 10, 12, 9, 9 } },
 	layout_icon    = theme.widget.layoutbox.icon,
@@ -524,7 +524,7 @@ theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
-theme.float = {}
+theme.float = { decoration = {} }
 
 -- Application runner
 ------------------------------------------------------------
@@ -564,9 +564,8 @@ theme.float.appswitcher = {
 theme.float.appswitcher.color.preview_bg = theme.color.main .. "12"
 
 -- hotkeys
-theme.float.appswitcher.hotkeys = { "1",   "2",  "3",  "4",  "5",  "6",  "7",  "8",  "9",  "0",
-                                    "F1",  "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
-                                    "F11", "F12" }
+theme.float.appswitcher.hotkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+                                    "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
 
 -- Quick launcher
 ------------------------------------------------------------
@@ -657,6 +656,20 @@ theme.float.notify = {
 		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width, y = mouse.screen.workarea.y }
 	end,
 }
+
+-- Decoration elements
+------------------------------------------------------------
+theme.float.decoration.button = {
+	color = theme.color
+}
+
+theme.float.decoration.button.color.text = "#cccccc"
+theme.float.decoration.button.color.shadow_down = theme.color.gray
+
+theme.float.decoration.field = {
+	color = theme.color
+}
+
 
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------
