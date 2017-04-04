@@ -189,11 +189,11 @@ function hotkeys:init(args)
 		},
 	}
 
-	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys, menu_keys_move), "move")
+	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys.move, menu_keys_move), "move")
 
 	-- Appswitcher
 	------------------------------------------------------------
-	appswitcher_keys = {
+	appswitcher_keys_move = {
 		{
 			{ env.mod }, "a", function() appswitcher:switch() end,
 			{ description = "Select next app", group = "Navigation" }
@@ -202,21 +202,102 @@ function hotkeys:init(args)
 			{ env.mod }, "q", function() appswitcher:switch({ reverse = true }) end,
 			{ description = "Select previous app", group = "Navigation" }
 		},
+	}
+
+	appswitcher_keys_action = {
 		{
 			{ env.mod }, "Super_L", function() appswitcher:hide() end,
-			{ description = "Exit", group = "Action" }
+			{ description = "Activate and exit", group = "Action" }
 		},
 		{
 			{}, "Escape", function() appswitcher:hide(true) end,
 			{ description = "Exit", group = "Action" }
 		},
+	}
+
+	appswitcher:set_keys(awful.util.table.join(appswitcher.keys.move, appswitcher_keys_move), "move")
+	appswitcher:set_keys(awful.util.table.join(appswitcher.keys.action, appswitcher_keys_action), "action")
+
+
+	-- Emacs like key sequences
+	--------------------------------------------------------------------------------
+
+	-- initial key
+	-- first prefix key, no description needed here
+	local keyseq = { { env.mod }, "c", {}, {} }
+
+	-- second sequence keys
+	keyseq[3] = {
+		-- second and last key in sequence, full description and action is necessary
 		{
-			{ env.mod }, "F1", function() redtip:show()  end,
-			{ description = "Show hotkeys helper", group = "Help" }
+			{}, "p", function () toggle_placement(env) end,
+			{ description = "Switch master/slave window placement", group = "Clients managment" }
+		},
+
+		-- not last key in sequence, no description needed here
+		{ {}, "k", {}, {} }, -- application kill group
+		{ {}, "n", {}, {} }, -- application minimize group
+		{ {}, "r", {}, {} }, -- application restore group
+
+		-- { {}, "g", {}, {} }, -- run or rise group
+		-- { {}, "f", {}, {} }, -- launch application group
+	}
+
+	-- application kill actions,
+	-- last key in sequence, full description and action is necessary
+	keyseq[3][2][3] = {
+		{
+			{}, "f", function() if client.focus then client.focus:kill() end end,
+			{ description = "Kill focused client", group = "Kill application", keyset = { "f" } }
+		},
+		{
+			{}, "a", kill_all,
+			{ description = "Kill all clients with current tag", group = "Kill application", keyset = { "a" } }
 		},
 	}
 
-	appswitcher:set_keys(appswitcher_keys)
+	-- application minimize actions,
+	-- last key in sequence, full description and action is necessary
+	keyseq[3][3][3] = {
+		{
+			{}, "f", function() if client.focus then client.focus.minimized = true end end,
+			{ description = "Minimized focused client", group = "Clients managment", keyset = { "f" } }
+		},
+		{
+			{}, "a", minimize_all,
+			{ description = "Minimized all clients with current tag", group = "Clients managment", keyset = { "a" } }
+		},
+		{
+			{}, "e", minimize_all_except_focused,
+			{ description = "Minimized all clients except focused", group = "Clients managment", keyset = { "e" } }
+		},
+	}
+
+	-- application restore actions,
+	-- last key in sequence, full description and action is necessary
+	keyseq[3][4][3] = {
+		{
+			{}, "f", restore_client,
+			{ description = "Restore minimized client", group = "Clients managment", keyset = { "f" } }
+		},
+		{
+			{}, "a", restore_all,
+			{ description = "Restore all clients with current tag", group = "Clients managment", keyset = { "a" } }
+		},
+	}
+
+	-- quick launch key sequence actions, auto fill up last sequence key
+	-- for i = 1, 9 do
+	-- 	local ik = tostring(i)
+	-- 	table.insert(keyseq[3][5][3], {
+	-- 		{}, ik, function() qlaunch:run_or_raise(ik) end,
+	-- 		{ description = "Run or rise application №" .. ik, group = "Run or Rise", keyset = { ik } }
+	-- 	})
+	-- 	table.insert(keyseq[3][6][3], {
+	-- 		{}, ik, function() qlaunch:run_or_raise(ik, true) end,
+	-- 		{ description = "Launch application №".. ik, group = "Quick Launch", keyset = { ik } }
+	-- 	})
+	-- end
 
 
 	-- Global keys
@@ -231,12 +312,12 @@ function hotkeys:init(args)
 			{ description = "Window control mode", group = "Main" }
 		},
 		{
-			{ env.mod }, "F5", function () toggle_placement(env) end,
-			{ description = "Switch master/slave window placement", group = "Main" }
-		},
-		{
 			{ env.mod, "Control" }, "r", awesome.restart,
 			{ description = "Reload awesome", group = "Main" }
+		},
+		{
+			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
+			{ description = "User key sequence", group = "Main" }
 		},
 		{
 			{ env.mod }, "Return", function() awful.spawn(env.terminal) end,
@@ -286,37 +367,7 @@ function hotkeys:init(args)
 		},
 		{
 			{ env.mod }, "F3", function() redflat.float.qlaunch:show() end,
-			{ description = "Application quick launcher", group = "Widgets" }
-		},
-
-		{
-			{ env.mod }, "Escape", awful.tag.history.restore,
-			{ description = "Go previos tag", group = "Tag navigation" }
-		},
-		{
-			{ env.mod }, "Right", awful.tag.viewnext,
-			{ description = "View next tag", group = "Tag navigation" }
-		},
-		{
-			{ env.mod }, "Left", awful.tag.viewprev,
-			{ description = "View previous tag", group = "Tag navigation" }
-		},
-
-		{
-			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
-			{ description = "Switch to next with current tag", group = "Application switcher" }
-		},
-		{
-			{ env.mod }, "q", nil, function() appswitcher:show({ filter = current, reverse = true }) end,
-			{ description = "Switch to previous with current tag", group = "Application switcher" }
-		},
-		{
-			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
-			{ description = "Switch to next through all tags", group = "Application switcher" }
-		},
-		{
-			{ env.mod, "Shift" }, "q", nil, function() appswitcher:show({ filter = allscr, reverse = true }) end,
-			{ description = "Switch to previous through all tags", group = "Application switcher" }
+			{ description = "Application quick launcher", group = "Main" }
 		},
 
 		{
@@ -337,37 +388,46 @@ function hotkeys:init(args)
 		},
 
 		{
+			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
+			{ description = "Switch to next with current tag", group = "Application switcher" }
+		},
+		{
+			{ env.mod }, "q", nil, function() appswitcher:show({ filter = current, reverse = true }) end,
+			{ description = "Switch to previous with current tag", group = "Application switcher" }
+		},
+		{
+			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
+			{ description = "Switch to next through all tags", group = "Application switcher" }
+		},
+		{
+			{ env.mod, "Shift" }, "q", nil, function() appswitcher:show({ filter = allscr, reverse = true }) end,
+			{ description = "Switch to previous through all tags", group = "Application switcher" }
+		},
+
+		{
+			{ env.mod }, "Escape", awful.tag.history.restore,
+			{ description = "Go previos tag", group = "Tag navigation" }
+		},
+		{
+			{ env.mod }, "Right", awful.tag.viewnext,
+			{ description = "View next tag", group = "Tag navigation" }
+		},
+		{
+			{ env.mod }, "Left", awful.tag.viewprev,
+			{ description = "View previous tag", group = "Tag navigation" }
+		},
+
+		{
 			{ env.mod }, "y", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
 			{ description = "Show layout menu", group = "Layouts" }
 		},
 		{
-			{ env.mod, "Control"}, "Right", function() awful.layout.inc(1) end,
+			{ env.mod }, "Up", function() awful.layout.inc(1) end,
 			{ description = "Select next layout", group = "Layouts" }
 		},
 		{
-			{ env.mod, "Control" }, "Left", function() awful.layout.inc(-1) end,
+			{ env.mod, "Down" }, "Left", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
-		},
-
-		{
-			{ env.mod, "Control" }, "n", restore_client,
-			{ description = "Restore minimized client", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod }, "Down", minimize_all,
-			{ description = "Minimized all clients with current tag", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod, "Control" }, "Down", minimize_all_except_focused,
-			{ description = "Minimized all clients except focused", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod }, "Up", restore_all,
-			{ description = "Restore all clients with current tag", group = "Clients manipulation" }
-		},
-		{
-			{ env.mod, "Shift" }, "F4", kill_all,
-			{ description = "Kill all clients with current tag", group = "Clients manipulation" }
 		},
 	}
 
