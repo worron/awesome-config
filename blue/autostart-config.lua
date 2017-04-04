@@ -13,22 +13,22 @@ local autostart = {}
 --------------------------------------------------------------------------------
 function autostart.run()
 	-- utils
-	awful.util.spawn_with_shell("compton")
-	awful.util.spawn_with_shell("pulseaudio")
-	awful.util.spawn_with_shell("nm-applet")
-	awful.util.spawn_with_shell("sleep 0.5 && bash ~/Documents/scripts/ff-sync.sh")
-	awful.util.spawn_with_shell("xrdb -merge ~/.Xdefaults")
+	awful.spawn.with_shell("compton")
+	awful.spawn.with_shell("pulseaudio")
+	awful.spawn.with_shell("nm-applet")
+	awful.spawn.with_shell("sleep 0.5 && bash ~/Documents/scripts/ff-sync.sh")
+	awful.spawn.with_shell("xrdb -merge ~/.Xdefaults")
 
 	-- gtk setting deamon
-	awful.util.spawn_with_shell("unity-settings-daemon")
+	awful.spawn.with_shell("unity-settings-daemon")
 
 	-- keyboard layouts
-	awful.util.spawn_with_shell("kbdd")
-	awful.util.spawn_with_shell("sleep 1 && bash ~/Documents/scripts/kbdd-setup.sh")
+	awful.spawn.with_shell("kbdd")
+	awful.spawn.with_shell("sleep 1 && bash ~/Documents/scripts/kbdd-setup.sh")
 
 	-- apps
-	awful.util.spawn_with_shell("clipflap")
-	awful.util.spawn_with_shell("sleep 0.5 && transmission-gtk -m")
+	awful.spawn.with_shell("clipflap")
+	awful.spawn.with_shell("sleep 0.5 && transmission-gtk -m")
 end
 
 -- End
