@@ -149,8 +149,8 @@ function hotkeys:init(args)
 		},
 	}
 
-	apprunner:set_keys(awful.util.table.join(apprunner.keys.move, apprunner_keys_move), "move")
-	-- apprunner:set_keys(apprunner_keys_move, "move")
+	-- apprunner:set_keys(awful.util.table.join(apprunner.keys.move, apprunner_keys_move), "move")
+	apprunner:set_keys(apprunner_keys_move, "move")
 
 	-- Menu widget
 	------------------------------------------------------------
@@ -173,8 +173,8 @@ function hotkeys:init(args)
 		},
 	}
 
-	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys.move, menu_keys_move), "move")
-	-- redflat.menu:set_keys(menu_keys_move, "move")
+	-- redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys.move, menu_keys_move), "move")
+	redflat.menu:set_keys(menu_keys_move, "move")
 
 	-- Appswitcher widget
 	------------------------------------------------------------
@@ -221,7 +221,7 @@ function hotkeys:init(args)
 		},
 		{
 			{ env.mod }, "F1", function() redtip:show()  end,
-			{ description = "Show hotkeys helper", group = "Help" }
+			{ description = "Show hotkeys helper", group = "Action" }
 		},
 	}
 
@@ -260,11 +260,11 @@ function hotkeys:init(args)
 	keyseq[3][1][3] = {
 		{
 			{}, "f", function() if client.focus then client.focus:kill() end end,
-			{ description = "Kill focused client", group = "Kill application" }
+			{ description = "Kill focused client", group = "Kill application", keyset = { "f" } }
 		},
 		{
 			{}, "a", kill_all,
-			{ description = "Kill all clients with current tag", group = "Kill application" }
+			{ description = "Kill all clients with current tag", group = "Kill application", keyset = { "a" } }
 		},
 	}
 
@@ -272,33 +272,33 @@ function hotkeys:init(args)
 	keyseq[3][2][3] = {
 		{
 			{}, "p", function () toggle_placement(env) end,
-			{ description = "Switch master/slave window placement", group = "Clients managment" }
+			{ description = "Switch master/slave window placement", group = "Clients managment", keyset = { "p" } }
 		},
 	}
 
 	keyseq[3][3][3] = {
 		{
 			{}, "f", restore_client,
-			{ description = "Restore minimized client", group = "Clients managment" }
+			{ description = "Restore minimized client", group = "Clients managment", keyset = { "f" } }
 		},
 		{
 			{}, "a", restore_all,
-			{ description = "Restore all clients with current tag", group = "Clients managment" }
+			{ description = "Restore all clients with current tag", group = "Clients managment", keyset = { "a" } }
 		},
 	}
 
 	keyseq[3][4][3] = {
 		{
 			{}, "f", function() if client.focus then client.focus.minimized = true end end,
-			{ description = "Minimized focused client", group = "Clients managment" }
+			{ description = "Minimized focused client", group = "Clients managment", keyset = { "f" } }
 		},
 		{
 			{}, "a", minimize_all,
-			{ description = "Minimized all clients with current tag", group = "Clients managment" }
+			{ description = "Minimized all clients with current tag", group = "Clients managment", keyset = { "a" } }
 		},
 		{
 			{}, "e", minimize_all_except_focused,
-			{ description = "Minimized all clients except focused", group = "Clients managment" }
+			{ description = "Minimized all clients except focused", group = "Clients managment", keyset = { "e" } }
 		},
 	}
 

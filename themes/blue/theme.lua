@@ -38,7 +38,7 @@ theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
 theme.useless_gap         = 4  -- useless gap
 
-theme.cellnum = { x = 96, y = 54 } -- grid layout property
+theme.cellnum = { x = 96, y = 58 } -- grid layout property
 
 theme.wallpaper = theme.path .. "/wallpaper/custom.png" -- wallpaper file
 
@@ -51,7 +51,7 @@ theme.fonts = {
 	notify   = "Play bold 14",   -- redflat notify popup font
 	clock    = "Play bold 12",   -- textclock widget font
 	qlaunch  = "Play bold 14",   -- quick launch key label font
-	keychain = "Play bold 14",   -- key sequence tip font
+	keychain = "Play bold 16",   -- key sequence tip font
 	title    = "Roboto bold 13", -- widget titles font
 	titlebar = "Roboto bold 13", -- client titlebar font
 	hotkeys = {
@@ -207,7 +207,7 @@ theme.service.navigator = {
 }
 
 theme.service.navigator.keytip = {}
-theme.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 460 }, exit = true }
+theme.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 440 }, exit = true }
 theme.service.navigator.keytip["fairh"] = theme.service.navigator.keytip["fairv"]
 
 theme.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 660 }, exit = true }
@@ -215,7 +215,7 @@ theme.service.navigator.keytip["tileleft"]   = theme.service.navigator.keytip["t
 theme.service.navigator.keytip["tiletop"]    = theme.service.navigator.keytip["tile"]
 theme.service.navigator.keytip["tilebottom"] = theme.service.navigator.keytip["tile"]
 
-theme.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 560 }, column = 2, exit = true }
+theme.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 520 }, column = 2, exit = true }
 theme.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 580 }, column = 2, exit = true }
 
 -- Desktop file parser
@@ -245,7 +245,7 @@ theme.menu = {
 	icon_margin  = { 4, 7, 7, 8 },
 	ricon_margin = { 9, 9, 9, 9 },
 	font         = theme.fonts.menu,
-	keytip       = { geometry = { width = 400, height = 460 } },
+	keytip       = { geometry = { width = 400, height = 380 } },
 	hide_timeout = 1,
 	submenu_icon = theme.path .. "/common/submenu.svg"
 }
@@ -438,7 +438,7 @@ theme.widget.layoutbox.icon = {
 
 theme.widget.layoutbox.menu = {
 	icon_margin  = { 8, 12, 9, 9 },
-	width        = 260,
+	width        = 220,
 	auto_hotkey  = true,
 	nohide       = false,
 	color        = { right_icon = theme.color.icon, left_icon = theme.color.icon }
@@ -535,6 +535,7 @@ theme.float.apprunner = {
 	title_height  = 48,
 	prompt_height = 35,
 	title_icon    = theme.path .. "/widget/search.svg",
+	keytip        = { geometry = { width = 400, height = 250 } },
 	border_width  = 0,
 	name_font     = theme.fonts.title,
 	comment_font  = theme.fonts.main,
@@ -554,7 +555,7 @@ theme.float.appswitcher = {
 	title_font     = theme.fonts.title,
 	border_width   = 0,
 	update_timeout = 1 / 12,
-	keytip         = { geometry = { width = 400, height = 380 }, exit = true },
+	keytip         = { geometry = { width = 400, height = 360 }, exit = true },
 	font           = theme.cairo_fonts.appswitcher,
 	color          = theme.color
 }
@@ -577,7 +578,7 @@ theme.float.qlaunch = {
 	df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
 	no_icon       = theme.homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
 	recoloring    = true,
-	keytip        = { geometry = { width = 600, height = 340 } },
+	keytip        = { geometry = { width = 600, height = 320 } },
 	label_font    = theme.fonts.qlaunch,
 	color         = theme.color,
 }
@@ -634,7 +635,7 @@ theme.float.top = {
 -- Key sequence tip
 ------------------------------------------------------------
 theme.float.keychain = {
-	geometry        = { width = 250, height = 50 },
+	geometry        = { width = 250, height = 56 },
 	font            = theme.fonts.keychain,
 	border_width    = 0,
 	keytip          = { geometry = { width = 1200, height = 580 }, column = 2 },
