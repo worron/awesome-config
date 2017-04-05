@@ -57,6 +57,28 @@ client.connect_signal("untagged", function(c, t)
 	if redflat.layout.map.data[t] then redflat.layout.map.clean_client(c) end
 end)
 
+
+-- user map layout preset
+-- preset can be defined for individual tags, but this should be done after tag initialization
+
+-- redflat.layout.map.base_construct = function(wa)
+-- 	local tree = { set = {}, active = 1, autoaim = true }
+
+-- 	tree.set[1] = redflat.layout.map.construct_itempack({}, wa, false)
+-- 	tree.set[2] = redflat.layout.map.base_set_new_pack({}, wa, true, tree.set[1])
+-- 	tree.set[3] = redflat.layout.map.base_set_new_pack({}, wa, true, tree.set[1])
+-- 	tree.set[4] = redflat.layout.map.base_set_new_pack({}, wa, true, tree.set[1])
+
+-- 	function tree:aim()
+-- 		for i = 2, 4 do if #self.set[i].items == 0 then return i end end
+-- 		local active = #self.set[4].items >= #self.set[2].items and 2 or 4
+-- 		return active
+-- 	end
+
+-- 	return tree
+-- end
+
+
 -- End
 -----------------------------------------------------------------------------------------------------------------------
 return layouts

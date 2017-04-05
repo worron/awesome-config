@@ -453,7 +453,7 @@ function hotkeys:init(args)
 	-- user map layout keys
 	local layout_map_layout = {
 		{
-			{ "Mod4" }, "r", function() map.swap_group() end,
+			{ "Mod4" }, "s", function() map.swap_group() end,
 			{ description = "Change placement direction for group", group = "Layout" }
 		},
 		{
@@ -507,6 +507,10 @@ function hotkeys:init(args)
 		{
 			{ "Mod4" }, "[", function() map.move_group(-1) end,
 			{ description = "Move active group to the bottom", group = "Layout" }
+		},
+		{
+			{ "Mod4" }, "r", function() map.reset_tree() end,
+			{ description = "Reset layout structure", group = "Layout" }
 		},
 	}
 
