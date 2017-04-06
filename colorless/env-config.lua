@@ -61,6 +61,16 @@ env.wallpaper = function(s)
 	end
 end
 
+-- Tag tooltip text generation
+--------------------------------------------------------------------------------
+env.tagtip = function(t)
+	local layname = awful.layout.getname(awful.tag.getproperty(t, "layout"))
+	if redflat.util.table.check(beautiful, "widget.layoutbox.name_alias") then
+		layname = beautiful.widget.layoutbox.name_alias[layname] or layname
+	end
+	return string.format("%s (%d apps) [%s]", t.name, #(t:clients()), layname)
+end
+
 -- Panel widgets wrapper
 --------------------------------------------------------------------------------
 env.wrapper = function(widget, name, buttons)

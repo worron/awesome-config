@@ -205,7 +205,7 @@ awful.screen.connect_for_each_screen(
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
 
 		-- taglist widget
-		taglist[s] = redflat.widget.taglist({ screen = s, buttons = taglist.buttons }, taglist.style)
+		taglist[s] = redflat.widget.taglist({ screen = s, buttons = taglist.buttons, hint = env.tagtip }, taglist.style)
 
 		-- tasklist widget
 		tasklist[s] = redflat.widget.tasklist({ screen = s, buttons = tasklist.buttons }, tasklist.style)
