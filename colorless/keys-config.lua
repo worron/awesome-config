@@ -113,42 +113,44 @@ function hotkeys:init(args)
 
 	-- Layouts
 	--------------------------------------------------------------------------------
-	local layout_tile = {
-		{
-			{ env.mod }, "l", function () awful.tag.incmwfact( 0.05) end,
-			{ description = "Increase master width factor", group = "Layout" }
-		},
-		{
-			{ env.mod }, "j", function () awful.tag.incmwfact(-0.05) end,
-			{ description = "Decrease master width factor", group = "Layout" }
-		},
-		{
-			{ env.mod }, "i", function () awful.client.incwfact( 0.05) end,
-			{ description = "Increase window factor of a client", group = "Layout" }
-		},
-		{
-			{ env.mod }, "k", function () awful.client.incwfact(-0.05) end,
-			{ description = "Decrease window factor of a client", group = "Layout" }
-		},
-		{
-			{ env.mod, }, "+", function () awful.tag.incnmaster( 1, nil, true) end,
-			{ description = "Increase the number of master clients", group = "Layout" }
-		},
-		{
-			{ env.mod }, "-", function () awful.tag.incnmaster(-1, nil, true) end,
-			{ description = "Decrease the number of master clients", group = "Layout" }
-		},
-		{
-			{ env.mod, "Control" }, "+", function () awful.tag.incncol( 1, nil, true) end,
-			{ description = "Increase the number of columns", group = "Layout" }
-		},
-		{
-			{ env.mod, "Control" }, "-", function () awful.tag.incncol(-1, nil, true) end,
-			{ description = "Decrease the number of columns", group = "Layout" }
-		},
-	}
+	-- this is exaple for layouts hotkeys setup, see other color configs for more
 
-	laycom:set_keys(layout_tile, "tile")
+	-- local layout_tile = {
+	-- 	{
+	-- 		{ env.mod }, "l", function () awful.tag.incmwfact( 0.05) end,
+	-- 		{ description = "Increase master width factor", group = "Layout" }
+	-- 	},
+	-- 	{
+	-- 		{ env.mod }, "j", function () awful.tag.incmwfact(-0.05) end,
+	-- 		{ description = "Decrease master width factor", group = "Layout" }
+	-- 	},
+	-- 	{
+	-- 		{ env.mod }, "i", function () awful.client.incwfact( 0.05) end,
+	-- 		{ description = "Increase window factor of a client", group = "Layout" }
+	-- 	},
+	-- 	{
+	-- 		{ env.mod }, "k", function () awful.client.incwfact(-0.05) end,
+	-- 		{ description = "Decrease window factor of a client", group = "Layout" }
+	-- 	},
+	-- 	{
+	-- 		{ env.mod, }, "+", function () awful.tag.incnmaster( 1, nil, true) end,
+	-- 		{ description = "Increase the number of master clients", group = "Layout" }
+	-- 	},
+	-- 	{
+	-- 		{ env.mod }, "-", function () awful.tag.incnmaster(-1, nil, true) end,
+	-- 		{ description = "Decrease the number of master clients", group = "Layout" }
+	-- 	},
+	-- 	{
+	-- 		{ env.mod, "Control" }, "+", function () awful.tag.incncol( 1, nil, true) end,
+	-- 		{ description = "Increase the number of columns", group = "Layout" }
+	-- 	},
+	-- 	{
+	-- 		{ env.mod, "Control" }, "-", function () awful.tag.incncol(-1, nil, true) end,
+	-- 		{ description = "Decrease the number of columns", group = "Layout" }
+	-- 	},
+	-- }
+
+	-- laycom:set_keys(layout_tile, "tile")
 
 	-- Keys for widgets
 	--------------------------------------------------------------------------------

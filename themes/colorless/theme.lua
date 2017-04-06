@@ -96,6 +96,28 @@ theme.service.navigator = {
 	                 bg1  = theme.color.gray .. "40",   bg2  = theme.color.gray .. "20" }
 }
 
+-- layout hotkeys helper size
+theme.service.navigator.keytip = {}
+theme.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 360 }, exit = true }
+theme.service.navigator.keytip["fairh"] = theme.service.navigator.keytip["fairv"]
+theme.service.navigator.keytip["spiral"] = theme.service.navigator.keytip["fairv"]
+theme.service.navigator.keytip["dwindle"] = theme.service.navigator.keytip["fairv"]
+
+theme.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 480 }, exit = true }
+theme.service.navigator.keytip["tileleft"]   = theme.service.navigator.keytip["tile"]
+theme.service.navigator.keytip["tiletop"]    = theme.service.navigator.keytip["tile"]
+theme.service.navigator.keytip["tilebottom"] = theme.service.navigator.keytip["tile"]
+
+theme.service.navigator.keytip["cornernw"] = { geometry = { width = 600, height = 440 }, exit = true }
+theme.service.navigator.keytip["cornerne"] = theme.service.navigator.keytip["cornernw"]
+theme.service.navigator.keytip["cornerse"] = theme.service.navigator.keytip["cornernw"]
+theme.service.navigator.keytip["cornersw"] = theme.service.navigator.keytip["cornernw"]
+
+theme.service.navigator.keytip["magnifier"] = { geometry = { width = 600, height = 360 }, exit = true }
+
+theme.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 440 }, column = 2, exit = true }
+theme.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 480 }, column = 2, exit = true }
+
 -- Desktop file parser
 --------------------------------------------------------------------------------
 theme.service.dfparser = {
@@ -398,7 +420,7 @@ theme.float.keychain = {
 	geometry        = { width = 250, height = 54 },
 	font            = theme.fonts.keychain,
 	-- border_width    = 0,
-	keytip          = { geometry = { width = 1200, height = 580 }, column = 2 },
+	keytip          = { geometry = { width = 600, height = 400 }, column = 1 },
 	color           = theme.color,
 }
 
