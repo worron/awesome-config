@@ -83,7 +83,7 @@ function desktop:init(args)
 
 	local function form_value(value, color_set, text_set, unit, dn)
 		local color_set = color_set or colset.base
-		local text_set = text_set or { "no one" }
+		local text_set = text_set or { "none" }
 		local dn = dn or 3
 
 		local hilight = style.color.gray
@@ -125,7 +125,7 @@ function desktop:init(args)
 	local cpu_sentences = {
 		"%s",
 		" %s percent of CPU. ",
-		"In more detail %s of %s available cores fully loaded ",
+		"In more detail %s of the %s available cores fully loaded ",
 		"and %s %s half-used. ",
 		-- "Furthermore %s %s used by more than ten percent.",
 	}
@@ -150,7 +150,7 @@ function desktop:init(args)
 			{ form_value(usage.total, {}, cpu_intro) },
 			{ form_value(usage.total, colset.light, {}) },
 			{ form_value(core_load.full, colset.cores), #usage.core },
-			{ form_value(core_load.half, colset.cores), core_load.half > 1 and "are" or "is" },
+			{ form_value(core_load.half, colset.cores, { "not even one" }), core_load.half > 1 and "are" or "is" },
 			-- { form_value(core_load.low), core_load.low > 1 and "cores are" or "core is" },
 		}
 

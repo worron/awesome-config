@@ -49,7 +49,7 @@ function signals:init(args)
 	end
 
 	-- hilight border of focused window
-	-- disable this one since focus indicated by titlebars in current config
+	-- can be disabled since focus indicated by titlebars in current config
 	if env.color_border_focus then
 		client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
 		client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
@@ -57,6 +57,13 @@ function signals:init(args)
 
 	-- wallpaper update on screen geometry change
 	screen.connect_signal("property::geometry", env.wallpaper)
+
+	-- Awesome v4.0 introduce screen handling without restart.
+	-- Since I'm using single monitor setup and I'm too lazy to rework my panel widgets for this new feature,
+	-- simple adding signal to restart wm on new monitor pluging.
+	-- For reference, screen-dependent widgets are
+	-- redflat.widget.layoutbox, redflat.widget.taglist, redflat.widget.tasklist
+	screen.connect_signal("list", awesome.restart)
 end
 
 -- End

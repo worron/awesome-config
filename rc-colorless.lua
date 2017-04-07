@@ -110,9 +110,6 @@ awful.screen.connect_for_each_screen(
 		-- tags
 		awful.tag({ "Tag1", "Tag2", "Tag3", "Tag4", "Tag5" }, s, awful.layout.layouts[1])
 
-		-- Create a promptbox for each screen
-		s.mypromptbox = awful.widget.prompt()
-
 		-- layoutbox widget
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
 

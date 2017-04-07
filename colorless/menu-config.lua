@@ -26,6 +26,14 @@ function menu:init(args)
 
 	-- Application submenu
 	------------------------------------------------------------
+
+	-- WARNING!
+	-- 'dfparser' module used to parse available desktop files for building application list and finding app icons,
+	-- it may cause significant delay on wm start/restart due to the synchronous type of the scripts.
+	-- This issue can be reduced by using additional settings like custom desktop files directory
+	-- and user only icon theme. See colored configs for more details.
+
+	-- At worst, you can give up all applications widgets (appmenu, applauncher, appswitcher, qlaunch) in your config
 	local appmenu = redflat.service.dfparser.menu({ icons = icon_style, wm_name = "awesome" })
 
 	-- Main menu
@@ -40,7 +48,7 @@ function menu:init(args)
 			{ "Test Item 2", function() naughty.notify({ text = "Test menu 2" }) end, key = "m" },
 			separator,
 			{ "Restart", awesome.restart, },
-			{ "Exit", awesome.quit, },
+			{ "Exit",    awesome.quit, },
 		}
 	})
 
