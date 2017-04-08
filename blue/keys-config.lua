@@ -478,7 +478,7 @@ function hotkeys:init(args)
 		},
 		{
 			{ "Mod4", "Control" }, "d", function() map.clean_groups() end,
-			{ description = "Destroy group all empty groups", group = "Layout" }
+			{ description = "Destroy all empty groups", group = "Layout" }
 		},
 		{
 			{ "Mod4" }, "f", function() map.set_active() end,

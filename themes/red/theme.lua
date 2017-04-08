@@ -193,8 +193,9 @@ theme.service.navigator = {
 	titlefont    = theme.cairo_fonts.navigator.title,
 	font         = theme.cairo_fonts.navigator.main,
 	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
-	                 fbg1 = theme.color.main .. "40", fbg2 = theme.color.main .. "20",
-	                 bg1  = theme.color.gray .. "40", bg2  = theme.color.gray .. "20" }
+	                 fbg1 = theme.color.main .. "40",   fbg2 = theme.color.main .. "20",
+	                 hbg1 = theme.color.urgent .. "40", hbg2 = theme.color.urgent .. "20",
+	                 bg1  = theme.color.gray .. "40",   bg2  = theme.color.gray .. "20" }
 }
 
 theme.service.navigator.keytip = {}
