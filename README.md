@@ -4,11 +4,12 @@ Custom config for [Awesome WM](http://awesome.naquadah.org).
 This config is compatible with AwesomeWM 4 only, check `v356` branch for older (v3.5.6 - v3.5.9) version.
 
 ## Screenshots
-![](https://github.com/worron/awesome-config/wiki/images/red-1.png)
+![](https://github.com/worron/awesome-config/wiki/images/v400/red.png)
 ---
-![](https://github.com/worron/awesome-config/wiki/images/blue-1.png)
+![](https://github.com/worron/awesome-config/wiki/images/v400/blue.png)
 ---
-![](https://github.com/worron/awesome-config/wiki/images/orange-1.png)
+![](https://github.com/worron/awesome-config/wiki/images/v400/orange.png)
+<p align="center"><a href="https://youtu.be/OoSts990-lY">Video Demo</a></p>
 
 ## Description
 Advanced user config for Awesome WM, It consist of a bunch of new widgets, features, tiling schemes, and some reworked standart widgets. This repository provide only config examples and themes. Main code base can be found in `redflat` submodule. Should be mentioned, that originally this scripts was created for Awesome v3.5.6 and then roughly ported to latest version, thereby some part of code may seem too messed and outdated.  So code improvement fixes are welcomed.
