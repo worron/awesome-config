@@ -9,6 +9,8 @@ This config is compatible with AwesomeWM 4 only, check `v356` branch for older (
 ![](https://github.com/worron/awesome-config/wiki/images/v400/blue.png)
 ---
 ![](https://github.com/worron/awesome-config/wiki/images/v400/orange.png)
+---
+![](https://github.com/worron/awesome-config/wiki/images/v400/green.png)
 <p align="center"><a href="https://youtu.be/OoSts990-lY">Video Demo</a></p>
 
 ## Description
