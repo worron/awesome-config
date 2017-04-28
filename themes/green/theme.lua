@@ -514,6 +514,9 @@ theme.widget.tasklist.winmenu.icon = {
 	maximized            = theme.path .. "/common/window_control/maximized.svg",
 }
 
+-- icon aliases
+theme.widget.tasklist.iconnames = {}
+theme.widget.tasklist.iconnames["jetbrains-pycharm-ce"] = "pycharm"
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
