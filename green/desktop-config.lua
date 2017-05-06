@@ -90,7 +90,7 @@ function desktop:init(args)
 
 	transm.args = {
 		corners    = { num = 8, maxm = 100 },
-		lines      = { { maxm = 4*1024, unit = { { "PEERS", - 1 } } }, { maxm = 4*1024, unit = { { "PEERS", - 1 } } } },
+		lines      = { { maxm = 4*1024, unit = { { "TRRNT", - 1 } } }, { maxm = 4*1024, unit = { { "TRRNT", - 1 } } } },
 		meter      = { func = system.transmission_parse },
 		timeout    = 5,
 		async      = "transmission-remote -l"
