@@ -85,7 +85,7 @@ textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat =
 -- Software update indcator
 --------------------------------------------------------------------------------
 local upgrades = {}
-upgrades.widget = redflat.widget.upgrades()
+upgrades.widget = redflat.widget.upgrades({ command = "bash -c 'pacman -Qu | wc -l'" })
 
 upgrades.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () mymenu.mainmenu:toggle() end),
@@ -145,7 +145,7 @@ mail.widget = redflat.widget.mail({ maillist = my_mails })
 
 -- buttons
 mail.buttons = awful.util.table.join(
-	awful.button({ }, 1, function () awful.spawn.with_shell("claws-mail") end),
+	awful.button({ }, 1, function () awful.spawn.with_shell(env.mail) end),
 	awful.button({ }, 2, function () redflat.widget.mail:update() end)
 )
 

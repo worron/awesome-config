@@ -231,9 +231,9 @@ function desktop:init(args)
 	-- temperature sensors
 	hardwareset.args.actions[1] = function()
 		local data = {}
-		data[1] = system.thermal.sensors("'Physical id 0'")
+		data[1] = system.thermal.sensors("'Package id 0'")
 		data[2] = system.thermal.hddtemp({ disk = "/dev/sdb" })
-		data[3] = system.thermal.nvprime()
+		data[3] = system.thermal.nvoptimus()
 
 		local values = {
 			{ form_value(data[1][1], colset.tcpu, {}) },

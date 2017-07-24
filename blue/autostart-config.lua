@@ -17,10 +17,9 @@ function autostart.run()
 	awful.spawn.with_shell("pulseaudio")
 	awful.spawn.with_shell("nm-applet")
 	awful.spawn.with_shell("sleep 0.5 && bash ~/Documents/scripts/ff-sync.sh")
-	awful.spawn.with_shell("xrdb -merge ~/.Xdefaults")
 
-	-- gtk setting deamon
-	awful.spawn.with_shell("unity-settings-daemon")
+	-- gnome setting deamon
+	awful.spawn.with_shell("/usr/lib/gnome-settings-daemon/gsd-xsettings")
 
 	-- keyboard layouts
 	awful.spawn.with_shell("kbdd")
