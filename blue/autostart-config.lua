@@ -18,8 +18,9 @@ function autostart.run()
 	awful.spawn.with_shell("nm-applet")
 	awful.spawn.with_shell("sleep 0.5 && bash ~/Documents/scripts/ff-sync.sh")
 
-	-- gnome setting deamon
+	-- gnome environment
 	awful.spawn.with_shell("/usr/lib/gnome-settings-daemon/gsd-xsettings")
+	awful.spawn.with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
 	-- keyboard layouts
 	awful.spawn.with_shell("kbdd")
