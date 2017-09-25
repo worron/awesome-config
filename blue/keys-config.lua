@@ -115,6 +115,12 @@ local brightness = function(args)
 	-- redflat.float.brightness:change_with_gsd(args) -- use gnome settings deamon
 end
 
+-- right bottom corner position
+local rb_corner = function()
+	return { x = screen[mouse.screen].workarea.x + screen[mouse.screen].workarea.width,
+	         y = screen[mouse.screen].workarea.y + screen[mouse.screen].workarea.height }
+end
+
 -- Build hotkeys depended on config parameters
 -----------------------------------------------------------------------------------------------------------------------
 function hotkeys:init(args)
@@ -707,6 +713,23 @@ function hotkeys:init(args)
 		{
 			{ env.mod }, "v", volume_mute,
 			{ description = "Toggle mute", group = "Volume control" }
+		},
+
+		{
+			{ env.mod }, "e", function() redflat.float.player:show(rb_corner()) end,
+			{ description = "Show/hide widget", group = "Audio player" }
+		},
+		{
+			{}, "XF86AudioPlay", function() redflat.float.player:action("PlayPause") end,
+			{ description = "Play/Pause track", group = "Audio player" }
+		},
+		{
+			{}, "XF86AudioNext", function() redflat.float.player:action("Next") end,
+			{ description = "Next track", group = "Audio player" }
+		},
+		{
+			{}, "XF86AudioPrev", function() redflat.float.player:action("Previous") end,
+			{ description = "Previous track", group = "Audio player" }
 		},
 
 		{
