@@ -42,6 +42,7 @@ Advanced user config for Awesome WM, It consist of a bunch of new widgets, featu
 | system upgrades        | panel         | apt-get                                     |
 | volume control         | panel         | pacmd                                       |
 | brightness control     | floating      | xbacklight/unity-settings-daemon, dbus-send |
+| mpris2 player          | floating      | dbus-send                                   |
 | CPU temperature        | desktop       | lm-sensors                                  |
 | HDD temperature        | desktop       | hddtemp, curl                               |
 | Nvidia GPU temperature | desktop       | nvidia-smi                                  |
