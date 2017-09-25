@@ -458,11 +458,13 @@ theme.float.notify = {
 -- Decoration elements
 ------------------------------------------------------------
 theme.float.decoration.button = {
-	color = theme.color
+	color = {
+		shadow3 = theme.color.shadow3,
+		shadow4 = theme.color.shadow4,
+		gray    = theme.color.gray,
+		text    = "#cccccc"
+	},
 }
-
-theme.float.decoration.button.color.text = "#cccccc"
-theme.float.decoration.button.color.shadow_down = theme.color.gray
 
 theme.float.decoration.field = {
 	color = theme.color

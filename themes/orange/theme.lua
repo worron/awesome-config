@@ -54,10 +54,14 @@ theme.fonts = {
 	keychain = "Play bold 16",   -- key sequence tip font
 	title    = "Roboto bold 13", -- widget titles font
 	titlebar = "Roboto bold 13", -- client titlebar font
-	hotkeys = {
+	hotkeys  = {
 		main  = "Roboto 14",             -- hotkeys helper main font
 		key   = "Iosevka Term Light 14", -- hotkeys helper key font (use monospace for align)
 		title = "Roboto bold 16",        -- hotkeys helper group title font
+	},
+	player   = {
+		main = "Play bold 14", -- player widget main font
+		time = "Play bold 16", -- player widget current time font
 	},
 }
 
@@ -445,6 +449,29 @@ theme.widget.tasklist.appnames["Keepassx"            ] = "KPASS"
 -----------------------------------------------------------------------------------------------------------------------
 theme.float = { decoration = {} }
 
+-- Audio player
+------------------------------------------------------------
+theme.float.player = {
+	geometry     = { width = 520, height = 150 },
+	screen_gap   = 2 * theme.useless_gap,
+	titlefont    = theme.fonts.player.main,
+	artistfont   = theme.fonts.player.main,
+	timefont     = theme.fonts.player.time,
+	dashcontrol  = { color = theme.color, bar = { num = 7 } },
+	progressbar  = { color = theme.color },
+	border_width = 0,
+	timeout      = 1,
+	color        = theme.color
+}
+
+theme.float.player.icon = {
+	cover   = theme.path .. "/common/player/cover.svg",
+	next_tr = theme.path .. "/common/player/next.svg",
+	prev_tr = theme.path .. "/common/player/previous.svg",
+	play    = theme.path .. "/common/player/play.svg",
+	pause   = theme.path .. "/common/player/pause.svg"
+}
+
 -- Application runner
 ------------------------------------------------------------
 theme.float.apprunner = {
@@ -580,11 +607,13 @@ theme.float.notify = {
 -- Decoration elements
 ------------------------------------------------------------
 theme.float.decoration.button = {
-	color = theme.color
+	color = {
+		shadow3 = theme.color.shadow3,
+		shadow4 = theme.color.shadow4,
+		gray    = theme.color.gray,
+		text    = "#cccccc"
+	},
 }
-
-theme.float.decoration.button.color.text = "#cccccc"
-theme.float.decoration.button.color.shadow_down = theme.color.gray
 
 theme.float.decoration.field = {
 	color = theme.color
