@@ -116,10 +116,17 @@ tray.buttons = awful.util.table.join(
 local volume = {}
 volume.widget = redflat.widget.pulse(nil, { widget = redflat.gauge.audio.red.new })
 
+-- activate player widget
+redflat.float.player:init({ name = "Lollypop" })
+
 volume.buttons = awful.util.table.join(
 	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
 	awful.button({}, 5, function() redflat.widget.pulse:change_volume({ down = true }) end),
-	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end)
+	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end),
+	awful.button({}, 3, function() redflat.float.player:show()                         end),
+	awful.button({}, 1, function() redflat.float.player:action("PlayPause")            end),
+	awful.button({}, 8, function() redflat.float.player:action("Previous")             end),
+	awful.button({}, 9, function() redflat.float.player:action("Next")                 end)
 )
 
 -- Keyboard layout indicator
