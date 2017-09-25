@@ -60,8 +60,8 @@ theme.fonts = {
 		title = "Roboto bold 16",        -- hotkeys helper group title font
 	},
 	player   = {
-		main = "Play bold 14", -- player widget main font
-		time = "Play bold 16", -- player widget current time font
+		main = "Play bold 13", -- player widget main font
+		time = "Play bold 15", -- player widget current time font
 	},
 }
 
@@ -452,8 +452,13 @@ theme.float = { decoration = {} }
 -- Audio player
 ------------------------------------------------------------
 theme.float.player = {
-	geometry     = { width = 520, height = 150 },
+	geometry     = { width = 490, height = 130 },
 	screen_gap   = 2 * theme.useless_gap,
+	border_gap   = { 15, 15, 15, 15 },
+	elements_gap = { 15, 0, 0, 0 },
+	control_gap  = { 0, 0, 14, 6 },
+	line_height  = 26,
+	bar_width    = 6,
 	titlefont    = theme.fonts.player.main,
 	artistfont   = theme.fonts.player.main,
 	timefont     = theme.fonts.player.time,
