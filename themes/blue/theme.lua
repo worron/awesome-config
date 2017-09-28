@@ -509,22 +509,6 @@ theme.widget.tasklist.winmenu.icon = {
 	maximized            = theme.path .. "/common/window_control/maximized.svg",
 }
 
--- task aliases
-theme.widget.tasklist.appnames = {}
-theme.widget.tasklist.appnames["Exaile"              ] = "EXAILE"
-theme.widget.tasklist.appnames["Smplayer"            ] = "SMPL"
-theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
-theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
-theme.widget.tasklist.appnames["Gnome-system-monitor"] = "SYMON"
-theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GIMP"
-theme.widget.tasklist.appnames["Goldendict"          ] = "GDIC"
-theme.widget.tasklist.appnames["Easytag"             ] = "ETAG"
-theme.widget.tasklist.appnames["Mcomix"              ] = "COMIX"
-theme.widget.tasklist.appnames["Claws-mail"          ] = "CMAIL"
-theme.widget.tasklist.appnames["URxvt"               ] = "RXVT"
-theme.widget.tasklist.appnames["VirtualBox"          ] = "VBOX"
-theme.widget.tasklist.appnames["Keepassx"            ] = "KPASS"
-
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------

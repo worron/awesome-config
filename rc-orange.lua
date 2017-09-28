@@ -54,6 +54,9 @@ local separator = redflat.gauge.separator.vertical()
 --------------------------------------------------------------------------------
 local tasklist = {}
 
+-- load list of app name aliases from files and set it as part of tasklist theme
+tasklist.style = { appnames = require("orange.alias-config")}
+
 tasklist.buttons = awful.util.table.join(
 	awful.button({}, 1, redflat.widget.tasklist.action.select),
 	awful.button({}, 2, redflat.widget.tasklist.action.close),
@@ -214,7 +217,7 @@ awful.screen.connect_for_each_screen(
 		taglist[s] = redflat.widget.taglist({ screen = s, buttons = taglist.buttons, hint = env.tagtip }, taglist.style)
 
 		-- tasklist widget
-		tasklist[s] = redflat.widget.tasklist({ screen = s, buttons = tasklist.buttons })
+		tasklist[s] = redflat.widget.tasklist({ screen = s, buttons = tasklist.buttons }, tasklist.style)
 
 		-- panel wibox
 		s.panel = awful.wibar({ position = "bottom", screen = s, height = beautiful.panel_height or 36 })
