@@ -107,7 +107,7 @@ local volume = {}
 volume.widget = redflat.widget.pulse(nil, { widget = redflat.gauge.audio.red.new })
 
 -- activate player widget
-redflat.float.player:init({ name = "Lollypop" })
+redflat.float.player:init({ name = env.player })
 
 volume.buttons = awful.util.table.join(
 	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
