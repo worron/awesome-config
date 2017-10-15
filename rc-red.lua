@@ -85,7 +85,7 @@ textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat =
 -- Software update indcator
 --------------------------------------------------------------------------------
 local upgrades = {}
-upgrades.widget = redflat.widget.upgrades({ command = "bash -c 'pacman -Qu | wc -l'" })
+upgrades.widget = redflat.widget.upgrades({ command = env.upgrades })
 
 upgrades.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () mymenu.mainmenu:toggle() end),
