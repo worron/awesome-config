@@ -31,6 +31,16 @@ function autostart.run()
 	awful.spawn.with_shell("sleep 0.5 && transmission-gtk -m")
 end
 
+-- Read and commads from file and spawn them
+--------------------------------------------------------------------------------
+function autostart.run_from_file(file_)
+	local f = io.open(file_)
+	for line in f:lines() do
+		if line:sub(1, 1) ~= "#" then awful.spawn.with_shell(line) end
+	end
+	f:close()
+end
+
 -- End
 -----------------------------------------------------------------------------------------------------------------------
 return autostart
