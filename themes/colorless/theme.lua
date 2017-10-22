@@ -186,7 +186,7 @@ theme.gauge.tag.orange = {
 -- Task
 ------------------------------------------------------------
 theme.gauge.task.blue = {
-	width    = 80,
+	width    = 70,
 	show_min = true,
 	font     = theme.cairo_fonts.tag,
 	point    = { width = 70, height = 3, gap = 27, dx = 5 },
@@ -299,7 +299,6 @@ theme.widget.layoutbox.name_alias = {
 -- Tasklist
 ------------------------------------------------------------
 theme.widget.tasklist = {
-	width       = 70,
 	char_digit  = 5,
 	task        = theme.gauge.task.blue
 }
