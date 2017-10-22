@@ -476,9 +476,9 @@ theme.gauge.tag.green.icon = theme.widget.layoutbox.icon
 -- Tasklist
 ------------------------------------------------------------
 theme.widget.tasklist = {
-	width       = 80,
 	custom_icon = true,
 	need_group  = false,
+	task        = theme.gauge.task.green,
 	-- parser      = { icons = {
 	-- 	theme   = theme.homedir .. "/.icons/ACYLS-circle",
 	-- }},
