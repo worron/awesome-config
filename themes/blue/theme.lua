@@ -17,7 +17,7 @@ theme.color = {
 	icon      = "#a0a0a0",
 	text      = "#aaaaaa",
 	urgent    = "#B32601",
-	highlight = "#ffffff",
+	highlight = "#e0e0e0",
 
 	border    = "#404040",
 	shadow1   = "#141414",
@@ -741,6 +741,9 @@ theme.border_marked = theme.color.main
 
 -- font
 theme.font = theme.fonts.main
+
+-- misc
+theme.enable_spawn_cursor = false
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------

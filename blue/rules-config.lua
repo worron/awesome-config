@@ -29,7 +29,7 @@ rules.floating_any = {
 }
 
 rules.titlebar_exeptions = {
-	class = { "Cavalcade", "Clipflap", "Steam" }
+	class = { "Cavalcade", "Clipflap", "Steam", "VirtualBox" }
 }
 
 rules.maximized = {
