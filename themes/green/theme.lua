@@ -522,6 +522,20 @@ theme.widget.tasklist.winmenu.icon = {
 theme.widget.tasklist.iconnames = {}
 theme.widget.tasklist.iconnames["jetbrains-pycharm-ce"] = "pycharm"
 
+-- Client menu
+------------------------------------------------------------
+theme.widget.clientmenu = {
+	micon          = theme.icon,
+	color          = theme.color,
+	actionline     = { height = 28 },
+	layout_icon    = theme.widget.layoutbox.icon,
+	menu           = theme.widget.tasklist.winmenu.menu,
+	state_iconsize = theme.widget.tasklist.winmenu.state_iconsize,
+	tagmenu        = theme.widget.tasklist.winmenu.tagmenu,
+	icon           = theme.widget.tasklist.winmenu.icon,
+}
+
+
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
 theme.float = { decoration = {} }

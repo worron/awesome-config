@@ -8,6 +8,7 @@ local wibox = require("wibox")
 
 -- local redflat = require("redflat")
 local redtitle = require("redflat.titlebar")
+local clientmenu = require("redflat.float.clientmenu")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -22,6 +23,13 @@ local function title_buttons(c)
 			function()
 				client.focus = c;  c:raise()
 				awful.mouse.client.move(c)
+			end
+		),
+		awful.button(
+			{ }, 3,
+			function()
+				client.focus = c;  c:raise()
+				clientmenu:show(c)
 			end
 		)
 	)

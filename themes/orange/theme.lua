@@ -427,6 +427,19 @@ theme.widget.tasklist.winmenu.icon = {
 	maximized            = theme.path .. "/common/window_control/maximized.svg",
 }
 
+-- Client menu
+------------------------------------------------------------
+theme.widget.clientmenu = {
+	micon          = theme.icon,
+	color          = theme.color,
+	actionline     = { height = 28 },
+	layout_icon    = theme.widget.layoutbox.icon,
+	menu           = theme.widget.tasklist.winmenu.menu,
+	state_iconsize = theme.widget.tasklist.winmenu.state_iconsize,
+	tagmenu        = theme.widget.tasklist.winmenu.tagmenu,
+	icon           = theme.widget.tasklist.winmenu.icon,
+}
+
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
