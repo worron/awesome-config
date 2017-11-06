@@ -37,6 +37,7 @@ local function on_maximize(c)
 	local model = redtitle.get_model(c)
 	if model and not model.hidden then
 		c.height = c:geometry().height + (is_max and model.size or -model.size)
+		if is_max then c.y = c.screen.workarea.y end
 	end
 end
 
