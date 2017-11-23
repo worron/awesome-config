@@ -46,6 +46,10 @@ function env:init(args)
 		naughty.config.presets.normal   = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.normal)
 		naughty.config.presets.critical = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.critical)
 		naughty.config.presets.low      = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.low)
+
+		-- dirty fix to ignore forced geometry for critical preset
+		-- For the sake of laziness I prefer fix some parameters after inherit than write pure table without inherit
+		naughty.config.presets.critical.height, naughty.config.presets.critical.width = nil, nil
 	end
 end
 
