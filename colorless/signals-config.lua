@@ -43,6 +43,16 @@ function signals:init(args)
 		end
 	)
 
+	-- add missing borders to windows that get unmaximized
+	client.connect_signal(
+		"property::maximized",
+		function(c)
+			if not c.maximized then
+				c.border_width = beautiful.border_width
+			end
+		end
+	)
+
 	-- enable sloppy focus, so that focus follows mouse
 	if env.sloppy_focus then
 		client.connect_signal("mouse::enter", do_sloppy_focus)
