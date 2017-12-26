@@ -400,6 +400,7 @@ theme.widget.tasklist.winmenu = {
 	menu           = { width = 220, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
 	state_iconsize = { width = 18, height = 18 },
 	layout_icon    = theme.widget.layoutbox.icon,
+	hide_action    = { min = false, move = false },
 	color          = theme.color
 }
 

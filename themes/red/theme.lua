@@ -490,6 +490,7 @@ theme.widget.tasklist.winmenu = {
 	tagmenu        = { width = 180, color = { right_icon = theme.color.icon, left_icon = theme.color.icon },
 	                   icon_margin = { 10, 12, 9, 9 } },
 	layout_icon    = theme.widget.layoutbox.icon,
+	hide_action    = { min = false, move = false },
 	color          = theme.color
 }
 

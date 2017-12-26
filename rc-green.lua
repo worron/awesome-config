@@ -95,7 +95,7 @@ redflat.widget.layoutbox:init(awful.layout.layouts)
 -- Tray widget
 --------------------------------------------------------------------------------
 local tray = {}
-tray.widget = redflat.widget.minitray({ timeout = 10 })
+tray.widget = redflat.widget.minitray()
 
 tray.buttons = awful.util.table.join(
 	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)
