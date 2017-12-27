@@ -49,7 +49,7 @@ function desktop:init(args)
 	local ssdspeed = { geometry = wgeometry(grid, places.ssdspeed, workarea) }
 
 	ssdspeed.args = {
-		interface = "sdc",
+		interface = "sdb",
 		meter_function = system.disk_speed,
 		timeout   = 2,
 		label     = "SOLID DRIVE"
@@ -62,7 +62,7 @@ function desktop:init(args)
 	local hddspeed = { geometry = wgeometry(grid, places.hddspeed, workarea) }
 
 	hddspeed.args = {
-		interface = "sdb",
+		interface = "sdc",
 		meter_function = system.disk_speed,
 		timeout = 2,
 		label = "HARD DRIVE"
@@ -147,7 +147,7 @@ function desktop:init(args)
 	local thermald = { geometry = wgeometry(grid, places.thermald, workarea) }
 
 	thermald.args = {
-		sensors = { { meter_function = system.thermal.hddtemp, args = { disk = "/dev/sdb" }, maxm = 60, crit = 45 } },
+		sensors = { { meter_function = system.thermal.hddtemp, args = { disk = "/dev/sdc" }, maxm = 60, crit = 45 } },
 		names   = { "hdd" },
 		timeout = 10
 	}

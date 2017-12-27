@@ -232,7 +232,7 @@ function desktop:init(args)
 	hardwareset.args.actions[1] = function()
 		local data = {}
 		data[1] = system.thermal.sensors("'Package id 0'")
-		data[2] = system.thermal.hddtemp({ disk = "/dev/sdb" })
+		data[2] = system.thermal.hddtemp({ disk = "/dev/sdc" })
 		data[3] = system.thermal.nvoptimus()
 
 		local values = {
@@ -259,8 +259,8 @@ function desktop:init(args)
 
 	hardwareset.args.actions[2] = function()
 		local data = {}
-		data[1] = system.disk_speed("sdc", speed_storage[1])
-		data[2] = system.disk_speed("sdb", speed_storage[2])
+		data[1] = system.disk_speed("sdb", speed_storage[1])
+		data[2] = system.disk_speed("sdc", speed_storage[2])
 
 		local values = {}
 		for i, set in ipairs({colset.sspeed, colset.hspeed}) do
