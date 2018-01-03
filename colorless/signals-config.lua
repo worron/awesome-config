@@ -19,6 +19,17 @@ local function do_sloppy_focus(c)
 	end
 end
 
+local function fixed_maximized_geometry(c, context)
+	if c.maximized and context ~= "fullscreen" then
+		c:geometry({
+			x = c.screen.workarea.x,
+			y = c.screen.workarea.y,
+			height = c.screen.workarea.height - 2 * c.border_width,
+			width = c.screen.workarea.width - 2 * c.border_width
+		})
+	end
+end
+
 -- Build  table
 -----------------------------------------------------------------------------------------------------------------------
 function signals:init(args)
@@ -53,17 +64,9 @@ function signals:init(args)
 		end
 	)
 
-	-- don't let maximized windows move/resize themselves
+	-- don't allow maximized windows move/resize themselves
 	client.connect_signal(
-		"request::geometry",
-		function(c)
-			if c.maximized then
-				c.height = c.screen.workarea.height - 2 * c.border_width
-				c.width = c.screen.workarea.width - 2 * c.border_width
-				c.x = c.screen.workarea.x
-				c.y = c.screen.workarea.y
-			end
-		end
+		"request::geometry", fixed_maximized_geometry
 	)
 
 	-- enable sloppy focus, so that focus follows mouse
