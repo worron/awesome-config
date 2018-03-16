@@ -744,6 +744,11 @@ function hotkeys:init(args)
 			{ env.mod }, "Down", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
 		},
+
+		{
+			{ env.mod, "Control" }, "s", function() for s in screen do env.wallpaper(s) end end,
+			{} -- hidden key
+		}
 	}
 
 	-- Client keys
