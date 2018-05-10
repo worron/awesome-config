@@ -522,6 +522,7 @@ theme.widget.tasklist.winmenu.icon = {
 -- icon aliases
 theme.widget.tasklist.iconnames = {}
 theme.widget.tasklist.iconnames["jetbrains-pycharm-ce"] = "pycharm"
+theme.widget.tasklist.iconnames["Qemu-system-x86_64"] = "qemu"
 
 -- Client menu
 ------------------------------------------------------------

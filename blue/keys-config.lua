@@ -677,11 +677,11 @@ function hotkeys:init(args)
 		},
 
 		{
-			{}, "XF86MonBrightnessUp", function() brightness({ step = 1 }) end,
+			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
 			{ description = "Increase brightness", group = "Brightness control" }
 		},
 		{
-			{}, "XF86MonBrightnessDown", function() brightness({ step = 1, down = true }) end,
+			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
 			{ description = "Reduce brightness", group = "Brightness control" }
 		},
 
