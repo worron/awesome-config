@@ -428,9 +428,14 @@ theme.widget.tasklist.winmenu.icon = {
 	maximized            = theme.path .. "/common/window_control/maximized.svg",
 }
 
+
+-- Floating widgets
+-----------------------------------------------------------------------------------------------------------------------
+theme.float = { decoration = {} }
+
 -- Client menu
 ------------------------------------------------------------
-theme.widget.clientmenu = {
+theme.float.clientmenu = {
 	micon          = theme.icon,
 	color          = theme.color,
 	actionline     = { height = 28 },
@@ -440,11 +445,6 @@ theme.widget.clientmenu = {
 	tagmenu        = theme.widget.tasklist.winmenu.tagmenu,
 	icon           = theme.widget.tasklist.winmenu.icon,
 }
-
-
--- Floating widgets
------------------------------------------------------------------------------------------------------------------------
-theme.float = { decoration = {} }
 
 -- Audio player
 ------------------------------------------------------------
