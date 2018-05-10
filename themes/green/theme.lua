@@ -524,9 +524,14 @@ theme.widget.tasklist.iconnames = {}
 theme.widget.tasklist.iconnames["jetbrains-pycharm-ce"] = "pycharm"
 theme.widget.tasklist.iconnames["Qemu-system-x86_64"] = "qemu"
 
+
+-- Floating widgets
+-----------------------------------------------------------------------------------------------------------------------
+theme.float = { decoration = {} }
+
 -- Client menu
 ------------------------------------------------------------
-theme.widget.clientmenu = {
+theme.float.clientmenu = {
 	micon          = theme.icon,
 	color          = theme.color,
 	actionline     = { height = 28 },
@@ -536,11 +541,6 @@ theme.widget.clientmenu = {
 	tagmenu        = theme.widget.tasklist.winmenu.tagmenu,
 	icon           = theme.widget.tasklist.winmenu.icon,
 }
-
-
--- Floating widgets
------------------------------------------------------------------------------------------------------------------------
-theme.float = { decoration = {} }
 
 -- Audio player
 ------------------------------------------------------------

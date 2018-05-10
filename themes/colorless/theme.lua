@@ -336,9 +336,14 @@ theme.widget.tasklist.appnames = {}
 theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
 theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
 
+
+-- Floating widgets
+-----------------------------------------------------------------------------------------------------------------------
+theme.float = { decoration = {} }
+
 -- Client menu
 ------------------------------------------------------------
-theme.widget.clientmenu = {
+theme.float.clientmenu = {
 	micon          = theme.icon,
 	color          = theme.color,
 	actionline     = { height = 28 },
@@ -348,11 +353,6 @@ theme.widget.clientmenu = {
 	tagmenu        = theme.widget.tasklist.winmenu.tagmenu,
 	icon           = theme.widget.tasklist.winmenu.icon,
 }
-
-
--- Floating widgets
------------------------------------------------------------------------------------------------------------------------
-theme.float = { decoration = {} }
 
 -- Application runner
 ------------------------------------------------------------
