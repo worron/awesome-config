@@ -160,7 +160,7 @@ sysmon.widget.battery = redflat.widget.sysmon(
 sysmon.widget.network = redflat.widget.net(
 	{
 		interface = "wlp60s0",
-		speed = { up = 5 * 1024^2, down = 5 * 1024^2 },
+		speed = { up = 6 * 1024^2, down = 6 * 1024^2 },
 		autoscale = false
 	},
 	{ timeout = 2, widget = redflat.gauge.icon.double }

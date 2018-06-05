@@ -165,16 +165,16 @@ sysmon.icon.cpuram = redflat.util.table.check(beautiful, "icon.widget.monitor")
 
 -- battery
 sysmon.widget.battery = redflat.widget.sysmon(
-	{ func = redflat.system.pformatted.bat(25), arg = "BAT1" },
+	{ func = redflat.system.pformatted.bat(25), arg = "BAT0" },
 	{ timeout = 60, widget = redflat.gauge.icon.single, monitor = { is_vertical = true, icon = sysmon.icon.battery } }
 )
 
 -- network speed
 sysmon.widget.network = redflat.widget.net(
 	{
-		interface = "wlp3s0",
-		alert = { up = 4 * 1024^2, down = 4 * 1024^2 },
-		speed = { up = 5 * 1024^2, down = 5 * 1024^2 },
+		interface = "wlp60s0",
+		alert = { up = 5 * 1024^2, down = 5 * 1024^2 },
+		speed = { up = 6 * 1024^2, down = 6 * 1024^2 },
 		autoscale = false
 	},
 	{ timeout = 2, widget = redflat.gauge.monitor.double, monitor = { icon = sysmon.icon.network } }

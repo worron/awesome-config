@@ -479,9 +479,13 @@ theme.widget.tasklist = {
 	custom_icon = true,
 	need_group  = false,
 	task        = theme.gauge.task.green,
-	-- parser      = { icons = {
-	-- 	theme   = theme.homedir .. "/.icons/ACYLS-circle",
-	-- }},
+}
+
+theme.widget.tasklist.parser = {
+	desktop_file_dirs = awful.util.table.join(
+		theme.service.dfparser.desktop_file_dirs,
+		{ '~/.local/share/applications-fake' }
+	)
 }
 
 -- main
