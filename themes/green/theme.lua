@@ -479,9 +479,13 @@ theme.widget.tasklist = {
 	custom_icon = true,
 	need_group  = false,
 	task        = theme.gauge.task.green,
-	-- parser      = { icons = {
-	-- 	theme   = theme.homedir .. "/.icons/ACYLS-circle",
-	-- }},
+}
+
+theme.widget.tasklist.parser = {
+	desktop_file_dirs = awful.util.table.join(
+		theme.service.dfparser.desktop_file_dirs,
+		{ '~/.local/share/applications-fake' }
+	)
 }
 
 -- main
@@ -522,6 +526,7 @@ theme.widget.tasklist.winmenu.icon = {
 -- icon aliases
 theme.widget.tasklist.iconnames = {}
 theme.widget.tasklist.iconnames["jetbrains-pycharm-ce"] = "pycharm"
+theme.widget.tasklist.iconnames["Qemu-system-x86_64"] = "qemu"
 
 
 -- Floating widgets

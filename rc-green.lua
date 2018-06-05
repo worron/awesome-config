@@ -152,15 +152,15 @@ local sysmon = { widget = {}, buttons = {} }
 
 -- battery
 sysmon.widget.battery = redflat.widget.sysmon(
-	{ func = redflat.system.pformatted.bat(25), arg = "BAT1" },
+	{ func = redflat.system.pformatted.bat(25), arg = "BAT0" },
 	{ timeout = 60, widget = redflat.gauge.monitor.dash }
 )
 
 -- network speed
 sysmon.widget.network = redflat.widget.net(
 	{
-		interface = "wlp3s0",
-		speed = { up = 5 * 1024^2, down = 5 * 1024^2 },
+		interface = "wlp60s0",
+		speed = { up = 6 * 1024^2, down = 6 * 1024^2 },
 		autoscale = false
 	},
 	{ timeout = 2, widget = redflat.gauge.icon.double }

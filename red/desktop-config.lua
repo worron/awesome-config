@@ -35,9 +35,9 @@ function desktop:init(args)
 	local netspeed = { geometry = wgeometry(grid, places.netspeed, workarea) }
 
 	netspeed.args = {
-		interface    = "wlp3s0",
-		maxspeed     = { up = 5*1024^2, down = 5*1024^2 },
-		crit         = { up = 5*1024^2, down = 5*1024^2 },
+		interface    = "wlp60s0",
+		maxspeed     = { up = 6*1024^2, down = 6*1024^2 },
+		crit         = { up = 6*1024^2, down = 6*1024^2 },
 		timeout      = 2,
 		autoscale    = true
 	}
@@ -49,7 +49,7 @@ function desktop:init(args)
 	local ssdspeed = { geometry = wgeometry(grid, places.ssdspeed, workarea) }
 
 	ssdspeed.args = {
-		interface = "sdb",
+		interface = "nvme0n1",
 		meter_function = system.disk_speed,
 		timeout   = 2,
 		label     = "SOLID DRIVE"
@@ -62,7 +62,7 @@ function desktop:init(args)
 	local hddspeed = { geometry = wgeometry(grid, places.hddspeed, workarea) }
 
 	hddspeed.args = {
-		interface = "sdc",
+		interface = "sda",
 		meter_function = system.disk_speed,
 		timeout = 2,
 		label = "HARD DRIVE"
@@ -90,7 +90,7 @@ function desktop:init(args)
 
 	transm.args = {
 		corners    = { num = 8, maxm = 100 },
-		lines      = { { maxm = 55, unit = { { "SEED", - 1 } } }, { maxm = 600, unit = { { "DNLD", - 1 } } } },
+		lines      = { { maxm = 6*1024, unit = { { "SEED", - 1 } } }, { maxm = 6*1024, unit = { { "DNLD", - 1 } } } },
 		meter      = { func = system.transmission_parse },
 		timeout    = 5,
 		async      = "transmission-remote -l"
@@ -147,7 +147,7 @@ function desktop:init(args)
 	local thermald = { geometry = wgeometry(grid, places.thermald, workarea) }
 
 	thermald.args = {
-		sensors = { { meter_function = system.thermal.hddtemp, args = { disk = "/dev/sdc" }, maxm = 60, crit = 45 } },
+		sensors = { { meter_function = system.thermal.hddtemp, args = { disk = "/dev/sda" }, maxm = 60, crit = 45 } },
 		names   = { "hdd" },
 		timeout = 10
 	}
