@@ -195,7 +195,7 @@ function hotkeys:init(args)
 
 	-- Appswitcher
 	------------------------------------------------------------
-	appswitcher_keys_move = {
+	local appswitcher_keys_move = {
 		{
 			{ env.mod }, "a", function() appswitcher:switch() end,
 			{ description = "Select next app", group = "Navigation" }
@@ -206,7 +206,7 @@ function hotkeys:init(args)
 		},
 	}
 
-	appswitcher_keys_action = {
+	local appswitcher_keys_action = {
 		{
 			{ env.mod }, "Super_L", function() appswitcher:hide() end,
 			{ description = "Activate and exit", group = "Action" }
