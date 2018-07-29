@@ -15,9 +15,10 @@ function autostart.run()
 	-- utils
 	awful.spawn.with_shell("compton")
 	awful.spawn.with_shell("nm-applet")
-	awful.spawn.with_shell("bash ~/scripts/pa-setup.sh")
-	awful.spawn.with_shell("sleep 1 && bash ~/scripts/ff-sync.sh")
-	awful.spawn.with_shell("bash ~/scripts/color-profile-setup.sh")
+	awful.spawn.with_shell("bash ~/scripts/env/pa-setup.sh")
+	awful.spawn.with_shell("bash ~/scripts/env/color-profile-setup.sh")
+
+	awful.spawn.with_shell("sleep 1 && bash ~/scripts/firefox/ff-sync.sh")
 
 	-- gnome environment
 	awful.spawn.with_shell("/lib/gsd-xsettings")
@@ -25,11 +26,11 @@ function autostart.run()
 
 	-- keyboard layouts
 	awful.spawn.with_shell("kbdd")
-	awful.spawn.with_shell("sleep 1 && bash ~/scripts/kbdd-setup.sh")
+	awful.spawn.with_shell("bash ~/scripts/env/kbdd-setup.sh")
 
 	-- apps
 	awful.spawn.with_shell("clipflap")
-	awful.spawn.with_shell("sleep 1 && transmission-gtk -m")
+	awful.spawn.with_shell("transmission-gtk -m")
 end
 
 -- Read and commads from file and spawn them

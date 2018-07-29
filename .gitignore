@@ -1,7 +1,13 @@
 # Default rc.lua is actually a link to specific config
+
 # Wallpapers
 themes/*/wallpaper/
+
 # Private mail settings
 */mail-config.lua
+
 # Default config
 rc-back.lua
+
+# IDE settings
+.idea
