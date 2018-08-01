@@ -78,11 +78,8 @@ end
 -- Panel widgets wrapper
 --------------------------------------------------------------------------------
 env.wrapper = function(widget, name, buttons)
-	local margin = { 0, 0, 0, 0 }
-
-	if redflat.util.table.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name] then
-		margin = beautiful.widget.wrapper[name]
-	end
+	local margin = redflat.util.table.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name]
+	               and beautiful.widget.wrapper[name] or { 0, 0, 0, 0 }
 	if buttons then
 		widget:buttons(buttons)
 	end

@@ -6,7 +6,6 @@
 local beautiful = require("beautiful")
 local redflat = require("redflat")
 local awful = require("awful")
-local naughty = require("naughty")
 
 
 -- Initialize tables and vars for module

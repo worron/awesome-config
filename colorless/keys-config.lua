@@ -3,9 +3,7 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
-local table = table
 local awful = require("awful")
-local beautiful = require("beautiful")
 
 local redflat = require("redflat")
 
@@ -20,7 +18,6 @@ local current = redflat.widget.tasklist.filter.currenttags
 local allscr = redflat.widget.tasklist.filter.allscreen
 local laybox = redflat.widget.layoutbox
 local redtip = redflat.float.hotkeys
-local laycom = redflat.layout.common
 local redtitle = redflat.titlebar
 
 -- Key support functions

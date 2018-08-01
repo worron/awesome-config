@@ -64,7 +64,7 @@ function titlebar:init(args)
 		function(c)
 			-- build titlebar and mouse buttons for it
 			local buttons = title_buttons(c)
-			local bar = redtitle(c)
+			redtitle(c)
 
 			-- build light titlebar model
 			local light = wibox.widget({

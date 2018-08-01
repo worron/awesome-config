@@ -4,7 +4,6 @@
 
 -- Grab environment
 local beautiful = require("beautiful")
-local awful = require("awful")
 local redflat = require("redflat")
 local wibox = require("wibox")
 
@@ -22,7 +21,6 @@ function desktop:init(args)
 	if not beautiful.desktop then return end
 
 	local args = args or {}
-	local env = args.env
 	local style = { color = beautiful.desktop.color }
 
 	-- Setting and placement
