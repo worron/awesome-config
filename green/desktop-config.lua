@@ -18,11 +18,10 @@ local system = redflat.system
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-function desktop:init(args)
+function desktop:init()
 	if not beautiful.desktop then return end
 
-	local args = args or {}
-	local env = args.env
+--	local args = args or {}
 
 	-- placement
 	local grid = beautiful.desktop.grid

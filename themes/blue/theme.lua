@@ -4,7 +4,7 @@
 local awful = require("awful")
 
 local theme = {}
-local wa = mouse.screen.workarea
+--local wa = mouse.screen.workarea
 
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------

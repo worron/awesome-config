@@ -13,8 +13,7 @@ local layouts = {}
 
 -- Build  table
 -----------------------------------------------------------------------------------------------------------------------
-function layouts:init(args)
-	local args = args or {}
+function layouts:init()
 
 	-- layouts list
 	local layset = {

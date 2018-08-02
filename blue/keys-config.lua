@@ -184,7 +184,7 @@ function hotkeys:init(args)
 
 	-- Appswitcher widget
 	------------------------------------------------------------
-	appswitcher_keys = {
+	local appswitcher_keys = {
 		{
 			{ env.mod }, "a", function() appswitcher:switch() end,
 			{ description = "Select next app", group = "Navigation" }

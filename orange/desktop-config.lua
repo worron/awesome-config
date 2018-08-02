@@ -4,7 +4,6 @@
 
 -- Grab environment
 local beautiful = require("beautiful")
-local awful = require("awful")
 local redflat = require("redflat")
 local wibox = require("wibox")
 
@@ -22,7 +21,6 @@ function desktop:init(args)
 	if not beautiful.desktop then return end
 
 	local args = args or {}
-	local env = args.env
 	local style = { color = beautiful.desktop.color }
 
 	-- Setting and placement
@@ -42,21 +40,28 @@ function desktop:init(args)
 	local colset = { light = {}, base = {}, diskp = {}, diskpf = {}, tcpu = {}, tgpu = {}, thdd = {},
 	                 sspeed = {}, hspeed = {}, tspeed = {}, cores = {}}
 
+	--noinspection ArrayElementZero
 	colset.base[0] = style.color.icon
+	--noinspection ArrayElementZero
 	colset.light[0] = style.color.main
 
+	--noinspection ArrayElementZero
 	colset.diskp[0] = style.color.icon
 	colset.diskp[75] = style.color.main
 
+	--noinspection ArrayElementZero
 	colset.diskpf[0] = style.color.main
 	colset.diskpf[25] = style.color.icon
 
+	--noinspection ArrayElementZero
 	colset.tcpu[0] = style.color.icon
 	colset.tcpu[75] = style.color.main
 
+	--noinspection ArrayElementZero
 	colset.tgpu[0] = style.color.icon
 	colset.tgpu[80] = style.color.main
 
+	--noinspection ArrayElementZero
 	colset.thdd[0] = style.color.icon
 	colset.thdd[40] = style.color.main
 
@@ -69,6 +74,7 @@ function desktop:init(args)
 	colset.tspeed[-1] = style.color.icon
 	colset.tspeed[2.5 * 1024] = style.color.main
 
+	--noinspection ArrayElementZero
 	colset.cores[0] = style.color.icon
 	colset.cores[3] = style.color.main
 
@@ -107,9 +113,9 @@ function desktop:init(args)
 	end
 
 	local function form_text(sentences, values)
-		local txt = ""
-		for i, v in ipairs(values) do txt = txt .. string.format(sentences[i], unpack(v)) end
-		return txt
+		local txt = {}
+		for i, v in ipairs(values) do txt[#txt + 1] = string.format(sentences[i], unpack(v)) end
+		return table.concat(txt)
 	end
 
 	local function recolor(txt, c)
@@ -295,7 +301,7 @@ function desktop:init(args)
 	local tr_not_found = "does not running and information about your downloads is not available."
 
 	torrset.args.actions[1] = function(output)
-		data = system.transmission_parse(output)
+		local data = system.transmission_parse(output)
 
 		local values = {}
 		values[1] = { data.alert and tr_not_found or "running" }
@@ -307,13 +313,13 @@ function desktop:init(args)
 			values[4] = { form_value(data.lines[1][2]), data.lines[1][2] > 1 and "are" or "is",
 			              data.lines[1][2] > 0 and form_torr_speed(data.lines[1][1]) or "" }
 
-			local tlist = ""
+			local tlist = {}
 			for i, t in ipairs(data.corners) do
 				if tonumber(t) < 100 then
-					if i <= torrset.nactive then tlist = tlist .. " " .. t .. "%" end
+					if i <= torrset.nactive then tlist[#tlist + 1] = string.format(" %s%%", t) end
 				end
 			end
-			if tlist ~= "" then values[5] = { recolor(tlist, style.color.main) } end
+			if #tlist > 0 then values[5] = { recolor(table.concat(tlist), style.color.main) } end
 		end
 
 		return form_text(torrent_sentences, values)

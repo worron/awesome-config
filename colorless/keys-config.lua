@@ -3,9 +3,7 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
-local table = table
 local awful = require("awful")
-local beautiful = require("beautiful")
 
 local redflat = require("redflat")
 
@@ -20,7 +18,6 @@ local current = redflat.widget.tasklist.filter.currenttags
 local allscr = redflat.widget.tasklist.filter.allscreen
 local laybox = redflat.widget.layoutbox
 local redtip = redflat.float.hotkeys
-local laycom = redflat.layout.common
 local redtitle = redflat.titlebar
 
 -- Key support functions
@@ -195,7 +192,7 @@ function hotkeys:init(args)
 
 	-- Appswitcher
 	------------------------------------------------------------
-	appswitcher_keys_move = {
+	local appswitcher_keys_move = {
 		{
 			{ env.mod }, "a", function() appswitcher:switch() end,
 			{ description = "Select next app", group = "Navigation" }
@@ -206,7 +203,7 @@ function hotkeys:init(args)
 		},
 	}
 
-	appswitcher_keys_action = {
+	local appswitcher_keys_action = {
 		{
 			{ env.mod }, "Super_L", function() appswitcher:hide() end,
 			{ description = "Activate and exit", group = "Action" }
