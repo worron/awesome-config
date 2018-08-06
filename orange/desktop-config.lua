@@ -40,28 +40,21 @@ function desktop:init(args)
 	local colset = { light = {}, base = {}, diskp = {}, diskpf = {}, tcpu = {}, tgpu = {}, thdd = {},
 	                 sspeed = {}, hspeed = {}, tspeed = {}, cores = {}}
 
-	--noinspection ArrayElementZero
 	colset.base[0] = style.color.icon
-	--noinspection ArrayElementZero
 	colset.light[0] = style.color.main
 
-	--noinspection ArrayElementZero
 	colset.diskp[0] = style.color.icon
 	colset.diskp[75] = style.color.main
 
-	--noinspection ArrayElementZero
 	colset.diskpf[0] = style.color.main
 	colset.diskpf[25] = style.color.icon
 
-	--noinspection ArrayElementZero
 	colset.tcpu[0] = style.color.icon
 	colset.tcpu[75] = style.color.main
 
-	--noinspection ArrayElementZero
 	colset.tgpu[0] = style.color.icon
 	colset.tgpu[80] = style.color.main
 
-	--noinspection ArrayElementZero
 	colset.thdd[0] = style.color.icon
 	colset.thdd[40] = style.color.main
 

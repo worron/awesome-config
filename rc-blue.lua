@@ -146,7 +146,7 @@ pcall(function() my_mails = require("blue.mail-config") end)
 
 -- widget setup
 local mail = {}
-mail.widget = redflat.widget.mail({ maillist = my_mails })
+mail.widget = redflat.widget.mail({ maillist = my_mails, update_timeout = 1800 })
 
 -- buttons
 mail.buttons = awful.util.table.join(
