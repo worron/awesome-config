@@ -127,6 +127,7 @@ function hotkeys:init(args)
 	local args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
+	local appkeys = args.appkeys or {}
 
 	self.mouse.root = (awful.util.table.join(
 		awful.button({ }, 3, function () mainmenu:toggle() end),
@@ -136,6 +137,26 @@ function hotkeys:init(args)
 
 	-- Init widgets
 	redflat.float.qlaunch:init()
+
+	-- Application hotkeys helper
+	--------------------------------------------------------------------------------
+	local apphelper = function(appkeys)
+		if not client.focus then return end
+
+		local app = client.focus.class:lower()
+		for name, sheet in pairs(appkeys) do
+			if name == app then
+				redtip:set_pack(
+						client.focus.class, sheet.pack, sheet.style.column, sheet.style.geometry,
+						function() redtip:remove_pack() end
+				)
+				redtip:show()
+				return
+			end
+		end
+
+		redflat.float.notify:show({ text = "No tips for " .. client.focus.class })
+	end
 
 	-- Keys for widgets
 	--------------------------------------------------------------------------------
@@ -562,7 +583,11 @@ function hotkeys:init(args)
 	self.raw.root = {
 		{
 			{ env.mod }, "F1", function() redtip:show() end,
-			{ description = "Show hotkeys helper", group = "Main" }
+			{ description = "Show awesome hotkeys helper", group = "Main" }
+		},
+		{
+			{ env.mod, "Control" }, "F1", function() apphelper(appkeys) end,
+			{ description = "Show hotkeys helper for application", group = "Main" }
 		},
 		{
 			{ env.mod }, "F2", function () redflat.service.navigator:run() end,

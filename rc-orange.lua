@@ -281,8 +281,10 @@ edges:init()
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
+local appkeys = require("orange.appkeys-config") -- load file with application keys sheetb
+
 local hotkeys = require("orange.keys-config") -- load file with hotkeys configuration
-hotkeys:init({ env = env, menu = mymenu.mainmenu })
+hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys })
 
 
 -- Rules

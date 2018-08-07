@@ -278,8 +278,10 @@ edges:init()
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
+local appkeys = require("red.appkeys-config") -- load file with application keys sheet
+
 local hotkeys = require("red.keys-config") -- load file with hotkeys configuration
-hotkeys:init({ env = env, menu = mymenu.mainmenu })
+hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys })
 
 
 -- Rules

@@ -287,8 +287,10 @@ edges:init()
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
+local appkeys = require("blue.appkeys-config") -- load file with application keys sheet
+
 local hotkeys = require("blue.keys-config") -- load file with hotkeys configuration
-hotkeys:init({ env = env, menu = mymenu.mainmenu })
+hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys })
 
 
 -- Rules
