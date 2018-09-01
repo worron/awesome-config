@@ -425,7 +425,7 @@ function hotkeys:init(args)
 			{ description = "Select next layout", group = "Layouts" }
 		},
 		{
-			{ env.mod, "Down" }, "Left", function() awful.layout.inc(-1) end,
+			{ env.mod }, "Down", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
 		},
 	}
