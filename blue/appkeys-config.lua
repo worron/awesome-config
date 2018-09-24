@@ -162,7 +162,7 @@ appkeys["urxvt"] = {
 
 
 appkeys["mpv"] = {
-	style = { column = 2, geometry = { width = 1000, height = 800 } },
+	style = { column = 3, geometry = { width = 1600, height = 720 } },
 	pack = {
 		{
 			{}, "f", nil,
@@ -192,10 +192,31 @@ appkeys["mpv"] = {
 			{ "Shift" }, "o", nil,
 			{ description = "Toggle show progress", group = "General" }
 		},
+		{
+			{}, "F9", nil,
+			{ description = "Show the list of audio and subtitle", group = "General" }
+		},
+		{
+			{"Shift"}, "a", nil,
+			{ description = "Cycle aspect ratio", group = "General" }
+		},
+
+		{
+			{}, "F8", nil,
+			{ description = "Show the playlist", group = "Playlist" }
+		},
+		{
+			{ "Shift" }, ",", nil,
+			{ description = "Forward in playlist", group = "Playlist" }
+		},
+		{
+			{ "Shift" }, ".", nil,
+			{ description = "Backward in playlist", group = "Playlist" }
+		},
 
 		{
 			{}, "Space", nil,
-			{ description = "Play / pause", group = "Playback" }
+			{ description = "Play/pause", group = "Playback" }
 		},
 		{
 			{}, "[", nil,
@@ -205,10 +226,30 @@ appkeys["mpv"] = {
 			{}, "]", nil,
 			{ description = "Increase speed", group = "Playback" }
 		},
+		{
+			{}, "{", nil,
+			{ description = "Halve current speed", group = "Playback" }
+		},
+		{
+			{}, "}", nil,
+			{ description = "Double current speed", group = "Playback" }
+		},
+		{
+			{}, "l", nil,
+			{ description = "Set/clear A-B loop points", group = "Playback" }
+		},
+		{
+			{ "Shift" }, "l", nil,
+			{ description = "Toggle infinite looping", group = "Playback" }
+		},
+		{
+			{}, "Backspace", nil,
+			{ description = "Reset speed to normal", group = "Playback" }
+		},
 
 		{
 			{}, "m", nil,
-			{ description = "Mute / unmute", group = "Audio" }
+			{ description = "Mute/unmute", group = "Audio" }
 		},
 		{
 			{}, "9", nil,
@@ -232,11 +273,11 @@ appkeys["mpv"] = {
 		},
 
 		{
-			{}, "pgup", nil,
+			{}, "PageUp", nil,
 			{ description = "Next chapter", group = "Navigation" }
 		},
 		{
-			{}, "pgdn", nil,
+			{}, "PageDn", nil,
 			{ description = "Previous chapter", group = "Navigation" }
 		},
 		{
@@ -263,10 +304,26 @@ appkeys["mpv"] = {
 			{}, "Down", nil,
 			{ description = "Backward 60 seconds", group = "Navigation" }
 		},
+		{
+			{ "Control" }, "Left", nil,
+			{ description = "Seek to the previous subtitle", group = "Navigation" }
+		},
+		{
+			{ "Control" }, "Right", nil,
+			{ description = "Seek to the next subtitle", group = "Navigation" }
+		},
+		{
+			{ "Shift" }, "Backspace", nil,
+			{ description = "Undo  the  last  seek", group = "Navigation" }
+		},
+		{
+			{ "Control", "Shift" }, "Backspace", nil,
+			{ description = "Mark the current position", group = "Navigation" }
+		},
 
 		{
 			{}, "v", nil,
-			{ description = "Show / hide subtitles", group = "Subtitles" }
+			{ description = "Show/hide subtitles", group = "Subtitles" }
 		},
 		{
 			{}, "j", nil,
@@ -292,11 +349,12 @@ appkeys["mpv"] = {
 			{}, "t", nil,
 			{ description = "Move subtitles down", group = "Subtitles" }
 		},
-
 		{
-			{"Shift"}, "a", nil,
-			{ description = "Cycle aspect ratio", group = "Video" }
+			{}, "u", nil,
+			{ description = "Style overrides on/off", group = "Subtitles" }
 		},
+
+
 		{
 			{}, "1", nil,
 			{ description = "Decrease contrast", group = "Video" }
@@ -329,15 +387,31 @@ appkeys["mpv"] = {
 			{}, "8", nil,
 			{ description = "Increase saturation", group = "Video" }
 		},
+
 		{
 			{}, "w", nil,
-			{ description = "Zoom out", group = "Video" }
+			{ description = "Decrease pan-and-scan range", group = "Zoom" }
 		},
 		{
 			{}, "e", nil,
-			{ description = "Zoom in", group = "Video" }
+			{ description = "Increase pan-and-scan range", group = "Zoom" }
 		},
-
+		{
+			{ "Alt" }, "-", nil,
+			{ description = "Decrease zoom", group = "Zoom" }
+		},
+		{
+			{ "Alt" }, "+", nil,
+			{ description = "Increase zoom", group = "Zoom" }
+		},
+		{
+			{ "Alt" }, "Backspace", nil,
+			{ description = "Reset zoom", group = "Zoom" }
+		},
+		{
+			{ "Alt" }, "Arrow", nil,
+			{ description = "Move the video rectangle", group = "Zoom" }
+		},
 	}
 }
 
