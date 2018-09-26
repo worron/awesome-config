@@ -61,7 +61,7 @@ and then edit `rc.lua` to select wanted config.
 Config `rc-colorless.lua` is some kind of basic config, it consist only general features and should work without any additional editing.  You can set colorless config, set you own colors, fonts, hotkeys and then port any widget you want from colored configs.
 
 #### Start with Colors
-<!--Colored configs is full featured setup designed to demonstrate all the power of `redflat` extension module. It contains some personal setting, so if you want to use colored config you should carefully edit "Panel widgets", "Desktop widgets", "Autostart user applications" sections, hotkeys and environment vars first.-->
+Colored configs is full featured setup designed to demonstrate all the power of `redflat` extension module. It contains some personal setting, so if you want to use colored config you should carefully edit "Panel widgets", "Desktop widgets", "Autostart user applications" sections, hotkeys and environment vars first.
 
 #### Tips
 Hotkeys helper bound to `Mod4`+`F1` (with holding modkey) by default, It will show you all hotkeys available at the current moment.
