@@ -1,12 +1,13 @@
--- fix unpack compatibility between lua versions
+-- Fix unpack compatibility between lua versions
 unpack = unpack or table.unpack
 
--- disable autostart applications
+-- Set lock 'true' to disable autostart applications
 local timestamp = require("redflat.timestamp")
-timestamp.lock = true
+timestamp.lock = false
 
--- config selection
--- local rc = "rc-red"
+-- Select configuration file
+
+ --local rc = "rc-red"
 local rc = "rc-blue"
 -- local rc = "rc-orange"
 -- local rc = "rc-green"
