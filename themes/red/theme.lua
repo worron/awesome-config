@@ -223,7 +223,7 @@ theme.service.dfparser = {
 		'~/.local/share/applications',
 	},
 	icons = {
-		df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
+		df_icon       = theme.path .. "/common/system.svg",
 		theme         = theme.homedir .. "/.icons/ACYLS",
 		custom_only   = true,
 		scalable_only = true
@@ -620,8 +620,8 @@ theme.float.qlaunch = {
 	border_width  = 0,
 	appline       = { iwidth = 160, im = { 5, 5, 5, 5 }, igap = { 0, 0, 10, 10 }, lheight = 30 },
 	state         = { gap = 6, radius = 3, size = 10, height = 20, width = 20 },
-	df_icon       = theme.homedir .. "/.icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
-	no_icon       = theme.homedir .. "/.icons/ACYLS/scalable/apps/question.svg",
+	df_icon       = theme.path .. "/common/system.svg",
+	no_icon       = theme.path .. "/common/unknown.svg",
 	recoloring    = true,
 	keytip        = { geometry = { width = 600, height = 320 } },
 	label_font    = theme.fonts.qlaunch,
