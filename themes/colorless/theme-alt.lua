@@ -75,6 +75,7 @@ theme.icon = {
 	blank    = theme.path .. "/common/blank.svg",
 	warning  = theme.path .. "/common/warning.svg",
 	awesome  = theme.path .. "/common/awesome.svg",
+	system   = theme.path .. "/common/system.svg",
 }
 
 
@@ -146,23 +147,27 @@ function theme:update()
 	self.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 440 }, column = 2, exit = true }
 	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 480 }, column = 2, exit = true }
 
----- Desktop file parser
-----------------------------------------------------------------------------------
---theme.service.dfparser = {
---	desktop_file_dirs = {
---		'/usr/share/applications/',
---		'/usr/local/share/applications/',
---		'~/.local/share/applications',
---	},
---	icons = {
---		-- df_icon       = "/usr/share/icons/ACYLS/scalable/mimetypes/application-x-executable.svg",
---		-- theme         = "/usr/share/icons/ACYLS",
---		custom_only   = false,
---		scalable_only = false
---	}
---}
---
---
+	-- Desktop file parser
+	--------------------------------------------------------------------------------
+	self.service.dfparser = {
+		-- list of path to check desktop files
+		desktop_file_dirs = {
+			'/usr/share/applications/',
+			'/usr/local/share/applications/',
+			'~/.local/share/applications',
+		},
+		-- icon theme settings
+		icons = {
+			 theme         = nil, -- user icon theme path
+			-- theme         = "/usr/share/icons/ACYLS", -- for example
+			df_icon       = self.icon.system, -- default (fallback) icon
+			custom_only   = false, -- use icons from user theme (no system fallback like 'hicolor' allowed) only
+			scalable_only = false  -- use vector(svg) icons (no raster icons allowed) only
+		},
+		wm_name = nil -- window manager name
+	}
+
+
 ---- Menu config
 -------------------------------------------------------------------------------------------------------------------------
 --theme.menu = {
