@@ -34,7 +34,7 @@ function env:init(args)
 	self.set_slave = true
 
 	-- theme setup
-	beautiful.init(env.themedir .. "/theme.lua")
+	beautiful.init(env.themedir .. "/theme-alt.lua")
 
 	-- naughty config
 	naughty.config.padding = beautiful.useless_gap and 2 * beautiful.useless_gap or 0
