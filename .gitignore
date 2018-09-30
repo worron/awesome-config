@@ -11,3 +11,6 @@ rc-back.lua
 
 # IDE settings
 .idea
+
+# Test enviroment
+run-with-xephur.sh
