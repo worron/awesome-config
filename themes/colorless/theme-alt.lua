@@ -83,6 +83,7 @@ theme.icon = {
 -- Make it updatabele since it may depends on common
 -----------------------------------------------------------------------------------------------------------------------
 function theme:update()
+
 	-- Service utils config
 	----------------------------------------------------------------------------------
 	self.service = {}
@@ -158,8 +159,8 @@ function theme:update()
 		},
 		-- icon theme settings
 		icons = {
-			 theme         = nil, -- user icon theme path
-			-- theme         = "/usr/share/icons/ACYLS", -- for example
+			theme         = nil, -- user icon theme path
+			--theme         = "/usr/share/icons/ACYLS", -- for example
 			df_icon       = self.icon.system, -- default (fallback) icon
 			custom_only   = false, -- use icons from user theme (no system fallback like 'hicolor' allowed) only
 			scalable_only = false  -- use vector(svg) icons (no raster icons allowed) only
@@ -168,31 +169,38 @@ function theme:update()
 	}
 
 
----- Menu config
--------------------------------------------------------------------------------------------------------------------------
---theme.menu = {
---	border_width = 4,
---	screen_gap   = theme.useless_gap + theme.border_width,
---	height       = 32,
---	width        = 250,
---	icon_margin  = { 8, 8, 8, 8 },
---	ricon_margin = { 9, 9, 9, 9 },
---	font         = theme.fonts.menu,
---	keytip       = { geometry = { width = 400, height = 460 } },
---	hide_timeout = 1,
---	submenu_icon = theme.path .. "/common/submenu.svg"
---}
---
---theme.menu.color = {
---	border       = theme.color.wibox,
---	text         = theme.color.text,
---	highlight    = theme.color.highlight,
---	main         = theme.color.main,
---	wibox        = theme.color.wibox,
---	submenu_icon = theme.color.icon
---}
---
---
+	-- Menu config
+	--------------------------------------------------------------------------------
+	self.menu = {
+		border_width = 4, -- menu border width
+		screen_gap   = self.useless_gap + self.border_width, -- minimal space from screen edge on placement
+		height       = 32,  -- menu item height
+		width        = 250, -- menu item width
+		icon_margin  = { 8, 8, 8, 8 }, -- space around left icon in menu item
+		ricon_margin = { 9, 9, 9, 9 }, -- space around right icon in menu item
+		nohide       = false, -- do not hide menu after item activation
+		auto_expand  = true,  -- show submenu on item selection (without item activation)
+		auto_hotkey  = false, -- automatically set hotkeys for all menu items
+		select_first = true,  -- auto select first item when menu shown
+		hide_timeout = 1,     -- auto hide timeout (auto hide disables if this set to 0)
+		font         = self.fonts.menu, -- menu font
+		submenu_icon = self.path .. "/common/submenu.svg", -- icon for submenu items
+		keytip       = { geometry = { width = 400, height = 460 } }, -- hotkeys helper style
+		svg_scale    = { false, false }, -- use vector scaling for left, right icons in menu item
+	}
+
+	self.menu.color = {
+		border       = self.color.wibox,     -- menu border color
+		text         = self.color.text,      -- menu text color
+		highlight    = self.color.highlight, -- menu text and icons color for selected item
+		main         = self.color.main,      -- menu selection color
+		wibox        = self.color.wibox,     -- menu background color
+		submenu_icon = self.color.icon,      -- submenu icon color
+		right_icon   = nil,                  -- right icon color in menu item
+		left_icon    = nil,                  -- left icon color in menu item
+	}
+
+
 ---- Gauge style
 -------------------------------------------------------------------------------------------------------------------------
 --theme.gauge = { tag = {}, task = {}, graph = {}}
