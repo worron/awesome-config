@@ -201,66 +201,74 @@ function theme:update()
 	}
 
 
----- Gauge style
--------------------------------------------------------------------------------------------------------------------------
---theme.gauge = { tag = {}, task = {}, graph = {}}
---
----- Separator
---------------------------------------------------------------
---theme.gauge.separator = {
---	marginv = { 2, 2, 4, 4 },
---	marginh = { 6, 6, 3, 3 },
---	color  = theme.color
---}
---
----- Tag
---------------------------------------------------------------
---theme.gauge.tag.orange = {
---	width        = 38,
---	line_width   = 4,
---	iradius      = 5,
---	radius       = 11,
---	hilight_min  = false,
---	color        = theme.color
---}
---
----- Task
---------------------------------------------------------------
---theme.gauge.task.blue = {
---	width    = 70,
---	show_min = true,
---	font     = theme.cairo_fonts.tag,
---	point    = { width = 70, height = 3, gap = 27, dx = 5 },
---	text_gap = 20,
---	color    = theme.color
---}
---
----- Dotcount
---------------------------------------------------------------
---theme.gauge.graph.dots = {
---	column_num   = { 3, 5 }, -- { min, max }
---	row_num      = 3,
---	dot_size     = 5,
---	dot_gap_h    = 4,
---	color        = theme.color
---}
---
---
----- Panel widgets
--------------------------------------------------------------------------------------------------------------------------
---theme.widget = {}
---
----- individual margins for palnel widgets
---------------------------------------------------------------
---theme.widget.wrapper = {
---	mainmenu    = { 12, 10, 6, 6 },
---	layoutbox   = { 10, 10, 6, 6 },
---	textclock   = { 12, 12, 0, 0 },
---	taglist     = { 4, 4, 0, 0 },
---	tray        = { 10, 12, 7, 7 },
---	-- tasklist    = { 0, 70, 0, 0 }, -- centering tasklist widget
---}
---
+	-- Gauge (various elements that used as component for other widgets) style
+	------------------------------------------------------------
+	self.gauge = { tag = {}, task = {}, graph = {}}
+
+	-- Separator (decoration used on panel, menu and some other widgets)
+	------------------------------------------------------------
+	self.gauge.separator = {
+		marginv = { 2, 2, 4, 4 }, -- margins for vertical separator
+		marginh = { 6, 6, 3, 3 }, -- margins for horizontal separator
+		color  = self.color -- colors (shadow used)
+	}
+
+	-- Tag (base element of taglist)
+	------------------------------------------------------------
+	self.gauge.tag.orange = {
+		width        = 38,    -- widget width
+		line_width   = 4,     -- width of arcs
+		iradius      = 5,     -- radius for center point
+		radius       = 11,    -- arcs radius
+		cgap         = 0.314, -- gap between arcs in radians
+		min_sections = 1,     -- minimal amount of arcs
+		show_min     = false, -- indicate minimized apps by color
+		color        = self.color -- colors (main used)
+	}
+
+	-- Task (base element of tasklist)
+	------------------------------------------------------------
+	self.gauge.task.blue = {
+		width      = 70,   -- widget width
+		show_min   = true, -- indicate minimized apps by color
+		font       = self.cairo_fonts.tag, -- font
+		text_shift = 20, -- shift from upper border of widget to lower border of text
+		color      = self.color, -- colors (main used)
+
+		-- apps indicator
+		point = {
+			width = 70, -- apps indicator total width
+			height = 3, -- apps indicator total height
+			gap = 27,   -- shift from upper border of widget to apps indicator
+			dx = 5      -- gap between apps indicator parts
+		},
+	}
+
+	-- Dotcount (used in minitray widget)
+	------------------------------------------------------------
+	self.gauge.graph.dots = {
+		column_num   = { 3, 5 },  -- amount of dot columns (min/max)
+		row_num      = 3,         -- amount of dot rows
+		dot_size     = 5,         -- dots size
+		dot_gap_h    = 4,         -- horizontal gap between dot (with columns number it'll define widget width)
+		color        = self.color -- colors (main used)
+	}
+	
+	-- Panel widgets
+	------------------------------------------------------------
+	self.widget = {}
+
+	-- individual margins for panel widgets
+	------------------------------------------------------------
+	self.widget.wrapper = {
+		mainmenu    = { 12, 10, 6, 6 },
+		layoutbox   = { 10, 10, 6, 6 },
+		textclock   = { 12, 12, 0, 0 },
+		taglist     = { 4, 4, 0, 0 },
+		tray        = { 10, 12, 7, 7 },
+		-- tasklist    = { 0, 70, 0, 0 }, -- centering tasklist widget
+	}
+
 ---- Textclock
 --------------------------------------------------------------
 --theme.widget.textclock = {
@@ -337,12 +345,12 @@ function theme:update()
 --	cornersw          = "Corner SW",
 --}
 --
----- Tasklist
---------------------------------------------------------------
---theme.widget.tasklist = {
---	char_digit  = 5,
---	task        = theme.gauge.task.blue
---}
+	-- Tasklist
+	--------------------------------------------------------------
+	theme.widget.tasklist = {
+		char_digit  = 5,
+		task        = theme.gauge.task.blue
+	}
 --
 ---- main
 --theme.widget.tasklist.winmenu = {
