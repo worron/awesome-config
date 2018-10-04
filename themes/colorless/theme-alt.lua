@@ -100,7 +100,7 @@ function theme:update()
 		},
 		linegap   = 32, -- gap between two lines on window information plate
 		timeout   = 1,  -- highlight duration
-		notify    = {}, -- redflat notify style
+		notify    = {}, -- redflat notify style (see theme.float.notify)
 		titlefont = self.cairo_fonts.navigator.title, -- first line font on window information plate
 		font      = self.cairo_fonts.navigator.main,  -- second line font on window information plate
 
@@ -269,123 +269,130 @@ function theme:update()
 		-- tasklist    = { 0, 70, 0, 0 }, -- centering tasklist widget
 	}
 
----- Textclock
---------------------------------------------------------------
---theme.widget.textclock = {
---	font  = theme.fonts.clock,
---	color = { text = theme.color.icon }
---}
---
----- Minitray
---------------------------------------------------------------
---theme.widget.minitray = {
---	border_width = 0,
---	geometry     = { height = 40 },
---	screen_gap   = 2 * theme.useless_gap,
---	color        = { wibox = theme.color.wibox, border = theme.color.wibox },
---	set_position = function()
---		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
---		         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
---	end,
---}
---
---
----- Layoutbox
---------------------------------------------------------------
---theme.widget.layoutbox = {
---	micon = theme.icon,
---	color = theme.color
---}
---
---theme.widget.layoutbox.icon = {
---	floating          = theme.path .. "/layouts/floating.svg",
---	max               = theme.path .. "/layouts/max.svg",
---	fullscreen        = theme.path .. "/layouts/fullscreen.svg",
---	tilebottom        = theme.path .. "/layouts/tilebottom.svg",
---	tileleft          = theme.path .. "/layouts/tileleft.svg",
---	tile              = theme.path .. "/layouts/tile.svg",
---	tiletop           = theme.path .. "/layouts/tiletop.svg",
---	fairv             = theme.path .. "/layouts/fair.svg",
---	fairh             = theme.path .. "/layouts/fair.svg",
---	grid              = theme.path .. "/layouts/grid.svg",
---	usermap           = theme.path .. "/layouts/map.svg",
---	magnifier         = theme.path .. "/layouts/magnifier.svg",
---	spiral            = theme.path .. "/layouts/spiral.svg",
---	cornerne          = theme.path .. "/layouts/cornerne.svg",
---	cornernw          = theme.path .. "/layouts/cornernw.svg",
---	cornerse          = theme.path .. "/layouts/cornerse.svg",
---	cornersw          = theme.path .. "/layouts/cornersw.svg",
---	unknown           = theme.path .. "/common/unknown.svg",
---}
---
---theme.widget.layoutbox.menu = {
---	icon_margin  = { 8, 12, 8, 8 },
---	width        = 260,
---	auto_hotkey  = true,
---	nohide       = false,
---	color        = { right_icon = theme.color.icon, left_icon = theme.color.icon }
---}
---
---theme.widget.layoutbox.name_alias = {
---	floating          = "Floating",
---	fullscreen        = "Fullscreen",
---	max               = "Maximized",
---	grid              = "Grid",
---	usermap           = "User Map",
---	tile              = "Right Tile",
---	fairv             = "Fair Tile",
---	tileleft          = "Left Tile",
---	tiletop           = "Top Tile",
---	tilebottom        = "Bottom Tile",
---	magnifier         = "Magnifier",
---	spiral            = "Spiral",
---	cornerne          = "Corner NE",
---	cornernw          = "Corner NW",
---	cornerse          = "Corner SE",
---	cornersw          = "Corner SW",
---}
---
+	-- Textclock
+	------------------------------------------------------------
+	self.widget.textclock = {
+		font    = self.fonts.clock, -- font
+		tooltip = {},               -- redflat tooltip style (see theme.float.tooltip)
+		color   = { text = self.color.icon }
+	}
+
+	-- Minitray
+	------------------------------------------------------------
+	self.widget.minitray = {
+		dotcount     = {}, -- redflat dotcount style (see theme.gauge.graph.dots)
+		border_width = 0,  -- floating widget border width
+		geometry     = { height = 40 }, -- floating widget size
+		screen_gap   = 2 * self.useless_gap, -- minimal space from screen edge on floating widget placement
+		color        = { wibox = self.color.wibox, border = self.color.wibox },
+
+		-- function to define floating widget position when shown
+		set_position = function()
+			return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
+			         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+		end,
+	}
+
+
+	-- Layoutbox
+	------------------------------------------------------------
+	self.widget.layoutbox = {
+		micon = self.icon,  -- some common menu icons (used: 'blank', 'check')
+		color = self.color  -- colors (main used)
+	}
+
+	-- layout icons
+	self.widget.layoutbox.icon = {
+		floating          = self.path .. "/layouts/floating.svg",
+		max               = self.path .. "/layouts/max.svg",
+		fullscreen        = self.path .. "/layouts/fullscreen.svg",
+		tilebottom        = self.path .. "/layouts/tilebottom.svg",
+		tileleft          = self.path .. "/layouts/tileleft.svg",
+		tile              = self.path .. "/layouts/tile.svg",
+		tiletop           = self.path .. "/layouts/tiletop.svg",
+		fairv             = self.path .. "/layouts/fair.svg",
+		fairh             = self.path .. "/layouts/fair.svg",
+		grid              = self.path .. "/layouts/grid.svg",
+		usermap           = self.path .. "/layouts/map.svg",
+		magnifier         = self.path .. "/layouts/magnifier.svg",
+		spiral            = self.path .. "/layouts/spiral.svg",
+		cornerne          = self.path .. "/layouts/cornerne.svg",
+		cornernw          = self.path .. "/layouts/cornernw.svg",
+		cornerse          = self.path .. "/layouts/cornerse.svg",
+		cornersw          = self.path .. "/layouts/cornersw.svg",
+		unknown           = self.path .. "/common/unknown.svg",  -- this one used as fallback
+	}
+
+	-- redflat menu style (see theme.menu)
+	self.widget.layoutbox.menu = {
+		icon_margin  = { 8, 12, 8, 8 },
+		width        = 260,
+		auto_hotkey  = true,
+		nohide       = false,
+		color        = { right_icon = self.color.icon, left_icon = self.color.icon }
+	}
+
+	-- human readable aliases for layout names (displayed in menu and tooltip)
+	self.widget.layoutbox.name_alias = {
+		floating          = "Floating",
+		fullscreen        = "Fullscreen",
+		max               = "Maximized",
+		grid              = "Grid",
+		usermap           = "User Map",
+		tile              = "Right Tile",
+		fairv             = "Fair Tile",
+		tileleft          = "Left Tile",
+		tiletop           = "Top Tile",
+		tilebottom        = "Bottom Tile",
+		magnifier         = "Magnifier",
+		spiral            = "Spiral",
+		cornerne          = "Corner NE",
+		cornernw          = "Corner NW",
+		cornerse          = "Corner SE",
+		cornersw          = "Corner SW",
+	}
+
 	-- Tasklist
 	--------------------------------------------------------------
-	theme.widget.tasklist = {
+	self.widget.tasklist = {
 		char_digit  = 5,
-		task        = theme.gauge.task.blue
+		task        = self.gauge.task.blue
 	}
---
----- main
---theme.widget.tasklist.winmenu = {
---	micon          = theme.icon,
---	titleline      = { font = theme.fonts.title, height = 30 },
---	menu           = { width = 220, color = { right_icon = theme.color.icon }, ricon_margin = { 9, 9, 10, 10 } },
---	tagmenu        = { width = 160, color = { right_icon = theme.color.icon, left_icon = theme.color.icon },
---	                   icon_margin = { 8, 10, 8, 8 } },
---	state_iconsize = { width = 18, height = 18 },
---	layout_icon    = theme.widget.layoutbox.icon,
---	color          = theme.color
---}
---
----- tasktip
---theme.widget.tasklist.tasktip = {
---	color = theme.color
---}
---
----- menu
---theme.widget.tasklist.winmenu.icon = {
---	floating             = theme.path .. "/common/window_control/floating.svg",
---	sticky               = theme.path .. "/common/window_control/pin.svg",
---	ontop                = theme.path .. "/common/window_control/ontop.svg",
---	below                = theme.path .. "/common/window_control/below.svg",
---	close                = theme.path .. "/common/window_control/close.svg",
---	minimize             = theme.path .. "/common/window_control/minimize.svg",
---	maximized            = theme.path .. "/common/window_control/maximized.svg",
---}
---
----- task aliases
---theme.widget.tasklist.appnames = {}
---theme.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
---theme.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
---
---
+
+	-- main
+	self.widget.tasklist.winmenu = {
+		micon          = self.icon,
+		titleline      = { font = self.fonts.title, height = 30 },
+		menu           = { width = 220, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 10, 10 } },
+		tagmenu        = { width = 160, color = { right_icon = self.color.icon, left_icon = self.color.icon },
+		                   icon_margin = { 8, 10, 8, 8 } },
+		state_iconsize = { width = 18, height = 18 },
+		layout_icon    = self.widget.layoutbox.icon,
+		color          = self.color
+	}
+
+	-- tasktip
+	self.widget.tasklist.tasktip = {
+		color = self.color
+	}
+
+	-- menu
+	self.widget.tasklist.winmenu.icon = {
+		floating             = self.path .. "/common/window_control/floating.svg",
+		sticky               = self.path .. "/common/window_control/pin.svg",
+		ontop                = self.path .. "/common/window_control/ontop.svg",
+		below                = self.path .. "/common/window_control/below.svg",
+		close                = self.path .. "/common/window_control/close.svg",
+		minimize             = self.path .. "/common/window_control/minimize.svg",
+		maximized            = self.path .. "/common/window_control/maximized.svg",
+	}
+
+	-- task aliases
+	self.widget.tasklist.appnames = {}
+	self.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
+	self.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
+
+
 ---- Floating widgets
 -------------------------------------------------------------------------------------------------------------------------
 --theme.float = { decoration = {} }
