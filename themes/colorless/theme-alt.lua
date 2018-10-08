@@ -375,7 +375,7 @@ function theme:update()
 			font = self.fonts.title, -- menu title height
 			height = 30              -- menu title font
 		},
-		stateline      = { height = 35 },             -- height of then menu item with state icons
+		stateline      = { height = 35 },             -- height of menu item with state icons
 		state_iconsize = { width = 18, height = 18 }, -- size for state icons
 		layout_icon    = self.widget.layoutbox.icon,  -- list of layout icons
 		sep_margin     = { 3, 3, 5, 5 },              -- margins around menu separators
@@ -421,23 +421,31 @@ function theme:update()
 	self.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
 
 
----- Floating widgets
--------------------------------------------------------------------------------------------------------------------------
---theme.float = { decoration = {} }
---
----- Client menu
---------------------------------------------------------------
---theme.float.clientmenu = {
---	micon          = theme.icon,
---	color          = theme.color,
---	actionline     = { height = 28 },
---	layout_icon    = theme.widget.layoutbox.icon,
---	menu           = theme.widget.tasklist.winmenu.menu,
---	state_iconsize = theme.widget.tasklist.winmenu.state_iconsize,
---	tagmenu        = theme.widget.tasklist.winmenu.tagmenu,
---	icon           = theme.widget.tasklist.winmenu.icon,
---}
---
+	-- Floating widgets
+	--------------------------------------------------------------
+	self.float = { decoration = {} }
+
+	-- Client menu
+	------------------------------------------------------------
+	self.float.clientmenu = {
+		actionline      = { height = 28 },             -- height of menu item with action icons
+		action_iconsize = { width = 18, height = 18 }, -- size for action icons
+		stateline       = { height = 35 },             -- height of menu item with state icons
+		state_iconsize  = { width = 20, height = 20 }, -- size for state icons
+
+		sep_margin      = { horizontal = { 3, 3, 5, 5 }, vertical = { 3, 3, 3, 3 } }, -- margins around menu separators
+
+		-- same elements as for task list menu
+		icon            = self.widget.tasklist.winmenu.icon,
+		micon           = self.widget.tasklist.winmenu.micon,
+		layout_icon     = self.widget.layoutbox.icon,
+		menu            = self.widget.tasklist.winmenu.menu,
+		state_iconsize  = self.widget.tasklist.winmenu.state_iconsize,
+		tagmenu         = self.widget.tasklist.winmenu.tagmenu,
+		hide_action     = self.widget.tasklist.winmenu.hide_action,
+		color           = self.color,
+	}
+
 ---- Application runner
 --------------------------------------------------------------
 --theme.float.apprunner = {
