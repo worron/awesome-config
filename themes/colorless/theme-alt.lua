@@ -446,23 +446,29 @@ function theme:update()
 		color           = self.color,
 	}
 
----- Application runner
---------------------------------------------------------------
---theme.float.apprunner = {
---	itemnum       = 6,
---	geometry      = { width = 620, height = 480 },
---	border_margin = { 24, 24, 24, 24 },
---	icon_margin   = { 8, 16, 0, 0 },
---	title_height  = 48,
---	prompt_height = 35,
---	keytip        = { geometry = { width = 400, height = 260 } },
---	title_icon    = theme.path .. "/widget/search.svg",
---	border_width  = 0,
---	name_font     = theme.fonts.title,
---	comment_font  = theme.fonts.main,
---	color         = theme.color
---}
---
+	-- Application runner
+	------------------------------------------------------------
+	self.float.apprunner = {
+		itemnum       = 6,                                 -- number of visible items
+		geometry      = { width = 620, height = 480 },     -- widget size
+		border_margin = { 24, 24, 24, 24 },                -- margin around widget content
+		icon_margin   = { 8, 16, 0, 0 },                   -- margins around widget icon
+		title_height  = 48,                                -- height of title (promt and icon) area
+		prompt_height = 35,                                -- prompt line height
+		title_icon    = self.path .. "/widget/search.svg", -- widget icon
+		border_width  = 0,                                 -- widget border width
+		parser        = {},                                -- desktop file parser settings(see theme.service.dfparser)
+		color         = self.color,                        -- colors (main used)
+
+		name_font     = self.fonts.title,   -- application title font
+		comment_font  = self.fonts.main,    -- application comment font
+		list_text_vgap   = 4,               -- space between application title and comment
+		list_icon_margin = { 6, 12, 6, 6 }, -- margins around applications icons
+		dimage           = self.path .. "/common/unknown.svg", -- fallback icon for applications
+
+		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip style
+	}
+
 ---- Application switcher
 --------------------------------------------------------------
 --theme.float.appswitcher = {
