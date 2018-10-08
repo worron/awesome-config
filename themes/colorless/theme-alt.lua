@@ -354,29 +354,46 @@ function theme:update()
 
 	-- Tasklist
 	--------------------------------------------------------------
+
+	-- main settings
 	self.widget.tasklist = {
-		char_digit  = 5,
-		task        = self.gauge.task.blue
+		custom_icon = false, -- use custom applications icons (not every gauge task widget support icons)
+		iconnames   = {},    -- icon name aliases for custom applications icons
+		widget      = nil,   -- task gauge widget (usually setted by rc file)
+		width       = 40,    -- width of task element in tasklist
+		char_digit  = 3,     -- number of characters in task element text
+ 		need_group  = true,  -- group application instances into one task element
+		parser      = {},    -- redlat desktop file parser settings (see theme.service.dfparser)
+		task_margin = { 5, 5, 0, 0 },      -- margins around task element
+		task        = self.gauge.task.blue -- style for task gauge widget
 	}
 
-	-- main
+	-- menu settings
 	self.widget.tasklist.winmenu = {
-		micon          = self.icon,
-		titleline      = { font = self.fonts.title, height = 30 },
-		menu           = { width = 220, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 10, 10 } },
-		tagmenu        = { width = 160, color = { right_icon = self.color.icon, left_icon = self.color.icon },
-		                   icon_margin = { 8, 10, 8, 8 } },
-		state_iconsize = { width = 18, height = 18 },
-		layout_icon    = self.widget.layoutbox.icon,
-		color          = self.color
+		micon          = self.icon, -- some common menu icons
+		titleline      = {
+			font = self.fonts.title, -- menu title height
+			height = 30              -- menu title font
+		},
+		stateline      = { height = 35 },             -- height of then menu item with state icons
+		state_iconsize = { width = 18, height = 18 }, -- size for state icons
+		layout_icon    = self.widget.layoutbox.icon,  -- list of layout icons
+		sep_margin     = { 3, 3, 5, 5 },              -- margins around menu separators
+		color          = self.color,                  -- colors (main used)
+
+		-- main menu style (see theme.menu)
+		menu = { width = 220, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 10, 10 } },
+
+		-- tag action submenu style (see theme.menu)
+		tagmenu = { width = 160, color = { right_icon = self.color.icon, left_icon = self.color.icon },
+		            icon_margin = { 8, 10, 8, 8 } },
+
+		-- set which action will hide menu after activate
+		hide_action = { min = true, move = true, max = false, add = false, floating = false, sticky = false,
+		                ontop = false, below = false, maximized = false },
 	}
 
-	-- tasktip
-	self.widget.tasklist.tasktip = {
-		color = self.color
-	}
-
-	-- menu
+	-- menu icons
 	self.widget.tasklist.winmenu.icon = {
 		floating             = self.path .. "/common/window_control/floating.svg",
 		sticky               = self.path .. "/common/window_control/pin.svg",
@@ -385,9 +402,20 @@ function theme:update()
 		close                = self.path .. "/common/window_control/close.svg",
 		minimize             = self.path .. "/common/window_control/minimize.svg",
 		maximized            = self.path .. "/common/window_control/maximized.svg",
+
+		unknown              = self.path .. "/common/unknown.svg",  -- this one used as fallback
 	}
 
-	-- task aliases
+	-- multiline task element tip
+	self.widget.tasklist.tasktip = {
+		border_width = 2,                -- tip border width
+		margin       = { 10, 10, 5, 5 }, -- margins around text in tip lines
+		timeout      = 0.5,              -- hide timeout
+		sl_highlight = false,            -- highlight application state when it's single line tip
+		color = self.color,              -- colors (main used)
+	}
+
+	-- task text aliases
 	self.widget.tasklist.appnames = {}
 	self.widget.tasklist.appnames["Firefox"             ] = "FIFOX"
 	self.widget.tasklist.appnames["Gnome-terminal"      ] = "GTERM"
