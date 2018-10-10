@@ -121,7 +121,7 @@ function theme:update()
 		}
 	}
 
-	-- layout hotkeys helper styles
+	-- layout hotkeys helper settings
 	self.service.navigator.keytip = {}
 
 	-- this one used as fallback when style for certain layout missed
@@ -185,7 +185,7 @@ function theme:update()
 		hide_timeout = 1,     -- auto hide timeout (auto hide disables if this set to 0)
 		font         = self.fonts.menu, -- menu font
 		submenu_icon = self.path .. "/common/submenu.svg", -- icon for submenu items
-		keytip       = { geometry = { width = 400, height = 460 } }, -- hotkeys helper style
+		keytip       = { geometry = { width = 400, height = 460 } }, -- hotkeys helper settings
 		svg_scale    = { false, false }, -- use vector scaling for left, right icons in menu item
 	}
 
@@ -466,7 +466,7 @@ function theme:update()
 		list_icon_margin = { 6, 12, 6, 6 }, -- margins around applications icons
 		dimage           = self.path .. "/common/unknown.svg", -- fallback icon for applications
 
-		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip style
+		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip settings
 	}
 	
 	-- Application switcher
@@ -490,7 +490,7 @@ function theme:update()
 		color           = self.color,         -- colors (main used)
 		font            = self.cairo_fonts.appswitcher, -- font of application mark(key)
 
-		-- redflat key tip style
+		-- redflat key tip settings
 		keytip         = { geometry = { width = 400, height = 320 }, exit = true },
 	}
 	
@@ -530,7 +530,7 @@ function theme:update()
 			height = 14 -- height of application state marks area
 		},
 
-		-- redflat key tip style
+		-- redflat key tip settings
 		keytip        = { geometry = { width = 600, height = 260 } },
 
 		-- file to store widget data
@@ -538,20 +538,22 @@ function theme:update()
 		configfile      = os.getenv("HOME") .. "/.cache/awesome/applist",
 	}
 
----- Hotkeys helper
---------------------------------------------------------------
---theme.float.hotkeys = {
---	geometry      = { width = 1400, height = 600 },
---	border_margin = { 20, 20, 10, 10 },
---	border_width  = 0,
---	is_align      = true,
---	separator     = { marginh = { 0, 0, 2, 6 } },
---	font          = theme.fonts.hotkeys.main,
---	keyfont       = theme.fonts.hotkeys.key,
---	titlefont     = theme.fonts.hotkeys.title,
---	color         = theme.color
---}
---
+	-- Hotkeys helper
+	------------------------------------------------------------
+	self.float.hotkeys = {
+		geometry      = { width = 1400, height = 600 }, -- widget size
+		border_margin = { 20, 20, 10, 10 },             -- margins around widget content
+		border_width  = 0,                              -- widget border width
+		delim         = "   ",                          -- text separator between key and description
+		tspace        = 5,                              -- space between lines in widget title
+		is_align      = true,                           -- align keys description (monospace font required)
+		separator     = { marginh = { 0, 0, 2, 6 } },   -- redflat separator style (see theme.gauge.separator)
+		font          = self.fonts.hotkeys.main,        -- keys description font
+		keyfont       = self.fonts.hotkeys.key,         -- keys font
+		titlefont     = self.fonts.hotkeys.title,       -- widget title font
+		color         = self.color                      -- colors (main used)
+	}
+
 ---- Key sequence tip
 --------------------------------------------------------------
 --theme.float.keychain = {
