@@ -457,7 +457,7 @@ function theme:update()
 		prompt_height = 35,                                -- prompt line height
 		title_icon    = self.path .. "/widget/search.svg", -- widget icon
 		border_width  = 0,                                 -- widget border width
-		parser        = {},                                -- desktop file parser settings(see theme.service.dfparser)
+		parser        = {},                                -- desktop file parser settings (see theme.service.dfparser)
 		color         = self.color,                        -- colors (main used)
 
 		name_font     = self.fonts.title,   -- application title font
@@ -468,32 +468,40 @@ function theme:update()
 
 		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip style
 	}
+	
+	-- Application switcher
+	------------------------------------------------------------
+	self.float.appswitcher = {
+		wibox_height    = 240, -- widget height
+		label_height    = 28,  -- height of the area with application mark(key)
+		title_height    = 40,  -- height of widget title line (application name and tag name)
+		icon_size       = 96,  -- size of the application icon in preview area
+		preview_gap     = 20,  -- gap between preview areas
+		parser          = {},  -- desktop file parser settings (see theme.service.dfparser)
 
----- Application switcher
---------------------------------------------------------------
---theme.float.appswitcher = {
---	wibox_height   = 240,
---	label_height   = 28,
---	title_height   = 40,
---	icon_size      = 96,
---	border_margin  = { 10, 10, 0, 10 },
---	preview_margin = { 15, 15, 15, 15 },
---	preview_format = 16 / 10,
---	title_font     = theme.fonts.title,
---	border_width   = 0,
---	update_timeout = 1 / 12,
---	keytip         = { geometry = { width = 400, height = 320 }, exit = true },
---	font           = theme.cairo_fonts.appswitcher,
---	color          = theme.color
---}
---
----- additional color
---theme.float.appswitcher.color.preview_bg = theme.color.main .. "12"
---
----- hotkeys
---theme.float.appswitcher.hotkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
---                                    "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
---
+		border_margin   = { 10, 10, 0, 10 },  -- margins around widget content
+		preview_margin  = { 15, 15, 15, 15 }, -- margins around application preview
+		preview_format  = 16 / 10,            -- preview acpect ratio
+		title_font      = self.fonts.title,   -- font of widget title line
+		border_width    = 0,                  -- widget border width
+		update_timeout  = 1 / 12,             -- application preview update timeout
+		min_icon_number = 4,                  -- this one will define the minimal widget width
+		                                      -- (widget will not shrink if number of apps items less then this)
+		color           = self.color,         -- colors (main used)
+		font            = self.cairo_fonts.appswitcher, -- font of application mark(key)
+
+		-- redflat key tip style
+		keytip         = { geometry = { width = 400, height = 320 }, exit = true },
+	}
+	
+	-- additional color
+	self.float.appswitcher.color.preview_bg = self.color.main .. "12"
+	
+	-- application marks(keys) list
+	self.float.appswitcher.hotkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+	                                   "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
+
+
 ---- Quick launcher
 --------------------------------------------------------------
 --theme.float.qlaunch = {
