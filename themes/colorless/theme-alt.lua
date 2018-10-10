@@ -502,21 +502,42 @@ function theme:update()
 	                                   "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
 
 
----- Quick launcher
---------------------------------------------------------------
---theme.float.qlaunch = {
---	geometry      = { width = 1400, height = 170 },
---	border_margin = { 5, 5, 12, 15 },
---	border_width  = 0,
---	appline       = { iwidth = 140, im = { 5, 5, 0, 0 }, igap = { 0, 0, 5, 15 }, lheight = 26 },
---	state         = { gap = 5, radius = 5, size = 10,  height = 14 },
---	df_icon       = theme.path .. "/common/system.svg",
---	no_icon       = theme.path .. "/common/unknown.svg",
---	keytip        = { geometry = { width = 600, height = 260 } },
---	label_font    = theme.fonts.qlaunch,
---	color         = theme.color,
---}
---
+	-- Quick launcher
+	------------------------------------------------------------
+	self.float.qlaunch = {
+		geometry      = { width = 1400, height = 170 }, -- widget size
+
+		border_width  = 0,                   -- widget border width
+		border_margin = { 5, 5, 12, 15 },    -- margins around widget content
+		parser        = {},                  -- desktop file parser settings (see theme.service.dfparser)
+		notify        = {},                  -- desktop file parser settings (see theme.float.notify)
+		recoloring    = false,               -- apply redflat recoloring feature on application icons
+		label_font    = self.fonts.qlaunch,  -- font of application mark(key)
+		color         = self.color,          -- colors (main used)
+		df_icon       = self.path .. "/common/system.svg",  -- fallback application icon
+		no_icon       = self.path .. "/common/unknown.svg", -- icon for unused application slot
+
+		appline       = {
+			iwidth = 140,           -- application item width
+			im = { 5, 5, 0, 0 },    -- margins around application item area
+			igap = { 0, 0, 5, 15 }, -- margins around application icon itself (will affect icon size)
+			lheight = 26            -- height of application mark(key) area
+		},
+		state         = {
+			gap = 5,    -- space between application state marks
+			radius = 5, -- application state mark radius
+			size = 10,  -- application state mark size
+			height = 14 -- height of application state marks area
+		},
+
+		-- redflat key tip style
+		keytip        = { geometry = { width = 600, height = 260 } },
+
+		-- file to store widget data
+		-- this widget is rare one which need to keep settings between sessions
+		configfile      = os.getenv("HOME") .. "/.cache/awesome/applist",
+	}
+
 ---- Hotkeys helper
 --------------------------------------------------------------
 --theme.float.hotkeys = {
