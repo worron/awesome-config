@@ -458,6 +458,7 @@ function theme:update()
 		title_icon    = self.path .. "/widget/search.svg", -- widget icon
 		border_width  = 0,                                 -- widget border width
 		parser        = {},                                -- desktop file parser settings (see theme.service.dfparser)
+		field         = nil,                               -- redflat text field style(see theme.float.decoration.field)
 		color         = self.color,                        -- colors (main used)
 
 		name_font     = self.fonts.title,   -- application title font
@@ -576,13 +577,16 @@ function theme:update()
 		color        = self.color          -- colors (main used)
 	}
 
----- Floating prompt
---------------------------------------------------------------
---theme.float.prompt = {
---	border_width = 0,
---	color        = theme.color
---}
---
+	-- Floating prompt
+	------------------------------------------------------------
+	self.float.prompt = {
+		geometry     = { width = 620, height = 120 }, -- widget size
+		border_width = 0,                             -- widget border width
+		margin       = { 20, 20, 40, 40 },            -- margins around widget content
+		field        = nil,                           -- redflat text field style (see theme.float.decoration.field)
+		color        = self.color                     -- colors (main used)
+	}
+
 ---- Notify
 --------------------------------------------------------------
 --theme.float.notify = {
