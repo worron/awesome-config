@@ -554,16 +554,18 @@ function theme:update()
 		color         = self.color                      -- colors (main used)
 	}
 
----- Key sequence tip
---------------------------------------------------------------
---theme.float.keychain = {
---	geometry        = { width = 250, height = 54 },
---	font            = theme.fonts.keychain,
---	-- border_width    = 0,
---	keytip          = { geometry = { width = 600, height = 400 }, column = 1 },
---	color           = theme.color,
---}
---
+	-- Key sequence tip
+	------------------------------------------------------------
+	self.float.keychain = {
+		geometry        = { width = 250, height = 54 }, -- default widget size
+		font            = self.fonts.keychain,          -- widget font
+		border_width    = 2,                            -- widget border width
+		color           = self.color,                   -- colors (main used)
+
+		-- redflat key tip settings
+		keytip          = { geometry = { width = 600, height = 400 }, column = 1 },
+	}
+
 ---- Tooltip
 --------------------------------------------------------------
 --theme.float.tooltip = {
