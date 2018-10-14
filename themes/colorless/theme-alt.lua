@@ -566,16 +566,16 @@ function theme:update()
 		keytip          = { geometry = { width = 600, height = 400 }, column = 1 },
 	}
 
----- Tooltip
---------------------------------------------------------------
---theme.float.tooltip = {
---	margin       = { 6, 6, 4, 4 },
---	timeout      = 0,
---	font         = theme.fonts.tooltip,
---	border_width = 2,
---	color        = theme.color
---}
---
+	-- Tooltip
+	------------------------------------------------------------
+	self.float.tooltip = {
+		margin       = { 6, 6, 4, 4 },     -- margins around widget content
+		timeout      = 0,                  -- show delay
+		font         = self.fonts.tooltip, -- widget font
+		border_width = 2,                  -- widget border width
+		color        = self.color          -- colors (main used)
+	}
+
 ---- Floating prompt
 --------------------------------------------------------------
 --theme.float.prompt = {
