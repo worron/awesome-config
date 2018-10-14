@@ -385,6 +385,7 @@ function theme:update()
 		stateline      = { height = 35 },             -- height of menu item with state icons
 		state_iconsize = { width = 18, height = 18 }, -- size for state icons
 		layout_icon    = self.widget.layoutbox.icon,  -- list of layout icons
+		-- TODO: unify this
 		sep_margin     = { 3, 3, 5, 5 },              -- margins around menu separators
 		color          = self.color,                  -- colors (main used)
 
@@ -594,7 +595,7 @@ function theme:update()
 		color        = self.color                     -- colors (main used)
 	}
 
-	-- Notify
+	-- Notify (redflat notification widget)
 	------------------------------------------------------------
 	self.float.notify = {
 		geometry        = { width = 484, height = 106 }, -- widget size
@@ -635,7 +636,7 @@ function theme:update()
 
 
 	-- Titlebar
-	-----------------------------------------------------------------------------------------------------------------------
+	------------------------------------------------------------
 	self.titlebar = {
 		size          = 8,                   -- titlebar height
 		position      = "top",               -- titlebar position
@@ -652,29 +653,9 @@ function theme:update()
 		},
 	}
 
----- Naughty config
--------------------------------------------------------------------------------------------------------------------------
---theme.naughty = {}
---
---theme.naughty.base = {
---	timeout      = 10,
---	margin       = 12,
---	icon_size    = 80,
---	font         = theme.fonts.main,
---	bg           = theme.color.wibox,
---	fg           = theme.color.text,
---	height       = theme.float.notify.geometry.height,
---	width        = theme.float.notify.geometry.width,
---	border_width = 4,
---	border_color = theme.color.wibox
---}
---
---theme.naughty.normal = {}
---theme.naughty.critical = { timeout = 0, border_color = theme.color.main }
---theme.naughty.low = { timeout = 5 }
---
--- Default awesome theme vars
------------------------------------------------------------------------------------------------------------------------
+
+	-- Default awesome theme vars
+	------------------------------------------------------------
 
 	-- colors
 	self.bg_normal     = self.color.wibox
@@ -693,6 +674,26 @@ function theme:update()
 
 	-- font
 	self.font = self.fonts.main
+
+	-- standart awesome notification widget
+	self.naughty = {}
+
+	self.naughty.base = {
+		timeout      = 10,
+		margin       = 12,
+		icon_size    = 80,
+		font         = self.fonts.main,
+		bg           = self.color.wibox,
+		fg           = self.color.text,
+		height       = self.float.notify.geometry.height,
+		width        = self.float.notify.geometry.width,
+		border_width = 4,
+		border_color = self.color.wibox
+	}
+
+	self.naughty.normal = {}
+	self.naughty.critical = { timeout = 0, border_color = self.color.main }
+	self.naughty.low = { timeout = 5 }
 end
 
 theme:update()
