@@ -217,7 +217,7 @@ function theme:update()
 	self.gauge.separator = {
 		marginv = { 2, 2, 4, 4 }, -- margins for vertical separator
 		marginh = { 6, 6, 3, 3 }, -- margins for horizontal separator
-		color  = self.color -- colors (shadow used)
+		color  = self.color       -- colors (shadow used)
 	}
 
 	-- Tag (base element of taglist)
@@ -617,33 +617,41 @@ function theme:update()
 		end,
 	}
 
----- Decoration elements
---------------------------------------------------------------
---theme.float.decoration.button = {
---	color = {
---		shadow3 = theme.color.shadow3,
---		shadow4 = theme.color.shadow4,
---		gray    = theme.color.gray,
---		text    = "#cccccc"
---	},
---}
---
---theme.float.decoration.field = {
---	color = theme.color
---}
---
---
----- Titlebar
--------------------------------------------------------------------------------------------------------------------------
---theme.titlebar = {
---	size          = 8,
---	position      = "top",
---	font          = theme.fonts.titlebar,
---	icon          = { size = 30, gap = 10 },
---	border_margin = { 0, 0, 0, 4 },
---	color         = theme.color,
---}
---
+	-- Decoration (various elements that used as component for other widgets) style
+	------------------------------------------------------------
+	-- TODO: rework this
+	--self.float.decoration.button = {
+	--	color = {
+	--		shadow3 = self.color.shadow3,
+	--		shadow4 = self.color.shadow4,
+	--		gray    = self.color.gray,
+	--		text    = "#cccccc"
+	--	},
+	--}
+
+	self.float.decoration.field = {
+		color = self.color  -- colors (shadow used)
+	}
+
+
+	-- Titlebar
+	-----------------------------------------------------------------------------------------------------------------------
+	self.titlebar = {
+		size          = 8,                   -- titlebar height
+		position      = "top",               -- titlebar position
+		font          = self.fonts.titlebar, -- titlebar font
+		border_margin = { 0, 0, 0, 4 },      -- margins around titlebar active area
+		color         = self.color,          -- colors (main used)
+
+		-- TODO: rename this
+		-- application state marks settings
+		icon = {
+			size  = 30, -- mark size
+			gap   = 10, -- space between marks
+			angle = 0   -- marks pitch angle
+		},
+	}
+
 ---- Naughty config
 -------------------------------------------------------------------------------------------------------------------------
 --theme.naughty = {}
