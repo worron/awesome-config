@@ -382,12 +382,11 @@ function theme:update()
 			font = self.fonts.title, -- menu title height
 			height = 30              -- menu title font
 		},
-		stateline      = { height = 35 },             -- height of menu item with state icons
-		state_iconsize = { width = 18, height = 18 }, -- size for state icons
-		layout_icon    = self.widget.layoutbox.icon,  -- list of layout icons
-		-- TODO: unify this
-		sep_margin     = { 3, 3, 5, 5 },              -- margins around menu separators
-		color          = self.color,                  -- colors (main used)
+		stateline      = { height = 35 },              -- height of menu item with state icons
+		state_iconsize = { width = 18, height = 18 },  -- size for state icons
+		layout_icon    = self.widget.layoutbox.icon,   -- list of layout icons
+		separator      = { marginh = { 3, 3, 5, 5 } }, -- redflat separator style (see theme.gauge.separator)
+		color          = self.color,                   -- colors (main used)
 
 		-- main menu style (see theme.menu)
 		menu = { width = 220, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 10, 10 } },
@@ -441,7 +440,8 @@ function theme:update()
 		stateline       = { height = 35 },             -- height of menu item with state icons
 		state_iconsize  = { width = 20, height = 20 }, -- size for state icons
 
-		sep_margin      = { horizontal = { 3, 3, 5, 5 }, vertical = { 3, 3, 3, 3 } }, -- margins around menu separators
+		-- redflat separator style(see theme.gauge.separator)
+		separator       = { marginh = { 3, 3, 5, 5 }, marginv = { 3, 3, 3, 3 } },
 
 		-- same elements as for task list menu
 		icon            = self.widget.tasklist.winmenu.icon,
