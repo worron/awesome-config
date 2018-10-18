@@ -5,18 +5,18 @@ local awful = require("awful")
 
 -- This theme inherited from colorless with overwriting some values
 local theme = require("themes/colorless/theme")
+
 --local wa = mouse.screen.workarea
 
 
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
-theme.color.main = "#064E71"
+theme.color.main   = "#064E71"
 theme.color.urgent = "#B32601"
 
 -- Common
 -----------------------------------------------------------------------------------------------------------------------
 theme.path = awful.util.get_configuration_dir() .. "themes/blue"
-theme.homedir = os.getenv("HOME")
 
 -- Main config
 ------------------------------------------------------------
@@ -59,15 +59,6 @@ theme.cairo_fonts = {
 		title = { font = "Play", size = 28, face = 1, slant = 0 }, -- window navigation title font
 		main  = { font = "Play", size = 22, face = 1, slant = 0 }  -- window navigation  main font
 	},
-}
-
--- Shared icons
---------------------------------------------------------------------------------
-theme.icon = {
-	check    = theme.path .. "/common/check.svg",
-	blank    = theme.path .. "/common/blank.svg",
-	warning  = theme.path .. "/common/warning.svg",
-	awesome  = theme.path .. "/common/awesome.svg",
 }
 
 -- Widget icons
@@ -178,6 +169,18 @@ theme.icon.widget = {
 --	thermal  = { 1, 5 }
 --}
 --
+
+-- Main theme settings
+-- Make it updatabele since it may depends on common and ancestor theme settings
+-----------------------------------------------------------------------------------------------------------------------
+
+-- setup ancestor settings
+theme:update()
+
+-- overwrite ancestor update settings with current theme values
+function theme:update()
+
+end
 --
 ---- Service utils config
 -------------------------------------------------------------------------------------------------------------------------

@@ -73,9 +73,11 @@ theme.cairo_fonts = {
 theme.icon = {
 	check    = theme.path .. "/common/check.svg",
 	blank    = theme.path .. "/common/blank.svg",
+	submenu  = theme.path .. "/common/submenu.svg",
 	warning  = theme.path .. "/common/warning.svg",
 	awesome  = theme.path .. "/common/awesome.svg",
 	system   = theme.path .. "/common/system.svg",
+	unknown  = theme.path .. "/common/unknown.svg",
 }
 
 
@@ -183,8 +185,8 @@ function theme:update()
 		auto_hotkey  = false, -- automatically set hotkeys for all menu items
 		select_first = true,  -- auto select first item when menu shown
 		hide_timeout = 1,     -- auto hide timeout (auto hide disables if this set to 0)
-		font         = self.fonts.menu, -- menu font
-		submenu_icon = self.path .. "/common/submenu.svg", -- icon for submenu items
+		font         = self.fonts.menu,   -- menu font
+		submenu_icon = self.icon.submenu, -- icon for submenu items
 		keytip       = { geometry = { width = 400, height = 460 } }, -- hotkeys helper settings
 		svg_scale    = { false, false }, -- use vector scaling for left, right icons in menu item
 	}
@@ -327,7 +329,7 @@ function theme:update()
 		cornernw          = self.path .. "/layouts/cornernw.svg",
 		cornerse          = self.path .. "/layouts/cornerse.svg",
 		cornersw          = self.path .. "/layouts/cornersw.svg",
-		unknown           = self.path .. "/common/unknown.svg",  -- this one used as fallback
+		unknown           = self.icon.unknown,  -- this one used as fallback
 	}
 
 	-- redflat menu style (see theme.menu)
@@ -410,7 +412,7 @@ function theme:update()
 		minimize             = self.path .. "/common/window_control/minimize.svg",
 		maximized            = self.path .. "/common/window_control/maximized.svg",
 
-		unknown              = self.path .. "/common/unknown.svg",  -- this one used as fallback
+		unknown              = self.icon.unknown,  -- this one used as fallback
 	}
 
 	-- multiline task element tip
@@ -469,11 +471,11 @@ function theme:update()
 		field         = nil,                               -- redflat text field style(see theme.float.decoration.field)
 		color         = self.color,                        -- colors (main used)
 
-		name_font     = self.fonts.title,   -- application title font
-		comment_font  = self.fonts.main,    -- application comment font
-		list_text_vgap   = 4,               -- space between application title and comment
-		list_icon_margin = { 6, 12, 6, 6 }, -- margins around applications icons
-		dimage           = self.path .. "/common/unknown.svg", -- fallback icon for applications
+		name_font     = self.fonts.title,     -- application title font
+		comment_font  = self.fonts.main,      -- application comment font
+		list_text_vgap   = 4,                 -- space between application title and comment
+		list_icon_margin = { 6, 12, 6, 6 },   -- margins around applications icons
+		dimage           = self.icon.unknown, -- fallback icon for applications
 
 		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip settings
 	}
@@ -523,8 +525,8 @@ function theme:update()
 		recoloring    = false,               -- apply redflat recoloring feature on application icons
 		label_font    = self.fonts.qlaunch,  -- font of application mark(key)
 		color         = self.color,          -- colors (main used)
-		df_icon       = self.path .. "/common/system.svg",  -- fallback application icon
-		no_icon       = self.path .. "/common/unknown.svg", -- icon for unused application slot
+		df_icon       = self.icon.system,    -- fallback application icon
+		no_icon       = self.icon.unknown,   -- icon for unused application slot
 
 		appline       = {
 			iwidth = 140,           -- application item width
