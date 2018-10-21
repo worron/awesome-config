@@ -180,81 +180,33 @@ theme:update()
 -- overwrite ancestor update settings with current theme values
 function theme:update()
 
+	-- Set hotkey helper size according current fonts
+	--------------------------------------------------------------------------------
+	self.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 440 }, exit = true }
+	self.service.navigator.keytip["fairh"] = self.service.navigator.keytip["fairv"]
+
+	self.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 660 }, exit = true }
+	self.service.navigator.keytip["tileleft"]   = self.service.navigator.keytip["tile"]
+	self.service.navigator.keytip["tiletop"]    = self.service.navigator.keytip["tile"]
+	self.service.navigator.keytip["tilebottom"] = self.service.navigator.keytip["tile"]
+
+	self.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 520 }, column = 2, exit = true }
+	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 580 }, column = 2, exit = true }
+
+	-- Desktop file parser
+	--------------------------------------------------------------------------------
+	self.service.dfparser.icons.theme         = self.homedir .. "/.icons/ACYLS"
+	self.service.dfparser.icons.custom_only   = true
+	self.service.dfparser.icons.scalable_only = true
+
+	-- Menu config
+	--------------------------------------------------------------------------------
+	self.menu.icon_margin  = { 4, 7, 7, 8 }
+	self.menu.keytip       = { geometry = { width = 400, height = 380 } }
+
+
 end
---
----- Service utils config
--------------------------------------------------------------------------------------------------------------------------
---theme.service = {}
---
----- Window control mode appearance
-----------------------------------------------------------------------------------
---theme.service.navigator = {
---	border_width = 0,
---	gradstep     = 60,
---	marksize     = { width = 160, height = 80, r = 20 },
---	linegap      = 32,
---	titlefont    = theme.cairo_fonts.navigator.title,
---	font         = theme.cairo_fonts.navigator.main,
---	color        = { border = theme.color.main, mark = theme.color.gray, text = theme.color.wibox,
---	                 fbg1 = theme.color.main .. "40",   fbg2 = theme.color.main .. "20",
---	                 hbg1 = theme.color.urgent .. "40", hbg2 = theme.color.urgent .. "20",
---	                 bg1  = theme.color.gray .. "40",   bg2  = theme.color.gray .. "20" }
---}
---
---theme.service.navigator.keytip = {}
---theme.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 440 }, exit = true }
---theme.service.navigator.keytip["fairh"] = theme.service.navigator.keytip["fairv"]
---
---theme.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 660 }, exit = true }
---theme.service.navigator.keytip["tileleft"]   = theme.service.navigator.keytip["tile"]
---theme.service.navigator.keytip["tiletop"]    = theme.service.navigator.keytip["tile"]
---theme.service.navigator.keytip["tilebottom"] = theme.service.navigator.keytip["tile"]
---
---theme.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 520 }, column = 2, exit = true }
---theme.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 580 }, column = 2, exit = true }
---
----- Desktop file parser
-----------------------------------------------------------------------------------
---theme.service.dfparser = {
---	desktop_file_dirs = {
---		'/usr/share/applications/',
---		'/usr/local/share/applications/',
---		'~/.local/share/applications',
---	},
---	icons = {
---		df_icon       = theme.path .. "/common/system.svg",
---		theme         = theme.homedir .. "/.icons/ACYLS",
---		custom_only   = true,
---		scalable_only = true
---	}
---}
---
---
----- Menu config
--------------------------------------------------------------------------------------------------------------------------
---theme.menu = {
---	border_width = 4,
---	screen_gap   = theme.useless_gap + theme.border_width,
---	height       = 32,
---	width        = 250,
---	icon_margin  = { 4, 7, 7, 8 },
---	ricon_margin = { 9, 9, 9, 9 },
---	font         = theme.fonts.menu,
---	keytip       = { geometry = { width = 400, height = 380 } },
---	hide_timeout = 1,
---	submenu_icon = theme.path .. "/common/submenu.svg"
---}
---
---theme.menu.color = {
---	border       = theme.color.wibox,
---	text         = theme.color.text,
---	highlight    = theme.color.highlight,
---	main         = theme.color.main,
---	wibox        = theme.color.wibox,
---	submenu_icon = theme.color.icon
---}
---
---
+
 ---- Gauge style
 -------------------------------------------------------------------------------------------------------------------------
 --theme.gauge = { tag = {}, task = {}, icon = {}, audio = {}, monitor = {}, graph = {} }
