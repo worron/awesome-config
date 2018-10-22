@@ -23,16 +23,17 @@ theme.wallpaper = theme.path .. "/wallpaper/custom.png" -- wallpaper file
 -- Widget icons
 --------------------------------------------------------------------------------
 theme.icon.widget = {
-	battery  = theme.path .. "/widget/battery.svg",
-	wireless = theme.path .. "/widget/wireless.svg",
-	monitor  = theme.path .. "/widget/monitor.svg",
+	battery    = theme.path .. "/widget/battery.svg",
+	wireless   = theme.path .. "/widget/wireless.svg",
+	monitor    = theme.path .. "/widget/monitor.svg",
+	audio      = theme.path .. "/widget/audio.svg",
+	headphones = theme.path .. "/widget/headphones.svg",
 }
 
--- Main theme settings
------------------------------------------------------------------------------------------------------------------------
-
--- setup ancestor settings
+-- Setup ancestor settings
+--------------------------------------------------------------------------------
 theme:update()
+
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
@@ -52,125 +53,17 @@ theme.widget.wrapper = {
 	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
 }
 
--- Panel widget settings
---------------------------------------------------------------------------------
+-- Pulseaudio volume control
+------------------------------------------------------------
+theme.widget.pulse = {
+	audio  = { icon = theme.icon.widget.headphones },
+	notify = { icon = theme.icon.widget.audio },
+}
 
-
----- overwrite ancestor update settings with current theme values
---function theme:update()
---
---	-- Set hotkey helper size according current fonts
---	--------------------------------------------------------------------------------
---	self.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 440 }, exit = true }
---	self.service.navigator.keytip["fairh"] = self.service.navigator.keytip["fairv"]
---
---	self.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 660 }, exit = true }
---	self.service.navigator.keytip["tileleft"]   = self.service.navigator.keytip["tile"]
---	self.service.navigator.keytip["tiletop"]    = self.service.navigator.keytip["tile"]
---	self.service.navigator.keytip["tilebottom"] = self.service.navigator.keytip["tile"]
---
---	self.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 520 }, column = 2, exit = true }
---	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 580 }, column = 2, exit = true }
---
---	-- Desktop file parser
---	--------------------------------------------------------------------------------
---	self.service.dfparser.icons.theme         = self.homedir .. "/.icons/ACYLS"
---	self.service.dfparser.icons.custom_only   = true
---	self.service.dfparser.icons.scalable_only = true
---
---	-- Menu config
---	--------------------------------------------------------------------------------
---	self.menu.icon_margin  = { 4, 7, 7, 8 }
---	self.menu.keytip       = { geometry = { width = 400, height = 380 } }
---
---	-- Gauge style
---	--------------------------------------------------------------------------------
---
---	-- Panel widgets
---	--------------------------------------------------------------------------------
---	self.widget = {}
---
---	-- individual margins for palnel widgets
---	------------------------------------------------------------
---	self.widget.wrapper = {
---		layoutbox   = { 12, 10, 6, 6 },
---		textclock   = { 10, 10, 0, 0 },
---		volume      = { 10, 10, 5, 5 },
---		network     = { 10, 10, 5, 5 },
---		cpuram      = { 10, 10, 5, 5 },
---		keyboard    = { 10, 10, 4, 4 },
---		mail        = { 10, 10, 4, 4 },
---		battery     = { 8, 10, 7, 7 },
---		tray        = { 8, 8, 7, 7 },
---		tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
---	}
-
---end
-
----- Gauge style
--------------------------------------------------------------------------------------------------------------------------
---theme.gauge = { tag = {}, task = {}, icon = {}, audio = {}, monitor = {}, graph = {} }
---
-
-
----- Tag
---------------------------------------------------------------
---theme.gauge.tag.blue = {
---	width    = 103,
---	font     = theme.cairo_fonts.tag,
---	point    = { width = 80, height = 3, gap = 27, dx = 5 },
---	text_gap = 20,
---	color    = theme.color
---}
---
----- Task
---------------------------------------------------------------
---theme.gauge.task.blue = {
---	width    = 70,
---	show_min = true,
---	font     = theme.cairo_fonts.tag,
---	point    = { width = 70, height = 3, gap = 27, dx = 5 },
---	text_gap = 20,
---	color    = theme.color
---}
---
-
----- Volume indicator
---------------------------------------------------------------
---theme.gauge.audio.blue = {
---	width   = 75,
---	dash    = { bar = { num = 5, width = 4 }, color = theme.color },
---	dmargin = { 10, 0, 2, 2 },
---	icon    = theme.path .. "/widget/headphones.svg",
---	color = { icon = theme.color.icon, mute = theme.color.urgent },
---}
---
---
 ---- Panel widgets
 -------------------------------------------------------------------------------------------------------------------------
 --theme.widget = {}
---
----- individual margins for palnel widgets
---------------------------------------------------------------
---theme.widget.wrapper = {
---	layoutbox   = { 12, 10, 6, 6 },
---	textclock   = { 10, 10, 0, 0 },
---	volume      = { 10, 10, 5, 5 },
---	network     = { 10, 10, 5, 5 },
---	cpuram      = { 10, 10, 5, 5 },
---	keyboard    = { 10, 10, 4, 4 },
---	mail        = { 10, 10, 4, 4 },
---	battery     = { 8, 10, 7, 7 },
---	tray        = { 8, 8, 7, 7 },
---	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
---}
---
----- Pulseaudio volume control
---------------------------------------------------------------
---theme.widget.pulse = {
---	notify      = { icon = theme.path .. "/widget/audio.svg" }
---}
---
+
 ---- Brightness control
 --------------------------------------------------------------
 --theme.widget.brightness = {

@@ -205,7 +205,7 @@ function theme:init()
 
 
 	-- Gauge (various elements that used as component for other widgets) style
-	------------------------------------------------------------
+	--------------------------------------------------------------------------------
 	self.gauge = { tag = {}, task = {}, icon = {}, audio = {}, monitor = {}, graph = {} }
 
 
@@ -248,6 +248,40 @@ function theme:init()
 		color  = self.color       -- colors (shadow used)
 	}
 
+	-- Step like dash bar (user for volume widgets)
+	------------------------------------------------------------
+	self.gauge.graph.dash = {
+		bar = {
+			width = 4, -- dash element width
+			num   = 10 -- number of dash elements
+		},
+		color = self.color -- colors (shadow used)
+	}
+
+	-- Volume indicator
+	------------------------------------------------------------
+	self.gauge.audio.blue = {
+		width   = 75,               -- widget width
+		dmargin = { 10, 0, 2, 2 },  -- margins around dash area
+		icon    = self.icon.system, -- volume icon
+
+		-- colors
+		color = { icon = self.color.icon, mute = self.color.urgent },
+
+		-- dash style (see theme.gauge.graph.dash)
+		dash = { bar = { num = 5, width = 4 } },
+	}
+
+	-- Dotcount (used in minitray widget)
+	------------------------------------------------------------
+	self.gauge.graph.dots = {
+		column_num   = { 3, 5 },  -- amount of dot columns (min/max)
+		row_num      = 3,         -- amount of dot rows
+		dot_size     = 5,         -- dots size
+		dot_gap_h    = 4,         -- horizontal gap between dot (with columns number it'll define widget width)
+		color        = self.color -- colors (main used)
+	}
+
 	-- Tag (base element of taglist)
 	------------------------------------------------------------
 	self.gauge.tag.orange = {
@@ -261,36 +295,38 @@ function theme:init()
 		color        = self.color -- colors (main used)
 	}
 
-	-- Task (base element of tasklist)
-	------------------------------------------------------------
-	self.gauge.task.blue = {
-		width      = 70,   -- widget width
-		show_min   = true, -- indicate minimized apps by color
-		font       = self.cairo_fonts.tag, -- font
-		text_shift = 20, -- shift from upper border of widget to lower border of text
+	self.gauge.tag.blue = {
+		width      = 103,        -- widget width
+		show_min   = true,       -- indicate minimized apps by color
+		text_shift = 20,         -- shift from upper border of widget to lower border of text
 		color      = self.color, -- colors (main used)
+		font       = self.cairo_fonts.tag, -- font
 
 		-- apps indicator
 		point = {
-			width = 70, -- apps indicator total width
+			width = 80, -- apps indicator total width
 			height = 3, -- apps indicator total height
 			gap = 27,   -- shift from upper border of widget to apps indicator
 			dx = 5      -- gap between apps indicator parts
 		},
 	}
 
-	-- Dotcount (used in minitray widget)
+	-- Task (base element of tasklist)
 	------------------------------------------------------------
-	self.gauge.graph.dots = {
-		column_num   = { 3, 5 },  -- amount of dot columns (min/max)
-		row_num      = 3,         -- amount of dot rows
-		dot_size     = 5,         -- dots size
-		dot_gap_h    = 4,         -- horizontal gap between dot (with columns number it'll define widget width)
-		color        = self.color -- colors (main used)
+
+	-- the same structure as blue tag
+	self.gauge.task.blue = {
+		width      = 70,
+		show_min   = true,
+		text_shift = 20,
+		color      = self.color,
+		font       = self.cairo_fonts.tag,
+		point    = { width = 70, height = 3, gap = 27, dx = 5 },
 	}
-	
+
+
 	-- Panel widgets
-	------------------------------------------------------------
+	--------------------------------------------------------------------------------
 	self.widget = {}
 
 	-- individual margins for panel widgets
@@ -328,6 +364,13 @@ function theme:init()
 		end,
 	}
 
+	-- Pulseaudio volume control
+	------------------------------------------------------------
+	self.widget.pulse = {
+		notify = {},  -- redflat notify style (see theme.float.notify)
+		widget = nil, -- audio gauge (usually setted by rc file)
+		audio  = {}   -- style for gauge
+	}
 
 	-- Layoutbox
 	------------------------------------------------------------
@@ -457,7 +500,7 @@ function theme:init()
 
 
 	-- Floating widgets
-	--------------------------------------------------------------
+	--------------------------------------------------------------------------------
 	self.float = { decoration = {} }
 
 	-- Client menu
@@ -647,7 +690,7 @@ function theme:init()
 	}
 
 	-- Decoration (various elements that used as component for other widgets) style
-	------------------------------------------------------------
+	--------------------------------------------------------------------------------
 	-- TODO: rework this
 	--self.float.decoration.button = {
 	--	color = {
@@ -683,7 +726,7 @@ function theme:init()
 
 
 	-- Default awesome theme vars
-	------------------------------------------------------------
+	--------------------------------------------------------------------------------
 
 	-- colors
 	self.bg_normal     = self.color.wibox
