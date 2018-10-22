@@ -29,6 +29,7 @@ theme.color = {
 -- Common
 -----------------------------------------------------------------------------------------------------------------------
 theme.path = awful.util.get_configuration_dir() .. "themes/colorless"
+theme.base = awful.util.get_configuration_dir() .. "themes/colorless"
 theme.homedir = os.getenv("HOME")
 
 -- Main config
@@ -84,7 +85,7 @@ theme.icon = {
 -- Main theme settings
 -- Make it updatabele since it may depends on common
 -----------------------------------------------------------------------------------------------------------------------
-function theme:update()
+function theme:init()
 
 	-- Service utils config
 	----------------------------------------------------------------------------------
@@ -337,23 +338,23 @@ function theme:update()
 
 	-- layout icons
 	self.widget.layoutbox.icon = {
-		floating          = self.path .. "/layouts/floating.svg",
-		max               = self.path .. "/layouts/max.svg",
-		fullscreen        = self.path .. "/layouts/fullscreen.svg",
-		tilebottom        = self.path .. "/layouts/tilebottom.svg",
-		tileleft          = self.path .. "/layouts/tileleft.svg",
-		tile              = self.path .. "/layouts/tile.svg",
-		tiletop           = self.path .. "/layouts/tiletop.svg",
-		fairv             = self.path .. "/layouts/fair.svg",
-		fairh             = self.path .. "/layouts/fair.svg",
-		grid              = self.path .. "/layouts/grid.svg",
-		usermap           = self.path .. "/layouts/map.svg",
-		magnifier         = self.path .. "/layouts/magnifier.svg",
-		spiral            = self.path .. "/layouts/spiral.svg",
-		cornerne          = self.path .. "/layouts/cornerne.svg",
-		cornernw          = self.path .. "/layouts/cornernw.svg",
-		cornerse          = self.path .. "/layouts/cornerse.svg",
-		cornersw          = self.path .. "/layouts/cornersw.svg",
+		floating          = self.base .. "/layouts/floating.svg",
+		max               = self.base .. "/layouts/max.svg",
+		fullscreen        = self.base .. "/layouts/fullscreen.svg",
+		tilebottom        = self.base .. "/layouts/tilebottom.svg",
+		tileleft          = self.base .. "/layouts/tileleft.svg",
+		tile              = self.base .. "/layouts/tile.svg",
+		tiletop           = self.base .. "/layouts/tiletop.svg",
+		fairv             = self.base .. "/layouts/fair.svg",
+		fairh             = self.base .. "/layouts/fair.svg",
+		grid              = self.base .. "/layouts/grid.svg",
+		usermap           = self.base .. "/layouts/map.svg",
+		magnifier         = self.base .. "/layouts/magnifier.svg",
+		spiral            = self.base .. "/layouts/spiral.svg",
+		cornerne          = self.base .. "/layouts/cornerne.svg",
+		cornernw          = self.base .. "/layouts/cornernw.svg",
+		cornerse          = self.base .. "/layouts/cornerse.svg",
+		cornersw          = self.base .. "/layouts/cornersw.svg",
 		unknown           = self.icon.unknown,  -- this one used as fallback
 	}
 
@@ -429,13 +430,13 @@ function theme:update()
 
 	-- menu icons
 	self.widget.tasklist.winmenu.icon = {
-		floating             = self.path .. "/common/window_control/floating.svg",
-		sticky               = self.path .. "/common/window_control/pin.svg",
-		ontop                = self.path .. "/common/window_control/ontop.svg",
-		below                = self.path .. "/common/window_control/below.svg",
-		close                = self.path .. "/common/window_control/close.svg",
-		minimize             = self.path .. "/common/window_control/minimize.svg",
-		maximized            = self.path .. "/common/window_control/maximized.svg",
+		floating             = self.base .. "/common/window_control/floating.svg",
+		sticky               = self.base .. "/common/window_control/pin.svg",
+		ontop                = self.base .. "/common/window_control/ontop.svg",
+		below                = self.base .. "/common/window_control/below.svg",
+		close                = self.base .. "/common/window_control/close.svg",
+		minimize             = self.base .. "/common/window_control/minimize.svg",
+		maximized            = self.base .. "/common/window_control/maximized.svg",
 
 		unknown              = self.icon.unknown,  -- this one used as fallback
 	}
@@ -725,6 +726,6 @@ end
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------
-theme:update()
+theme:init()
 
 return theme
