@@ -205,13 +205,38 @@ function theme:update()
 
 	-- Gauge (various elements that used as component for other widgets) style
 	------------------------------------------------------------
-	self.gauge = { tag = {}, task = {}, graph = {}}
+	self.gauge = { tag = {}, task = {}, icon = {}, audio = {}, monitor = {}, graph = {} }
 
 
 	-- Plain progressbar element
 	------------------------------------------------------------
 	self.gauge.graph.bar = {
-		color = theme.color -- colors (main used)
+		color = self.color -- colors (main used)
+	}
+
+	-- Icon indicator (decoration in some panel widgets)
+	------------------------------------------------------------
+	self.gauge.icon.single = {
+		icon        = self.icon.system,  -- default icon
+		is_vertical = false,             -- use vertical gradient (horizontal if false)
+		color       = self.color         -- colors (main used)
+	}
+
+	-- Double value monitor (double progressbar with icon)
+	--------------------------------------------------------------
+	self.gauge.monitor.double = {
+		icon     = self.icon.system, -- default icon
+		width    = 90,               -- widget width
+		dmargin  = { 10, 0, 0, 0 },  -- margins around progressbar area
+		color    = self.color,       -- colors (main used)
+
+		-- progressbar style
+		line = {
+			width = 4, -- progressbar height
+			v_gap = 6, -- space between progressbar
+			gap = 4,   -- gap between progressbar dashes
+			num = 5    -- number of progressbar dashes
+		},
 	}
 
 	-- Separator (decoration used on panel, menu and some other widgets)

@@ -204,6 +204,27 @@ function theme:update()
 	self.menu.icon_margin  = { 4, 7, 7, 8 }
 	self.menu.keytip       = { geometry = { width = 400, height = 380 } }
 
+	-- Gauge style
+	--------------------------------------------------------------------------------
+
+	-- Panel widgets
+	--------------------------------------------------------------------------------
+	self.widget = {}
+
+	-- individual margins for palnel widgets
+	------------------------------------------------------------
+	self.widget.wrapper = {
+		layoutbox   = { 12, 10, 6, 6 },
+		textclock   = { 10, 10, 0, 0 },
+		volume      = { 10, 10, 5, 5 },
+		network     = { 10, 10, 5, 5 },
+		cpuram      = { 10, 10, 5, 5 },
+		keyboard    = { 10, 10, 4, 4 },
+		mail        = { 10, 10, 4, 4 },
+		battery     = { 8, 10, 7, 7 },
+		tray        = { 8, 8, 7, 7 },
+		tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
+	}
 
 end
 
@@ -211,29 +232,8 @@ end
 -------------------------------------------------------------------------------------------------------------------------
 --theme.gauge = { tag = {}, task = {}, icon = {}, audio = {}, monitor = {}, graph = {} }
 --
----- Separator
---------------------------------------------------------------
---theme.gauge.separator = {
---	marginv = { 2, 2, 4, 4 },
---	marginh = { 6, 6, 3, 3 },
---	color  = theme.color
---}
---
----- Icon indicator
---------------------------------------------------------------
---theme.gauge.icon.single = {
---	color  = theme.color
---}
---
----- Monitor
-----------------------------------------------------------------
---theme.gauge.monitor.double = {
---	width    = 90,
---	line     = { v_gap = 6 },
---	dmargin  = { 10, 0, 0, 0 },
---	color    = theme.color
---}
---
+
+
 ---- Tag
 --------------------------------------------------------------
 --theme.gauge.tag.blue = {
@@ -255,16 +255,7 @@ end
 --	color    = theme.color
 --}
 --
----- Dotcount
---------------------------------------------------------------
---theme.gauge.graph.dots = {
---	column_num   = { 3, 5 }, -- { min, max }
---	row_num      = 3,
---	dot_size     = 5,
---	dot_gap_h    = 4,
---	color        = theme.color
---}
---
+
 ---- Volume indicator
 --------------------------------------------------------------
 --theme.gauge.audio.blue = {
