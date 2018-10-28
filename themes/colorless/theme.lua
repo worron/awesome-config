@@ -58,6 +58,10 @@ theme.fonts = {
 		key   = "mono 12",      -- hotkeys helper key font (use monospace for align)
 		title = "sans bold 14", -- hotkeys helper group title font
 	},
+	player   = {
+		main = "sans bold 12", -- player widget main font
+		time = "sans bold 14", -- player widget current time font
+	},
 }
 
 theme.cairo_fonts = {
@@ -562,6 +566,44 @@ function theme:init()
 		tagmenu         = self.widget.tasklist.winmenu.tagmenu,
 		hide_action     = self.widget.tasklist.winmenu.hide_action,
 		color           = self.color,
+	}
+
+	-- Audio player
+	------------------------------------------------------------
+	self.float.player = {
+		geometry        = { width = 490, height = 130 }, -- widget size
+		screen_gap      = 2 * self.useless_gap,          -- minimal space from screen edge on floating widget placement
+		border_margin   = { 15, 15, 15, 15 },            -- margins around widget content
+		elements_margin = { 15, 0, 0, 0 },               -- margins around main player elements (exclude cover art)
+		controls_margin = { 0, 0, 14, 6 },               -- margins around control player elements
+		volume_margin   = { 0, 0, 0, 3 },                -- margins around volume element
+		buttons_margin  = { 0, 0, 3, 3 },                -- margins around buttons area
+		pause_margin    = { 12, 12, 0, 0 },              -- margins around pause button
+		line_height     = 26,                            -- text lines height
+		bar_width       = 6,                             -- progressbar width
+		volume_width    = 50,                            -- volume element width
+		titlefont       = self.fonts.player.main,        -- track font
+		artistfont      = self.fonts.player.main,        -- artist/album font
+		timefont        = self.fonts.player.time,        -- track progress time font
+		border_width    = 0,                             -- widget border width
+		timeout         = 1,                             -- widget update timeout
+		set_position    = nil,                           -- set_position
+		color           = self.color,                    -- color (main used)
+
+		-- volume dash style (see theme.gauge.graph.dash)
+		dashcontrol  = { color = self.color, bar = { num = 7 } },
+
+		-- progressbar style (see theme.gauge.graph.bar)
+		progressbar  = { color = self.color },
+	}
+
+	-- widget icons
+	self.float.player.icon = {
+		cover   = self.base .. "/common/player/cover.svg",
+		next_tr = self.base .. "/common/player/next.svg",
+		prev_tr = self.base .. "/common/player/previous.svg",
+		play    = self.base .. "/common/player/play.svg",
+		pause   = self.base .. "/common/player/pause.svg"
 	}
 
 	-- Application runner
