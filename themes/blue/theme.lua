@@ -28,6 +28,10 @@ theme.icon.widget = {
 	monitor    = theme.path .. "/widget/monitor.svg",
 	audio      = theme.path .. "/widget/audio.svg",
 	headphones = theme.path .. "/widget/headphones.svg",
+	brightness = theme.path .. "/widget/brightness.svg",
+	keyboard   = theme.path .. "/widget/keyboard.svg",
+	mail       = theme.path .. "/widget/mail.svg",
+	upgrades   = theme.path .. "/widget/upgrades.svg",
 }
 
 -- Setup ancestor settings
@@ -54,58 +58,29 @@ theme.widget.wrapper = {
 }
 
 -- Pulseaudio volume control
+--------------------------------------------------------------------------------
+theme.widget.pulse.audio  = { icon = theme.icon.widget.headphones }
+theme.widget.pulse.notify = { icon = theme.icon.widget.audio }
+
+-- Keyboard layout indicator
+--------------------------------------------------------------------------------
+theme.widget.keyboard.icon = theme.icon.widget.keyboard
+
+-- Mail indicator
+--------------------------------------------------------------------------------
+theme.widget.mail.icon = theme.icon.widget.mail
+
+-- System updates indicator
 ------------------------------------------------------------
-theme.widget.pulse = {
-	audio  = { icon = theme.icon.widget.headphones },
-	notify = { icon = theme.icon.widget.audio },
-}
+theme.widget.upgrades.notify = { icon = theme.icon.widget.upgrades }
 
----- Panel widgets
--------------------------------------------------------------------------------------------------------------------------
---theme.widget = {}
+-- Floating widgets
+-----------------------------------------------------------------------------------------------------------------------
 
----- Brightness control
---------------------------------------------------------------
---theme.widget.brightness = {
---	notify      = { icon = theme.path .. "/widget/brightness.svg" }
---}
---
----- Textclock
---------------------------------------------------------------
---theme.widget.textclock = {
---	font  = theme.fonts.clock,
---	color = { text = theme.color.icon }
---}
---
----- Keyboard layout indicator
---------------------------------------------------------------
---theme.widget.keyboard = {
---	icon         = theme.path .. "/widget/keyboard.svg",
---	micon        = theme.icon,
---	layout_color = { theme.color.icon, theme.color.main }
---}
---
---theme.widget.keyboard.menu = {
---	width        = 180,
---	color        = { right_icon = theme.color.icon },
---	nohide       = true
---}
---
----- Upgrades
---------------------------------------------------------------
---theme.widget.upgrades = {
---	notify      = { icon = theme.path .. "/widget/upgrades.svg" },
---	color       = theme.color
---}
---
----- Mail
---------------------------------------------------------------
---theme.widget.mail = {
---	icon        = theme.path .. "/widget/mail.svg",
---	notify      = { icon = theme.path .. "/widget/mail.svg" },
---	color       = theme.color,
---}
---
+-- Brightness control
+--------------------------------------------------------------------------------
+theme.float.brightness.notify = { icon = theme.icon.widget.brightness }
+
 ---- Minitray
 --------------------------------------------------------------
 --theme.widget.minitray = {

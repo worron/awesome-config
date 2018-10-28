@@ -343,9 +343,9 @@ function theme:init()
 	-- Textclock
 	------------------------------------------------------------
 	self.widget.textclock = {
-		font    = self.fonts.clock, -- font
-		tooltip = {},               -- redflat tooltip style (see theme.float.tooltip)
-		color   = { text = self.color.icon }
+		font    = self.fonts.clock,          -- font
+		tooltip = {},                        -- redflat tooltip style (see theme.float.tooltip)
+		color   = { text = self.color.icon } -- colors
 	}
 
 	-- Minitray
@@ -370,6 +370,39 @@ function theme:init()
 		notify = {},  -- redflat notify style (see theme.float.notify)
 		widget = nil, -- audio gauge (usually setted by rc file)
 		audio  = {}   -- style for gauge
+	}
+
+	-- Keyboard layout indicator
+	------------------------------------------------------------
+	self.widget.keyboard = {
+		icon         = self.icon.system,  -- widget icon
+		micon        = self.icon,         -- some common menu icons
+
+		-- list of colors associated with keyboard layouts
+		layout_color = { self.color.icon, self.color.main },
+
+		-- redflat menu style (see theme.menu)
+		menu = { width  = 180, color  = { right_icon = self.color.icon }, nohide = true }
+	}
+
+	-- Mail indicator
+	------------------------------------------------------------
+	self.widget.mail = {
+		icon        = self.icon.system,  -- widget icon
+		notify      = {},                -- redflat notify style (see theme.float.notify)
+ 		need_notify = true,              -- show notification on new mail
+		firstrun    = false,             -- check mail on wm start/restart
+		color       = self.color,        -- colors (main used)
+	}
+
+	-- System updates indicator
+	------------------------------------------------------------
+	self.widget.upgrades = {
+		icon        = self.icon.system,  -- widget icon
+		notify      = {},                -- redflat notify style (see theme.float.notify)
+ 		need_notify = true,              -- show notification on new mail
+		firstrun    = false,             -- check mail on wm start/restart
+		color       = self.color,        -- colors (main used)
 	}
 
 	-- Layoutbox
@@ -502,6 +535,12 @@ function theme:init()
 	-- Floating widgets
 	--------------------------------------------------------------------------------
 	self.float = { decoration = {} }
+
+	-- Brightness control
+	--------------------------------------------------------------------------------
+	self.float.brightness = {
+		notify = {},  -- redflat notify style (see theme.float.notify)
+	}
 
 	-- Client menu
 	------------------------------------------------------------
