@@ -472,7 +472,7 @@ function theme:init()
 		iconnames   = {},    -- icon name aliases for custom applications icons
 		widget      = nil,   -- task gauge widget (usually setted by rc file)
 		width       = 40,    -- width of task element in tasklist
-		char_digit  = 3,     -- number of characters in task element text
+		char_digit  = 4,     -- number of characters in task element text
  		need_group  = true,  -- group application instances into one task element
 		parser      = {},    -- redlat desktop file parser settings (see theme.service.dfparser)
 		task_margin = { 5, 5, 0, 0 },      -- margins around task element
@@ -484,7 +484,7 @@ function theme:init()
 		micon          = self.icon, -- some common menu icons
 		titleline      = {
 			font = self.fonts.title, -- menu title height
-			height = 30              -- menu title font
+			height = 25              -- menu title font
 		},
 		stateline      = { height = 35 },              -- height of menu item with state icons
 		state_iconsize = { width = 18, height = 18 },  -- size for state icons
@@ -493,11 +493,11 @@ function theme:init()
 		color          = self.color,                   -- colors (main used)
 
 		-- main menu style (see theme.menu)
-		menu = { width = 220, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 10, 10 } },
+		menu = { width = 220, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
 
 		-- tag action submenu style (see theme.menu)
 		tagmenu = { width = 160, color = { right_icon = self.color.icon, left_icon = self.color.icon },
-		            icon_margin = { 8, 10, 8, 8 } },
+		            icon_margin = { 9, 9, 9, 9 } },
 
 		-- set which action will hide menu after activate
 		hide_action = { min = true, move = true, max = false, add = false, floating = false, sticky = false,
@@ -537,7 +537,7 @@ function theme:init()
 	self.float = { decoration = {} }
 
 	-- Brightness control
-	--------------------------------------------------------------------------------
+	------------------------------------------------------------
 	self.float.brightness = {
 		notify = {},  -- redflat notify style (see theme.float.notify)
 	}

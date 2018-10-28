@@ -43,72 +43,11 @@ theme.widget.wrapper = {
 	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
 }
 
----- Minitray
---------------------------------------------------------------
---theme.widget.minitray = {
---	border_width = 0,
---	geometry     = { height = 40 },
---	screen_gap   = 2 * theme.useless_gap,
---	color        = { wibox = theme.color.wibox, border = theme.color.wibox },
---	set_position = function()
---		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
---		         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
---	end,
---}
---
----- Layoutbox
---------------------------------------------------------------
---theme.widget.layoutbox = {
---	micon = theme.icon,
---	color = theme.color
---}
---
---theme.widget.layoutbox.icon = {
---	floating          = theme.path .. "/layouts/floating.svg",
---	max               = theme.path .. "/layouts/max.svg",
---	fullscreen        = theme.path .. "/layouts/fullscreen.svg",
---	tilebottom        = theme.path .. "/layouts/tilebottom.svg",
---	tileleft          = theme.path .. "/layouts/tileleft.svg",
---	tile              = theme.path .. "/layouts/tile.svg",
---	tiletop           = theme.path .. "/layouts/tiletop.svg",
---	fairv             = theme.path .. "/layouts/fair.svg",
---	fairh             = theme.path .. "/layouts/fair.svg",
---	grid              = theme.path .. "/layouts/grid.svg",
---	usermap           = theme.path .. "/layouts/map.svg",
---	magnifier         = theme.path .. "/layouts/magnifier.svg",
---	cornerne          = theme.path .. "/layouts/cornerne.svg",
---	cornernw          = theme.path .. "/layouts/cornernw.svg",
---	cornerse          = theme.path .. "/layouts/cornerse.svg",
---	cornersw          = theme.path .. "/layouts/cornersw.svg",
---	unknown           = theme.path .. "/common/unknown.svg",
---}
---
---theme.widget.layoutbox.menu = {
---	icon_margin  = { 8, 12, 9, 9 },
---	width        = 220,
---	auto_hotkey  = true,
---	nohide       = false,
---	color        = { right_icon = theme.color.icon, left_icon = theme.color.icon }
---}
---
---theme.widget.layoutbox.name_alias = {
---	floating          = "Floating",
---	fullscreen        = "Fullscreen",
---	max               = "Maximized",
---	grid              = "Grid",
---	usermap           = "User Map",
---	tile              = "Right Tile",
---	fairv             = "Fair Tile",
---	tileleft          = "Left Tile",
---	tiletop           = "Top Tile",
---	tilebottom        = "Bottom Tile",
---	magnifier         = "Magnifier",
---	cornerne          = "Corner NE",
---	cornernw          = "Corner NW",
---	cornerse          = "Corner SE",
---	cornersw          = "Corner SW",
---}
---
+-- Tasklist
+--------------------------------------------------------------------------------
+theme.widget.tasklist.char_digit = 5
+theme.widget.tasklist.task = theme.gauge.task.blue
+
 ---- Tasklist
 --------------------------------------------------------------
 --theme.widget.tasklist = {

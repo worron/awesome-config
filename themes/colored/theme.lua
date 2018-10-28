@@ -123,6 +123,17 @@ function theme:update()
 	------------------------------------------------------------
 	self.widget.upgrades.notify = { icon = self.wicon.upgrades }
 
+	-- Layoutbox
+	------------------------------------------------------------
+	self.widget.layoutbox.menu.icon_margin  = { 8, 12, 9, 9 }
+	self.widget.layoutbox.menu.width = 200
+
+	-- Tasklist
+	------------------------------------------------------------
+	self.widget.tasklist.winmenu.hide_action = { min = false, move = false }
+	self.widget.tasklist.tasktip.margin = { 8, 8, 4, 4 }
+	self.widget.tasklist.winmenu.tagmenu.width = 150
+
 	-- Floating widgets
 	--------------------------------------------------------------------------------
 
