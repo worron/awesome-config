@@ -20,20 +20,6 @@ theme.path = awful.util.get_configuration_dir() .. "themes/blue"
 --------------------------------------------------------------------------------
 theme.wallpaper = theme.path .. "/wallpaper/custom.png" -- wallpaper file
 
--- Widget icons
---------------------------------------------------------------------------------
-theme.icon.widget = {
-	battery    = theme.path .. "/widget/battery.svg",
-	wireless   = theme.path .. "/widget/wireless.svg",
-	monitor    = theme.path .. "/widget/monitor.svg",
-	audio      = theme.path .. "/widget/audio.svg",
-	headphones = theme.path .. "/widget/headphones.svg",
-	brightness = theme.path .. "/widget/brightness.svg",
-	keyboard   = theme.path .. "/widget/keyboard.svg",
-	mail       = theme.path .. "/widget/mail.svg",
-	upgrades   = theme.path .. "/widget/upgrades.svg",
-}
-
 -- Setup ancestor settings
 --------------------------------------------------------------------------------
 theme:update()
@@ -56,30 +42,6 @@ theme.widget.wrapper = {
 	tray        = { 8, 8, 7, 7 },
 	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
 }
-
--- Pulseaudio volume control
---------------------------------------------------------------------------------
-theme.widget.pulse.audio  = { icon = theme.icon.widget.headphones }
-theme.widget.pulse.notify = { icon = theme.icon.widget.audio }
-
--- Keyboard layout indicator
---------------------------------------------------------------------------------
-theme.widget.keyboard.icon = theme.icon.widget.keyboard
-
--- Mail indicator
---------------------------------------------------------------------------------
-theme.widget.mail.icon = theme.icon.widget.mail
-
--- System updates indicator
-------------------------------------------------------------
-theme.widget.upgrades.notify = { icon = theme.icon.widget.upgrades }
-
--- Floating widgets
------------------------------------------------------------------------------------------------------------------------
-
--- Brightness control
---------------------------------------------------------------------------------
-theme.float.brightness.notify = { icon = theme.icon.widget.brightness }
 
 ---- Minitray
 --------------------------------------------------------------

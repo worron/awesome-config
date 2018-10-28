@@ -52,6 +52,20 @@ theme.cairo_fonts = {
 	},
 }
 
+-- Widget icons
+--------------------------------------------------------------------------------
+theme.wicon = {
+	battery    = theme.path .. "/widget/battery.svg",
+	wireless   = theme.path .. "/widget/wireless.svg",
+	monitor    = theme.path .. "/widget/monitor.svg",
+	audio      = theme.path .. "/widget/audio.svg",
+	headphones = theme.path .. "/widget/headphones.svg",
+	brightness = theme.path .. "/widget/brightness.svg",
+	keyboard   = theme.path .. "/widget/keyboard.svg",
+	mail       = theme.path .. "/widget/mail.svg",
+	upgrades   = theme.path .. "/widget/upgrades.svg",
+}
+
 -- Main theme settings
 -- Make it updatabele since it may depends on common and ancestor theme settings
 -----------------------------------------------------------------------------------------------------------------------
@@ -67,12 +81,12 @@ function theme:update()
 	self.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 440 }, exit = true }
 	self.service.navigator.keytip["fairh"] = self.service.navigator.keytip["fairv"]
 
-	self.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 660 }, exit = true }
+	self.service.navigator.keytip["tile"]       = { geometry = { width = 600, height = 660 }, exit = true }
 	self.service.navigator.keytip["tileleft"]   = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tiletop"]    = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tilebottom"] = self.service.navigator.keytip["tile"]
 
-	self.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 520 }, column = 2, exit = true }
+	self.service.navigator.keytip["grid"]    = { geometry = { width = 1400, height = 520 }, column = 2, exit = true }
 	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 580 }, column = 2, exit = true }
 
 	-- Desktop file parser
@@ -91,6 +105,30 @@ function theme:update()
 
 	-- Panel widgets
 	--------------------------------------------------------------------------------
+
+	-- Pulseaudio volume control
+	------------------------------------------------------------
+	self.widget.pulse.audio  = { icon = self.wicon.headphones }
+	self.widget.pulse.notify = { icon = self.wicon.audio }
+
+	-- Keyboard layout indicator
+	------------------------------------------------------------
+	self.widget.keyboard.icon = self.wicon.keyboard
+
+	-- Mail indicator
+	------------------------------------------------------------
+	self.widget.mail.icon = self.wicon.mail
+
+	-- System updates indicator
+	------------------------------------------------------------
+	self.widget.upgrades.notify = { icon = self.wicon.upgrades }
+
+	-- Floating widgets
+	--------------------------------------------------------------------------------
+
+	-- Brightness control
+	------------------------------------------------------------
+	self.float.brightness.notify = { icon = self.wicon.brightness }
 
 	-- Default awesome theme vars
 	--------------------------------------------------------------------------------

@@ -159,9 +159,9 @@ mail.buttons = awful.util.table.join(
 local sysmon = { widget = {}, buttons = {}, icon = {} }
 
 -- icons
-sysmon.icon.battery = redflat.util.table.check(beautiful, "icon.widget.battery")
-sysmon.icon.network = redflat.util.table.check(beautiful, "icon.widget.wireless")
-sysmon.icon.cpuram = redflat.util.table.check(beautiful, "icon.widget.monitor")
+sysmon.icon.battery = redflat.util.table.check(beautiful, "wicon.battery")
+sysmon.icon.network = redflat.util.table.check(beautiful, "wicon.wireless")
+sysmon.icon.cpuram = redflat.util.table.check(beautiful, "wicon.monitor")
 
 -- battery
 sysmon.widget.battery = redflat.widget.sysmon(

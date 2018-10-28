@@ -573,7 +573,7 @@ function theme:init()
 		icon_margin   = { 8, 16, 0, 0 },                   -- margins around widget icon
 		title_height  = 48,                                -- height of title (promt and icon) area
 		prompt_height = 35,                                -- prompt line height
-		title_icon    = self.path .. "/widget/search.svg", -- widget icon
+		title_icon    = self.icon.system,                  -- widget icon
 		border_width  = 0,                                 -- widget border width
 		parser        = {},                                -- desktop file parser settings (see theme.service.dfparser)
 		field         = nil,                               -- redflat text field style(see theme.float.decoration.field)
