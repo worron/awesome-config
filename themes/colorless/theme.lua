@@ -703,12 +703,12 @@ function theme:init()
 	------------------------------------------------------------
 	self.float.hotkeys = {
 		geometry      = { width = 1400, height = 600 }, -- widget size
-		border_margin = { 20, 20, 10, 10 },             -- margins around widget content
+		border_margin = { 20, 20, 8, 10 },             -- margins around widget content
 		border_width  = 0,                              -- widget border width
 		delim         = "   ",                          -- text separator between key and description
 		tspace        = 5,                              -- space between lines in widget title
 		is_align      = true,                           -- align keys description (monospace font required)
-		separator     = { marginh = { 0, 0, 2, 6 } },   -- redflat separator style (see theme.gauge.separator)
+		separator     = { marginh = { 0, 0, 3, 6 } },   -- redflat separator style (see theme.gauge.separator)
 		font          = self.fonts.hotkeys.main,        -- keys description font
 		keyfont       = self.fonts.hotkeys.key,         -- keys font
 		titlefont     = self.fonts.hotkeys.title,       -- widget title font
@@ -718,7 +718,7 @@ function theme:init()
 	-- Key sequence tip
 	------------------------------------------------------------
 	self.float.keychain = {
-		geometry        = { width = 250, height = 54 }, -- default widget size
+		geometry        = { width = 250, height = 56 }, -- default widget size
 		font            = self.fonts.keychain,          -- widget font
 		border_width    = 2,                            -- widget border width
 		color           = self.color,                   -- colors (main used)
@@ -730,7 +730,7 @@ function theme:init()
 	-- Tooltip
 	------------------------------------------------------------
 	self.float.tooltip = {
-		margin       = { 6, 6, 4, 4 },     -- margins around widget content
+		margin       = { 6, 6, 3, 3 },     -- margins around widget content
 		timeout      = 0,                  -- show delay
 		font         = self.fonts.tooltip, -- widget font
 		border_width = 2,                  -- widget border width

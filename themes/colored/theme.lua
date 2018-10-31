@@ -64,6 +64,7 @@ theme.wicon = {
 	keyboard   = theme.path .. "/widget/keyboard.svg",
 	mail       = theme.path .. "/widget/mail.svg",
 	upgrades   = theme.path .. "/widget/upgrades.svg",
+	search     = theme.path .. "/widget/search.svg",
 }
 
 -- Main theme settings
@@ -134,6 +135,28 @@ function theme:update()
 
 	-- Floating widgets
 	--------------------------------------------------------------------------------
+
+	-- Application runner
+	------------------------------------------------------------
+	self.float.apprunner.title_icon = self.wicon.search
+	self.float.apprunner.keytip = { geometry = { width = 400, height = 250 } }
+
+	-- Application switcher
+	------------------------------------------------------------
+	self.float.appswitcher.keytip = { geometry = { width = 400, height = 360 }, exit = true }
+
+	-- Quick launcher
+	------------------------------------------------------------
+	self.float.qlaunch.keytip = { geometry = { width = 600, height = 320 } }
+
+	-- Hotkeys helper
+	------------------------------------------------------------
+	self.float.hotkeys.geometry = { width = 1800, height = 1000 }
+
+	-- Key sequence tip
+	------------------------------------------------------------
+	self.float.keychain.border_width = 0
+	self.float.keychain.keytip = { geometry = { width = 1200, height = 580 }, column = 2 }
 
 	-- Brightness control
 	------------------------------------------------------------
