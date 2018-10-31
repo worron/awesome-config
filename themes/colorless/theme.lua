@@ -9,6 +9,7 @@ local theme = {}
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
 theme.color = {
+	-- main colors
 	main      = "#02606D",
 	gray      = "#575757",
 	bg        = "#161616",
@@ -18,12 +19,16 @@ theme.color = {
 	text      = "#aaaaaa",
 	urgent    = "#B25500",
 	highlight = "#e0e0e0",
-
 	border    = "#404040",
+
+	-- secondary colors
 	shadow1   = "#141414",
 	shadow2   = "#313131",
 	shadow3   = "#1c1c1c",
-	shadow4   = "#767676"
+	shadow4   = "#767676",
+
+	button    = "#575757",
+	pressed   = "#404040",
 }
 
 -- Common
@@ -249,7 +254,7 @@ function theme:init()
 	self.gauge.separator = {
 		marginv = { 2, 2, 4, 4 }, -- margins for vertical separator
 		marginh = { 6, 6, 3, 3 }, -- margins for horizontal separator
-		color  = self.color       -- colors (shadow used)
+		color  = self.color       -- color (secondary used)
 	}
 
 	-- Step like dash bar (user for volume widgets)
@@ -259,7 +264,7 @@ function theme:init()
 			width = 4, -- dash element width
 			num   = 10 -- number of dash elements
 		},
-		color = self.color -- colors (shadow used)
+		color = self.color -- color (main used)
 	}
 
 	-- Volume indicator
@@ -796,23 +801,17 @@ function theme:init()
 
 	-- Decoration (various elements that used as component for other widgets) style
 	--------------------------------------------------------------------------------
-	-- TODO: rework this
-	--self.float.decoration.button = {
-	--	color = {
-	--		shadow3 = self.color.shadow3,
-	--		shadow4 = self.color.shadow4,
-	--		gray    = self.color.gray,
-	--		text    = "#cccccc"
-	--	},
-	--}
+	self.float.decoration.button = {
+		color = self.color  -- colors (secondary used)
+	}
 
 	self.float.decoration.field = {
-		color = self.color  -- colors (shadow used)
+		color = self.color  -- colors (secondary used)
 	}
 
 
 	-- Titlebar
-	------------------------------------------------------------
+	--------------------------------------------------------------------------------
 	self.titlebar = {
 		size          = 8,                   -- titlebar height
 		position      = "top",               -- titlebar position
