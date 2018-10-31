@@ -136,6 +136,13 @@ function theme:update()
 	-- Floating widgets
 	--------------------------------------------------------------------------------
 
+	-- Top processes
+	------------------------------------------------------------
+	self.float.top.set_position  = function()
+		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
+		         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+	end
+
 	-- Application runner
 	------------------------------------------------------------
 	self.float.apprunner.title_icon = self.wicon.search

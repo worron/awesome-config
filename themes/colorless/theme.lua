@@ -606,6 +606,31 @@ function theme:init()
 		pause   = self.base .. "/common/player/pause.svg"
 	}
 
+	-- Top processes
+	------------------------------------------------------------
+	self.float.top = {
+		geometry      = { width = 460, height = 400 }, -- widget size
+		screen_gap    = 2 * self.useless_gap,          -- minimal space from screen edge on floating widget placement
+		border_margin = { 20, 20, 10, 0 },             -- margins around widget content
+		button_margin = { 140, 140, 18, 18 },          -- margins around kill button
+		title_height  = 40,                            -- widget title height
+		border_width  = 0,                             -- widget border width
+		bottom_height = 70,                            -- kill button area height
+		list_side_gap = 8,                             -- left/rigth borger margin for processes list
+		title_font    = self.fonts.title,              -- widget title font
+		timeout       = 2,                             -- widget update timeout
+		color         = self.color,                    -- color (main used)
+
+		-- list columns width
+		labels_width  = { num = 30, cpu = 70, mem = 120 },
+
+		-- redflat key tip settings
+		keytip        = { geometry = { width = 400, height = 300 } },
+
+		-- placement function
+		set_position  = nil,
+	}
+
 	-- Application runner
 	------------------------------------------------------------
 	self.float.apprunner = {
@@ -629,7 +654,7 @@ function theme:init()
 
 		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip settings
 	}
-	
+
 	-- Application switcher
 	------------------------------------------------------------
 	self.float.appswitcher = {
@@ -661,7 +686,6 @@ function theme:init()
 	-- application marks(keys) list
 	self.float.appswitcher.hotkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
 	                                   "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
-
 
 	-- Quick launcher
 	------------------------------------------------------------
