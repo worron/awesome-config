@@ -29,6 +29,8 @@ theme.color = {
 
 	button    = "#575757",
 	pressed   = "#404040",
+
+	desktop_gray = "#404040",
 }
 
 -- Common
@@ -75,6 +77,10 @@ theme.cairo_fonts = {
 	navigator   = {
 		title = { font = "Sans", size = 28, face = 1, slant = 0 }, -- window navigation title font
 		main  = { font = "Sans", size = 22, face = 1, slant = 0 }  -- window navigation  main font
+	},
+
+	desktop = {
+		textbox = { font = "Sans", size = 24, face = 1 },
 	},
 }
 
@@ -827,7 +833,65 @@ function theme:init()
 			angle = 0   -- marks pitch angle
 		},
 	}
+	
+	-- Desktop config
+	--------------------------------------------------------------------------------
+	self.desktop = { common = {} }
+	
+	-- Common
+	--------------------------------------------------------------------------------
+	self.desktop.line_height = 18 -- text and progressbar height for desktop wodgets
 
+	-- desktop widget colors
+	self.desktop.color = {
+		main  = self.color.main,
+		gray  = self.color.desktop_gray,
+		wibox = self.color.bg .. "00"
+	}
+
+	-- Textbox
+	------------------------------------------------------------
+	self.desktop.common.textbox = {
+		width  = nil,       -- widget width
+		height = nil,       -- widget height
+		draw   = "by_left", -- align method ("by_left", "by_right", "by_edges", "by_width")
+		color  = "#404040", -- text color
+
+		-- font style
+		font = self.cairo_fonts.desktop.textbox,
+	}
+
+	-- Dashbar
+	------------------------------------------------------------
+	self.desktop.common.dashbar = {
+		width       = nil,  -- widget width
+		height      = nil,  -- widget height
+		autoscale   = true, -- normalize chart values
+		maxm        = 1,    -- the maximum allowed value
+
+		-- color (desktop used)
+		color = self.desktop.color,
+
+		-- chart bars settings
+		bar = {
+			width = 6,  -- bar width
+			gap = 6     -- space between bars
+		}
+	}
+
+	--zero_height = 4,    -- height for zero value point in chart
+
+	-- Barpack
+	------------------------------------------------------------
+	self.desktop.common.barpack = {
+		label_style = { width = 80, draw = "by_width" },  -- label text style (see theme.desktop.common.textbox)
+		text_style  = { width = 92, draw = "by_edges" },  -- value text style (see theme.desktop.common.textbox)
+		dashbar     = nil,                                -- progressbar style (see theme.desktop.common.dashbar)
+		line_height = self.desktop.line_height,           -- text/progressbar height
+		text_gap    = 22,                                 -- space between text and progressbar
+		label_gap   = 16,                                 -- space between label and progressbar
+		color       = self.desktop.color                  -- color (desktop used)
+	}
 
 	-- Default awesome theme vars
 	--------------------------------------------------------------------------------

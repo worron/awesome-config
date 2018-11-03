@@ -50,6 +50,10 @@ theme.cairo_fonts = {
 		title = { font = "Play", size = 28, face = 1, slant = 0 }, -- window navigation title font
 		main  = { font = "Play", size = 22, face = 1, slant = 0 }  -- window navigation  main font
 	},
+
+	desktop = {
+		textbox = { font = "prototype", size = 24, face = 0 },
+	},
 }
 
 -- Widget icons
