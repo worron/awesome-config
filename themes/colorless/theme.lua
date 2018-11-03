@@ -897,7 +897,7 @@ function theme:init()
 		}
 	}
 
-	-- Barpack (progressbar with label in front and text value after it)
+	-- Barpack (group of progressbars with label in front and text value after it)
 	------------------------------------------------------------
 	self.desktop.common.barpack = {
 		label_style = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
@@ -922,7 +922,7 @@ function theme:init()
 		color            = self.desktop.color,  -- color (desktop used)
 
 		-- direction icons
-		images           = {
+		images = {
 			self.icon.system, -- up
 			self.icon.system  -- down
 		},
@@ -936,7 +936,7 @@ function theme:init()
 		-- progressbar label and value (see theme.desktop.common.textbox)
 		label = { height = self.desktop.line_height },
 
-		-- progressbar style (see theme.desktop.common.barpack)
+		-- progressbar style (see theme.desktop.common.dashbar)
 		dashbar = { bar = { width = 16, gap = 6 }, height = 6 },
 	}
 
@@ -951,10 +951,15 @@ function theme:init()
 		color        = self.desktop.color
 	}
 
-	-- Disks
+	-- Widget with multiple progress bars
 	------------------------------------------------------------
 	self.desktop.dashpack = {
-		color = self.desktop.color
+		show_text = false,              -- show text value for progressbars
+		digit_num = 3,                  -- minimal number of digits for progressbar value
+		color     = self.desktop.color, -- color (desktop used)
+
+		-- progressbars style (see theme.desktop.common.barpack)
+		barpack   = {},
 	}
 
 	-- Widget with several text groups in single line
