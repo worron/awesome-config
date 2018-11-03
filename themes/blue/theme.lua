@@ -28,6 +28,11 @@ theme:update()
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
 
+-- Desktop widgets
+--------------------------------------------------------------------------------
+theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
+
+
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {

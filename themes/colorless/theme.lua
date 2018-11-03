@@ -837,9 +837,7 @@ function theme:init()
 	-- Desktop config
 	--------------------------------------------------------------------------------
 	self.desktop = { common = {} }
-	
-	-- Common
-	--------------------------------------------------------------------------------
+
 	self.desktop.line_height = 18 -- text and progressbar height for desktop wodgets
 
 	-- desktop widget colors
@@ -849,49 +847,127 @@ function theme:init()
 		wibox = self.color.bg .. "00"
 	}
 
+	-- Common (various elements that used as component for desktop widgets)
+	--------------------------------------------------------------------------------
+
 	-- Textbox
 	------------------------------------------------------------
 	self.desktop.common.textbox = {
-		width  = nil,       -- widget width
-		height = nil,       -- widget height
-		draw   = "by_left", -- align method ("by_left", "by_right", "by_edges", "by_width")
-		color  = "#404040", -- text color
+		width  = nil,                     -- widget width
+		height = nil,                     -- widget height
+		draw   = "by_left",               -- align method ("by_left", "by_right", "by_edges", "by_width")
+		color  = self.desktop.color.gray, -- text color
 
 		-- font style
 		font = self.cairo_fonts.desktop.textbox,
 	}
 
-	-- Dashbar
+	-- Dashbar (dashed progressbar)
 	------------------------------------------------------------
 	self.desktop.common.dashbar = {
 		width       = nil,  -- widget width
 		height      = nil,  -- widget height
-		autoscale   = true, -- normalize chart values
+		autoscale   = true, -- normalize progressbar value
 		maxm        = 1,    -- the maximum allowed value
 
 		-- color (desktop used)
 		color = self.desktop.color,
 
-		-- chart bars settings
+		-- progressbar settings
 		bar = {
 			width = 6,  -- bar width
 			gap = 6     -- space between bars
 		}
 	}
 
-	--zero_height = 4,    -- height for zero value point in chart
+	-- Time chart
+	------------------------------------------------------------
+	self.desktop.common.chart = {
+		width       = nil,                     -- widget width
+		height      = nil,                     -- widget height
+		autoscale   = true,                    -- normalize chart values
+		maxm        = 1,                       -- the maximum allowed value
+		zero_height = 4,                       -- height for zero value point in chart
+		color       = self.desktop.color.gray, -- chart bars color
 
-	-- Barpack
+		-- chart bars settings
+		bar = {
+			width = 5,  -- bar width
+			gap = 5     -- space between bars
+		}
+	}
+
+	-- Barpack (progressbar with label in front and text value after it)
 	------------------------------------------------------------
 	self.desktop.common.barpack = {
-		label_style = { width = 80, draw = "by_width" },  -- label text style (see theme.desktop.common.textbox)
-		text_style  = { width = 92, draw = "by_edges" },  -- value text style (see theme.desktop.common.textbox)
+		label_style = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
+		text_style  = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
 		dashbar     = nil,                                -- progressbar style (see theme.desktop.common.dashbar)
 		line_height = self.desktop.line_height,           -- text/progressbar height
 		text_gap    = 22,                                 -- space between text and progressbar
 		label_gap   = 16,                                 -- space between label and progressbar
 		color       = self.desktop.color                  -- color (desktop used)
 	}
+
+	-- Widgets
+	--------------------------------------------------------------------------------
+
+	-- Speed widget (double progressbar with time chart for each of it)
+	------------------------------------------------------------
+	self.desktop.speedmeter = {
+		barvalue_height  = 32,                  -- height of the area with progressbar and text
+		digit_num        = 2,                   -- minimal number of digits for progressbar value
+		fullchart_height = 80,                  -- height of the each area with progressbar, text and chart
+		image_gap        = 16,                  -- space between direction icon and progressbar/chart
+		color            = self.desktop.color,  -- color (desktop used)
+
+		-- direction icons
+		images           = {
+			self.icon.system, -- up
+			self.icon.system  -- down
+		},
+
+		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
+		-- do not try to use full style settings from 'theme.desktop.commom' here
+
+		-- time chart style (see theme.desktop.common.chart)
+		chart = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 },
+
+		-- progressbar label and value (see theme.desktop.common.textbox)
+		label = { height = self.desktop.line_height },
+
+		-- progressbar style (see theme.desktop.common.barpack)
+		dashbar = { bar = { width = 16, gap = 6 }, height = 6 },
+	}
+
+	-- CPU and memory
+	------------------------------------------------------------
+	self.desktop.multim = {
+		corner       = { width = 34, corner = { height = 17, num = 10, line = 4 } },
+		state_height = 58,
+		prog_height  = 80,
+		image_gap    = 16,
+		image        = self.icon.system,
+		color        = self.desktop.color
+	}
+
+	-- Disks
+	------------------------------------------------------------
+	self.desktop.dashpack = {
+		color = self.desktop.color
+	}
+
+	-- Thermal
+	------------------------------------------------------------
+	self.desktop.sline = {
+		digit_num = 2,
+		lbox      = { draw = "by_width", width = 50 },
+		rbox      = { draw = "by_edges", width = 60 },
+		icon      = self.path .. "/desktop/star.svg",
+		iwidth    = 142,
+		color     = self.desktop.color
+	}
+
 
 	-- Default awesome theme vars
 	--------------------------------------------------------------------------------

@@ -140,9 +140,9 @@ function desktop:init()
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
-	netspeed.widget = redflat.desktop.speedgraph(netspeed.args, netspeed.geometry, netspeed.style)
-	ssdspeed.widget = redflat.desktop.speedgraph(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
-	hddspeed.widget = redflat.desktop.speedgraph(hddspeed.args, hddspeed.geometry, hddspeed.style)
+	netspeed.widget = redflat.desktop.speedmeter(netspeed.args, netspeed.geometry, netspeed.style)
+	ssdspeed.widget = redflat.desktop.speedmeter(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
+	hddspeed.widget = redflat.desktop.speedmeter(hddspeed.args, hddspeed.geometry, hddspeed.style)
 	cpumem.widget = redflat.desktop.multim(cpumem.args, cpumem.geometry, cpumem.style)
 	transm.widget = redflat.desktop.multim(transm.args, transm.geometry, transm.style)
 	disks.widget = redflat.desktop.dashpack(disks.args, disks.geometry, disks.style)
