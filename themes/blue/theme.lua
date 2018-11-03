@@ -32,6 +32,7 @@ theme:update()
 --------------------------------------------------------------------------------
 theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
 
+theme.desktop.simpleline.icon = theme.path .. "/desktop/star.svg"
 
 -- Desktop widgets placement
 --------------------------------------------------------------------------------

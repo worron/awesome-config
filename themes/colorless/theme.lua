@@ -957,17 +957,17 @@ function theme:init()
 		color = self.desktop.color
 	}
 
-	-- Thermal
+	-- Widget with several text groups in single line
+	-- every group has label and value and icon in the middle
 	------------------------------------------------------------
-	self.desktop.sline = {
-		digit_num = 2,
-		lbox      = { draw = "by_width", width = 50 },
-		rbox      = { draw = "by_edges", width = 60 },
-		icon      = self.path .. "/desktop/star.svg",
-		iwidth    = 142,
-		color     = self.desktop.color
+	self.desktop.simpleline = {
+		lbox      = { draw = "by_width", width = 50 }, -- label style (see theme.desktop.common.textbox)
+		rbox      = { draw = "by_edges", width = 60 }, -- value style (see theme.desktop.common.textbox)
+		digit_num = 2,                                 -- minimal number of digits for value
+		icon      = self.icon.system,                  -- group icon
+		iwidth    = 142,                               -- width for every text group
+		color     = self.desktop.color                 -- color (desktop used)
 	}
-
 
 	-- Default awesome theme vars
 	--------------------------------------------------------------------------------
