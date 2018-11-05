@@ -82,7 +82,9 @@ function desktop:init(args)
 		timeout = 2
 	}
 
-	cpumem.style = {}
+	cpumem.style = {
+		icon      = env.themedir .. "/desktop/bstar.svg"
+	}
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
@@ -98,7 +100,7 @@ function desktop:init(args)
 
 	transm.style = {
 		digit_num = 1,
-		image     = env.themedir .. "/desktop/skull.svg"
+		icon      = env.themedir .. "/desktop/skull.svg"
 	}
 
 	-- Disks
@@ -112,7 +114,7 @@ function desktop:init(args)
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/opt" },
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/mnt/media" }
 		},
-		names   = {"root", "home", "misc", "data"},
+		names   = {"root", "home", "misc", "data"},  -- TODO: move this to styles
 		timeout = 300
 	}
 
@@ -144,8 +146,8 @@ function desktop:init(args)
 	netspeed.widget = redflat.desktop.speedmeter(netspeed.args, netspeed.geometry, netspeed.style)
 	ssdspeed.widget = redflat.desktop.speedmeter(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
 	hddspeed.widget = redflat.desktop.speedmeter(hddspeed.args, hddspeed.geometry, hddspeed.style)
-	cpumem.widget = redflat.desktop.multim(cpumem.args, cpumem.geometry, cpumem.style)
-	transm.widget = redflat.desktop.multim(transm.args, transm.geometry, transm.style)
+	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
+	transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
 	disks.widget = redflat.desktop.multibar(disks.args, disks.geometry, disks.style)
 	thermal.widget = redflat.desktop.simpleline(thermal.args, thermal.geometry, thermal.style)
 end

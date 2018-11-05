@@ -897,6 +897,25 @@ function theme:init()
 		}
 	}
 
+
+	-- Corner shaped vertical progressbar
+	------------------------------------------------------------
+	self.desktop.common.corners = {
+		width     = nil,                     -- widget width
+		height    = nil,                     -- widget height
+		autoscale = true,                    -- normalize chart values
+		maxm      = 1,                       -- the maximum allowed value
+		plain     = false,                   -- use plain progressbar instead of corner shaped
+		color     = self.desktop.color,      -- color (desktop used)
+
+		-- corner element style
+		corner = {
+			num = 10,   -- number of elements
+			line = 5,   -- element line width
+			height = 10 -- element height
+		},
+	}
+
 	-- Barpack (group of progressbars with label in front and text value after it)
 	------------------------------------------------------------
 	self.desktop.common.barpack = {
@@ -940,15 +959,24 @@ function theme:init()
 		dashbar = { bar = { width = 16, gap = 6 }, height = 6 },
 	}
 
-	-- CPU and memory
+	-- Widget with multiple horizontal and vertical progress bars
 	------------------------------------------------------------
-	self.desktop.multim = {
-		corner       = { width = 34, corner = { height = 17, num = 10, line = 4 } },
-		state_height = 58,
-		prog_height  = 80,
-		image_gap    = 16,
-		image        = self.icon.system,
-		color        = self.desktop.color
+	self.desktop.multimeter = {
+		state_height = 58,                 -- horizontal progressbar area height
+		prog_height  = 80,                 -- vertical progressbars height
+		image_gap    = 16,                 -- space between widget icon and progressbar/chart
+		digit_num    = 3,                  -- minimal number of digits for horizontal progressbar values
+		icon         = self.icon.system,   -- widget icon
+		color        = self.desktop.color, -- color (desktop used)
+		labels       = {},                 -- list of optional labels for horizontal bars
+
+		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
+
+		--  vertical progressbars style (see theme.desktop.common.corners)
+		corner = { width = 34, corner = { height = 17, num = 10, line = 4 } },
+
+		-- horizontal progressbars style (see theme.desktop.common.barpack)
+		barpack = {},
 	}
 
 	-- Widget with multiple progress bars
@@ -957,6 +985,8 @@ function theme:init()
 		show_text = false,              -- show text value for progressbars
 		digit_num = 3,                  -- minimal number of digits for progressbar value
 		color     = self.desktop.color, -- color (desktop used)
+
+		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
 
 		-- progressbars style (see theme.desktop.common.barpack)
 		barpack   = {},

@@ -146,7 +146,7 @@ theme.desktop.speedmeter = {
 
 -- CPU and memory
 ------------------------------------------------------------
-theme.desktop.multim = {
+theme.desktop.multimeter = {
 	corner       = { width = 32, corner = { num = 10, line = 3 }, plaindash = true },
 	state_height = 58,
 	prog_height  = 70,
