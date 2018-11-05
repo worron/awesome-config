@@ -146,7 +146,7 @@ function desktop:init(args)
 	hddspeed.widget = redflat.desktop.speedmeter(hddspeed.args, hddspeed.geometry, hddspeed.style)
 	cpumem.widget = redflat.desktop.multim(cpumem.args, cpumem.geometry, cpumem.style)
 	transm.widget = redflat.desktop.multim(transm.args, transm.geometry, transm.style)
-	disks.widget = redflat.desktop.dashpack(disks.args, disks.geometry, disks.style)
+	disks.widget = redflat.desktop.multibar(disks.args, disks.geometry, disks.style)
 	thermal.widget = redflat.desktop.simpleline(thermal.args, thermal.geometry, thermal.style)
 end
 

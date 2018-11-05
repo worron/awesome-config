@@ -953,7 +953,7 @@ function theme:init()
 
 	-- Widget with multiple progress bars
 	------------------------------------------------------------
-	self.desktop.dashpack = {
+	self.desktop.multibar = {
 		show_text = false,              -- show text value for progressbars
 		digit_num = 3,                  -- minimal number of digits for progressbar value
 		color     = self.desktop.color, -- color (desktop used)

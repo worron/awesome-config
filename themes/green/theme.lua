@@ -156,7 +156,7 @@ theme.desktop.multim = {
 
 -- Disks
 ------------------------------------------------------------
-theme.desktop.dashpack = {
+theme.desktop.multibar = {
 	color = theme.desktop.color
 }
 

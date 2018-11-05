@@ -173,10 +173,10 @@ function desktop:init(args)
 	cpumem.widget = redflat.desktop.multim(cpumem.args, cpumem.geometry, cpumem.style)
 	transm.widget = redflat.desktop.multim(transm.args, transm.geometry, transm.style)
 
-	disks.widget   = redflat.desktop.dashpack(disks.args, disks.geometry, disks.style)
-	thermalc.widget = redflat.desktop.dashpack(thermalc.args, thermalc.geometry, thermalc.style)
-	thermald.widget = redflat.desktop.dashpack(thermald.args, thermald.geometry, thermald.style)
-	thermalg.widget = redflat.desktop.dashpack(thermalg.args, thermalg.geometry, thermalg.style)
+	disks.widget   = redflat.desktop.multibar(disks.args, disks.geometry, disks.style)
+	thermalc.widget = redflat.desktop.multibar(thermalc.args, thermalc.geometry, thermalc.style)
+	thermald.widget = redflat.desktop.multibar(thermald.args, thermald.geometry, thermald.style)
+	thermalg.widget = redflat.desktop.multibar(thermalg.args, thermalg.geometry, thermalg.style)
 end
 
 -- End
