@@ -3,7 +3,8 @@
 -----------------------------------------------------------------------------------------------------------------------
 local awful = require("awful")
 
--- This theme inherited from colorless with overwriting some values
+-- This theme was inherited from another with overwriting some values
+-- Check parent theme to find full settings list and its description
 local theme = require("themes/colored/theme")
 
 
@@ -12,15 +13,17 @@ local theme = require("themes/colored/theme")
 theme.color.main   = "#064E71"
 theme.color.urgent = "#B32601"
 
+
 -- Common
 -----------------------------------------------------------------------------------------------------------------------
 theme.path = awful.util.get_configuration_dir() .. "themes/blue"
 
 -- Main config
 --------------------------------------------------------------------------------
-theme.wallpaper = theme.path .. "/wallpaper/custom.png" -- wallpaper file
+theme.panel_height = 36 -- panel height
+theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
 
--- Setup ancestor theme settings
+-- Setup parent theme settings
 --------------------------------------------------------------------------------
 theme:update()
 
@@ -31,8 +34,6 @@ theme:update()
 -- Desktop widgets
 --------------------------------------------------------------------------------
 theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
-
-theme.desktop.simpleline.icon = theme.path .. "/desktop/star.svg"
 
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
@@ -75,6 +76,7 @@ theme.widget.wrapper = {
 --------------------------------------------------------------------------------
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.blue
+
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------

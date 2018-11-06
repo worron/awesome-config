@@ -3,7 +3,8 @@
 -----------------------------------------------------------------------------------------------------------------------
 local awful = require("awful")
 
--- This theme inherited from colorless with overwriting some values
+-- This theme was inherited from another with overwriting some values
+-- Check parent theme to find full settings list and its description
 local theme = require("themes/colorless/theme")
 
 
@@ -13,7 +14,6 @@ theme.path = awful.util.get_configuration_dir() .. "themes/colored"
 
 -- Main config
 ------------------------------------------------------------
-
 theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
 theme.useless_gap         = 4  -- useless gap
@@ -71,6 +71,7 @@ theme.wicon = {
 	search     = theme.path .. "/widget/search.svg",
 }
 
+
 -- Main theme settings
 -- Make it updatabele since it may depends on common and ancestor theme settings
 -----------------------------------------------------------------------------------------------------------------------
@@ -78,7 +79,7 @@ theme.wicon = {
 -- overwrite ancestor update settings with current theme values
 function theme:update()
 
-	-- setup ancestor settings
+	-- setup parent theme settings
 	self:init()
 
 	-- Set hotkey helper size according current fonts
@@ -104,7 +105,6 @@ function theme:update()
 	--------------------------------------------------------------------------------
 	self.menu.icon_margin  = { 4, 7, 7, 8 }
 	self.menu.keytip       = { geometry = { width = 400, height = 380 } }
-
 
 	-- Panel widgets
 	--------------------------------------------------------------------------------

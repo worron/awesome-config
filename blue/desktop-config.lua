@@ -138,6 +138,7 @@ function desktop:init(args)
 	}
 
 	thermal.style = {
+		icon      = env.themedir .. "/desktop/star.svg",
 		unit      = { { "°C", -1 } },
 	}
 
