@@ -7,7 +7,7 @@ unpack = unpack or table.unpack
 
 -- Disable autostart applications if needed
 local timestamp = require("redflat.timestamp")
-timestamp.lock = false
+timestamp.lock = true
 
 -- DPI setup
 local beautiful = require("beautiful")
@@ -16,8 +16,8 @@ beautiful.xresources.set_dpi(96)
 -- Configuration file setup
 -----------------------------------------------------------------------------------------------------------------------
 --local rc = "rc-red"
-local rc = "rc-blue"
---local rc = "rc-orange"
+--local rc = "rc-blue"
+local rc = "rc-orange"
 --local rc = "rc-green"
 --local rc = "rc-colorless"
 
