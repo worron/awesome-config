@@ -328,7 +328,7 @@ function theme:init()
 
 	self.gauge.tag.red = {
 		width        = 80,                   -- widget width
-		text_shift   = 20,                   -- shift from upper border of widget to lower border of text
+		text_shift   = 19,                   -- shift from upper border of widget to lower border of text
 		font         = self.cairo_fonts.tag, -- font
 		show_counter = true,                 -- visible/hidden apps counter
 		color        = self.color,           -- colors (main used)
@@ -345,7 +345,7 @@ function theme:init()
 
 		-- geometry for state marks
 		geometry = {
-			active    = { height = 5, y = 26 },                     -- active tag mark
+			active    = { height = 4, y = 27 },                     -- active tag mark
 			focus     = { x = 5, y = 7, width = 10, height = 12 },  -- focused tag mark
 			occupied  = { x = 68, y = 7, width = 8, height = 12 }   -- occupied tag mark
 		}
@@ -364,6 +364,19 @@ function theme:init()
 		point    = { width = 70, height = 3, gap = 27, dx = 5 },
 	}
 
+	self.gauge.task.red = {
+		width        = 40,                     -- widget width
+		text_shift   = 19,                     -- shift from upper border of widget to lower border of text
+		font         = self.cairo_fonts.tag,   -- font
+		line         = { height = 4, y = 27 }, -- application state indicator
+		color        = self.color,             -- colors (main used)
+
+		-- applications counter
+		counter = {
+			size = 12, -- counter font size
+			margin = 2 -- margin around counter
+		},
+	}
 
 	-- Panel widgets
 	--------------------------------------------------------------------------------
