@@ -300,21 +300,21 @@ function theme:init()
 	-- Tag (base element of taglist)
 	------------------------------------------------------------
 	self.gauge.tag.orange = {
-		width        = 38,    -- widget width
-		line_width   = 4,     -- width of arcs
-		iradius      = 5,     -- radius for center point
-		radius       = 11,    -- arcs radius
-		cgap         = 0.314, -- gap between arcs in radians
-		min_sections = 1,     -- minimal amount of arcs
-		show_min     = false, -- indicate minimized apps by color
+		width        = 38,        -- widget width
+		line_width   = 4,         -- width of arcs
+		iradius      = 5,         -- radius for center point
+		radius       = 11,        -- arcs radius
+		cgap         = 0.314,     -- gap between arcs in radians
+		min_sections = 1,         -- minimal amount of arcs
+		show_min     = false,     -- indicate minimized apps by color
 		color        = self.color -- colors (main used)
 	}
 
 	self.gauge.tag.blue = {
-		width      = 103,        -- widget width
-		show_min   = true,       -- indicate minimized apps by color
-		text_shift = 20,         -- shift from upper border of widget to lower border of text
-		color      = self.color, -- colors (main used)
+		width      = 103,                  -- widget width
+		show_min   = true,                 -- indicate minimized apps by color
+		text_shift = 20,                   -- shift from upper border of widget to lower border of text
+		color      = self.color,           -- colors (main used)
 		font       = self.cairo_fonts.tag, -- font
 
 		-- apps indicator
@@ -324,6 +324,31 @@ function theme:init()
 			gap = 27,   -- shift from upper border of widget to apps indicator
 			dx = 5      -- gap between apps indicator parts
 		},
+	}
+
+	self.gauge.tag.red = {
+		width        = 80,                   -- widget width
+		text_shift   = 20,                   -- shift from upper border of widget to lower border of text
+		font         = self.cairo_fonts.tag, -- font
+		show_counter = true,                 -- visible/hidden apps counter
+		color        = self.color,           -- colors (main used)
+
+		-- apps counter
+		counter      = {
+			size = 12,         -- counter font size
+			margin = 2,        -- margin around counter
+			coord = { 40, 28 } -- counter position
+		},
+
+		-- functions for state marks
+		marks = nil,
+
+		-- geometry for state marks
+		geometry = {
+			active    = { height = 5, y = 26 },                     -- active tag mark
+			focus     = { x = 5, y = 7, width = 10, height = 12 },  -- focused tag mark
+			occupied  = { x = 68, y = 7, width = 8, height = 12 }   -- occupied tag mark
+		}
 	}
 
 	-- Task (base element of tasklist)
