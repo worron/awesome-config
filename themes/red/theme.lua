@@ -20,8 +20,13 @@ theme.path = awful.util.get_configuration_dir() .. "themes/red"
 
 -- Main config
 --------------------------------------------------------------------------------
-theme.panel_height = 36 -- panel height
+theme.panel_height = 50 -- panel height
+theme.useless_gap  = 6  -- useless gap
 theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
+
+-- Fonts
+------------------------------------------------------------
+theme.cairo_fonts.tag = { font = "Play", size = 20, face = 1 } -- taglist widget
 
 -- Setup parent theme settings
 --------------------------------------------------------------------------------
@@ -60,28 +65,74 @@ theme:update()
 -- individual margins for palnel widgets
 --------------------------------------------------------------------------------
 theme.widget.wrapper = {
-	layoutbox   = { 12, 10, 6, 6 },
-	textclock   = { 10, 10, 0, 0 },
-	volume      = { 10, 10, 5, 5 },
-	network     = { 10, 10, 5, 5 },
-	cpuram      = { 10, 10, 5, 5 },
-	keyboard    = { 10, 10, 4, 4 },
-	mail        = { 10, 10, 4, 4 },
-	--battery     = { 8, 10, 7, 7 },
-	tray        = { 8, 8, 7, 7 },
-	--tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
+	textclock   = { 4, 20, 0, 0 },
+	layoutbox   = { 4, 4, 9, 9 },
+	volume      = { 4, 4, 5, 5 },
+	upgrades    = { 4, 4, 9, 9 },
+	keyboard    = { 4, 4, 5, 5 },
+	mail        = { 4, 4, 5, 5 },
+	battery     = { 3, 3, 0, 0 },
+	ram         = { 3, 3, 0, 0 },
+	cpu         = { 3, 3, 0, 0 },
+	tray        = { 1, 1, 8, 8 },
+	network     = { 1, 1, 8, 8 },
+	taglist     = { 12, 0, 0, 0 },
+	tasklist    = { 4, 4, 0, 0 },
 }
+
+-- Separator
+------------------------------------------------------------
+theme.gauge.separator.marginv = { 12, 12, 5, 5 }
+theme.gauge.separator.marginh = { 8, 8, 3, 3 }
+
+-- Dotcount
+------------------------------------------------------------
+theme.gauge.graph.dots.column_num   = { 2, 3 }
+theme.gauge.graph.dots.row_num      = 4
+theme.gauge.graph.dots.dot_size     = 5
+theme.gauge.graph.dots.dot_gap_h    = 5
+
+-- Tag
+------------------------------------------------------------
+theme.gauge.tag.red.width        = 100
+theme.gauge.tag.red.text_shift   = 28
+theme.gauge.tag.red.counter      = { size = 13, margin = 3, coord = { 50, 38 } }
+theme.gauge.tag.red.show_counter = false
+
+theme.gauge.tag.red.geometry = {
+	active   = {         y = 36,             height = 4  },
+	focus    = { x = 4,  y = 14, width = 13, height = 13 },
+	occupied = { x = 85, y = 8,  width = 9,  height = 15 }
+}
+
+-- Task
+------------------------------------------------------------
+theme.gauge.task.red.width      = 50
+theme.gauge.task.red.text_shift = theme.gauge.tag.red.text_shift
+theme.gauge.task.red.line       = { height = 4, y = 36 }
+theme.gauge.task.red.counter    = { size = 13, margin = 3 }
+
+-- Monitor
+--------------------------------------------------------------
+theme.gauge.monitor.plain.text_shift = theme.gauge.tag.red.text_shift
+theme.gauge.monitor.plain.line       = theme.gauge.task.red.line
 
 -- Tasklist
 --------------------------------------------------------------------------------
---theme.widget.tasklist.char_digit = 5
---theme.widget.tasklist.task = theme.gauge.task.blue
---
+theme.widget.tasklist.char_digit = 3
+theme.widget.tasklist.task = theme.gauge.task.red
 
 -- Pulseaudio volume control
 ------------------------------------------------------------
 theme.widget.pulse.audio = { icon = { volume = theme.wicon.audio, mute = theme.wicon.mute } }
 
+-- System updates indicator
+------------------------------------------------------------
+theme.widget.upgrades.icon = theme.icon.awesome
+
+-- Minitray
+------------------------------------------------------------
+theme.widget.minitray.geometry = { height = 50 }
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------
