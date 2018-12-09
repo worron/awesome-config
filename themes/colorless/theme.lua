@@ -230,6 +230,17 @@ function theme:init()
 		color = self.color -- colors (main used)
 	}
 
+	-- Plain monitor (label and progressbar below)
+	--------------------------------------------------------------
+	self.gauge.monitor.plain = {
+		width      = nil,                         -- widget width
+		font       = self.cairo_fonts.tag,        -- widget font
+		text_shift = 19,                          -- shift from upper border of widget to lower border of text
+		label      = "MON",                       -- widget text
+		line       = { height = 4, y = 27 },      -- progressbar style
+		color      = self.color                   -- colors (main used)
+	}
+
 	-- Icon indicator (decoration in some panel widgets)
 	------------------------------------------------------------
 	self.gauge.icon.single = {
