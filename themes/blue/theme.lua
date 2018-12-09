@@ -77,6 +77,9 @@ theme.widget.wrapper = {
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.blue
 
+-- Pulseaudio volume control
+------------------------------------------------------------
+theme.widget.pulse.audio = { icon = theme.wicon.headphones }
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------

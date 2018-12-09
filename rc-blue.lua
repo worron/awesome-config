@@ -103,7 +103,7 @@ layoutbox.buttons = awful.util.table.join(
 -- Tray widget
 --------------------------------------------------------------------------------
 local tray = {}
-tray.widget = redflat.widget.minitray()
+tray.widget = redflat.widget.minitray(nil, { double_wibox = true })
 
 tray.buttons = awful.util.table.join(
 	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)

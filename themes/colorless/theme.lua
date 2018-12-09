@@ -287,6 +287,11 @@ function theme:init()
 		dash = { bar = { num = 5, width = 4 } },
 	}
 
+	self.gauge.audio.red = {
+		icon  = { volume = self.icon.system, mute = self.icon.warning },                   -- icons
+		color = { main = self.color.main, icon = self.color.icon, mute = self.color.gray } -- custom colors
+	}
+
 	-- Dotcount (used in minitray widget)
 	------------------------------------------------------------
 	self.gauge.graph.dots = {
@@ -453,8 +458,8 @@ function theme:init()
 	self.widget.upgrades = {
 		icon        = self.icon.system,  -- widget icon
 		notify      = {},                -- redflat notify style (see theme.float.notify)
- 		need_notify = true,              -- show notification on new mail
-		firstrun    = false,             -- check mail on wm start/restart
+ 		need_notify = true,              -- show notification on updates
+		firstrun    = false,             -- check updates on wm start/restart
 		color       = self.color,        -- colors (main used)
 	}
 

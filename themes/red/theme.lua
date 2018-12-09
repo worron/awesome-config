@@ -78,6 +78,11 @@ theme.widget.wrapper = {
 --theme.widget.tasklist.task = theme.gauge.task.blue
 --
 
+-- Pulseaudio volume control
+------------------------------------------------------------
+theme.widget.pulse.audio = { icon = { volume = theme.wicon.audio, mute = theme.wicon.mute } }
+
+
 -- End
 -----------------------------------------------------------------------------------------------------------------------
 return theme
