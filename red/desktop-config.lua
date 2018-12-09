@@ -82,7 +82,9 @@ function desktop:init(args)
 		timeout = 2
 	}
 
-	cpumem.style = {}
+	cpumem.style = {
+		icon      = env.themedir .. "/desktop/ed2.svg"
+	}
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
@@ -98,7 +100,7 @@ function desktop:init(args)
 
 	transm.style = {
 		digit_num = 1,
-		image     = env.themedir .. "/desktop/ed1.svg"
+		icon      = env.themedir .. "/desktop/ed1.svg"
 	}
 
 	-- Disks
