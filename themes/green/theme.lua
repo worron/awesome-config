@@ -31,27 +31,47 @@ theme:update()
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
 
----- Desktop widgets
-----------------------------------------------------------------------------------
---theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
---
----- Desktop widgets placement
-----------------------------------------------------------------------------------
---theme.desktop.grid = {
---	width  = { 520, 520, 520 },
---	height = { 180, 160, 160, 138, 18 },
---	edge   = { width = { 60, 60 }, height = { 40, 40 } }
---}
---
---theme.desktop.places = {
---	netspeed = { 1, 1 },
---	ssdspeed = { 2, 1 },
---	hddspeed = { 3, 1 },
---	cpumem   = { 1, 2 },
---	transm   = { 1, 3 },
---	disks    = { 1, 4 },
---	thermal  = { 1, 5 }
---}
+-- Desktop widgets
+--------------------------------------------------------------------------------
+
+-- Speedmeter
+------------------------------------------------------------
+theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
+
+-- Barpack
+------------------------------------------------------------
+theme.desktop.common.barpack.label_style = { width = 68, draw = "by_width" }
+theme.desktop.common.barpack.text_style  = { width = 94, draw = "by_edges" }
+theme.desktop.common.barpack.text_gap    = 14
+theme.desktop.common.barpack.label_gap   = 14
+
+-- Multimeter
+------------------------------------------------------------
+theme.desktop.multimeter.icon        = false
+theme.desktop.multimeter.prog_height = 70
+theme.desktop.multimeter.corner      = { width = 32, corner = { num = 10, line = 3 }, plain = true }
+
+-- Single line indicator
+------------------------------------------------------------
+theme.desktop.simpleline.icon = theme.path .. "/desktop/fire.svg"
+
+-- Desktop widgets placement
+--------------------------------------------------------------------------------
+theme.desktop.grid = {
+	width  = { 480, 480, 480 },
+	height = { 180, 150, 150, 138, 18 },
+	edge   = { width = { 80, 80 }, height = { 50, 50 } }
+}
+
+theme.desktop.places = {
+	netspeed = { 1, 1 },
+	ssdspeed = { 2, 1 },
+	hddspeed = { 3, 1 },
+	cpumem   = { 1, 2 },
+	transm   = { 1, 3 },
+	disks    = { 1, 4 },
+	thermal  = { 1, 5 }
+}
 
 
 -- Panel widgets
