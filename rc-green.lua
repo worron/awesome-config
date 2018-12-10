@@ -251,10 +251,10 @@ awful.screen.connect_for_each_screen(
 	end
 )
 
--- Desktop widgets
------------------------------------------------------------------------------------------------------------------------
-local desktop = require("green.desktop-config") -- load file with desktop widgets configuration
-desktop:init({ env = env })
+---- Desktop widgets
+-------------------------------------------------------------------------------------------------------------------------
+--local desktop = require("green.desktop-config") -- load file with desktop widgets configuration
+--desktop:init({ env = env })
 
 
 -- Active screen edges

@@ -18,8 +18,6 @@ theme.panel_height        = 36 -- panel height
 theme.border_width        = 4  -- window border width
 theme.useless_gap         = 4  -- useless gap
 
-theme.cellnum = { x = 96, y = 58 } -- grid layout property
-
 -- Fonts
 ------------------------------------------------------------
 theme.fonts = {
@@ -117,6 +115,11 @@ function theme:update()
 	self.gauge.icon.double.icon1 = self.wicon.down
 	self.gauge.icon.double.icon2 = self.wicon.up
 	self.gauge.icon.double.igap  = -6
+
+	-- Volume control
+	------------------------------------------------------------
+	self.gauge.audio.red.icon = { volume = self.wicon.audio, mute = self.wicon.mute }
+	self.gauge.audio.blue.icon = self.wicon.headphones
 
 	-- Pulseaudio volume control
 	------------------------------------------------------------

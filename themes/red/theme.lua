@@ -165,12 +165,6 @@ theme.widget.tasklist.appnames["Easytag"             ] = "TAG"
 theme.widget.tasklist.appnames["Mcomix"              ] = "CMX"
 theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
 
-
--- Pulseaudio volume control
-------------------------------------------------------------
--- TODO: move this to colored gauge
-theme.widget.pulse.audio = { icon = { volume = theme.wicon.audio, mute = theme.wicon.mute } }
-
 -- System updates indicator
 ------------------------------------------------------------
 theme.widget.upgrades.icon = theme.icon.awesome
