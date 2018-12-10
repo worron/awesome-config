@@ -147,6 +147,23 @@ theme.gauge.monitor.plain.line       = theme.gauge.task.red.line
 theme.widget.tasklist.char_digit = 3
 theme.widget.tasklist.task = theme.gauge.task.red
 
+theme.widget.tasklist.appnames = {}
+theme.widget.tasklist.appnames["Nemo"                ] = "NFM"
+theme.widget.tasklist.appnames["Gvim"                ] = "VIM"
+theme.widget.tasklist.appnames["Terminator"          ] = "TRM"
+theme.widget.tasklist.appnames["Firefox"             ] = "FFX"
+theme.widget.tasklist.appnames["Gnome-terminal"      ] = "TER"
+theme.widget.tasklist.appnames["Gnome-system-monitor"] = "GSM"
+theme.widget.tasklist.appnames["Gimp-2.8"            ] = "GMP"
+theme.widget.tasklist.appnames["Gimp"                ] = "GMP"
+theme.widget.tasklist.appnames["Goldendict"          ] = "DIC"
+theme.widget.tasklist.appnames["Transmission-gtk"    ] = "TMN"
+theme.widget.tasklist.appnames["Steam"               ] = "STM"
+theme.widget.tasklist.appnames["Easytag"             ] = "TAG"
+theme.widget.tasklist.appnames["Mcomix"              ] = "CMX"
+theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
+
+
 -- Pulseaudio volume control
 ------------------------------------------------------------
 theme.widget.pulse.audio = { icon = { volume = theme.wicon.audio, mute = theme.wicon.mute } }
