@@ -30,28 +30,13 @@ theme:update()
 
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
-
----- Desktop widgets
-----------------------------------------------------------------------------------
---theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
---
----- Desktop widgets placement
-----------------------------------------------------------------------------------
---theme.desktop.grid = {
---	width  = { 520, 520, 520 },
---	height = { 180, 160, 160, 138, 18 },
---	edge   = { width = { 60, 60 }, height = { 40, 40 } }
---}
---
---theme.desktop.places = {
---	netspeed = { 1, 1 },
---	ssdspeed = { 2, 1 },
---	hddspeed = { 3, 1 },
---	cpumem   = { 1, 2 },
---	transm   = { 1, 3 },
---	disks    = { 1, 4 },
---	thermal  = { 1, 5 }
---}
+theme.desktop.textset = {
+	font  = "Belligerent Madness 22",
+	-- font  = "Idolwild 22",
+	-- font  = "Palitoon 26",
+	spacing = 10,
+	color = theme.desktop.color
+}
 
 
 -- Panel widgets

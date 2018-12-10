@@ -31,6 +31,7 @@ theme.color = {
 	pressed   = "#404040",
 
 	desktop_gray = "#404040",
+	desktop_icon = "#606060",
 }
 
 -- Common
@@ -931,6 +932,7 @@ function theme:init()
 	self.desktop.color = {
 		main  = self.color.main,
 		gray  = self.color.desktop_gray,
+		icon  = self.color.desktop_icon,
 		wibox = self.color.bg .. "00"
 	}
 
@@ -1017,6 +1019,14 @@ function theme:init()
 
 	-- Widgets
 	--------------------------------------------------------------------------------
+
+	--Custom aligned text block
+	------------------------------------------------------------
+	self.desktop.textset = {
+		font  = "Sans 12",         -- font
+		spacing = 0,               -- space between lines
+		color = self.desktop.color -- color (desktop used)
+	}
 
 	-- Speed widget (double progressbar with time chart for each of it)
 	------------------------------------------------------------
