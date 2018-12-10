@@ -264,13 +264,13 @@ awful.screen.connect_for_each_screen(
 	end
 )
 
--- Desktop widgets
------------------------------------------------------------------------------------------------------------------------
-local desktop = require("orange.desktop-config") -- load file with desktop widgets configuration
-desktop:init({
-	env = env,
-	buttons = awful.util.table.join(awful.button({}, 3, function () mymenu.mainmenu:toggle() end))
-})
+---- Desktop widgets
+-------------------------------------------------------------------------------------------------------------------------
+--local desktop = require("orange.desktop-config") -- load file with desktop widgets configuration
+--desktop:init({
+--	env = env,
+--	buttons = awful.util.table.join(awful.button({}, 3, function () mymenu.mainmenu:toggle() end))
+--})
 
 
 -- Active screen edges

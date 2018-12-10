@@ -70,6 +70,8 @@ theme.wicon = {
 	upgrades   = theme.path .. "/widget/upgrades.svg",
 	search     = theme.path .. "/widget/search.svg",
 	mute       = theme.path .. "/widget/mute.svg",
+	up         = theme.path .. "/widget/up.svg",
+	down       = theme.path .. "/widget/down.svg",
 }
 
 
@@ -109,6 +111,12 @@ function theme:update()
 
 	-- Panel widgets
 	--------------------------------------------------------------------------------
+
+	-- Double icon indicator
+	------------------------------------------------------------
+	self.gauge.icon.double.icon1 = self.wicon.down
+	self.gauge.icon.double.icon2 = self.wicon.up
+	self.gauge.icon.double.igap  = -6
 
 	-- Pulseaudio volume control
 	------------------------------------------------------------

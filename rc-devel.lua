@@ -15,9 +15,9 @@ beautiful.xresources.set_dpi(96)
 
 -- Configuration file setup
 -----------------------------------------------------------------------------------------------------------------------
-local rc = "rc-red"
+--local rc = "rc-red"
 --local rc = "rc-blue"
---local rc = "rc-orange"
+local rc = "rc-orange"
 --local rc = "rc-green"
 --local rc = "rc-colorless"
 

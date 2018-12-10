@@ -22,6 +22,8 @@ theme.path = awful.util.get_configuration_dir() .. "themes/red"
 --------------------------------------------------------------------------------
 theme.panel_height = 50 -- panel height
 theme.useless_gap  = 6  -- useless gap
+theme.cellnum = { x = 80, y = 43 } -- grid layout property
+
 theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
 
 -- Fonts
@@ -166,6 +168,7 @@ theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
 
 -- Pulseaudio volume control
 ------------------------------------------------------------
+-- TODO: move this to colored gauge
 theme.widget.pulse.audio = { icon = { volume = theme.wicon.audio, mute = theme.wicon.mute } }
 
 -- System updates indicator

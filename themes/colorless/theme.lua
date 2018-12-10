@@ -261,6 +261,17 @@ function theme:init()
 		color       = self.color         -- colors (main used)
 	}
 
+	-- Double icon indicator
+	--------------------------------------------------------------
+	self.gauge.icon.double = {
+		icon1       = self.icon.system,  -- first icon
+		icon2       = self.icon.system,  -- second icon
+		is_vertical = true,              -- use vertical gradient (horizontal if false)
+		igap        = 4,                 -- gap between icons
+		color       = self.color         -- colors (main used)
+	}
+
+
 	-- Double value monitor (double progressbar with icon)
 	--------------------------------------------------------------
 	self.gauge.monitor.double = {
@@ -325,17 +336,27 @@ function theme:init()
 		color        = self.color -- colors (main used)
 	}
 
+	-- Circle shaped monitor
+	--------------------------------------------------------------
+	self.gauge.monitor.circle = {
+		width        = 32,        -- widget width
+		line_width   = 4,         -- width of circle
+		iradius      = 5,         -- radius for center point
+		radius       = 11,        -- circle radius
+		color        = self.color -- colors (main used)
+	}
+
 	-- Tag (base element of taglist)
 	------------------------------------------------------------
 	self.gauge.tag.orange = {
-		width        = 38,        -- widget width
-		line_width   = 4,         -- width of arcs
-		iradius      = 5,         -- radius for center point
-		radius       = 11,        -- arcs radius
-		cgap         = 0.314,     -- gap between arcs in radians
-		min_sections = 1,         -- minimal amount of arcs
-		show_min     = false,     -- indicate minimized apps by color
-		color        = self.color -- colors (main used)
+		width        = 38,                                   -- widget width
+		line_width   = self.gauge.monitor.circle.line_width, -- width of arcs
+		iradius      = self.gauge.monitor.circle.iradius,    -- radius for center point
+		radius       = self.gauge.monitor.circle.radius,     -- arcs radius
+		cgap         = 0.314,                                -- gap between arcs in radians
+		min_sections = 1,                                    -- minimal amount of arcs
+		show_min     = false,                                -- indicate minimized apps by color
+		color        = self.color                            -- colors (main used)
 	}
 
 	self.gauge.tag.blue = {
