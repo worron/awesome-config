@@ -132,6 +132,7 @@ function theme:update()
 	-- Mail indicator
 	------------------------------------------------------------
 	self.widget.mail.icon = self.wicon.mail
+	self.widget.mail.notify = { icon = self.wicon.mail }
 
 	-- System updates indicator
 	------------------------------------------------------------
