@@ -140,8 +140,10 @@ kbindicator.buttons = awful.util.table.join(
 
 -- Mail widget
 --------------------------------------------------------------------------------
+-- mail settings template
+local my_mails = require("orange.mail-example")
+
 -- safe load private mail settings
-local my_mails = {}
 pcall(function() my_mails = require("orange.mail-config") end)
 
 -- widget setup
