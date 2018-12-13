@@ -22,24 +22,24 @@ timestamp = require("redflat.timestamp")
 
 -- Error handling
 -----------------------------------------------------------------------------------------------------------------------
-require("blue.ercheck-config") -- load file with error handling
+require("colorless.ercheck-config") -- load file with error handling
 
 
 -- Setup theme and environment vars
 -----------------------------------------------------------------------------------------------------------------------
-local env = require("red.env-config") -- load file with environment
+local env = require("color.blue.env-config") -- load file with environment
 env:init({ theme = "red" })
 
 
 -- Layouts setup
 -----------------------------------------------------------------------------------------------------------------------
-local layouts = require("red.layout-config") -- load file with tile layouts setup
+local layouts = require("color.blue.layout-config") -- load file with tile layouts setup
 layouts:init()
 
 
 -- Main menu configuration
 -----------------------------------------------------------------------------------------------------------------------
-local mymenu = require("red.menu-config") -- load file with menu configuration
+local mymenu = require("color.blue.menu-config") -- load file with menu configuration
 mymenu:init({ env = env })
 
 
@@ -143,10 +143,10 @@ kbindicator.buttons = awful.util.table.join(
 -- Mail widget
 --------------------------------------------------------------------------------
 -- mail settings template
-local my_mails = require("red.mail-example")
+local my_mails = require("color.blue.mail-example")
 
 -- safe load private mail settings
-pcall(function() my_mails = require("red.mail-config") end)
+pcall(function() my_mails = require("color.blue.mail-config") end)
 
 -- widget setup
 local mail = {}
@@ -268,45 +268,45 @@ awful.screen.connect_for_each_screen(
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-local desktop = require("red.desktop-config") -- load file with desktop widgets configuration
+local desktop = require("color.red.desktop-config") -- load file with desktop widgets configuration
 desktop:init({ env = env })
 
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
-local edges = require("red.edges-config") -- load file with edges configuration
+local edges = require("color.blue.edges-config") -- load file with edges configuration
 edges:init()
 
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
-local appkeys = require("red.appkeys-config") -- load file with application keys sheet
+local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheet
 
-local hotkeys = require("red.keys-config") -- load file with hotkeys configuration
+local hotkeys = require("color.blue.keys-config") -- load file with hotkeys configuration
 hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys })
 
 
 -- Rules
 -----------------------------------------------------------------------------------------------------------------------
-local rules = require("red.rules-config") -- load file with rules configuration
+local rules = require("color.blue.rules-config") -- load file with rules configuration
 rules:init({ hotkeys = hotkeys})
 
 
 -- Titlebar setup
 -----------------------------------------------------------------------------------------------------------------------
-local titlebar = require("red.titlebar-config") -- load file with titlebar configuration
+local titlebar = require("colorless.titlebar-config") -- load file with titlebar configuration
 titlebar:init()
 
 
 -- Base signal set for awesome wm
 -----------------------------------------------------------------------------------------------------------------------
-local signals = require("red.signals-config") -- load file with signals configuration
+local signals = require("colorless.signals-config") -- load file with signals configuration
 signals:init({ env = env })
 
 
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
-local autostart = require("red.autostart-config") -- load file with autostart application list
+local autostart = require("color.blue.autostart-config") -- load file with autostart application list
 
 if timestamp.is_startup() then
 	autostart.run()

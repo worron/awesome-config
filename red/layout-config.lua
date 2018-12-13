@@ -1,1 +1,0 @@
-../blue/layout-config.lua

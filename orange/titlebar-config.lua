@@ -1,1 +1,0 @@
-../colorless/titlebar-config.lua

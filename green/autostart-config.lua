@@ -1,1 +1,0 @@
-../blue/autostart-config.lua

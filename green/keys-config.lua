@@ -1,1 +1,0 @@
-../blue/keys-config.lua

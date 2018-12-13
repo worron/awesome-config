@@ -1,1 +1,0 @@
-../blue/rules-config.lua
