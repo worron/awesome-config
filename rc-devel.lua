@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------------------------------
---                                                   Base setup                                                      --
+--                                              Development setup                                                    --
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Disable autostart applications
@@ -10,12 +10,13 @@ timestamp.lock = true
 local beautiful = require("beautiful")
 beautiful.xresources.set_dpi(96)
 
--- Configuration file setup
+-- Configuration file selection
 -----------------------------------------------------------------------------------------------------------------------
+--local rc = "colorless.rc-colorless"
+
 --local rc = "color.red.rc-red"
 local rc = "color.blue.rc-blue"
 --local rc = "color.orange.rc-orange"
 --local rc = "color.green.rc-green"
---local rc = "colorless.rc-colorless"
 
 require(rc)
