@@ -2,10 +2,7 @@
 --                                                   Base setup                                                      --
 -----------------------------------------------------------------------------------------------------------------------
 
--- Fix unpack compatibility between lua versions
-unpack = unpack or table.unpack
-
--- Disable autostart applications if needed
+-- Disable autostart applications
 local timestamp = require("redflat.timestamp")
 timestamp.lock = true
 

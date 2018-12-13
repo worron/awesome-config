@@ -7,6 +7,8 @@ local beautiful = require("beautiful")
 local redflat = require("redflat")
 local wibox = require("wibox")
 
+local unpack = unpack or table.unpack
+
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
 local desktop = {}

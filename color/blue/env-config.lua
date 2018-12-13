@@ -10,6 +10,8 @@ local naughty = require("naughty")
 
 local redflat = require("redflat")
 
+local unpack = unpack or table.unpack
+
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
 local env = {}
