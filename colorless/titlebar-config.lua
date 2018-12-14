@@ -89,17 +89,23 @@ function titlebar:init()
 			})
 
 			-- build full titlebar model
+			local title = redtitle.label(c, style.full)
+			title:buttons(buttons)
+
+			local focus_icon = redtitle.icon.focus(c, style.icon)
+			focus_icon:buttons(buttons)
+
 			local full = wibox.widget({
-				redtitle.icon.focus(c, style.icon),
-				redtitle.label(c, style.full),
+				focus_icon,
+				title,
 				{
-					redtitle.icon.property(c, "floating", style.icon),
 					redtitle.icon.property(c, "sticky", style.icon),
-					redtitle.icon.property(c, "ontop", style.icon),
+					redtitle.icon.property(c, "minimized", style.icon),
+					redtitle.icon.property(c, "maximized", style.icon),
 					spacing = style.icon.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
-				buttons = buttons,
+				--buttons = buttons,
 				layout  = wibox.layout.align.horizontal,
 			})
 

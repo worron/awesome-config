@@ -963,11 +963,15 @@ function theme:init()
 
 		-- icons list
 		list = {
-			focus    = self.base .. "/common/window_control/focus.svg",
-			floating = self.base .. "/common/window_control/floating.svg",
-			ontop    = self.base .. "/common/window_control/ontop.svg",
-			below    = self.base .. "/common/window_control/below.svg",
-			sticky   = self.base .. "/common/window_control/pin.svg",
+			focus     = self.base .. "/common/window_control/focus.svg",
+			floating  = self.base .. "/common/window_control/floating.svg",
+			ontop     = self.base .. "/common/window_control/ontop.svg",
+			below     = self.base .. "/common/window_control/below.svg",
+			sticky    = self.base .. "/common/window_control/pin.svg",
+			maximized = self.base .. "/common/window_control/maximized.svg",
+			minimized = self.base .. "/common/window_control/minimize.svg",
+
+			unknown   = self.icon.unknown,  -- this one used as fallback
 		}
 	}
 
