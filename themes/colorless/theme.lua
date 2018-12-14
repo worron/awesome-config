@@ -970,6 +970,7 @@ function theme:init()
 			sticky    = self.base .. "/common/window_control/pin.svg",
 			maximized = self.base .. "/common/window_control/maximized.svg",
 			minimized = self.base .. "/common/window_control/minimize.svg",
+			close     = self.base .. "/common/window_control/close.svg",
 
 			unknown   = self.icon.unknown,  -- this one used as fallback
 		}
