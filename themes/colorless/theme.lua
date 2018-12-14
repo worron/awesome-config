@@ -2,6 +2,7 @@
 --                                                Colorless theme                                                    --
 -----------------------------------------------------------------------------------------------------------------------
 local awful = require("awful")
+local redutil = require("redflat.util")
 
 local theme = {}
 --local wa = mouse.screen.workarea
@@ -810,10 +811,10 @@ function theme:init()
 		-- redflat key tip settings
 		keytip         = { geometry = { width = 400, height = 320 }, exit = true },
 	}
-	
+
 	-- additional color
 	self.float.appswitcher.color.preview_bg = self.color.main .. "12"
-	
+
 	-- application marks(keys) list
 	self.float.appswitcher.hotkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
 	                                   "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" }
@@ -938,7 +939,9 @@ function theme:init()
 
 	-- Titlebar
 	--------------------------------------------------------------------------------
-	self.titlebar = {
+	self.titlebar = {}
+
+	self.titlebar.light = {
 		size          = 8,                   -- titlebar height
 		position      = "top",               -- titlebar position
 		font          = self.fonts.titlebar, -- titlebar font
@@ -953,7 +956,12 @@ function theme:init()
 			angle = 0   -- marks pitch angle
 		},
 	}
-	
+
+	self.titlebar.full = redutil.table.merge(
+		self.titlebar.light,
+		{ size = 28, icon = { size = 25, gap = 0, angle = 0.5 } }
+	)
+
 	-- Desktop config
 	--------------------------------------------------------------------------------
 	self.desktop = { common = {} }

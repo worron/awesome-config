@@ -5,9 +5,11 @@
 -- Grab environment
 local awful = require("awful")
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 
 -- local redflat = require("redflat")
 local redtitle = require("redflat.titlebar")
+local redutil = require("redflat.util")
 local clientmenu = require("redflat.float.clientmenu")
 
 -- Initialize tables and vars for module
@@ -56,28 +58,30 @@ function titlebar:init(args)
 	local args = args or {}
 	local style = {}
 
-	style.light = args.light or redtitle.get_style()
-	style.full = args.full or { size = 28, icon = { size = 25, gap = 0, angle = 0.5 } }
+	style.light = args.light or redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.light
+	              or { icon = { gap = 10 }}
+	style.full = args.full or redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.full
+	             or { icon = { gap = 10 }}
 
 	client.connect_signal(
 		"request::titlebars",
 		function(c)
 			-- build titlebar and mouse buttons for it
 			local buttons = title_buttons(c)
-			redtitle(c)
+			redtitle(c, style.light)
 
 			-- build light titlebar model
 			local light = wibox.widget({
 				nil,
 				{
 					right = style.light.icon.gap,
-					redtitle.icon.focus(c),
+					redtitle.icon.focus(c, style.light),
 					layout = wibox.container.margin,
 				},
 				{
-					redtitle.icon.property(c, "floating"),
-					redtitle.icon.property(c, "sticky"),
-					redtitle.icon.property(c, "ontop"),
+					redtitle.icon.property(c, "floating", style.light),
+					redtitle.icon.property(c, "sticky", style.light),
+					redtitle.icon.property(c, "ontop", style.light),
 					spacing = style.light.icon.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
