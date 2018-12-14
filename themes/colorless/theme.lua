@@ -948,9 +948,8 @@ function theme:init()
 		border_margin = { 0, 0, 0, 4 },      -- margins around titlebar active area
 		color         = self.color,          -- colors (main used)
 
-		-- TODO: rename this
 		-- application state marks settings
-		icon = {
+		mark = {
 			size  = 30, -- mark size
 			gap   = 10, -- space between marks
 			angle = 0   -- marks pitch angle
@@ -959,7 +958,7 @@ function theme:init()
 
 	self.titlebar.full = redutil.table.merge(
 		self.titlebar.light,
-		{ size = 28, icon = { size = 25, gap = 0, angle = 0.5 } }
+		{ size = 28, mark = { size = 25, gap = 0, angle = 0.5 } }
 	)
 
 	-- Desktop config

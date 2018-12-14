@@ -59,9 +59,9 @@ function titlebar:init(args)
 	local style = {}
 
 	style.light = args.light or redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.light
-	              or { icon = { gap = 10 }}
+	              or { mark = { gap = 10 }}
 	style.full = args.full or redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.full
-	             or { icon = { gap = 10 }}
+	             or { mark = { gap = 10 }}
 
 	client.connect_signal(
 		"request::titlebars",
@@ -74,15 +74,15 @@ function titlebar:init(args)
 			local light = wibox.widget({
 				nil,
 				{
-					right = style.light.icon.gap,
-					redtitle.icon.focus(c, style.light),
+					right = style.light.mark.gap,
+					redtitle.mark.focus(c, style.light),
 					layout = wibox.container.margin,
 				},
 				{
-					redtitle.icon.property(c, "floating", style.light),
-					redtitle.icon.property(c, "sticky", style.light),
-					redtitle.icon.property(c, "ontop", style.light),
-					spacing = style.light.icon.gap,
+					redtitle.mark.property(c, "floating", style.light),
+					redtitle.mark.property(c, "sticky", style.light),
+					redtitle.mark.property(c, "ontop", style.light),
+					spacing = style.light.mark.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
 				buttons = buttons,
@@ -91,13 +91,13 @@ function titlebar:init(args)
 
 			-- build full titlebar model
 			local full = wibox.widget({
-				redtitle.icon.focus(c, style.full),
-				redtitle.icon.label(c, style.full),
+				redtitle.mark.focus(c, style.full),
+				redtitle.mark.label(c, style.full),
 				{
-					redtitle.icon.property(c, "floating", style.full),
-					redtitle.icon.property(c, "sticky", style.full),
-					redtitle.icon.property(c, "ontop", style.full),
-					spacing = style.full.icon.gap,
+					redtitle.mark.property(c, "floating", style.full),
+					redtitle.mark.property(c, "sticky", style.full),
+					redtitle.mark.property(c, "ontop", style.full),
+					spacing = style.full.mark.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
 				buttons = buttons,
