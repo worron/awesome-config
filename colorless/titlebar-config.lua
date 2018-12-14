@@ -100,7 +100,9 @@ function titlebar:init()
 					focus_icon,
 					title,
 					{
+						redtitle.icon.property(c, "floating", style.icon),
 						redtitle.icon.property(c, "sticky", style.icon),
+						redtitle.icon.property(c, "minimized", style.icon),
 						redtitle.icon.property(c, "maximized", style.icon),
 						redtitle.icon.close(c, style.icon),
 						spacing = style.icon.gap,
