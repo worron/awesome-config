@@ -53,36 +53,35 @@ end
 
 -- Connect titlebar building signal
 -----------------------------------------------------------------------------------------------------------------------
-function titlebar:init(args)
+function titlebar:init(_)
 
-	local args = args or {}
 	local style = {}
 
-	style.light = args.light or redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.light
-	              or { mark = { gap = 10 }}
-	style.full = args.full or redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.full
-	             or { mark = { gap = 10 }}
+	style.base = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.base or {}
+	style.full = redutil.table.merge(style.base, { size = 28 })
+	style.mark = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark or { mark = { gap = 10 }}
+	style.icon = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon or { icon = { gap = 10 }}
 
 	client.connect_signal(
 		"request::titlebars",
 		function(c)
 			-- build titlebar and mouse buttons for it
 			local buttons = title_buttons(c)
-			redtitle(c, style.light)
+			redtitle(c, style.base)
 
 			-- build light titlebar model
 			local light = wibox.widget({
 				nil,
 				{
-					right = style.light.mark.gap,
-					redtitle.mark.focus(c, style.light),
+					right = style.mark.mark.gap,
+					redtitle.mark.focus(c, style.mark),
 					layout = wibox.container.margin,
 				},
 				{
-					redtitle.mark.property(c, "floating", style.light),
-					redtitle.mark.property(c, "sticky", style.light),
-					redtitle.mark.property(c, "ontop", style.light),
-					spacing = style.light.mark.gap,
+					redtitle.mark.property(c, "floating", style.mark),
+					redtitle.mark.property(c, "sticky", style.mark),
+					redtitle.mark.property(c, "ontop", style.mark),
+					spacing = style.mark.mark.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
 				buttons = buttons,
@@ -91,13 +90,13 @@ function titlebar:init(args)
 
 			-- build full titlebar model
 			local full = wibox.widget({
-				redtitle.mark.focus(c, style.full),
-				redtitle.mark.label(c, style.full),
+				redtitle.icon.focus(c, style.icon),
+				redtitle.label(c, style.full),
 				{
-					redtitle.mark.property(c, "floating", style.full),
-					redtitle.mark.property(c, "sticky", style.full),
-					redtitle.mark.property(c, "ontop", style.full),
-					spacing = style.full.mark.gap,
+					redtitle.icon.property(c, "floating", style.icon),
+					redtitle.icon.property(c, "sticky", style.icon),
+					redtitle.icon.property(c, "ontop", style.icon),
+					spacing = style.icon.icon.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
 				buttons = buttons,

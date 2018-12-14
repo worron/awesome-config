@@ -2,7 +2,6 @@
 --                                                Colorless theme                                                    --
 -----------------------------------------------------------------------------------------------------------------------
 local awful = require("awful")
-local redutil = require("redflat.util")
 
 local theme = {}
 --local wa = mouse.screen.workarea
@@ -941,12 +940,16 @@ function theme:init()
 	--------------------------------------------------------------------------------
 	self.titlebar = {}
 
-	self.titlebar.light = {
+	self.titlebar.base = {
 		size          = 8,                   -- titlebar height
 		position      = "top",               -- titlebar position
 		font          = self.fonts.titlebar, -- titlebar font
 		border_margin = { 0, 0, 0, 4 },      -- margins around titlebar active area
 		color         = self.color,          -- colors (main used)
+	}
+
+	self.titlebar.mark = {
+		color = self.color, -- colors (main used)
 
 		-- application state marks settings
 		mark = {
@@ -956,10 +959,23 @@ function theme:init()
 		},
 	}
 
-	self.titlebar.full = redutil.table.merge(
-		self.titlebar.light,
-		{ size = 28, mark = { size = 25, gap = 0, angle = 0.5 } }
-	)
+	self.titlebar.icon = {
+		color = self.color, -- colors (main used)
+
+		-- application control icon settings
+		icon = {
+			gap = 15, -- space between marks
+
+			-- icons list
+			list = {
+				focus    = self.base .. "/common/window_control/focus.svg",
+				floating = self.base .. "/common/window_control/floating.svg",
+				ontop    = self.base .. "/common/window_control/ontop.svg",
+				below    = self.base .. "/common/window_control/below.svg",
+				sticky   = self.base .. "/common/window_control/pin.svg",
+			}
+		},
+	}
 
 	-- Desktop config
 	--------------------------------------------------------------------------------
