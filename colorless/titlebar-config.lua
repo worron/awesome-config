@@ -53,14 +53,14 @@ end
 
 -- Connect titlebar building signal
 -----------------------------------------------------------------------------------------------------------------------
-function titlebar:init(_)
+function titlebar:init()
 
 	local style = {}
 
 	style.base = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.base or {}
 	style.full = redutil.table.merge(style.base, { size = 28 })
-	style.mark = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark or { mark = { gap = 10 }}
-	style.icon = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon or { icon = { gap = 10 }}
+	style.mark = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark or { gap = 10 }
+	style.icon = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon or { gap = 10 }
 
 	client.connect_signal(
 		"request::titlebars",
@@ -73,7 +73,7 @@ function titlebar:init(_)
 			local light = wibox.widget({
 				nil,
 				{
-					right = style.mark.mark.gap,
+					right = style.mark.gap,
 					redtitle.mark.focus(c, style.mark),
 					layout = wibox.container.margin,
 				},
@@ -81,7 +81,7 @@ function titlebar:init(_)
 					redtitle.mark.property(c, "floating", style.mark),
 					redtitle.mark.property(c, "sticky", style.mark),
 					redtitle.mark.property(c, "ontop", style.mark),
-					spacing = style.mark.mark.gap,
+					spacing = style.mark.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
 				buttons = buttons,
@@ -96,7 +96,7 @@ function titlebar:init(_)
 					redtitle.icon.property(c, "floating", style.icon),
 					redtitle.icon.property(c, "sticky", style.icon),
 					redtitle.icon.property(c, "ontop", style.icon),
-					spacing = style.icon.icon.gap,
+					spacing = style.icon.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
 				buttons = buttons,

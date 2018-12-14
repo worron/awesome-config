@@ -948,33 +948,27 @@ function theme:init()
 		color         = self.color,          -- colors (main used)
 	}
 
+	-- application state marks settings
 	self.titlebar.mark = {
 		color = self.color, -- colors (main used)
-
-		-- application state marks settings
-		mark = {
-			size  = 30, -- mark size
-			gap   = 10, -- space between marks
-			angle = 0   -- marks pitch angle
-		},
+		size  = 30, -- mark size
+		gap   = 10, -- space between marks
+		angle = 0   -- marks pitch angle
 	}
 
+	-- application control icon settings
 	self.titlebar.icon = {
 		color = self.color, -- colors (main used)
+		gap   = 15,         -- space between marks
 
-		-- application control icon settings
-		icon = {
-			gap = 15, -- space between marks
-
-			-- icons list
-			list = {
-				focus    = self.base .. "/common/window_control/focus.svg",
-				floating = self.base .. "/common/window_control/floating.svg",
-				ontop    = self.base .. "/common/window_control/ontop.svg",
-				below    = self.base .. "/common/window_control/below.svg",
-				sticky   = self.base .. "/common/window_control/pin.svg",
-			}
-		},
+		-- icons list
+		list = {
+			focus    = self.base .. "/common/window_control/focus.svg",
+			floating = self.base .. "/common/window_control/floating.svg",
+			ontop    = self.base .. "/common/window_control/ontop.svg",
+			below    = self.base .. "/common/window_control/below.svg",
+			sticky   = self.base .. "/common/window_control/pin.svg",
+		}
 	}
 
 	-- Desktop config
