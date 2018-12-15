@@ -959,7 +959,7 @@ function theme:init()
 	-- application control icon settings
 	self.titlebar.icon = {
 		color = self.color, -- colors (main used)
-		gap   = 12,         -- space between icons
+		gap   = 10,         -- space between icons
 
 		-- icons list
 		list = {

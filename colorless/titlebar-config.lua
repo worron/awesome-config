@@ -57,20 +57,23 @@ function titlebar:init()
 
 	local style = {}
 
-	style.base = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.base or {}
-	style.full = redutil.table.merge(style.base, { size = 28 })
-	style.mark = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark or { gap = 10 }
-	style.icon = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon or { gap = 10 }
+	style.thin   = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.base or {}
+	style.wide   = redutil.table.merge(style.thin, { size = 28 })
+	style.iconic = redutil.table.merge(style.thin, { size = 28 })
+
+	style.mark  = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark or { gap = 10 }
+	style.mark1 = redutil.table.merge(style.mark, { size = 25, gap = 0, angle = 0.5 })
+	style.icon  = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon or { gap = 10 }
 
 	client.connect_signal(
 		"request::titlebars",
 		function(c)
 			-- build titlebar and mouse buttons for it
 			local buttons = title_buttons(c)
-			redtitle(c, style.base)
+			redtitle(c, style.thin)
 
 			-- build light titlebar model
-			local light = wibox.widget({
+			local thin = wibox.widget({
 				nil,
 				{
 					right = style.mark.gap,
@@ -89,13 +92,28 @@ function titlebar:init()
 			})
 
 			-- build full titlebar model
-			local title = redtitle.label(c, style.full)
+			local wide = wibox.widget({
+				redtitle.mark.focus(c, style.mark1),
+				redtitle.label(c, style.wide),
+				{
+					redtitle.mark.property(c, "floating", style.mark1),
+					redtitle.mark.property(c, "sticky", style.mark1),
+					redtitle.mark.property(c, "ontop", style.mark1),
+					spacing = style.mark1.gap,
+					layout = wibox.layout.fixed.horizontal()
+				},
+				buttons = buttons,
+				layout  = wibox.layout.align.horizontal,
+			})
+
+			-- build buttons titlebar model
+			local title = redtitle.label(c, style.iconic)
 			title:buttons(buttons)
 
 			local focus_icon = redtitle.button.focus(c, style.icon)
 			focus_icon:buttons(buttons)
 
-			local full = wibox.widget({
+			local iconic = wibox.widget({
 				{
 					focus_icon,
 					title,
@@ -111,13 +129,14 @@ function titlebar:init()
 					--buttons = buttons,
 					layout = wibox.layout.align.horizontal,
 				},
-				top = 1, bottom = 2, left = 4, right = 4,
+				top = 2, bottom = 2, left = 4, right = 4,
 				widget = wibox.container.margin
 			})
 
 			-- Set both models to titlebar
-			redtitle.add_layout(c, nil, light)
-			redtitle.add_layout(c, nil, full, style.full.size)
+			redtitle.add_layout(c, nil, thin,   style.thin.size)
+			redtitle.add_layout(c, nil, wide,   style.wide.size)
+			redtitle.add_layout(c, nil, iconic, style.iconic.size)
 
 			-- hide titlebar when window maximized
 			if c.maximized_vertical or c.maximized then on_maximize(c) end
