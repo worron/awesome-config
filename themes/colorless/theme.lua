@@ -375,9 +375,27 @@ function theme:init()
 		color        = self.color                            -- colors (main used)
 	}
 
+	self.gauge.tag.ruby = {
+		width = 40,         -- widget width
+		color = self.color, -- colors (main used)
+
+		-- tag state mark
+		base = {
+			pad = 6,       -- left/right padding
+			height = 10,   -- mark height
+			thickness = 2  -- mark lines thickness
+		},
+
+		-- client focus mark
+		mark = {
+			pad = 10,  -- left/right padding
+			height = 4 -- mark height
+		},
+	}
+
 	self.gauge.tag.blue = {
 		width      = 103,                  -- widget width
-		show_min   = false,                 -- indicate minimized apps by color
+		show_min   = false,                -- indicate minimized apps by color
 		text_shift = 20,                   -- shift from upper border of widget to lower border of text
 		color      = self.color,           -- colors (main used)
 		font       = self.cairo_fonts.tag, -- font

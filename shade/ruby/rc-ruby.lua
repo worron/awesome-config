@@ -68,7 +68,16 @@ tasklist.buttons = awful.util.table.join(
 -- Taglist widget
 --------------------------------------------------------------------------------
 local taglist = {}
-taglist.style = { widget = redflat.gauge.tag.orange.new, show_tip = true }
+
+taglist.style = { widget = redflat.gauge.tag.ruby.new, show_tip = true }
+
+taglist.layout = wibox.widget {
+	expand          = true,
+	forced_num_rows = 2,
+	forced_num_cols = 6,
+    layout          = wibox.layout.grid,
+}
+
 taglist.buttons = awful.util.table.join(
 	awful.button({         }, 1, function(t) t:view_only() end),
 	awful.button({ env.mod }, 1, function(t) if client.focus then client.focus:move_to_tag(t) end end),
@@ -210,13 +219,19 @@ awful.screen.connect_for_each_screen(
 		env.wallpaper(s)
 
 		-- tags
-		awful.tag({ "Main", "Full", "Edit", "Read", "Free", "Vbox" }, s, { al[5], al[6], al[6], al[4], al[5], al[3] })
+		awful.tag(
+			{ "Main", "Full", "Edit", "Read", "Free", "Vbox", "Main2", "Full2", "Edit2", "Read2", "Free2", "Vbox2" },
+			s,
+			{ al[5], al[6], al[6], al[4], al[5], al[3], al[5], al[6], al[6], al[4], al[5], al[3] }
+		)
 
 		-- layoutbox widget
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
 
 		-- taglist widget
-		taglist[s] = redflat.widget.taglist({ screen = s, buttons = taglist.buttons, hint = env.tagtip }, taglist.style)
+		taglist[s] = redflat.widget.taglist(
+			{ screen = s, buttons = taglist.buttons, hint = env.tagtip, layout = taglist.layout }, taglist.style
+		)
 
 		-- tasklist widget
 		tasklist[s] = redflat.widget.tasklist({ screen = s, buttons = tasklist.buttons }, tasklist.style)

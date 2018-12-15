@@ -42,7 +42,7 @@ theme.widget.wrapper = {
 	volume      = { 10, 10, 7, 7 },
 	network     = { 6, 6, 8, 8 },
 	keyboard    = { 10, 10, 5, 5 },
-	taglist     = { 4, 4, 0, 0 },
+	taglist     = { 5, 5, 5, 5 },
 	mail        = { 10, 10, 5, 5 },
 	cpu         = { 10, 2, 8, 8 },
 	ram         = { 2, 2, 8, 8 },
@@ -54,7 +54,6 @@ theme.widget.wrapper = {
 
 -- Tag (base element of taglist)
 ------------------------------------------------------------
-theme.gauge.tag.orange.width = 36
 
 -- Tasklist
 ------------------------------------------------------------
