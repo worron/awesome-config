@@ -92,7 +92,7 @@ function titlebar:init()
 			local title = redtitle.label(c, style.full)
 			title:buttons(buttons)
 
-			local focus_icon = redtitle.icon.focus(c, style.icon)
+			local focus_icon = redtitle.button.focus(c, style.icon)
 			focus_icon:buttons(buttons)
 
 			local full = wibox.widget({
@@ -100,11 +100,11 @@ function titlebar:init()
 					focus_icon,
 					title,
 					{
-						redtitle.icon.property(c, "floating", style.icon),
-						redtitle.icon.property(c, "sticky", style.icon),
-						redtitle.icon.property(c, "minimized", style.icon),
-						redtitle.icon.property(c, "maximized", style.icon),
-						redtitle.icon.close(c, style.icon),
+						redtitle.button.property(c, "floating", style.icon),
+						redtitle.button.property(c, "sticky", style.icon),
+						redtitle.button.property(c, "minimized", style.icon),
+						redtitle.button.property(c, "maximized", style.icon),
+						redtitle.button.close(c, style.icon),
 						spacing = style.icon.gap,
 						layout = wibox.layout.fixed.horizontal()
 					},

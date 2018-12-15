@@ -377,7 +377,7 @@ function theme:init()
 
 	self.gauge.tag.blue = {
 		width      = 103,                  -- widget width
-		show_min   = true,                 -- indicate minimized apps by color
+		show_min   = false,                 -- indicate minimized apps by color
 		text_shift = 20,                   -- shift from upper border of widget to lower border of text
 		color      = self.color,           -- colors (main used)
 		font       = self.cairo_fonts.tag, -- font
