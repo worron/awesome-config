@@ -136,7 +136,7 @@ kbindicator.buttons = awful.util.table.join(
 local my_mails = require("color.blue.mail-example")
 
 -- safe load private mail settings
-pcall(function() my_mails = require("color.blue.mail-config") end)
+pcall(function() my_mails = require("private.mail-config") end)
 
 -- widget setup
 local mail = {}

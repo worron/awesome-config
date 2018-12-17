@@ -4,7 +4,7 @@
 themes/*/wallpaper/
 
 # Private mail settings
-*/mail-config.lua
+private/*
 
 # Default config
 rc-back.lua
