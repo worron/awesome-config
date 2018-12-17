@@ -70,11 +70,12 @@ tasklist.buttons = awful.util.table.join(
 local taglist = {}
 
 taglist.style = { widget = redflat.gauge.tag.ruby.new, show_tip = true }
+taglist.cols_num = 6
 
 taglist.layout = wibox.widget {
 	expand          = true,
 	forced_num_rows = 2,
-	forced_num_cols = 6,
+	forced_num_cols = taglist.cols_num,
     layout          = wibox.layout.grid,
 }
 
@@ -296,8 +297,8 @@ edges:init()
 -----------------------------------------------------------------------------------------------------------------------
 local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheetb
 
-local hotkeys = require("color.blue.keys-config") -- load file with hotkeys configuration
-hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys })
+local hotkeys = require("shade.ruby.keys-config") -- load file with hotkeys configuration
+hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys, tag_cols_num = taglist.cols_num })
 
 
 -- Rules
