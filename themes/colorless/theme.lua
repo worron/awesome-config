@@ -382,14 +382,14 @@ function theme:init()
 		-- tag state mark
 		base = {
 			pad = 6,       -- left/right padding
-			height = 10,   -- mark height
+			height = 9,   -- mark height
 			thickness = 2  -- mark lines thickness
 		},
 
 		-- client focus mark
 		mark = {
 			pad = 10,  -- left/right padding
-			height = 4 -- mark height
+			height = 3 -- mark height
 		},
 	}
 
@@ -452,6 +452,16 @@ function theme:init()
 		color      = self.color,
 		font       = self.cairo_fonts.tag,
 		point    = { width = 70, height = 3, gap = 27, dx = 5 },
+	}
+
+	self.gauge.task.ruby = {
+		width = 76,
+		text_shift = 26,
+		color      = self.color,
+		font       = self.cairo_fonts.tag,
+
+		point      = { size = 5, space = 5, gap = 4 },
+		underline  = { height = 10, thickness = 3, gap = 34, dh = 0 },
 	}
 
 	self.gauge.task.red = {
