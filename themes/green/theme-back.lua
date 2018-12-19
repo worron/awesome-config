@@ -340,7 +340,7 @@ theme.gauge.audio.red = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.widget = {}
 
--- individual margins for palnel widgets
+-- individual margins for panel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
 	textclock   = { 10, 10, 0, 0 },

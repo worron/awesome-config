@@ -104,8 +104,8 @@ upgrades.widget = redflat.widget.upgrades({ command = env.upgrades })
 local layoutbox = {}
 
 layoutbox.buttons = awful.util.table.join(
-	awful.button({ }, 1, function () mymenu.mainmenu:toggle() end),
-	awful.button({ }, 3, function () redflat.widget.layoutbox:toggle_menu(mouse.screen.selected_tag) end),
+	awful.button({ }, 3, function () mymenu.mainmenu:toggle() end),
+	awful.button({ }, 1, function () redflat.widget.layoutbox:toggle_menu(mouse.screen.selected_tag) end),
 	awful.button({ }, 4, function () awful.layout.inc( 1) end),
 	awful.button({ }, 5, function () awful.layout.inc(-1) end)
 )
@@ -113,7 +113,7 @@ layoutbox.buttons = awful.util.table.join(
 -- Tray widget
 --------------------------------------------------------------------------------
 local tray = {}
-tray.widget = redflat.widget.minitray()
+tray.widget = redflat.widget.minitray(nil, { double_wibox = true })
 
 tray.buttons = awful.util.table.join(
 	awful.button({}, 1, function() redflat.widget.minitray:toggle() end)

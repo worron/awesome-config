@@ -34,21 +34,21 @@ theme:update()
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 
--- individual margins for palnel widgets
+-- individual margins for panel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
-	layoutbox   = { 12, 10, 6, 6 },
+	layoutbox   = { 12, 9, 6, 6 },
 	textclock   = { 10, 10, 0, 0 },
 	volume      = { 6, 10, 3, 3 },
-	keyboard    = { 10, 10, 4, 4 },
-	mail        = { 10, 10, 4, 4 },
+	keyboard    = { 9, 9, 3, 3 },
+	mail        = { 9, 9, 3, 3 },
 	tray        = { 8, 8, 7, 7 },
 	cpu         = { 9, 3, 7, 7 },
 	ram         = { 2, 2, 7, 7 },
 	battery     = { 3, 9, 7, 7 },
 	network     = { 4, 4, 7, 7 },
-	taglist     = { 5, 5, 5, 5 },
-	--tasklist    = { 6, 0, 0, 0 }, -- centering tasklist widget
+	taglist     = { 4, 4, 5, 4 },
+	tasklist    = { 0, 72, 0, 0 }, -- centering tasklist widget
 }
 
 -- Dotcount

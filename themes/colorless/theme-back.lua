@@ -209,7 +209,7 @@ theme.gauge.graph.dots = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.widget = {}
 
--- individual margins for palnel widgets
+-- individual margins for panel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
 	mainmenu    = { 12, 10, 6, 6 },

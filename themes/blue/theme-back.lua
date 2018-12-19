@@ -338,7 +338,7 @@ theme.gauge.audio.blue = {
 -----------------------------------------------------------------------------------------------------------------------
 theme.widget = {}
 
--- individual margins for palnel widgets
+-- individual margins for panel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
 	layoutbox   = { 12, 10, 6, 6 },

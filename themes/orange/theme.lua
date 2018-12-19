@@ -42,7 +42,7 @@ theme.desktop.textset = {
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 
--- individual margins for palnel widgets
+-- individual margins for panel widgets
 ------------------------------------------------------------
 theme.widget.wrapper = {
 	layoutbox   = { 12, 10, 6, 6 },

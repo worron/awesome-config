@@ -89,7 +89,7 @@ theme.desktop.places = {
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
 
--- individual margins for palnel widgets
+-- individual margins for panel widgets
 --------------------------------------------------------------------------------
 theme.widget.wrapper = {
 	textclock   = { 4, 20, 0, 0 },
