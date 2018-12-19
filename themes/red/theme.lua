@@ -51,7 +51,7 @@ theme.desktop.common.barpack.label_gap   = 20
 -- Speedmeter
 ------------------------------------------------------------
 theme.desktop.speedmeter.label            = { height = theme.desktop.line_height }
-theme.desktop.speedmeter.dashbar          = { bar = { width = 16, gap = 6 }, height = 6 }
+theme.desktop.speedmeter.progressbar      = { chunk = { width = 16, gap = 6 }, height = 6 }
 theme.desktop.speedmeter.chart            = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 }
 theme.desktop.speedmeter.barvalue_height  = 32
 theme.desktop.speedmeter.fullchart_height = 78
