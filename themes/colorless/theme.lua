@@ -1035,7 +1035,7 @@ function theme:init()
 
 	-- Dashed progressbar
 	------------------------------------------------------------
-	self.desktop.common.progressbar = {
+	self.desktop.common.bar.plain = {
 		width       = nil,   -- widget width
 		height      = nil,   -- widget height
 		autoscale   = false, -- normalize progressbar value
@@ -1092,7 +1092,7 @@ function theme:init()
 	self.desktop.common.barpack = {
 		label_style = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
 		text_style  = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
-		progressbar = nil,                                -- progressbar style (see theme.desktop.common.progressbar)
+		progressbar = nil,                                -- progressbar style (see theme.desktop.common.bar.plain)
 		line_height = self.desktop.line_height,           -- text/progressbar height
 		text_gap    = 22,                                 -- space between text and progressbar
 		label_gap   = 16,                                 -- space between label and progressbar
@@ -1134,7 +1134,7 @@ function theme:init()
 		-- progressbar label and value (see theme.desktop.common.textbox)
 		label = { height = self.desktop.line_height },
 
-		-- progressbar style (see theme.desktop.common.progressbar)
+		-- progressbar style (see theme.desktop.common.bar.plain)
 		progressbar = { chunk = { width = 16, gap = 6 }, height = 6 },
 	}
 
