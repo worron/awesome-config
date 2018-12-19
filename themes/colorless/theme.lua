@@ -1006,7 +1006,7 @@ function theme:init()
 
 	-- Desktop config
 	--------------------------------------------------------------------------------
-	self.desktop = { common = {} }
+	self.desktop = { common = { bar = {} } }
 
 	self.desktop.line_height = 18 -- text and progressbar height for desktop wodgets
 
@@ -1069,18 +1069,18 @@ function theme:init()
 	}
 
 
-	-- Corner shaped vertical progressbar
+	-- Custom shaped vertical progressbar
 	------------------------------------------------------------
-	self.desktop.common.corners = {
+	self.desktop.common.bar.shaped = {
 		width     = nil,                     -- widget width
 		height    = nil,                     -- widget height
 		autoscale = true,                    -- normalize chart values
 		maxm      = 1,                       -- the maximum allowed value
-		plain     = false,                   -- use plain progressbar instead of corner shaped
+		shape     = "corner",                -- progressbar chunk shape
 		color     = self.desktop.color,      -- color (desktop used)
 
-		-- corner element style
-		corner = {
+		-- element style
+		chunk = {
 			num = 10,   -- number of elements
 			line = 5,   -- element line width
 			height = 10 -- element height
@@ -1151,8 +1151,8 @@ function theme:init()
 
 		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
 
-		--  vertical progressbars style (see theme.desktop.common.corners)
-		corner = { width = 34, corner = { height = 17, num = 10, line = 4 } },
+		--  vertical progressbars style (see theme.desktop.common.bar.shaped)
+		corner = { width = 34, chunk = { height = 17, num = 10, line = 4 } },
 
 		-- horizontal progressbars style (see theme.desktop.common.barpack)
 		barpack = {},

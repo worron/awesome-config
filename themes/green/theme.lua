@@ -49,7 +49,7 @@ theme.desktop.common.barpack.label_gap   = 14
 ------------------------------------------------------------
 theme.desktop.multimeter.icon        = false
 theme.desktop.multimeter.prog_height = 70
-theme.desktop.multimeter.corner      = { width = 32, corner = { num = 10, line = 3 }, plain = true }
+theme.desktop.multimeter.corner      = { width = 32, chunk = { num = 10, line = 3 }, shape = "plain" }
 
 -- Single line indicator
 ------------------------------------------------------------
