@@ -150,7 +150,7 @@ function desktop:init(args)
 	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
 	transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
 	disks.widget = redflat.desktop.multiline(disks.args, disks.geometry, disks.style)
-	thermal.widget = redflat.desktop.simpleline(thermal.args, thermal.geometry, thermal.style)
+	thermal.widget = redflat.desktop.singleline(thermal.args, thermal.geometry, thermal.style)
 end
 
 -- End

@@ -53,7 +53,7 @@ theme.desktop.multimeter.upbar      = { width = 32, chunk = { num = 10, line = 3
 
 -- Single line indicator
 ------------------------------------------------------------
-theme.desktop.simpleline.icon = theme.path .. "/desktop/fire.svg"
+theme.desktop.singleline.icon = theme.path .. "/desktop/fire.svg"
 
 -- Desktop widgets placement
 --------------------------------------------------------------------------------

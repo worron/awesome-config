@@ -1174,7 +1174,7 @@ function theme:init()
 	-- Widget with several text groups in single line
 	-- every group has label and value and icon in the middle
 	------------------------------------------------------------
-	self.desktop.simpleline = {
+	self.desktop.singleline = {
 		lbox      = { draw = "by_width", width = 50 }, -- label style (see theme.desktop.common.textbox)
 		rbox      = { draw = "by_edges", width = 60 }, -- value style (see theme.desktop.common.textbox)
 		digit_num = 2,                                 -- minimal number of digits for value
