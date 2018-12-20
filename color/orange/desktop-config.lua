@@ -301,7 +301,7 @@ function desktop:init(args)
 		local values = {}
 		values[1] = { data.alert and tr_not_found or "running" }
 		if not data.alert then
-			values[2] = { form_value(#data.corners) }
+			values[2] = { form_value(#data.bars) }
 			values[3] = { (data.lines[1][2] > 0 or data.lines[2][2] > 0) and "Moreover" or "Unfortunately",
 			              form_value(data.lines[2][2]), data.lines[2][2] > 1 and "are" or "is",
 			              data.lines[2][2] > 0 and form_torr_speed(data.lines[2][1]) or "" }
@@ -309,7 +309,7 @@ function desktop:init(args)
 			              data.lines[1][2] > 0 and form_torr_speed(data.lines[1][1]) or "" }
 
 			local tlist = {}
-			for i, t in ipairs(data.corners) do
+			for i, t in ipairs(data.bars) do
 				if tonumber(t) < 100 then
 					if i <= torrset.nactive then tlist[#tlist + 1] = string.format(" %s%%", t) end
 				end

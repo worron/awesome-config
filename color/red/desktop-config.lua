@@ -76,7 +76,7 @@ function desktop:init(args)
 	local cpumem = { geometry = wgeometry(grid, places.cpumem, workarea) }
 
 	cpumem.args = {
-		corners = { num = 8, maxm = 100, crit = 90 },
+		topbars = { num = 8, maxm = 100, crit = 90 },
 		lines   = { { maxm = 100, crit = 80 }, { maxm = 100, crit = 80 } },
 		meter   = { args = cpu_storage },
 		timeout = 2
@@ -91,7 +91,7 @@ function desktop:init(args)
 	local transm = { geometry = wgeometry(grid, places.transm, workarea) }
 
 	transm.args = {
-		corners    = { num = 8, maxm = 100 },
+		topbars    = { num = 8, maxm = 100 },
 		lines      = { { maxm = 6*1024, unit = { { "SEED", - 1 } } }, { maxm = 6*1024, unit = { { "DNLD", - 1 } } } },
 		meter      = { func = system.transmission_parse },
 		timeout    = 5,

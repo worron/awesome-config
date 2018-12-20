@@ -1152,7 +1152,7 @@ function theme:init()
 		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
 
 		--  vertical progressbars style (see theme.desktop.common.bar.shaped)
-		corner = { width = 34, chunk = { height = 17, num = 10, line = 4 } },
+		upbar = { width = 34, chunk = { height = 17, num = 10, line = 4 } },
 
 		-- horizontal progressbars style (see theme.desktop.common.pack.lines)
 		lines = {},

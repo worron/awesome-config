@@ -60,7 +60,7 @@ theme.desktop.speedmeter.image_gap        = 20
 
 -- Multimeter
 ------------------------------------------------------------
-theme.desktop.multimeter.corner       = { width = 34, chunk = { height = 17, num = 10, line = 5 } }
+theme.desktop.multimeter.upbar       = { width = 34, chunk = { height = 17, num = 10, line = 5 } }
 theme.desktop.multimeter.state_height = 60
 theme.desktop.multimeter.prog_height  = 98
 theme.desktop.multimeter.image_gap    = 20
