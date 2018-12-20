@@ -41,12 +41,12 @@ theme:update()
 -- Desktop widgets
 --------------------------------------------------------------------------------
 
--- Barpack
+-- Lines
 ------------------------------------------------------------
-theme.desktop.common.barpack.label_style = { width = 88, draw = "by_width" }
-theme.desktop.common.barpack.text_style  = { width = 88, draw = "by_edges" }
-theme.desktop.common.barpack.text_gap    = 20
-theme.desktop.common.barpack.label_gap   = 20
+theme.desktop.common.pack.lines.label_style = { width = 88, draw = "by_width" }
+theme.desktop.common.pack.lines.text_style  = { width = 88, draw = "by_edges" }
+theme.desktop.common.pack.lines.text_gap    = 20
+theme.desktop.common.pack.lines.label_gap   = 20
 
 -- Speedmeter
 ------------------------------------------------------------

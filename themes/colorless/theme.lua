@@ -1006,7 +1006,7 @@ function theme:init()
 
 	-- Desktop config
 	--------------------------------------------------------------------------------
-	self.desktop = { common = { bar = {} } }
+	self.desktop = { common = { bar = {}, pack = {} } }
 
 	self.desktop.line_height = 18 -- text and progressbar height for desktop wodgets
 
@@ -1087,9 +1087,9 @@ function theme:init()
 		},
 	}
 
-	-- Barpack (group of progressbars with label in front and text value after it)
+	-- Lines (group of progressbars with label in front and text value after it)
 	------------------------------------------------------------
-	self.desktop.common.barpack = {
+	self.desktop.common.pack.lines = {
 		label_style = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
 		text_style  = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
 		progressbar = nil,                                -- progressbar style (see theme.desktop.common.bar.plain)
@@ -1154,21 +1154,21 @@ function theme:init()
 		--  vertical progressbars style (see theme.desktop.common.bar.shaped)
 		corner = { width = 34, chunk = { height = 17, num = 10, line = 4 } },
 
-		-- horizontal progressbars style (see theme.desktop.common.barpack)
-		barpack = {},
+		-- horizontal progressbars style (see theme.desktop.common.pack.lines)
+		lines = {},
 	}
 
 	-- Widget with multiple progress bars
 	------------------------------------------------------------
-	self.desktop.multibar = {
+	self.desktop.multiline = {
 		show_text = false,              -- show text value for progressbars
 		digit_num = 3,                  -- minimal number of digits for progressbar value
 		color     = self.desktop.color, -- color (desktop used)
 
 		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
 
-		-- progressbars style (see theme.desktop.common.barpack)
-		barpack   = {},
+		-- progressbars style (see theme.desktop.common.pack.lines)
+		lines = {},
 	}
 
 	-- Widget with several text groups in single line

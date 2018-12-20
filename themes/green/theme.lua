@@ -38,12 +38,12 @@ theme:update()
 ------------------------------------------------------------
 theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
 
--- Barpack
+-- Lines
 ------------------------------------------------------------
-theme.desktop.common.barpack.label_style = { width = 68, draw = "by_width" }
-theme.desktop.common.barpack.text_style  = { width = 94, draw = "by_edges" }
-theme.desktop.common.barpack.text_gap    = 14
-theme.desktop.common.barpack.label_gap   = 14
+theme.desktop.common.pack.lines.label_style = { width = 68, draw = "by_width" }
+theme.desktop.common.pack.lines.text_style  = { width = 94, draw = "by_edges" }
+theme.desktop.common.pack.lines.text_gap    = 14
+theme.desktop.common.pack.lines.label_gap   = 14
 
 -- Multimeter
 ------------------------------------------------------------
