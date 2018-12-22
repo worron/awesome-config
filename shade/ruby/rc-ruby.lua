@@ -284,8 +284,8 @@ awful.screen.connect_for_each_screen(
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-
-
+local desktop = require("shade.ruby.desktop-config") -- load file with desktop widgets configuration
+desktop:init({ env = env })
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------

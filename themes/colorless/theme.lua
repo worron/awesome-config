@@ -854,7 +854,7 @@ function theme:init()
 		border_width  = 0,                   -- widget border width
 		border_margin = { 5, 5, 12, 15 },    -- margins around widget content
 		parser        = {},                  -- desktop file parser settings (see theme.service.dfparser)
-		notify        = {},                  -- desktop file parser settings (see theme.float.notify)
+		notify        = {},                  -- redflat notify style (see theme.float.notify)
 		recoloring    = false,               -- apply redflat recoloring feature on application icons
 		label_font    = self.fonts.qlaunch,  -- font of application mark(key)
 		color         = self.color,          -- colors (main used)
@@ -1012,9 +1012,11 @@ function theme:init()
 
 	-- desktop widget colors
 	self.desktop.color = {
-		main  = self.color.main,
-		gray  = self.color.desktop_gray,
-		icon  = self.color.desktop_icon,
+		main       = self.color.main,
+		gray       = self.color.desktop_gray,
+		icon       = self.color.desktop_icon,
+		-- TODO: update colors
+		--undertone  = self.color.desktop_icon,
 		wibox = self.color.bg .. "00"
 	}
 
@@ -1182,6 +1184,32 @@ function theme:init()
 		iwidth    = 142,                               -- width for every text group
 		color     = self.desktop.color                 -- color (desktop used)
 	}
+
+	-- Calendar widget with lined up marks
+	------------------------------------------------------------
+	self.desktop.calendar = {
+		maxed_marks = true,               -- always draw 31 marks
+		color       = self.desktop.color, -- color (desktop used)
+		-- TODO: check for better font
+		font = { font = "Play", size = 12, face = 1 }, -- today label font
+
+		-- days marks style
+		--mark = { height = 12, width = 25, dx = 6 },
+		mark = {
+			height = 12, -- mark height
+			width  = 25, -- mark width
+			dx     = 6,  -- pointer arrow width
+			line   = 4,  -- stroke line width for next month marks
+		},
+
+		-- today pointer style
+		pointer = {
+			height = 16, -- mark height
+			width  = 42, -- mark width
+			dx     = 6,  -- pointer arrow width
+		},
+	}
+
 
 	-- Default awesome theme vars
 	--------------------------------------------------------------------------------
