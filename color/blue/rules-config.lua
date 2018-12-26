@@ -72,6 +72,29 @@ function rules:init(args)
 		{
 			rule_any   = { type = { "normal" }},
 			properties = { placement = awful.placement.no_overlap + awful.placement.no_offscreen }
+		},
+
+		-- Jetbrains (java) dirty focus trick assuming separate tag used for IDE
+		{
+			rule = { class = "jetbrains-%w+", type = "normal" },
+			callback = function(jetbrain)
+				local initial_tag = jetbrain.first_tag -- remember tag for unmanaged
+				jetbrain:connect_signal("focus", function(c)
+					for _, win in ipairs(c.first_tag:clients()) do
+						if win.name ~= c.name and win.type == "normal" then win.minimized = true end
+					end
+				end)
+				jetbrain:connect_signal("unmanage", function(c)
+					for _, win in ipairs(initial_tag:clients()) do
+						if win.name ~= c.name and win.type == "normal" then
+							win.minimized = false
+							client.focus = win
+							win:raise()
+							return
+						end
+					end
+				end)
+			end
 		}
 	}
 
