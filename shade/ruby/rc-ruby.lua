@@ -221,9 +221,12 @@ awful.screen.connect_for_each_screen(
 
 		-- tags
 		awful.tag(
-			{ "Main", "Full", "Edit", "Read", "Free", "Vbox", "Main2", "Full2", "Edit2", "Read2", "Free2", "Vbox2" },
+			{
+				"Prime", "Full1", "Code", "Edit", "Misc1", "Game",
+				"Spare", "Full2", "Test", "Back", "Misc2", "Free"
+			},
 			s,
-			{ al[5], al[6], al[6], al[4], al[5], al[3], al[5], al[6], al[6], al[4], al[5], al[3] }
+			{ al[5], al[6], al[6], al[4], al[3], al[3], al[4], al[6], al[6], al[4], al[3], al[1] }
 		)
 
 		-- layoutbox widget
