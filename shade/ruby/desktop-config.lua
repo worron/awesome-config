@@ -106,21 +106,26 @@ function desktop:init(args)
 	-- Disks
 	--------------------------------------------------------------------------------
 	local disks = { geometry = wgeometry(grid, places.disks, workarea) }
+	local qemu_image1 = "/home/vmdrive/win10-vgpu/win10-vgpu-current.qcow2"
+	local qemu_image2 = "/home/vmdrive/win10-vgpu/snap/win10-vgpu-testing.qcow2"
 
 	disks.args = {
 		sensors  = {
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/" },
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/home" },
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/opt" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/mnt/media" }
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/mnt/media" },
+			{ meter_function = system.qemu_image_size, maxm = 100, crit = 100, args = qemu_image1 },
+			{ meter_function = system.qemu_image_size, maxm = 100, crit = 60, args = qemu_image2 },
 		},
-		names   = {"root", "home", "misc", "data"},  -- TODO: move this to styles
+		names   = {"root", "home", "storage", "media", "qemu-w10igpu-base", "qemu-w10igpu-snap"},
 		timeout = 300
 	}
 
 	disks.style = {
 		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-		show_text = false
+		icon      = { image = env.themedir .. "/desktop/storage.svg", margin = { 0, 2, 0, 0 } },
+		lines     = { show_label = false, show_tooltip = true, show_text = false },
 	}
 
 	-- Temperature indicator
@@ -157,7 +162,7 @@ function desktop:init(args)
 	--hddspeed.widget = redflat.desktop.speedmeter(hddspeed.args, hddspeed.geometry, hddspeed.style)
 	--cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
 	--transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
-	--disks.widget = redflat.desktop.multiline(disks.args, disks.geometry, disks.style)
+	disks.widget = redflat.desktop.multiline(disks.args, disks.geometry, disks.style)
 	--thermal.widget = redflat.desktop.singleline(thermal.args, thermal.geometry, thermal.style)
 	calendar.widget = redflat.desktop.calendar(calendar.args, calendar.geometry)
 end

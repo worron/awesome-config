@@ -917,6 +917,7 @@ function theme:init()
 		timeout      = 0,                  -- show delay
 		font         = self.fonts.tooltip, -- widget font
 		border_width = 2,                  -- widget border width
+		set_position = nil,                -- function to setup tooltip position when shown
 		color        = self.color          -- colors (main used)
 	}
 
@@ -1092,13 +1093,17 @@ function theme:init()
 	-- Lines (group of progressbars with label in front and text value after it)
 	------------------------------------------------------------
 	self.desktop.common.pack.lines = {
-		label_style = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
-		text_style  = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
-		progressbar = nil,                                -- progressbar style (see theme.desktop.common.bar.plain)
-		line_height = self.desktop.line_height,           -- text/progressbar height
-		text_gap    = 22,                                 -- space between text and progressbar
-		label_gap   = 16,                                 -- space between label and progressbar
-		color       = self.desktop.color                  -- color (desktop used)
+		label_style  = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
+		text_style   = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
+		show_text    = false,                              -- show text value for progressbars
+		show_label   = true,                               -- show text name for progressbars
+		show_tooltip = false,                              -- show tooltip for progressbars
+		progressbar  = nil,                                -- progressbar style (see theme.desktop.common.bar.plain)
+		line_height  = self.desktop.line_height,           -- text/progressbar height
+		text_gap     = 22,                                 -- space between text and progressbar
+		label_gap    = 16,                                 -- space between label and progressbar
+		tooltip      = {},                                 -- redflat tooltip style (see theme.float.tooltip)
+		color        = self.desktop.color                  -- color (desktop used)
 	}
 
 	-- Widgets
@@ -1163,14 +1168,13 @@ function theme:init()
 	-- Widget with multiple progress bars
 	------------------------------------------------------------
 	self.desktop.multiline = {
-		show_text = false,              -- show text value for progressbars
 		digit_num = 3,                  -- minimal number of digits for progressbar value
 		color     = self.desktop.color, -- color (desktop used)
 
 		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
 
 		-- progressbars style (see theme.desktop.common.pack.lines)
-		lines = {},
+		lines = { progressbar = {}, tooltip = {} },
 	}
 
 	-- Widget with several text groups in single line

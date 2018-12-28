@@ -120,7 +120,7 @@ function desktop:init(args)
 
 	disks.style = {
 		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-		show_text = true
+		lines     = { show_text = true },
 	}
 
 	-- Temperature indicator
@@ -142,7 +142,7 @@ function desktop:init(args)
 
 	thermalc.style = {
 		unit      = { { "°C", -1 } },
-		show_text = true
+		lines     = { show_text = true },
 	}
 
 	-- hdd

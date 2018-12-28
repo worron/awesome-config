@@ -34,9 +34,9 @@ theme:update()
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
-	width  = { 520, 520, 520 },
-	height = { 180, 160, 160, 138, 18 },
-	edge   = { width = { 60, 60 }, height = { 40, 40 } }
+	width  = { 420, 520, 520 },
+	height = { 180, 160, 160, 72 },
+	edge   = { width = { 60, 60 }, height = { 60, 60 } }
 }
 
 theme.desktop.places = {
@@ -48,6 +48,16 @@ theme.desktop.places = {
 	disks    = { 1, 4 },
 	thermal  = { 1, 5 }
 }
+
+-- Desktop widgets
+--------------------------------------------------------------------------------
+theme.desktop.multiline.lines.line_height = 5
+theme.desktop.multiline.lines.progressbar.chunk = { gap = 5, width = 12 }
+theme.desktop.multiline.lines.tooltip.set_position = function()
+	local coords = mouse.coords()
+	return { x = coords.x, y = coords.y - 50 }
+end
+
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------

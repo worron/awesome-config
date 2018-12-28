@@ -117,7 +117,7 @@ function desktop:init()
 
 	disks.style = {
 		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-		show_text = false
+		lines     = { show_text = false },
 	}
 
 	-- Temperature indicator
