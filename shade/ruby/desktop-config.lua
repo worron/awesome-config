@@ -83,7 +83,9 @@ function desktop:init(args)
 	}
 
 	cpumem.style = {
-		icon = { image = env.themedir .. "/desktop/cpu.svg", full = true, margin = { 0, 4, 0, 0 } }
+		labels = { "RAM", "SWAP" },
+		lines = { show_label = false, show_tooltip = true, show_text = false },
+		icon  = { image = env.themedir .. "/desktop/cpu.svg", full = true, margin = { 0, 4, 0, 0 } }
 	}
 
 	-- Transmission info
@@ -143,7 +145,6 @@ function desktop:init(args)
 	}
 
 	thermal.style = {
-		--icon      = env.themedir .. "/desktop/star.svg",
 		unit      = { { "°C", -1 } },
 	}
 

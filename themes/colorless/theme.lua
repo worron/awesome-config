@@ -1095,7 +1095,7 @@ function theme:init()
 	self.desktop.common.pack.lines = {
 		label_style  = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
 		text_style   = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
-		show_text    = false,                              -- show text value for progressbars
+		show_text    = true,                              -- show text value for progressbars
 		show_label   = true,                               -- show text name for progressbars
 		show_tooltip = false,                              -- show tooltip for progressbars
 		progressbar  = {},                                 -- progressbar style (see theme.desktop.common.bar.plain)

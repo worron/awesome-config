@@ -64,7 +64,7 @@ theme.desktop.common.pack.lines.line_height = 5
 theme.desktop.common.pack.lines.progressbar.chunk = { gap = 5, width = 12 }
 theme.desktop.common.pack.lines.tooltip.set_position = function()
 	local coords = mouse.coords()
-	return { x = coords.x, y = coords.y - 50 }
+	return { x = coords.x, y = coords.y - 40 }
 end
 
 
