@@ -1098,7 +1098,7 @@ function theme:init()
 		show_text    = false,                              -- show text value for progressbars
 		show_label   = true,                               -- show text name for progressbars
 		show_tooltip = false,                              -- show tooltip for progressbars
-		progressbar  = nil,                                -- progressbar style (see theme.desktop.common.bar.plain)
+		progressbar  = {},                                 -- progressbar style (see theme.desktop.common.bar.plain)
 		line_height  = self.desktop.line_height,           -- text/progressbar height
 		text_gap     = 22,                                 -- space between text and progressbar
 		label_gap    = 16,                                 -- space between label and progressbar
@@ -1148,14 +1148,18 @@ function theme:init()
 	-- Widget with multiple horizontal and vertical progress bars
 	------------------------------------------------------------
 	self.desktop.multimeter = {
-		state_height = 58,                 -- horizontal progressbar area height
-		prog_height  = 80,                 -- vertical progressbars height
-		image_gap    = 16,                 -- space between widget icon and progressbar/chart
+		lines_height = 58,                 -- horizontal progressbar area height
+		upright_height  = 80,                 -- vertical progressbars height
 		digit_num    = 3,                  -- minimal number of digits for horizontal progressbar values
-		icon         = self.icon.system,   -- widget icon
 		color        = self.desktop.color, -- color (desktop used)
 		labels       = {},                 -- list of optional labels for horizontal bars
 
+		-- widget icon
+		icon = {
+			image  = self.icon.system,   -- widget icon
+			margin = { 0, 16, 0, 0 },    -- margins around icon
+			full   = false               -- draw icon in full height of widget
+		},
 		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
 
 		--  vertical progressbars style (see theme.desktop.common.bar.shaped)

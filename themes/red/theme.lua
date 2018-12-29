@@ -61,9 +61,9 @@ theme.desktop.speedmeter.image_gap        = 20
 -- Multimeter
 ------------------------------------------------------------
 theme.desktop.multimeter.upbar       = { width = 34, chunk = { height = 17, num = 10, line = 5 } }
-theme.desktop.multimeter.state_height = 60
-theme.desktop.multimeter.prog_height  = 98
-theme.desktop.multimeter.image_gap    = 20
+theme.desktop.multimeter.lines_height = 60
+theme.desktop.multimeter.upright_height  = 98
+theme.desktop.multimeter.icon.margin  = { 0, 20, 0, 0 }
 
 
 -- Desktop widgets placement

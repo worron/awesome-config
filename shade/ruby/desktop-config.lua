@@ -83,7 +83,7 @@ function desktop:init(args)
 	}
 
 	cpumem.style = {
-		icon      = env.themedir .. "/desktop/bstar.svg"
+		icon = { image = env.themedir .. "/desktop/cpu.svg", full = true, margin = { 0, 4, 0, 0 } }
 	}
 
 	-- Transmission info
@@ -124,7 +124,7 @@ function desktop:init(args)
 
 	disks.style = {
 		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-		icon      = { image = env.themedir .. "/desktop/storage.svg", margin = { 0, 2, 0, 0 } },
+		icon      = { image = env.themedir .. "/desktop/storage.svg", margin = { 0, 4, 0, 0 } },
 		lines     = { show_label = false, show_tooltip = true, show_text = false },
 	}
 
@@ -143,7 +143,7 @@ function desktop:init(args)
 	}
 
 	thermal.style = {
-		icon      = env.themedir .. "/desktop/star.svg",
+		--icon      = env.themedir .. "/desktop/star.svg",
 		unit      = { { "°C", -1 } },
 	}
 
@@ -160,7 +160,7 @@ function desktop:init(args)
 	--netspeed.widget = redflat.desktop.speedmeter(netspeed.args, netspeed.geometry, netspeed.style)
 	--ssdspeed.widget = redflat.desktop.speedmeter(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
 	--hddspeed.widget = redflat.desktop.speedmeter(hddspeed.args, hddspeed.geometry, hddspeed.style)
-	--cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
+	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
 	--transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
 	disks.widget = redflat.desktop.multiline(disks.args, disks.geometry, disks.style)
 	--thermal.widget = redflat.desktop.singleline(thermal.args, thermal.geometry, thermal.style)

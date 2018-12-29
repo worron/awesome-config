@@ -47,9 +47,9 @@ theme.desktop.common.pack.lines.label_gap   = 14
 
 -- Multimeter
 ------------------------------------------------------------
-theme.desktop.multimeter.icon        = false
-theme.desktop.multimeter.prog_height = 70
-theme.desktop.multimeter.upbar      = { width = 32, chunk = { num = 10, line = 3 }, shape = "plain" }
+theme.desktop.multimeter.icon           = { image = false }
+theme.desktop.multimeter.upright_height = 70
+theme.desktop.multimeter.upbar          = { width = 32, chunk = { num = 10, line = 3 }, shape = "plain" }
 
 -- Single line indicator
 ------------------------------------------------------------

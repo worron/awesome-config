@@ -34,9 +34,9 @@ theme:update()
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
-	width  = { 420, 520, 520 },
-	height = { 180, 160, 160, 72 },
-	edge   = { width = { 60, 60 }, height = { 60, 60 } }
+	width  = { 400, 400, 700 },
+	height = { 180, 80, 160, 160 },
+	edge   = { width = { 80, 80 }, height = { 60, 60 } }
 }
 
 theme.desktop.places = {
@@ -45,15 +45,24 @@ theme.desktop.places = {
 	hddspeed = { 3, 1 },
 	cpumem   = { 1, 2 },
 	transm   = { 1, 3 },
-	disks    = { 1, 4 },
+	disks    = { 2, 2 },
 	thermal  = { 1, 5 }
 }
 
 -- Desktop widgets
 --------------------------------------------------------------------------------
-theme.desktop.multiline.lines.line_height = 5
-theme.desktop.multiline.lines.progressbar.chunk = { gap = 5, width = 12 }
-theme.desktop.multiline.lines.tooltip.set_position = function()
+
+-- Multimeter
+------------------------------------------------------------
+theme.desktop.multimeter.upbar          = { width = 24, chunk = { num = 6, line = 4 }, shape = "plain" }
+theme.desktop.multimeter.upright_height = 50
+theme.desktop.multimeter.lines_height   = 20
+
+-- lines
+------------------------------------------------------------
+theme.desktop.common.pack.lines.line_height = 5
+theme.desktop.common.pack.lines.progressbar.chunk = { gap = 5, width = 12 }
+theme.desktop.common.pack.lines.tooltip.set_position = function()
 	local coords = mouse.coords()
 	return { x = coords.x, y = coords.y - 50 }
 end

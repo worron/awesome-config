@@ -83,7 +83,7 @@ function desktop:init(args)
 	}
 
 	cpumem.style = {
-		icon      = env.themedir .. "/desktop/bstar.svg"
+		icon = { image = env.themedir .. "/desktop/bstar.svg" }
 	}
 
 	-- Transmission info
@@ -100,7 +100,7 @@ function desktop:init(args)
 
 	transm.style = {
 		digit_num = 1,
-		icon      = env.themedir .. "/desktop/skull.svg"
+		icon = { image = env.themedir .. "/desktop/skull.svg" }
 	}
 
 	-- Disks
