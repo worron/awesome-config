@@ -104,7 +104,7 @@ function desktop:init(args)
 	transm.style = {
 		digit_num = 1,
 		lines = { show_label = false, show_tooltip = true, show_text = false },
-		icon  = { image = env.themedir .. "/desktop/cpu.svg", full = false, margin = { 0, 8, 0, 0 } }
+		icon  = { image = env.themedir .. "/desktop/transmission.svg", full = false, margin = { 0, 8, 0, 0 } }
 	}
 
 	-- Disks

@@ -1221,18 +1221,17 @@ function theme:init()
 		font = { font = "Play", size = 12, face = 1 }, -- today label font
 
 		-- days marks style
-		--mark = { height = 12, width = 25, dx = 6 },
 		mark = {
 			height = 12, -- mark height
 			width  = 25, -- mark width
 			dx     = 6,  -- pointer arrow width
-			line   = 4,  -- stroke line width for next month marks
+			line   = 2,  -- stroke line width for next month marks
 		},
 
 		-- today pointer style
 		pointer = {
-			height = 16, -- mark height
-			width  = 42, -- mark width
+			height = 16, -- pointer height
+			width  = 42, -- pointer width
 			dx     = 6,  -- pointer arrow width
 		},
 	}
