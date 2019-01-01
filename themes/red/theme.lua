@@ -50,13 +50,13 @@ theme.desktop.common.pack.lines.label_gap   = 20
 
 -- Speedmeter
 ------------------------------------------------------------
-theme.desktop.speedmeter.label            = { height = theme.desktop.line_height }
-theme.desktop.speedmeter.progressbar      = { chunk = { width = 16, gap = 6 }, height = 6 }
-theme.desktop.speedmeter.chart            = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 }
-theme.desktop.speedmeter.barvalue_height  = 32
-theme.desktop.speedmeter.fullchart_height = 78
-theme.desktop.speedmeter.images           = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
-theme.desktop.speedmeter.image_gap        = 20
+theme.desktop.speedmeter.normal.label            = { height = theme.desktop.line_height }
+theme.desktop.speedmeter.normal.progressbar      = { chunk = { width = 16, gap = 6 }, height = 6 }
+theme.desktop.speedmeter.normal.chart            = { bar = { width = 6, gap = 3 }, height = 40, zero_height = 4 }
+theme.desktop.speedmeter.normal.barvalue_height  = 32
+theme.desktop.speedmeter.normal.fullchart_height = 78
+theme.desktop.speedmeter.normal.image_gap        = 20
+theme.desktop.speedmeter.normal.images           = {theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg"}
 
 -- Multimeter
 ------------------------------------------------------------

@@ -36,7 +36,7 @@ theme:update()
 
 -- Speedmeter
 ------------------------------------------------------------
-theme.desktop.speedmeter.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
+theme.desktop.speedmeter.normal.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
 
 -- Lines
 ------------------------------------------------------------
