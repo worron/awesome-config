@@ -35,8 +35,8 @@ theme:update()
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 460, 460 },
-	height = { 80, 80, 80, 160, 160 },
-	edge   = { width = { 80, 840 }, height = { 80, 80 } }
+	height = { 100, 100, 100, 100 },
+	edge   = { width = { 80, 840 }, height = { 80, 260 } }
 }
 
 theme.desktop.places = {
@@ -46,7 +46,7 @@ theme.desktop.places = {
 	cpumem   = { 1, 1 },
 	transm   = { 1, 2 },
 	disks    = { 1, 3 },
-	thermal  = { 1, 5 }
+	thermal  = { 1, 4 }
 }
 
 -- Desktop widgets
@@ -59,18 +59,18 @@ theme.desktop.speedmeter.compact.icon = {
 	down = theme.path .. "/desktop/down.svg",
 	margin = { 0, 4, 0, 0}
 }
-theme.desktop.speedmeter.compact.height.chart = 38
+theme.desktop.speedmeter.compact.height.chart = 46
 theme.desktop.speedmeter.compact.label.width = 80
 theme.desktop.speedmeter.compact.label.font = { font = "prototype", size = 22, face = 1, slant = 0 }
-theme.desktop.speedmeter.compact.margins.label = { 8, 10, 6, 6 }
+theme.desktop.speedmeter.compact.margins.label = { 10, 10, 11, 11 }
 theme.desktop.speedmeter.compact.margins.chart = { 0, 0, 3, 3 }
 theme.desktop.speedmeter.compact.chart = { bar = { width = 6, gap = 3 }, height = nil, zero_height = 0 }
 theme.desktop.speedmeter.compact.progressbar = { chunk = { width = 6, gap = 3 }, height = 3 }
 
 -- Multimeter
 ------------------------------------------------------------
-theme.desktop.multimeter.upbar          = { width = 28, chunk = { num = 6, line = 4 }, shape = "plain" }
-theme.desktop.multimeter.upright_height = 50
+theme.desktop.multimeter.upbar          = { width = 32, chunk = { num = 8, line = 4 }, shape = "plain" }
+theme.desktop.multimeter.upright_height = 66
 theme.desktop.multimeter.lines_height   = 20
 
 -- lines
