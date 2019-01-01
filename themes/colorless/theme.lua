@@ -1007,7 +1007,7 @@ function theme:init()
 
 	-- Desktop config
 	--------------------------------------------------------------------------------
-	self.desktop = { common = { bar = {}, pack = {} } }
+	self.desktop = { common = { bar = {}, pack = {} }, speedmeter = {} }
 
 	self.desktop.line_height = 18 -- text and progressbar height for desktop wodgets
 
@@ -1119,7 +1119,7 @@ function theme:init()
 
 	-- Speed widget (double progressbar with time chart for each of it)
 	------------------------------------------------------------
-	self.desktop.speedmeter = {
+	self.desktop.speedmeter.normal = {
 		barvalue_height  = 32,                  -- height of the area with progressbar and text
 		digit_num        = 2,                   -- minimal number of digits for progressbar value
 		fullchart_height = 80,                  -- height of the each area with progressbar, text and chart
@@ -1143,6 +1143,25 @@ function theme:init()
 
 		-- progressbar style (see theme.desktop.common.bar.plain)
 		progressbar = { chunk = { width = 16, gap = 6 }, height = 6 },
+	}
+
+	self.desktop.speedmeter.compact = {
+		margins      = { label = {}, chart = {} }, -- extra margins for some elements
+		height       = { chart = 50 },              -- height of the each area with progressbar, text and chart
+		digit_num    = 2,                          -- minimal number of digits for progressbar value
+		color        = self.desktop.color,         -- color (desktop used)
+
+		-- direction icons
+		icon = {
+			up = self.icon.system,    -- up
+			down = self.icon.system,  -- down
+			margin = { 4, 4, 2, 2 },  -- margins around icon
+		},
+
+		-- !!! WARNING some style settings for elemets below will be overwritten by widget
+		chart       = { zero_height = 0 }, -- time chart style (see theme.desktop.common.chart)
+		label       = {},                  -- progressbar value (see theme.desktop.common.textbox)
+		progressbar = {},                  -- double progressbar style (see theme.desktop.common.bar.plain)
 	}
 
 	-- Widget with multiple horizontal and vertical progress bars

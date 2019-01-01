@@ -37,7 +37,8 @@ function desktop:init(args)
 		maxspeed     = { up = 6*1024^2, down = 6*1024^2 },
 		crit         = { up = 6*1024^2, down = 6*1024^2 },
 		timeout      = 2,
-		autoscale    = false
+		autoscale    = false,
+		label        = "NET"
 	}
 
 	netspeed.style  = {}
@@ -79,7 +80,7 @@ function desktop:init(args)
 		topbars = { num = 8, maxm = 100, crit = 90 },
 		lines   = { { maxm = 100, crit = 80 }, { maxm = 100, crit = 80 } },
 		meter   = { args = cpu_storage },
-		timeout = 2
+		timeout = 5
 	}
 
 	cpumem.style = {
@@ -96,13 +97,15 @@ function desktop:init(args)
 		topbars    = { num = 8, maxm = 100 },
 		lines      = { { maxm = 6*1024, unit = { { "SEED", - 1 } } }, { maxm = 6*1024, unit = { { "DNLD", - 1 } } } },
 		meter      = { func = system.transmission_parse },
-		timeout    = 5,
+		timeout    = 10,
 		async      = "transmission-remote -l"
 	}
 
 	transm.style = {
 		digit_num = 1,
-		icon      = env.themedir .. "/desktop/skull.svg"
+		lines = { show_label = false, show_tooltip = true, show_text = false },
+		icon  = { image = env.themedir .. "/desktop/cpu.svg", full = true, margin = { 0, 4, 0, 0 } }
+		--icon      = env.themedir .. "/desktop/skull.svg"
 	}
 
 	-- Disks
@@ -158,11 +161,11 @@ function desktop:init(args)
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
-	--netspeed.widget = redflat.desktop.speedmeter(netspeed.args, netspeed.geometry, netspeed.style)
-	--ssdspeed.widget = redflat.desktop.speedmeter(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
-	--hddspeed.widget = redflat.desktop.speedmeter(hddspeed.args, hddspeed.geometry, hddspeed.style)
+	netspeed.widget = redflat.desktop.speedmeter.compact(netspeed.args, netspeed.geometry, netspeed.style)
+	ssdspeed.widget = redflat.desktop.speedmeter.compact(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
+	hddspeed.widget = redflat.desktop.speedmeter.compact(hddspeed.args, hddspeed.geometry, hddspeed.style)
 	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
-	--transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
+	transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
 	disks.widget = redflat.desktop.multiline(disks.args, disks.geometry, disks.style)
 	--thermal.widget = redflat.desktop.singleline(thermal.args, thermal.geometry, thermal.style)
 	calendar.widget = redflat.desktop.calendar(calendar.args, calendar.geometry)

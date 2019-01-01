@@ -34,34 +34,49 @@ theme:update()
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
-	width  = { 400, 400, 700 },
-	height = { 180, 80, 160, 160 },
-	edge   = { width = { 80, 80 }, height = { 60, 60 } }
+	width  = { 460, 460 },
+	height = { 80, 80, 80, 160, 160 },
+	edge   = { width = { 80, 840 }, height = { 80, 80 } }
 }
 
 theme.desktop.places = {
-	netspeed = { 1, 1 },
-	ssdspeed = { 2, 1 },
-	hddspeed = { 3, 1 },
-	cpumem   = { 1, 2 },
-	transm   = { 1, 3 },
-	disks    = { 2, 2 },
+	netspeed = { 2, 1 },
+	ssdspeed = { 2, 2 },
+	hddspeed = { 2, 3 },
+	cpumem   = { 1, 1 },
+	transm   = { 1, 2 },
+	disks    = { 1, 3 },
 	thermal  = { 1, 5 }
 }
 
 -- Desktop widgets
 --------------------------------------------------------------------------------
 
+-- Speedmeter
+------------------------------------------------------------
+theme.desktop.speedmeter.compact.icon = {
+	up = theme.path .. "/desktop/up.svg",
+	down = theme.path .. "/desktop/down.svg",
+	margin = { 0, 4, 0, 0}
+}
+theme.desktop.speedmeter.compact.height.chart = 38
+theme.desktop.speedmeter.compact.label.width = 80
+theme.desktop.speedmeter.compact.label.font = { font = "prototype", size = 22, face = 1, slant = 0 }
+theme.desktop.speedmeter.compact.margins.label = { 8, 10, 6, 6 }
+theme.desktop.speedmeter.compact.margins.chart = { 0, 0, 3, 3 }
+theme.desktop.speedmeter.compact.chart = { bar = { width = 6, gap = 3 }, height = nil, zero_height = 0 }
+theme.desktop.speedmeter.compact.progressbar = { chunk = { width = 6, gap = 3 }, height = 3 }
+
 -- Multimeter
 ------------------------------------------------------------
-theme.desktop.multimeter.upbar          = { width = 24, chunk = { num = 6, line = 4 }, shape = "plain" }
+theme.desktop.multimeter.upbar          = { width = 28, chunk = { num = 6, line = 4 }, shape = "plain" }
 theme.desktop.multimeter.upright_height = 50
 theme.desktop.multimeter.lines_height   = 20
 
 -- lines
 ------------------------------------------------------------
 theme.desktop.common.pack.lines.line_height = 5
-theme.desktop.common.pack.lines.progressbar.chunk = { gap = 5, width = 12 }
+theme.desktop.common.pack.lines.progressbar.chunk = { gap = 6, width = 16 }
 theme.desktop.common.pack.lines.tooltip.set_position = function()
 	local coords = mouse.coords()
 	return { x = coords.x, y = coords.y - 40 }
