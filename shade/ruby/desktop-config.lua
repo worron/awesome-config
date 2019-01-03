@@ -186,7 +186,7 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local calendar = {
 		args     = { timeout = 60 },
-		geometry = { x = 1920 - 86, y = 20, width = 86, height = 1000 }
+		geometry = { x = 1920 - 100, y = 20, width = 100, height = 1000 }
 	}
 
 

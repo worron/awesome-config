@@ -1016,8 +1016,6 @@ function theme:init()
 		main       = self.color.main,
 		gray       = self.color.desktop_gray,
 		icon       = self.color.desktop_icon,
-		-- TODO: update colors
-		--undertone  = self.color.desktop_icon,
 		wibox = self.color.bg .. "00"
 	}
 
@@ -1218,7 +1216,12 @@ function theme:init()
 		maxed_marks = true,               -- always draw 31 marks
 		color       = self.desktop.color, -- color (desktop used)
 		-- TODO: check for better font
-		font = { font = "Play", size = 12, face = 1 }, -- today label font
+		-- today label style
+		label = {
+			gap = 4,     -- space between label and pointer
+			sep = "-",   -- day/month separator
+			font = { font = "Play", size = 17, face = 1, slant = 0 }, -- font
+		},
 
 		-- days marks style
 		mark = {
@@ -1230,9 +1233,10 @@ function theme:init()
 
 		-- today pointer style
 		pointer = {
-			height = 16, -- pointer height
-			width  = 42, -- pointer width
-			dx     = 6,  -- pointer arrow width
+			height = 14, -- pointer height
+			width  = 4,  -- pointer width
+			dx     = 5,  -- pointer arrow width
+			gap    = 6,  -- space between pointer and mark
 		},
 	}
 
