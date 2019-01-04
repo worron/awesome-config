@@ -166,21 +166,83 @@ function desktop:init(args)
 
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
+
+	-- ln sensors parser setup
+	system.thermal.lmsensors.delay = 5
+	system.thermal.lmsensors.patterns = {
+		cpu  = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
+		ram  = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
+		fan1 = { match = "Processor%sFan:%s+(%d+)%sRPM" },
+		fan2 = { match = "Video%sFan:%s+(%d+)%sRPM" },
+		wifi = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		chip = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+	}
+
+	-- tepmerature widgets
 	local thermal = { geometry = wgeometry(grid, places.thermal, workarea) }
 
 	thermal.args = {
 		sensors = {
-			{ meter_function = system.thermal.sensors, args = "'Package id 0'", maxm = 100, crit = 75 },
-			{ meter_function = system.thermal.hddtemp, args = { disk = "/dev/sda" }, maxm = 60, crit = 45 },
-			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
+			{ meter_function = system.thermal.lmsensors.get, args = "chip", maxm = 100, crit = 75 },
+			{ meter_function = system.thermal.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
+			{ meter_function = system.thermal.lmsensors.get, args = "ram", maxm = 100, crit = 75 },
+			{ meter_function = system.thermal.lmsensors.get, args = "wifi", maxm = 100, crit = 75 },
+			--{ meter_function = system.thermal.hddtemp, args = { disk = "/dev/sda" }, maxm = 60, crit = 45 },
+			--{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
 		},
-		names   = { "cpu", "hdd", "gpu" },
-		timeout = 5
+		names   = { "chip", "cpu", "ram", "wifi" },
+		timeout = 10
 	}
 
 	thermal.style = {
+		digit_num = 2,
+		icon      = { image = env.themedir .. "/desktop/cpu.svg", margin = { 0, 8, 0, 0 } },
+		lines     = {
+			line_height = 10,
+			text_style = { font = { font = "Play", size = 14, face = 1, slant = 0 }, width = 40 },
+			text_gap   = 10,
+			label_style = { font = { font = "Play", size = 14, face = 1, slant = 0 } },
+			progressbar = { chunk = { gap = 6, width = 4 } },
+			show_label = false, show_tooltip = true, show_text = true,
+		},
 		unit      = { { "°C", -1 } },
 	}
+
+	-- fan widgets
+	local fan1 = { geometry = wgeometry(grid, places.fan1, workarea) }
+
+	fan1.args = {
+		sensors = {
+			{ meter_function = system.thermal.lmsensors.get, args = "fan1", maxm = 5000, crit = 4000 },
+		},
+		names   = { "fan1" },
+		timeout = 10
+	}
+
+	fan1.style = {
+		digit_num = 2,
+		lines     = {
+			line_height = 18,
+			text_style  = { width = 108 },
+			text_gap    = 10,
+			label_style = { width = 66 },
+			label_gap   = 10,
+			progressbar = { chunk = { gap = 6, width = 4 } },
+			show_label  = true, show_tooltip = false, show_text = true,
+		},
+		unit      = { { "RPM", -1 }, { "KRMP", 1024^1 } },
+	}
+
+	local fan2 = { geometry = wgeometry(grid, places.fan2, workarea) }
+	fan2.args = {
+		sensors = {
+			{ meter_function = system.thermal.lmsensors.get, args = "fan2", maxm = 5000, crit = 4000 },
+		},
+		names   = { "fan2" },
+		timeout = 10
+	}
+
+	fan2.style = fan1.style
 
 	-- Calendar
 	--------------------------------------------------------------------------------
@@ -198,9 +260,12 @@ function desktop:init(args)
 	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
 	transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
 
-	disks1.widget = redflat.desktop.multiline(disks1.args, disks1.geometry, disks1.style)
-	disks2.widget = redflat.desktop.multiline(disks2.args, disks2.geometry, disks2.style)
-	--thermal.widget = redflat.desktop.singleline(thermal.args, thermal.geometry, thermal.style)
+	disks1.widget  = redflat.desktop.multiline(disks1.args, disks1.geometry, disks1.style)
+	disks2.widget  = redflat.desktop.multiline(disks2.args, disks2.geometry, disks2.style)
+
+	thermal.widget = redflat.desktop.multiline(thermal.args, thermal.geometry, thermal.style)
+	fan1.widget = redflat.desktop.multiline(fan1.args, fan1.geometry, fan1.style)
+	fan2.widget = redflat.desktop.multiline(fan2.args, fan2.geometry, fan2.style)
 
 	calendar.widget = redflat.desktop.calendar(calendar.args, calendar.geometry)
 end
