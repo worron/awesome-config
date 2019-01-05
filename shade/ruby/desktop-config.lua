@@ -3,6 +3,9 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
+local tonumber = tonumber
+local string = string
+
 local beautiful = require("beautiful")
 local awful = require("awful")
 local redflat = require("redflat")
@@ -175,26 +178,24 @@ function desktop:init(args)
 		fan1 = { match = "Processor%sFan:%s+(%d+)%sRPM" },
 		fan2 = { match = "Video%sFan:%s+(%d+)%sRPM" },
 		wifi = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
-		chip = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		--chip = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 	}
 
 	-- tepmerature widgets
-	local thermal = { geometry = wgeometry(grid, places.thermal, workarea) }
+	local thermal1 = { geometry = wgeometry(grid, places.thermal1, workarea) }
 
-	thermal.args = {
+	thermal1.args = {
 		sensors = {
-			{ meter_function = system.thermal.lmsensors.get, args = "chip", maxm = 100, crit = 75 },
+			--{ meter_function = system.thermal.lmsensors.get, args = "chip", maxm = 100, crit = 75 },
 			{ meter_function = system.thermal.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
-			{ meter_function = system.thermal.lmsensors.get, args = "ram", maxm = 100, crit = 75 },
 			{ meter_function = system.thermal.lmsensors.get, args = "wifi", maxm = 100, crit = 75 },
-			--{ meter_function = system.thermal.hddtemp, args = { disk = "/dev/sda" }, maxm = 60, crit = 45 },
-			--{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
+			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
 		},
-		names   = { "chip", "cpu", "ram", "wifi" },
+		names   = { "cpu", "wifi", "gpu" },
 		timeout = 10
 	}
 
-	thermal.style = {
+	thermal1.style = {
 		digit_num = 2,
 		icon      = { image = env.themedir .. "/desktop/cpu.svg", margin = { 0, 8, 0, 0 } },
 		lines     = {
@@ -207,6 +208,38 @@ function desktop:init(args)
 		},
 		unit      = { { "°C", -1 } },
 	}
+
+	local thermal2 = { geometry = wgeometry(grid, places.thermal2, workarea) }
+
+	local function hdd_smart_check(setup)
+		awful.spawn.easy_async("smartctl --attributes /dev/sda",
+			function(output)
+				local value = tonumber(string.match(output, "194.+%s(%d+)%s%(.+%)\r?\n"))
+				setup(value and { value } or { 0 })
+			end
+		)
+	end
+
+	local function ssd_smart_check(setup)
+		awful.spawn.easy_async("smartctl --attributes /dev/nvme0n1",
+			function(output)
+				local value = tonumber(string.match(output, "Temperature:%s+(%d+)%sCelsius"))
+				setup(value and { value } or { 0 })
+			end
+		)
+	end
+
+	thermal2.args = {
+		sensors = {
+			{ acync_function = hdd_smart_check, maxm = 50, crit = 45 },
+			{ acync_function = ssd_smart_check, maxm = 80, crit = 70 },
+			{ meter_function = system.thermal.lmsensors.get, args = "ram", maxm = 100, crit = 75 },
+		},
+		names   = { "hdd", "ssd", "ram" },
+		timeout = 30
+	}
+
+	thermal2.style = thermal1.style
 
 	-- fan widgets
 	local fan1 = { geometry = wgeometry(grid, places.fan1, workarea) }
@@ -263,7 +296,8 @@ function desktop:init(args)
 	disks1.widget  = redflat.desktop.multiline(disks1.args, disks1.geometry, disks1.style)
 	disks2.widget  = redflat.desktop.multiline(disks2.args, disks2.geometry, disks2.style)
 
-	thermal.widget = redflat.desktop.multiline(thermal.args, thermal.geometry, thermal.style)
+	thermal1.widget = redflat.desktop.multiline(thermal1.args, thermal1.geometry, thermal1.style)
+	thermal2.widget = redflat.desktop.multiline(thermal2.args, thermal2.geometry, thermal2.style)
 	fan1.widget = redflat.desktop.multiline(fan1.args, fan1.geometry, fan1.style)
 	fan2.widget = redflat.desktop.multiline(fan2.args, fan2.geometry, fan2.style)
 

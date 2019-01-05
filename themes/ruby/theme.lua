@@ -46,7 +46,8 @@ theme.desktop.places = {
 	cpumem   = { 1, 1 },
 	transm   = { 1, 2 },
 	disks    = { 1, 3 },
-	thermal  = { 1, 4 },
+	thermal1 = { 1, 4 },
+	thermal2 = { 2, 4 },
 	fan1     = { 1, 5 },
 	fan2     = { 2, 5 },
 }
