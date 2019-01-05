@@ -1091,6 +1091,7 @@ function theme:init()
 	-- Lines (group of progressbars with label in front and text value after it)
 	------------------------------------------------------------
 	self.desktop.common.pack.lines = {
+		-- TODO: rename this
 		label_style  = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
 		text_style   = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
 		show_text    = true,                              -- show text value for progressbars
@@ -1165,6 +1166,7 @@ function theme:init()
 	-- Widget with multiple horizontal and vertical progress bars
 	------------------------------------------------------------
 	self.desktop.multimeter = {
+		-- TODO: rename this
 		lines_height = 58,                 -- horizontal progressbar area height
 		upright_height  = 80,                 -- vertical progressbars height
 		digit_num    = 3,                  -- minimal number of digits for horizontal progressbar values

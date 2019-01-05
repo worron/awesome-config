@@ -113,8 +113,8 @@ function desktop:init(args)
 	-- Disks
 	--------------------------------------------------------------------------------
 	local disks1 = { geometry = wgeometry(grid, places.disks, workarea) }
-	local qemu_image1 = "/home/vmdrive/win10-vgpu/win10-vgpu-current.qcow2"
-	local qemu_image2 = "/home/vmdrive/win10-vgpu/snap/win10-vgpu-testing.qcow2"
+	local qemu_image1 = "/home/vmdrive/win10-gvt/win10-gvt-base.qcow2"
+	local qemu_image2 = "/home/vmdrive/win10-gvt/snap/win10-gvt-current.qcow2"
 
 	disks1.args = {
 		sensors  = {
@@ -158,7 +158,7 @@ function desktop:init(args)
 			{ meter_function = system.qemu_image_size, maxm = 100, crit = 100, args = qemu_image1 },
 			{ meter_function = system.qemu_image_size, maxm = 100, crit = 60, args = qemu_image2 },
 		},
-		names   = { "qemu-w10igpu-base", "qemu-w10igpu-snap" },
+		names   = { "qemu-w10gvt-base", "qemu-w10gvt-snap" },
 		timeout = 600
 	}
 
