@@ -21,6 +21,7 @@ appnames["VirtualBox"          ] = "VBOX"
 appnames["Keepassx"            ] = "KPASS"
 appnames["keepassxc"           ] = "KPASS"
 appnames["Evince"              ] = "EVINCE"
+appnames["Thunderbird"         ] = "TBIRD"
 appnames["jetbrains-pycharm-ce"] = "PYCRM"
 appnames["Qemu-system-x86_64"  ] = "QEMU"
 

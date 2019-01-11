@@ -307,7 +307,7 @@ hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys, tag_cols_nu
 -- Rules
 -----------------------------------------------------------------------------------------------------------------------
 local rules = require("color.blue.rules-config") -- load file with rules configuration
-rules:init({ hotkeys = hotkeys})
+rules:init({ env = env, hotkeys = hotkeys })
 
 
 -- Titlebar setup

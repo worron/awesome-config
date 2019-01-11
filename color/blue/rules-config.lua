@@ -43,6 +43,7 @@ function rules:init(args)
 	local args = args or {}
 	self.base_properties.keys = args.hotkeys.keys.client
 	self.base_properties.buttons = args.hotkeys.mouse.client
+	self.env = args.env or {}
 
 
 	-- Build rules
@@ -72,6 +73,12 @@ function rules:init(args)
 		{
 			rule_any   = { type = { "normal" }},
 			properties = { placement = awful.placement.no_overlap + awful.placement.no_offscreen }
+		},
+
+		-- Tags placement
+		{
+			rule = { instance = "Xephyr" },
+			properties = { tag = self.env.theme == "ruby" and "Test" or "Free", fullscreen = true }
 		},
 
 		-- Jetbrains (java) dirty focus trick assuming separate tag used for IDE
