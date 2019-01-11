@@ -1194,6 +1194,9 @@ function theme:init()
 		digit_num = 3,                  -- minimal number of digits for progressbar value
 		color     = self.desktop.color, -- color (desktop used)
 
+		-- widget icon settings
+		icon = { image = nil, margin = { 0, 0, 0, 0 } },
+
 		-- !!! WARNING some missed style settings for elemets below will be overwritten by widget
 
 		-- progressbars style (see theme.desktop.common.pack.lines)

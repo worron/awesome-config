@@ -57,9 +57,7 @@ function desktop:init(args)
 		label     = "SOLID DRIVE"
 	}
 
-	ssdspeed.style = {
-		unit   = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } },
-	}
+	ssdspeed.style = beautiful.desktop.speedmeter_drive
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
@@ -72,7 +70,7 @@ function desktop:init(args)
 		label = "HARD DRIVE"
 	}
 
-	hddspeed.style = awful.util.table.clone(ssdspeed.style)
+	hddspeed.style = beautiful.desktop.speedmeter_drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
@@ -86,11 +84,7 @@ function desktop:init(args)
 		timeout = 5
 	}
 
-	cpumem.style = {
-		labels = { "RAM", "SWAP" },
-		lines = { show_label = false, show_tooltip = true, show_text = false },
-		icon  = { image = env.themedir .. "/desktop/cpu.svg", full = false, margin = { 0, 8, 0, 0 } }
-	}
+	cpumem.style = beautiful.desktop.multimeter_cpumem
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
@@ -98,17 +92,15 @@ function desktop:init(args)
 
 	transm.args = {
 		topbars    = { num = 8, maxm = 100 },
+		-- TODO: move unit to style
 		lines      = { { maxm = 6*1024, unit = { { "SEED", - 1 } } }, { maxm = 6*1024, unit = { { "DNLD", - 1 } } } },
 		meter      = { func = system.transmission_parse },
 		timeout    = 10,
 		async      = "transmission-remote -l"
 	}
 
-	transm.style = {
-		digit_num = 1,
-		lines = { show_label = false, show_tooltip = true, show_text = false },
-		icon  = { image = env.themedir .. "/desktop/transmission.svg", full = false, margin = { 0, 8, 0, 0 } }
-	}
+	-- TODO: rework transmission seed/download info
+	transm.style = beautiful.desktop.multimeter_transmission
 
 	-- Disks
 	--------------------------------------------------------------------------------
@@ -130,15 +122,7 @@ function desktop:init(args)
 		timeout = 300
 	}
 
-	disks1.style = {
-		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-		icon      = { image = env.themedir .. "/desktop/storage.svg", margin = { 0, 8, 0, 0 } },
-		lines     = {
-			line_height = 10,
-			progressbar = { chunk = { gap = 6, width = 4 } },
-			show_label = false, show_tooltip = true, show_text = false
-		},
-	}
+	disks1.style = beautiful.desktop.multiline_storage
 
 	-- tricky widget placement
 	local disks2 = {}
@@ -162,10 +146,7 @@ function desktop:init(args)
 		timeout = 600
 	}
 
-	disks2.style = {
-		lines     = { show_label = false, show_tooltip = true, show_text = false },
-		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-	}
+	disks2.style = beautiful.desktop.multiline_images
 
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
@@ -195,20 +176,9 @@ function desktop:init(args)
 		timeout = 10
 	}
 
-	thermal1.style = {
-		digit_num = 2,
-		icon      = { image = env.themedir .. "/desktop/cpu.svg", margin = { 0, 8, 0, 0 } },
-		lines     = {
-			line_height = 10,
-			text_style = { font = { font = "Play", size = 14, face = 1, slant = 0 }, width = 40 },
-			text_gap   = 10,
-			label_style = { font = { font = "Play", size = 14, face = 1, slant = 0 } },
-			progressbar = { chunk = { gap = 6, width = 4 } },
-			show_label = false, show_tooltip = true, show_text = true,
-		},
-		unit      = { { "°C", -1 } },
-	}
+	thermal1.style = beautiful.desktop.multiline_thermal
 
+	----
 	local thermal2 = { geometry = wgeometry(grid, places.thermal2, workarea) }
 
 	local function hdd_smart_check(setup)
@@ -243,38 +213,19 @@ function desktop:init(args)
 
 	-- fan widgets
 	local fan1 = { geometry = wgeometry(grid, places.fan1, workarea) }
-
 	fan1.args = {
-		sensors = {
-			{ meter_function = system.thermal.lmsensors.get, args = "fan1", maxm = 5000, crit = 4000 },
-		},
+		sensors = { { meter_function = system.thermal.lmsensors.get, args = "fan1", maxm = 5000, crit = 4000 } },
 		names   = { "fan1" },
 		timeout = 10
 	}
-
-	fan1.style = {
-		digit_num = 2,
-		lines     = {
-			line_height = 18,
-			text_style  = { width = 108 },
-			text_gap    = 10,
-			label_style = { width = 66 },
-			label_gap   = 10,
-			progressbar = { chunk = { gap = 6, width = 4 } },
-			show_label  = true, show_tooltip = false, show_text = true,
-		},
-		unit      = { { "RPM", -1 }, { "KRMP", 1024^1 } },
-	}
+	fan1.style = beautiful.desktop.multiline_fan
 
 	local fan2 = { geometry = wgeometry(grid, places.fan2, workarea) }
 	fan2.args = {
-		sensors = {
-			{ meter_function = system.thermal.lmsensors.get, args = "fan2", maxm = 5000, crit = 4000 },
-		},
+		sensors = { { meter_function = system.thermal.lmsensors.get, args = "fan2", maxm = 5000, crit = 4000 } },
 		names   = { "fan2" },
 		timeout = 10
 	}
-
 	fan2.style = fan1.style
 
 	-- Calendar
@@ -290,6 +241,7 @@ function desktop:init(args)
 	netspeed.widget = redflat.desktop.speedmeter.compact(netspeed.args, netspeed.geometry, netspeed.style)
 	ssdspeed.widget = redflat.desktop.speedmeter.compact(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
 	hddspeed.widget = redflat.desktop.speedmeter.compact(hddspeed.args, hddspeed.geometry, hddspeed.style)
+
 	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
 	transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
 
@@ -298,6 +250,7 @@ function desktop:init(args)
 
 	thermal1.widget = redflat.desktop.multiline(thermal1.args, thermal1.geometry, thermal1.style)
 	thermal2.widget = redflat.desktop.multiline(thermal2.args, thermal2.geometry, thermal2.style)
+
 	fan1.widget = redflat.desktop.multiline(fan1.args, fan1.geometry, fan1.style)
 	fan2.widget = redflat.desktop.multiline(fan2.args, fan2.geometry, fan2.style)
 

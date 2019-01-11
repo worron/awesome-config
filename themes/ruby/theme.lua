@@ -34,9 +34,9 @@ theme:update()
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
-	width  = { 460, 460 },
+	width  = { 440, 440 },
 	height = { 100, 100, 100, 66, 18 },
-	edge   = { width = { 80, 840 }, height = { 80, 80 } }
+	edge   = { width = { 100, 840 }, height = { 100, 100 } }
 }
 
 theme.desktop.places = {
@@ -55,8 +55,7 @@ theme.desktop.places = {
 -- Desktop widgets
 --------------------------------------------------------------------------------
 
--- Lines
-------------------------------------------------------------
+-- Lines (common part)
 theme.desktop.common.pack.lines.line_height = 5
 theme.desktop.common.pack.lines.progressbar.chunk = { gap = 6, width = 16 }
 theme.desktop.common.pack.lines.tooltip.set_position = function()
@@ -64,27 +63,94 @@ theme.desktop.common.pack.lines.tooltip.set_position = function()
 	return { x = coords.x, y = coords.y - 40 }
 end
 
--- Speedmeter
-------------------------------------------------------------
+-- Speedmeter (base widget)
 theme.desktop.speedmeter.compact.icon = {
 	up = theme.path .. "/desktop/up.svg",
 	down = theme.path .. "/desktop/down.svg",
 	margin = { 0, 4, 0, 0}
 }
 theme.desktop.speedmeter.compact.height.chart = 46
-theme.desktop.speedmeter.compact.label.width = 80
-theme.desktop.speedmeter.compact.label.font = { font = "prototype", size = 22, face = 1, slant = 0 }
-theme.desktop.speedmeter.compact.margins.label = { 10, 10, 11, 11 }
+theme.desktop.speedmeter.compact.label.width = 72
+theme.desktop.speedmeter.compact.label.font = { font = "Play", size = 22, face = 1, slant = 0 }
+theme.desktop.speedmeter.compact.margins.label = { 10, 10, 12, 12 } -- TODO: autocenter this
 theme.desktop.speedmeter.compact.margins.chart = { 0, 0, 3, 3 }
 theme.desktop.speedmeter.compact.chart = { bar = { width = 6, gap = 3 }, height = nil, zero_height = 0 }
 theme.desktop.speedmeter.compact.progressbar = { chunk = { width = 6, gap = 3 }, height = 3 }
 
--- Multimeter
-------------------------------------------------------------
+-- Speedmeter drive (individual widget)
+theme.desktop.speedmeter_drive = {
+	unit   = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } },
+}
+
+-- Multimeter (base widget)
 theme.desktop.multimeter.upbar          = { width = 32, chunk = { num = 8, line = 4 }, shape = "plain" }
+theme.desktop.multimeter.lines          = { show_label = false, show_tooltip = true, show_text = false }
+theme.desktop.multimeter.icon.full      = false
+theme.desktop.multimeter.icon.margin    = { 0, 8, 0, 0 }
 theme.desktop.multimeter.upright_height = 66
 theme.desktop.multimeter.lines_height   = 20
 
+-- Multimeter cpu and ram (individual widget)
+theme.desktop.multimeter_cpumem = {
+	labels = { "RAM", "SWAP" },
+	icon  = { image = theme.path .. "/desktop/cpu.svg" }
+}
+
+-- Multimeter transmission info (individual widget)
+-- TODO: rework transmission seed/download info
+theme.desktop.multimeter_transmission = {
+	digit_num = 1,
+	icon  = { image = theme.path .. "/desktop/transmission.svg" }
+}
+
+-- Multilines (base widget)
+theme.desktop.multiline.lines          = { show_label = false, show_tooltip = true, show_text = false }
+theme.desktop.multiline.icon.margin    = theme.desktop.multimeter.icon.margin
+
+-- Multilines storage (individual widget)
+theme.desktop.multiline_storage = {
+	unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
+	icon      = { image = theme.path .. "/desktop/storage.svg" },
+	lines     = {
+		line_height = 10,
+		progressbar = { chunk = { gap = 6, width = 4 } },
+	},
+}
+
+-- Multilines qemu drive images (individual widget)
+theme.desktop.multiline_images = {
+	unit = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
+}
+
+-- Multilines temperature (individual widget)
+theme.desktop.multiline_thermal = {
+	digit_num = 1,
+	icon      = { image = theme.path .. "/desktop/cpu.svg", margin = { 0, 8, 0, 0 } },
+	lines     = {
+		line_height = 13,
+		text_style = { font = { font = "Play", size = 18, face = 1, slant = 0 }, width = 44 },
+		text_gap   = 10,
+		label_style = { font = { font = "Play", size = 18, face = 1, slant = 0 } },
+		progressbar = { chunk = { gap = 6, width = 4 } },
+		show_label = false, show_tooltip = true, show_text = true,
+	},
+	unit      = { { "°C", -1 } },
+}
+
+-- Multilines fan (individual widget)
+theme.desktop.multiline_fan = {
+		digit_num = 1,
+		lines     = {
+			line_height = 18,
+			text_style  = { width = 90, font = { font = "Play", size = 26, face = 1, slant = 0 } },
+			text_gap    = 10,
+			label_style = { width = 70, font = { font = "Play", size = 26, face = 1, slant = 0 } },
+			label_gap   = 10,
+			progressbar = { chunk = { gap = 7, width = 5 } },
+			show_label  = true, show_tooltip = false, show_text = true,
+		},
+		unit      = { { "RPM", -1 }, { "R", 1 } },
+}
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------
