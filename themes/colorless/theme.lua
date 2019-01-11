@@ -1223,9 +1223,9 @@ function theme:init()
 		-- TODO: check for better font
 		-- today label style
 		label = {
-			gap = 4,     -- space between label and pointer
+			gap = 3,     -- space between label and pointer
 			sep = "-",   -- day/month separator
-			font = { font = "Play", size = 17, face = 1, slant = 0 }, -- font
+			font = { font = "Play", size = 16, face = 1, slant = 0 }, -- font
 		},
 
 		-- days marks style
@@ -1238,10 +1238,10 @@ function theme:init()
 
 		-- today pointer style
 		pointer = {
-			height = 14, -- pointer height
+			height = 12, -- pointer height
 			width  = 4,  -- pointer width
-			dx     = 5,  -- pointer arrow width
-			gap    = 6,  -- space between pointer and mark
+			dx     = 6,  -- pointer arrow width
+			gap    = 5,  -- space between pointer and mark
 		},
 	}
 

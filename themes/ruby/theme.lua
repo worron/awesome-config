@@ -141,12 +141,12 @@ theme.desktop.multiline_thermal = {
 theme.desktop.multiline_fan = {
 		digit_num = 1,
 		lines     = {
-			line_height = 18,
-			text_style  = { width = 90, font = { font = "Play", size = 26, face = 1, slant = 0 } },
+			line_height = 15,
+			text_style  = { width = 74, font = { font = "Play", size = 22, face = 1, slant = 0 } },
 			text_gap    = 10,
-			label_style = { width = 70, font = { font = "Play", size = 26, face = 1, slant = 0 } },
+			label_style = { width = 46, font = { font = "Play", size = 22, face = 1, slant = 0 } },
 			label_gap   = 10,
-			progressbar = { chunk = { gap = 7, width = 5 } },
+			progressbar = { chunk = { gap = 6, width = 4 } },
 			show_label  = true, show_tooltip = false, show_text = true,
 		},
 		unit      = { { "RPM", -1 }, { "R", 1 } },
