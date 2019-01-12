@@ -3,12 +3,10 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Grab environment
-local tonumber = tonumber
-local string = string
-
 local beautiful = require("beautiful")
 local awful = require("awful")
 local redflat = require("redflat")
+local timer = require("gears.timer")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -32,19 +30,6 @@ function desktop:init(_)
 	-- placement
 	local grid = beautiful.desktop.grid
 	local places = beautiful.desktop.places
-
-	-- Sensors parser setup
-	--------------------------------------------------------------------------------
-	-- TODO: rework to async and rename
-	system.thermal.lmsensors.delay = 5
-	system.thermal.lmsensors.patterns = {
-		cpu       = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
-		ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
-		wifi      = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
-		--chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
-		cpu_fan   = { match = "Processor%sFan:%s+(%d+)%sRPM" },
-		video_fan = { match = "Video%sFan:%s+(%d+)%sRPM" },
-	}
 
 	-- Network speed
 	--------------------------------------------------------------------------------
@@ -136,7 +121,7 @@ function desktop:init(_)
 
 	disks.style = beautiful.desktop.multiline_storage
 
-	-- QEMU image (placed along with disk)
+	-- QEMU image (placed along with disks)
 	--------------------------------------------------------------------------------
 	local qemu_image1 = "/home/vmdrive/win10-gvt/win10-gvt-base.qcow2"
 	local qemu_image2 = "/home/vmdrive/win10-gvt/snap/win10-gvt-current.qcow2"
@@ -164,20 +149,42 @@ function desktop:init(_)
 
 	qemu.style = beautiful.desktop.multiline_images
 
+	-- Sensors parser setup
+	--------------------------------------------------------------------------------
+	local sensors_base_timeout = 10
+
+	system.lmsensors.delay = 2
+	system.lmsensors.patterns = {
+		cpu       = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
+		ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
+		wifi      = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		--chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		cpu_fan   = { match = "Processor%sFan:%s+(%d+)%sRPM" },
+		video_fan = { match = "Video%sFan:%s+(%d+)%sRPM" },
+	}
+
+	-- start auto async lmsensors check
+	timer({
+		timeout     = sensors_base_timeout - 1,
+		autostart   = true,
+		single_shot = true,
+		callback    = function() system.lmsensors:start(sensors_base_timeout) end
+	})
+
 	-- Temperature indicator for chips
 	--------------------------------------------------------------------------------
 	local thermal_chips = { geometry = wgeometry(grid, places.thermal1, workarea) }
 
 	thermal_chips.args = {
 		sensors = {
-			--{ meter_function = system.thermal.lmsensors.get, args = "chip", maxm = 100, crit = 75 },
-			{ meter_function = system.thermal.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
-			{ meter_function = system.thermal.lmsensors.get, args = "wifi", maxm = 100, crit = 75 },
+			--{ meter_function = system.lmsensors.get, args = "chip", maxm = 100, crit = 75 },
+			{ meter_function = system.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
+			{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75 },
 			-- TODO: rework nvidia meter
 			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
 		},
 		names   = { "cpu", "wifi", "gpu" },
-		timeout = 10
+		timeout = sensors_base_timeout,
 	}
 
 	thermal_chips.style = beautiful.desktop.multiline_thermal
@@ -191,12 +198,12 @@ function desktop:init(_)
 
 	thermal_storage.args = {
 		sensors = {
-			{ async_function = hdd_smart_check, maxm = 50, crit = 45 },
+			{ async_function = hdd_smart_check, maxm = 60, crit = 45 },
 			{ async_function = ssd_smart_check, maxm = 80, crit = 70 },
-			{ meter_function = system.thermal.lmsensors.get, args = "ram", maxm = 100, crit = 75 },
+			{ meter_function = system.lmsensors.get, args = "ram", maxm = 100, crit = 75 },
 		},
 		names   = { "hdd", "ssd", "ram" },
-		timeout = 30
+		timeout = 3 * sensors_base_timeout,
 	}
 
 	thermal_storage.style = thermal_chips.style
@@ -205,9 +212,9 @@ function desktop:init(_)
 	--------------------------------------------------------------------------------
 	local cpu_fan = { geometry = wgeometry(grid, places.fan1, workarea) }
 	cpu_fan.args = {
-		sensors = { { meter_function = system.thermal.lmsensors.get, args = "cpu_fan", maxm = 5000, crit = 4000 } },
+		sensors = { { meter_function = system.lmsensors.get, args = "cpu_fan", maxm = 5000, crit = 4000 } },
 		names   = { "fan" },
-		timeout = 10
+		timeout = sensors_base_timeout,
 	}
 	cpu_fan.style = beautiful.desktop.multiline_fan
 
@@ -215,9 +222,9 @@ function desktop:init(_)
 	--------------------------------------------------------------------------------
 	local video_fan = { geometry = wgeometry(grid, places.fan2, workarea) }
 	video_fan.args = {
-		sensors = { { meter_function = system.thermal.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000 } },
+		sensors = { { meter_function = system.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000 } },
 		names   = { "fan" },
-		timeout = 10
+		timeout = sensors_base_timeout,
 	}
 	video_fan.style = cpu_fan.style
 
