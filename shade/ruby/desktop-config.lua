@@ -186,28 +186,13 @@ function desktop:init(_)
 	--------------------------------------------------------------------------------
 	local thermal_storage = { geometry = wgeometry(grid, places.thermal2, workarea) }
 
-	local function hdd_smart_check(setup)
-		awful.spawn.easy_async("smartctl --attributes /dev/sda",
-			function(output)
-				local value = tonumber(string.match(output, "194.+%s(%d+)%s%(.+%)\r?\n"))
-				setup(value and { value } or { 0 })
-			end
-		)
-	end
-
-	local function ssd_smart_check(setup)
-		awful.spawn.easy_async("smartctl --attributes /dev/nvme0n1",
-			function(output)
-				local value = tonumber(string.match(output, "Temperature:%s+(%d+)%sCelsius"))
-				setup(value and { value } or { 0 })
-			end
-		)
-	end
+	local hdd_smart_check = system.simple_async("smartctl --attributes /dev/sda", "194.+%s(%d+)%s%(.+%)\r?\n")
+	local ssd_smart_check = system.simple_async("smartctl --attributes /dev/nvme0n1", "Temperature:%s+(%d+)%sCelsius")
 
 	thermal_storage.args = {
 		sensors = {
-			{ acync_function = hdd_smart_check, maxm = 50, crit = 45 },
-			{ acync_function = ssd_smart_check, maxm = 80, crit = 70 },
+			{ async_function = hdd_smart_check, maxm = 50, crit = 45 },
+			{ async_function = ssd_smart_check, maxm = 80, crit = 70 },
 			{ meter_function = system.thermal.lmsensors.get, args = "ram", maxm = 100, crit = 75 },
 		},
 		names   = { "hdd", "ssd", "ram" },

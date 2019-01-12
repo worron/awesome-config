@@ -278,7 +278,7 @@ function desktop:init(args)
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
-	local torrset = { args = { timeout = { 10 }, actions = {}, acync = { "transmission-remote -l" } }, height = 120 }
+	local torrset = { args = { timeout = { 10 }, actions = {}, async = { "transmission-remote -l" } }, height = 120 }
 	torrset.nactive = 5
 
 	local torrent_sentences = {
