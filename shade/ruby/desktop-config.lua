@@ -180,8 +180,7 @@ function desktop:init(_)
 			--{ meter_function = system.lmsensors.get, args = "chip", maxm = 100, crit = 75 },
 			{ meter_function = system.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
 			{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75 },
-			-- TODO: rework nvidia meter
-			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
+			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
 		},
 		names   = { "cpu", "wifi", "gpu" },
 		timeout = sensors_base_timeout,
