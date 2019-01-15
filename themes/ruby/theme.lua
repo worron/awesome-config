@@ -97,9 +97,9 @@ theme.desktop.multimeter_cpumem = {
 }
 
 -- Multimeter transmission info (individual widget)
--- TODO: rework transmission seed/download info
 theme.desktop.multimeter_transmission = {
-	digit_num = 1,
+	labels = { "SEED", "DNLD" },
+	unit   = { { "KB", -1 }, { "MB", 1024^1 } },
 	icon  = { image = theme.path .. "/desktop/transmission.svg" }
 }
 

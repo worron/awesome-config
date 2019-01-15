@@ -80,7 +80,7 @@ function desktop:init(_)
 	cpumem.args = {
 		topbars = { num = 8, maxm = 100, crit = 90 },
 		lines   = { { maxm = 100, crit = 80 }, { maxm = 100, crit = 80 } },
-		meter   = { args = cpu_storage },
+		meter   = { args = cpu_storage, func = system.dformatted.cpumem },
 		timeout = 5
 	}
 
@@ -90,14 +90,11 @@ function desktop:init(_)
 	--------------------------------------------------------------------------------
 	local transm = { geometry = wgeometry(grid, places.transm, workarea) }
 
-	-- TODO: rework transmission seed/download info
 	transm.args = {
 		topbars    = { num = 8, maxm = 100 },
-		-- TODO: move unit to style
-		lines      = { { maxm = 6*1024, unit = { { "SEED", - 1 } } }, { maxm = 6*1024, unit = { { "DNLD", - 1 } } } },
-		meter      = { func = system.transmission_parse },
+		lines      = { { maxm = 6*1024 }, { maxm = 6*1024 } },
+		meter      = { async = system.transmission.info, args = { speed_only = true } },
 		timeout    = 10,
-		async      = "transmission-remote -l"
 	}
 
 	transm.style = beautiful.desktop.multimeter_transmission
