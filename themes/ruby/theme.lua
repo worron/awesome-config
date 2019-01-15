@@ -54,6 +54,9 @@ theme.desktop.places = {
 
 -- Desktop widgets
 --------------------------------------------------------------------------------
+-- individual widget settings doesn't used by redflat module
+-- but grab directly from rc-files to rewrite base style
+theme.desktop.individual = { speedmeter = {}, multimeter = {}, multiline = {} }
 
 -- Lines (common part)
 theme.desktop.common.pack.lines.line_height = 5
@@ -78,7 +81,7 @@ theme.desktop.speedmeter.compact.chart = { bar = { width = 6, gap = 3 }, height 
 theme.desktop.speedmeter.compact.progressbar = { chunk = { width = 6, gap = 3 }, height = 3 }
 
 -- Speedmeter drive (individual widget)
-theme.desktop.speedmeter_drive = {
+theme.desktop.individual.speedmeter.drive = {
 	unit   = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } },
 }
 
@@ -91,16 +94,17 @@ theme.desktop.multimeter.upright_height = 66
 theme.desktop.multimeter.lines_height   = 20
 
 -- Multimeter cpu and ram (individual widget)
-theme.desktop.multimeter_cpumem = {
+theme.desktop.individual.multimeter.cpumem = {
 	labels = { "RAM", "SWAP" },
 	icon  = { image = theme.path .. "/desktop/cpu.svg" }
 }
 
 -- Multimeter transmission info (individual widget)
-theme.desktop.multimeter_transmission = {
+theme.desktop.individual.multimeter.transmission = {
 	labels = { "SEED", "DNLD" },
 	unit   = { { "KB", -1 }, { "MB", 1024^1 } },
-	icon  = { image = theme.path .. "/desktop/transmission.svg" }
+	upbar  = { width = 20, chunk = { num = 8, line = 4 }, shape = "plain" },
+	icon   = { image = theme.path .. "/desktop/transmission.svg" }
 }
 
 -- Multilines (base widget)
@@ -108,7 +112,7 @@ theme.desktop.multiline.lines          = { show_label = false, show_tooltip = tr
 theme.desktop.multiline.icon.margin    = theme.desktop.multimeter.icon.margin
 
 -- Multilines storage (individual widget)
-theme.desktop.multiline_storage = {
+theme.desktop.individual.multiline.storage = {
 	unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
 	icon      = { image = theme.path .. "/desktop/storage.svg" },
 	lines     = {
@@ -118,12 +122,12 @@ theme.desktop.multiline_storage = {
 }
 
 -- Multilines qemu drive images (individual widget)
-theme.desktop.multiline_images = {
+theme.desktop.individual.multiline.images = {
 	unit = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
 }
 
 -- Multilines temperature (individual widget)
-theme.desktop.multiline_thermal = {
+theme.desktop.individual.multiline.thermal = {
 	digit_num = 1,
 	icon      = { image = theme.path .. "/desktop/cpu.svg", margin = { 0, 8, 0, 0 } },
 	lines     = {
@@ -138,7 +142,7 @@ theme.desktop.multiline_thermal = {
 }
 
 -- Multilines fan (individual widget)
-theme.desktop.multiline_fan = {
+theme.desktop.individual.multiline.fan = {
 		digit_num = 1,
 		lines     = {
 			line_height = 15,
@@ -173,11 +177,9 @@ theme.widget.wrapper = {
 }
 
 -- Dotcount
-------------------------------------------------------------
 --theme.gauge.graph.dots.dot_gap_h = 5
 
 -- Audio
-------------------------------------------------------------
 theme.gauge.audio.blue.dash.plain = true
 theme.gauge.audio.blue.dash.bar.num = 8
 theme.gauge.audio.blue.dash.bar.width = 3
@@ -186,14 +188,9 @@ theme.gauge.audio.blue.width = 86
 theme.gauge.audio.blue.icon = theme.path .. "/widget/audio.svg"
 
 -- Dash
-------------------------------------------------------------
 theme.gauge.monitor.dash.width = 11
 
--- Tag (base element of taglist)
-------------------------------------------------------------
-
 -- Tasklist
-------------------------------------------------------------
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.ruby
 

@@ -4,7 +4,7 @@
 
 -- Grab environment
 local beautiful = require("beautiful")
-local awful = require("awful")
+--local awful = require("awful")
 local redflat = require("redflat")
 local timer = require("gears.timer")
 
@@ -36,12 +36,13 @@ function desktop:init(_)
 	local netspeed = { geometry = wgeometry(grid, places.netspeed, workarea) }
 
 	netspeed.args = {
-		interface    = "wlp60s0",
-		maxspeed     = { up = 6*1024^2, down = 6*1024^2 },
-		crit         = { up = 6*1024^2, down = 6*1024^2 },
-		timeout      = 2,
-		autoscale    = false,
-		label        = "NET"
+		meter_function = system.net_speed,
+		interface      = "wlp60s0",
+		maxspeed       = { up = 6*1024^2, down = 6*1024^2 },
+		crit           = { up = 6*1024^2, down = 6*1024^2 },
+		timeout        = 2,
+		autoscale      = false,
+		label          = "NET"
 	}
 
 	netspeed.style  = {}
@@ -57,7 +58,7 @@ function desktop:init(_)
 		label          = "SOLID DRIVE"
 	}
 
-	ssdspeed.style = beautiful.desktop.speedmeter_drive
+	ssdspeed.style = beautiful.desktop.individual.speedmeter.drive
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
@@ -70,7 +71,7 @@ function desktop:init(_)
 		label          = "HARD DRIVE"
 	}
 
-	hddspeed.style = beautiful.desktop.speedmeter_drive
+	hddspeed.style = beautiful.desktop.individual.speedmeter.drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
@@ -84,20 +85,20 @@ function desktop:init(_)
 		timeout = 5
 	}
 
-	cpumem.style = beautiful.desktop.multimeter_cpumem
+	cpumem.style = beautiful.desktop.individual.multimeter.cpumem
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
 	local transm = { geometry = wgeometry(grid, places.transm, workarea) }
 
 	transm.args = {
-		topbars    = { num = 8, maxm = 100 },
+		topbars    = { num = 12, maxm = 100 },
 		lines      = { { maxm = 6*1024 }, { maxm = 6*1024 } },
 		meter      = { async = system.transmission.info, args = { speed_only = true } },
 		timeout    = 10,
 	}
 
-	transm.style = beautiful.desktop.multimeter_transmission
+	transm.style = beautiful.desktop.individual.multimeter.transmission
 
 	-- Disks
 	--------------------------------------------------------------------------------
@@ -116,7 +117,7 @@ function desktop:init(_)
 		timeout = 300
 	}
 
-	disks.style = beautiful.desktop.multiline_storage
+	disks.style = beautiful.desktop.individual.multiline.storage
 
 	-- QEMU image (placed along with disks)
 	--------------------------------------------------------------------------------
@@ -144,7 +145,7 @@ function desktop:init(_)
 		timeout = 600
 	}
 
-	qemu.style = beautiful.desktop.multiline_images
+	qemu.style = beautiful.desktop.individual.multiline.images
 
 	-- Sensors parser setup
 	--------------------------------------------------------------------------------
@@ -183,7 +184,7 @@ function desktop:init(_)
 		timeout = sensors_base_timeout,
 	}
 
-	thermal_chips.style = beautiful.desktop.multiline_thermal
+	thermal_chips.style = beautiful.desktop.individual.multiline.thermal
 
 	-- Temperature indicator for storage devices
 	--------------------------------------------------------------------------------
@@ -212,7 +213,7 @@ function desktop:init(_)
 		names   = { "fan" },
 		timeout = sensors_base_timeout,
 	}
-	cpu_fan.style = beautiful.desktop.multiline_fan
+	cpu_fan.style = beautiful.desktop.individual.multiline.fan
 
 	-- Fan 2
 	--------------------------------------------------------------------------------
