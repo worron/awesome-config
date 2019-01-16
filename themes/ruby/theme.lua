@@ -35,7 +35,7 @@ theme:update()
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 440, 440 },
-	height = { 100, 100, 100, 66, 18 },
+	height = { 100, 100, 100, 66, 15 },
 	edge   = { width = { 100, 840 }, height = { 100, 100 } }
 }
 
@@ -129,7 +129,7 @@ theme.desktop.individual.multiline.images = {
 -- Multilines temperature (individual widget)
 theme.desktop.individual.multiline.thermal = {
 	digit_num = 1,
-	icon      = { image = theme.path .. "/desktop/cpu.svg", margin = { 0, 8, 0, 0 } },
+	icon      = { image = theme.path .. "/desktop/thermometer.svg", margin = { 0, 8, 0, 0 } },
 	lines     = {
 		line_height = 13,
 		text_style = { font = { font = "Play", size = 18, face = 1, slant = 0 }, width = 44 },
