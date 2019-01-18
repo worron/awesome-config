@@ -162,12 +162,7 @@ function desktop:init(_)
 	}
 
 	-- start auto async lmsensors check
-	timer({
-		timeout     = sensors_base_timeout - 1,
-		autostart   = true,
-		single_shot = true,
-		callback    = function() system.lmsensors:start(sensors_base_timeout) end
-	})
+	system.lmsensors:soft_start(sensors_base_timeout)
 
 	-- Temperature indicator for chips
 	--------------------------------------------------------------------------------
@@ -223,7 +218,7 @@ function desktop:init(_)
 		names   = { "fan" },
 		timeout = sensors_base_timeout,
 	}
-	video_fan.style = cpu_fan.style
+	video_fan.style = beautiful.desktop.individual.multiline.fan
 
 	-- Calendar
 	--------------------------------------------------------------------------------
