@@ -31,10 +31,6 @@ theme:update()
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
 
--- Desktop widgets
---------------------------------------------------------------------------------
-theme.desktop.speedmeter.normal.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
-
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
@@ -51,6 +47,48 @@ theme.desktop.places = {
 	transm   = { 1, 3 },
 	disks    = { 1, 4 },
 	thermal  = { 1, 5 }
+}
+
+-- Desktop widgets
+--------------------------------------------------------------------------------
+-- individual widget settings doesn't used by redflat module
+-- but grab directly from rc-files to rewrite base style
+theme.desktop.individual = { speedmeter = {}, multimeter = {}, multiline = {}, singleline = {} }
+
+-- Speedmeter (base widget)
+theme.desktop.speedmeter.normal.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
+
+-- Speedmeter drive (individual widget)
+theme.desktop.individual.speedmeter.drive = {
+	unit   = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } },
+}
+
+-- Multimeter (base widget)
+theme.desktop.multimeter.lines = { show_label = false, show_tooltip = false, show_text = true }
+
+-- Multimeter cpu and ram (individual widget)
+theme.desktop.individual.multimeter.cpumem = {
+	labels = { "RAM", "SWAP" },
+	icon   = { image = theme.path .. "/desktop/bstar.svg" }
+}
+
+-- Multimeter transmission info (individual widget)
+theme.desktop.individual.multimeter.transmission = {
+	labels = { "SEED", "DNLD" },
+	unit   = { { "KB", -1 }, { "MB", 1024^1 } },
+	icon   = { image = theme.path .. "/desktop/skull.svg" }
+}
+
+-- Multilines disks (individual widget)
+theme.desktop.individual.multiline.disks = {
+	unit  = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
+	lines = { show_text = false },
+}
+
+-- Singleline temperature (individual widget)
+theme.desktop.individual.singleline.thermal = {
+	icon = theme.path .. "/desktop/star.svg",
+	unit = { { "°C", -1 } },
 }
 
 
@@ -72,8 +110,8 @@ theme.widget.wrapper = {
 	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
 }
 
--- Tasklist
---------------------------------------------------------------------------------
+-- Various widgets style tuning
+------------------------------------------------------------
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.blue
 

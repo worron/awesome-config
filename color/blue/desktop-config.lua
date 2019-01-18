@@ -53,9 +53,7 @@ function desktop:init(args)
 		label     = "SOLID DRIVE"
 	}
 
-	ssdspeed.style = {
-		unit   = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } },
-	}
+	ssdspeed.style = beautiful.desktop.individual.speedmeter.drive
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
@@ -68,7 +66,7 @@ function desktop:init(args)
 		label = "HARD DRIVE"
 	}
 
-	hddspeed.style = awful.util.table.clone(ssdspeed.style)
+	ssdspeed.style = beautiful.desktop.individual.speedmeter.drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
@@ -78,13 +76,11 @@ function desktop:init(args)
 	cpumem.args = {
 		topbars = { num = 8, maxm = 100, crit = 90 },
 		lines   = { { maxm = 100, crit = 80 }, { maxm = 100, crit = 80 } },
-		meter   = { args = cpu_storage },
+		meter   = { args = cpu_storage, func = system.dformatted.cpumem },
 		timeout = 2
 	}
 
-	cpumem.style = {
-		icon = { image = env.themedir .. "/desktop/bstar.svg" }
-	}
+	cpumem.style = beautiful.desktop.individual.multimeter.cpumem
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
@@ -92,16 +88,13 @@ function desktop:init(args)
 
 	transm.args = {
 		topbars    = { num = 8, maxm = 100 },
-		lines      = { { maxm = 6*1024, unit = { { "SEED", - 1 } } }, { maxm = 6*1024, unit = { { "DNLD", - 1 } } } },
-		meter      = { func = system.transmission_parse },
+		lines      = { { maxm = 6*1024 }, { maxm = 6*1024 } },
+		meter      = { async = system.transmission.info, args = { speed_only = true } },
 		timeout    = 5,
 		async      = "transmission-remote -l"
 	}
 
-	transm.style = {
-		digit_num = 1,
-		icon = { image = env.themedir .. "/desktop/skull.svg" }
-	}
+	transm.style = beautiful.desktop.individual.multimeter.transmission
 
 	-- Disks
 	--------------------------------------------------------------------------------
@@ -118,29 +111,38 @@ function desktop:init(args)
 		timeout = 300
 	}
 
-	disks.style = {
-		unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-		lines     = { show_text = false },
+	disks.style = beautiful.desktop.individual.multiline.disks
+
+	-- Sensors parser setup
+	--------------------------------------------------------------------------------
+	local sensors_base_timeout = 5
+
+	system.lmsensors.delay = 2
+	system.lmsensors.patterns = {
+		cpu       = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
 	}
+
+	-- start auto async lmsensors check
+	system.lmsensors:soft_start(sensors_base_timeout)
 
 	-- Temperature indicator
 	--------------------------------------------------------------------------------
 	local thermal = { geometry = wgeometry(grid, places.thermal, workarea) }
 
+	local hdd_smart_check = system.simple_async("smartctl --attributes /dev/sda", "194.+%s(%d+)%s%(.+%)\r?\n")
+
 	thermal.args = {
 		sensors = {
-			{ meter_function = system.thermal.sensors, args = "'Package id 0'", maxm = 100, crit = 75 },
-			{ meter_function = system.thermal.hddtemp, args = { disk = "/dev/sda" }, maxm = 60, crit = 45 },
-			{ meter_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
+			{ meter_function = system.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
+			{ async_function = hdd_smart_check, maxm = 60, crit = 45 },
+			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
 		},
 		names   = { "cpu", "hdd", "gpu" },
-		timeout = 5
+		timeout = sensors_base_timeout,
 	}
 
-	thermal.style = {
-		icon      = env.themedir .. "/desktop/star.svg",
-		unit      = { { "°C", -1 } },
-	}
+	thermal.style = beautiful.desktop.individual.singleline.thermal
+
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------

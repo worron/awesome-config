@@ -176,6 +176,9 @@ theme.widget.wrapper = {
 	tasklist    = { 0, 72, 0, 0 }, -- centering tasklist widget
 }
 
+-- Various widgets style tuning
+------------------------------------------------------------
+
 -- Dotcount
 --theme.gauge.graph.dots.dot_gap_h = 5
 
