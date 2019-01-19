@@ -40,7 +40,7 @@ function desktop:init(args)
 
 	-- hilight settings
 	local colset = { light = {}, base = {}, diskp = {}, diskpf = {}, tcpu = {}, tgpu = {}, thdd = {},
-	                 sspeed = {}, hspeed = {}, tspeed = {}, cores = {}}
+					 sspeed = {}, hspeed = {}, tspeed = {}, cores = {}}
 
 	colset.base[0] = style.color.icon
 	colset.light[0] = style.color.main
@@ -120,7 +120,8 @@ function desktop:init(args)
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
 	local cpu_storage = { cpu_total = {}, cpu_active = {} }
-	local cpuset = { args = { timeout = { 5, 10 }, actions ={} }, height = 200 }
+	--local cpuset = { args = { timeout = { 5, 10 }, actions = {} }, height = 200 }
+	local cpuset = { blocks = { {}, {} }, height = 200 }
 	cpuset.unit = { { "MB", - 1 }, { "GB", 1024 } }
 
 	local cpu_sentences = {
@@ -137,7 +138,8 @@ function desktop:init(args)
 	cpu_intro[100] = "Warning! Your system uses only"
 
 	-- cpu meter function
-	cpuset.args.actions[1] = function()
+	cpuset.blocks[1].timeout = 5
+	cpuset.blocks[1].action = function()
 		local usage = system.cpu_usage(cpu_storage)
 
 		local core_load = { full = 0, half = 0, low = 0 }
@@ -171,7 +173,8 @@ function desktop:init(args)
 		" As for the swap space %s is used now.",
 	}
 
-	cpuset.args.actions[2] = function()
+	cpuset.blocks[2].timeout = 10
+	cpuset.blocks[2].action = function()
 		local mem = system.memory_info()
 
 		local values = {
@@ -184,21 +187,21 @@ function desktop:init(args)
 
 	-- Disks
 	--------------------------------------------------------------------------------
-	local diskset = { args = { timeout = { 60 }, actions = {} }, height = 280 }
+	local diskset = { blocks = { { timeout = 60 } }, height = 280 }
 	diskset.unit = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } }
 
 	local disks_points = { "/", "/home", "/opt", "/mnt/media" }
 	local disk_sentences = {
 		"Turning to the topic of drives %s of data was found on your system partition " ..
-		"and %s%s percent of disk space remain free.",
+				"and %s%s percent of disk space remain free.",
 		" Home partition filled with %s and %s percent of it is still free.",
 		" Also separate partition was allocated for opt directory" ..
-		" where %s used which is approximately %s percent of total,",
+				" where %s used which is approximately %s percent of total,",
 		" and for media subdir of mnt where %s used which is %s percent.",
 	}
 
 	-- disk usage meter function
-	diskset.args.actions[1] = function()
+	diskset.blocks[1].action = function()
 		local data = {}
 		for _, arg in ipairs(disks_points) do
 			data[#data + 1] = system.fs_info(arg)
@@ -240,7 +243,7 @@ function desktop:init(args)
 			{ form_value(data[1][1], colset.tcpu, {}) },
 			{ form_value(data[2][1], colset.thdd, {}) },
 			{ data[3].off and "is currently disabled" or
-			 string.format("has temperature of %s degrees", form_value(data[3][1], colset.tgpu, {})) },
+					  string.format("has temperature of %s degrees", form_value(data[3][1], colset.tgpu, {})) },
 		}
 
 		return form_text(thermal_sentences, values)
@@ -267,7 +270,7 @@ function desktop:init(args)
 		for i, set in ipairs({colset.sspeed, colset.hspeed}) do
 			if data[i][1] > 1 or data[i][2] > 1 then
 				values[i] = { rs_txt .. form_value(data[i][1], set, {}, hardwareset.unit) .. " and",
-				              ws_txt .. form_value(data[i][2], colset.sspeed, {}, hardwareset.unit) }
+							  ws_txt .. form_value(data[i][2], colset.sspeed, {}, hardwareset.unit) }
 			else
 				values[i] = { no_act_txt[i], (i == 2 and values[1][2] == "") and " either" or "" }
 			end
@@ -278,7 +281,7 @@ function desktop:init(args)
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
-	local torrset = { args = { timeout = { 10 }, actions = {}, async = { "transmission-remote -l" } }, height = 120 }
+	local torrset = { blocks = { { timeout = 10 } }, height = 120 }
 	torrset.nactive = 5
 
 	local torrent_sentences = {
@@ -295,18 +298,18 @@ function desktop:init(args)
 
 	local tr_not_found = "does not running and information about your downloads is not available."
 
-	torrset.args.actions[1] = function(output)
-		local data = system.transmission_parse(output)
-
+	torrset.blocks[1].async = function(setup) system.transmission.info(setup, {}) end
+	torrset.blocks[1].action = function(data)
 		local values = {}
 		values[1] = { data.alert and tr_not_found or "running" }
+
 		if not data.alert then
 			values[2] = { form_value(#data.bars) }
 			values[3] = { (data.lines[1][2] > 0 or data.lines[2][2] > 0) and "Moreover" or "Unfortunately",
-			              form_value(data.lines[2][2]), data.lines[2][2] > 1 and "are" or "is",
-			              data.lines[2][2] > 0 and form_torr_speed(data.lines[2][1]) or "" }
+						  form_value(data.lines[2][2]), data.lines[2][2] > 1 and "are" or "is",
+						  data.lines[2][2] > 0 and form_torr_speed(data.lines[2][1]) or "" }
 			values[4] = { form_value(data.lines[1][2]), data.lines[1][2] > 1 and "are" or "is",
-			              data.lines[1][2] > 0 and form_torr_speed(data.lines[1][1]) or "" }
+						  data.lines[1][2] > 0 and form_torr_speed(data.lines[1][1]) or "" }
 
 			local tlist = {}
 			for i, t in ipairs(data.bars) do
@@ -322,8 +325,9 @@ function desktop:init(args)
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
-	for _, field in ipairs({ cpuset, diskset, hardwareset, torrset }) do
-		field.box = redflat.desktop.textset(field.args)
+	--for _, field in ipairs({ cpuset, diskset, hardwareset, torrset }) do
+	for _, field in ipairs({ cpuset, diskset, torrset }) do
+		field.box = redflat.desktop.textset(field.blocks)
 		field.box:set_forced_height(field.height)
 		main_layout:add(field.box)
 	end
