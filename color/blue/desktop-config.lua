@@ -66,7 +66,7 @@ function desktop:init()
 		label = "HARD DRIVE"
 	}
 
-	ssdspeed.style = beautiful.desktop.individual.speedmeter.drive
+	hddspeed.style = beautiful.desktop.individual.speedmeter.drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
