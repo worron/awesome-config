@@ -120,7 +120,6 @@ function desktop:init(args)
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
 	local cpu_storage = { cpu_total = {}, cpu_active = {} }
-	--local cpuset = { args = { timeout = { 5, 10 }, actions = {} }, height = 200 }
 	local cpuset = { blocks = { {}, {} }, height = 200 }
 	cpuset.unit = { { "MB", - 1 }, { "GB", 1024 } }
 
@@ -221,32 +220,47 @@ function desktop:init(args)
 		return form_text(disk_sentences, values)
 	end
 
-	-- Temperature indicator
-	--------------------------------------------------------------------------------
-	local hardwareset = { args = { timeout = { 10, 10 }, actions = {} }, height = 240 }
-	hardwareset.unit = { { "KBps", -1 }, { "MBps", 2048 } }
+	-- Sensors parser setup
+	--------------------------------------------------------------------------------`
+	local sensors_base_timeout = 10
 
-	local thermal_sentences = {
-		"According to the sensor readings CPU temperature of %s degrees Celsius",
-		" and hard disk drive of %s degrees.",
-		" Discrete graphics card %s.",
+	system.lmsensors.delay = 2
+	system.lmsensors.patterns = {
+		cpu = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
 	}
 
-	-- temperature sensors
-	hardwareset.args.actions[1] = function()
-		local data = {}
-		data[1] = system.thermal.sensors("'Package id 0'")
-		data[2] = system.thermal.hddtemp({ disk = "/dev/sda" })
-		data[3] = system.thermal.nvoptimus()
+	-- start auto async lmsensors check
+	system.lmsensors:soft_start(sensors_base_timeout)
 
-		local values = {
-			{ form_value(data[1][1], colset.tcpu, {}) },
-			{ form_value(data[2][1], colset.thdd, {}) },
-			{ data[3].off and "is currently disabled" or
-					  string.format("has temperature of %s degrees", form_value(data[3][1], colset.tgpu, {})) },
-		}
+	-- Temperature indicator
+	--------------------------------------------------------------------------------
+	local hardwareset = { blocks = { {}, {}, {}, {} }, height = 240 }
+	hardwareset.unit = { { "KBps", -1 }, { "MBps", 2048 } }
 
-		return form_text(thermal_sentences, values)
+	-- temperature cpu
+	hardwareset.blocks[1].timeout = sensors_base_timeout
+	hardwareset.blocks[1].action = function()
+		local data = system.lmsensors.get("cpu")
+		local value = form_value(data[1], colset.tcpu, {})
+		return string.format("According to the sensor readings CPU temperature of %s degrees Celsius", value)
+	end
+
+	-- temperature hdd
+	local hdd_smart_check = system.simple_async("smartctl --attributes /dev/sda", "194.+%s(%d+)%s%(.+%)\r?\n")
+
+	hardwareset.blocks[2].async = hdd_smart_check
+	hardwareset.blocks[2].action = function(data)
+		local value = form_value(data[1], colset.thdd, {})
+		return string.format(" and hard disk drive of %s degrees.", value)
+	end
+
+	-- temperature nvidia
+	hardwareset.blocks[3].async = system.thermal.nvoptimus
+	hardwareset.blocks[3].action = function(data)
+		local value = data.off and "is currently disabled" or
+		              string.format("has temperature of %s degrees", form_value(data[1], colset.tgpu, {}))
+
+		return string.format(" Discrete graphics card %s.", value)
 	end
 
 	-- disks i/o speed
@@ -261,7 +275,7 @@ function desktop:init(args)
 
 	local no_act_txt = { "shows no signs of even minimal activity lately", "shows no signs of activity" }
 
-	hardwareset.args.actions[2] = function()
+	hardwareset.blocks[4].action = function()
 		local data = {}
 		data[1] = system.disk_speed("nvme0n1", speed_storage[1])
 		data[2] = system.disk_speed("sda", speed_storage[2])
@@ -325,8 +339,7 @@ function desktop:init(args)
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
-	--for _, field in ipairs({ cpuset, diskset, hardwareset, torrset }) do
-	for _, field in ipairs({ cpuset, diskset, torrset }) do
+	for _, field in ipairs({ cpuset, diskset, hardwareset, torrset }) do
 		field.box = redflat.desktop.textset(field.blocks)
 		field.box:set_forced_height(field.height)
 		main_layout:add(field.box)

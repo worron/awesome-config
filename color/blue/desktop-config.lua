@@ -113,7 +113,7 @@ function desktop:init()
 	disks.style = beautiful.desktop.individual.multiline.disks
 
 	-- Sensors parser setup
-	--------------------------------------------------------------------------------
+	--------------------------------------------------------------------------------`
 	local sensors_base_timeout = 5
 
 	system.lmsensors.delay = 2
