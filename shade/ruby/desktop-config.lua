@@ -6,7 +6,6 @@
 local beautiful = require("beautiful")
 --local awful = require("awful")
 local redflat = require("redflat")
-local timer = require("gears.timer")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -21,7 +20,7 @@ local wa = mouse.screen.workarea
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-function desktop:init(_)
+function desktop:init()
 	if not beautiful.desktop then return end
 
 	--local args = args or {}

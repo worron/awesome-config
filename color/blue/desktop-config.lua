@@ -4,7 +4,7 @@
 
 -- Grab environment
 local beautiful = require("beautiful")
-local awful = require("awful")
+--local awful = require("awful")
 local redflat = require("redflat")
 
 -- Initialize tables and vars for module
@@ -18,11 +18,11 @@ local system = redflat.system
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-function desktop:init(args)
+function desktop:init()
 	if not beautiful.desktop then return end
 
-	local args = args or {}
-	local env = args.env
+	--local args = args or {}
+	--local env = args.env
 
 	-- placement
 	local grid = beautiful.desktop.grid
@@ -91,7 +91,6 @@ function desktop:init(args)
 		lines      = { { maxm = 6*1024 }, { maxm = 6*1024 } },
 		meter      = { async = system.transmission.info, args = { speed_only = true } },
 		timeout    = 5,
-		async      = "transmission-remote -l"
 	}
 
 	transm.style = beautiful.desktop.individual.multimeter.transmission
