@@ -83,7 +83,7 @@ function theme:update()
 	-- setup parent theme settings
 	self:init()
 
-	-- Set hotkey helper size according current fonts
+	-- Set hotkey helper size according current fonts and keys scheme
 	--------------------------------------------------------------------------------
 	self.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 440 }, exit = true }
 	self.service.navigator.keytip["fairh"] = self.service.navigator.keytip["fairv"]

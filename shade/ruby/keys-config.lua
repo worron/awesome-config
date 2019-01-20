@@ -23,6 +23,7 @@ local grid = redflat.layout.grid
 local map = redflat.layout.map
 local redtitle = redflat.titlebar
 local qlaunch = redflat.float.qlaunch
+local tagkeys = { "q", "w", "e", "r", "t", "y" }
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
@@ -78,15 +79,29 @@ local function toggle_placement(env)
 	redflat.float.notify:show({ text = (env.set_slave and "Slave" or "Master") .. " placement" })
 end
 
--- select next row tag on douoble key press
-local function tag_double_select(t, i, col_num)
-	if t.selected then
-		local screen = awful.screen.focused()
-		local tag = screen.tags[i + col_num]
+-- select next row tag on second key press
+local function tag_double_select(i, colnum)
+	local screen = awful.screen.focused()
+	local tag = screen.tags[i]
+	if tag.selected then
+		tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
 		if tag then tag:view_only() end
 	else
-		t:view_only()
+		tag:view_only()
 	end
+end
+
+-- toggle tag
+local function tag_toogle_by_index(i)
+	awful.tag.viewtoggle(awful.screen.focused().tags[i])
+end
+
+-- switch tag line
+local function tag_line_switch(colnum)
+	local screen = awful.screen.focused()
+	local i = screen.selected_tag.index
+	local tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
+	tag:view_only()
 end
 
 -- numeric keys function builders
@@ -121,6 +136,7 @@ local volume_mute  = function() redflat.widget.pulse:mute() end
 -- brightness functions
 local brightness = function(args)
 	redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight utility
+	-- TODO: clean USD features
 	-- redflat.float.brightness:change_with_gsd(args) -- use gnome settings deamon
 end
 
@@ -217,19 +233,11 @@ function hotkeys:init(args)
 	------------------------------------------------------------
 	local appswitcher_keys = {
 		{
-			{ env.mod }, "a", function() appswitcher:switch() end,
+			{ env.mod }, "Tab", function() appswitcher:switch() end,
 			{ description = "Select next app", group = "Navigation" }
 		},
 		{
-			{ env.mod, "Shift" }, "a", function() appswitcher:switch() end,
-			{} -- hidden key
-		},
-		{
-			{ env.mod }, "q", function() appswitcher:switch({ reverse = true }) end,
-			{ description = "Select previous app", group = "Navigation" }
-		},
-		{
-			{ env.mod, "Shift" }, "q", function() appswitcher:switch({ reverse = true }) end,
+			{ env.mod, "Shift" }, "Tab", function() appswitcher:switch() end,
 			{} -- hidden key
 		},
 		{
@@ -644,16 +652,16 @@ function hotkeys:init(args)
 			{ description = "Go to urgent client", group = "Client focus" }
 		},
 		{
-			{ env.mod }, "Tab", focus_to_previous,
+			{ env.mod }, "z", focus_to_previous,
 			{ description = "Go to previos client", group = "Client focus" }
 		},
 
 		{
-			{ env.mod }, "w", function() mainmenu:show() end,
+			{ env.mod }, "s", function() mainmenu:show() end,
 			{ description = "Show main menu", group = "Widgets" }
 		},
 		{
-			{ env.mod }, "r", function() apprunner:show() end,
+			{ env.mod }, "d", function() apprunner:show() end,
 			{ description = "Application launcher", group = "Widgets" }
 		},
 		{
@@ -661,7 +669,7 @@ function hotkeys:init(args)
 			{ description = "Show the prompt box", group = "Widgets" }
 		},
 		{
-			{ env.mod }, "x", function() redflat.float.top:show("cpu") end,
+			{ env.mod }, "/", function() redflat.float.top:show("cpu") end,
 			{ description = "Show the top process list", group = "Widgets" }
 		},
 		{
@@ -693,22 +701,18 @@ function hotkeys:init(args)
 			{ env.mod }, "Left", awful.tag.viewprev,
 			{ description = "View previous tag", group = "Tag navigation" }
 		},
+		{
+			{ env.mod }, "space", function() tag_line_switch(tcn) end,
+			{ description = "Switch tag line", group = "Tag navigation" }
+		},
 
 		{
-			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
+			{ env.mod }, "Tab", nil, function() appswitcher:show({ filter = current }) end,
 			{ description = "Switch to next with current tag", group = "Application switcher" }
 		},
 		{
-			{ env.mod }, "q", nil, function() appswitcher:show({ filter = current, reverse = true }) end,
-			{ description = "Switch to previous with current tag", group = "Application switcher" }
-		},
-		{
-			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
+			{ env.mod, "Shift" }, "Tab", nil, function() appswitcher:show({ filter = allscr }) end,
 			{ description = "Switch to next through all tags", group = "Application switcher" }
-		},
-		{
-			{ env.mod, "Shift" }, "q", nil, function() appswitcher:show({ filter = allscr, reverse = true }) end,
-			{ description = "Switch to previous through all tags", group = "Application switcher" }
 		},
 
 		{
@@ -721,19 +725,19 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "t", function() redtitle.toggle(client.focus) end,
+			{ env.mod }, "b", function() redtitle.toggle(client.focus) end,
 			{ description = "Show/hide titlebar for focused client", group = "Titlebar" }
 		},
 		{
-			{ env.mod, "Control" }, "t", function() redtitle.switch(client.focus) end,
+			{ env.mod, "Control" }, "b", function() redtitle.switch(client.focus) end,
 			{ description = "Switch titlebar view for focused client", group = "Titlebar" }
 		},
 		{
-			{ env.mod, "Shift" }, "t", function() redtitle.toggle_all() end,
+			{ env.mod, "Shift" }, "b", function() redtitle.toggle_all() end,
 			{ description = "Show/hide titlebar for all clients", group = "Titlebar" }
 		},
 		{
-			{ env.mod, "Control", "Shift" }, "t", function() redtitle.switch_all() end,
+			{ env.mod, "Control", "Shift" }, "b", function() redtitle.switch_all() end,
 			{ description = "Switch titlebar view for all clients", group = "Titlebar" }
 		},
 
@@ -746,12 +750,12 @@ function hotkeys:init(args)
 			{ description = "Reduce volume", group = "Volume control" }
 		},
 		{
-			{ env.mod }, "v", volume_mute,
+			{}, "XF86AudioMute", volume_mute,
 			{ description = "Toggle mute", group = "Volume control" }
 		},
 
 		{
-			{ env.mod }, "e", function() redflat.float.player:show(rb_corner()) end,
+			{ env.mod }, "v", function() redflat.float.player:show(rb_corner()) end,
 			{ description = "Show/hide widget", group = "Audio player" }
 		},
 		{
@@ -768,7 +772,7 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "y", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
+			{ env.mod }, "x", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
 			{ description = "Show layout menu", group = "Layouts" }
 		},
 		{
@@ -822,41 +826,50 @@ function hotkeys:init(args)
 	--------------------------------------------------------------------------------
 
 	-- add real keys without description here
-	for i = 1, 9 do
+	for i = 1, tcn do
 		self.keys.root = awful.util.table.join(
 			self.keys.root,
-			tag_numkey(i,    { env.mod },                     function(t) tag_double_select(t, i, tcn)    end),
-			tag_numkey(i,    { env.mod, "Control" },          function(t) awful.tag.viewtoggle(t)     end),
-			client_numkey(i, { env.mod, "Shift" },            function(t) client.focus:move_to_tag(t) end),
-			client_numkey(i, { env.mod, "Control", "Shift" }, function(t) client.focus:toggle_tag(t)  end)
+			tag_numkey(i,    { env.mod },                     function(_) tag_double_select(i, tcn)        end),
+			tag_numkey(i,    { env.mod, "Control" },          function(t) awful.tag.viewtoggle(t)          end)
+			--client_numkey(i, { env.mod, "Shift" },            function(t) client.focus:move_to_tag(t)      end),
+			--client_numkey(i, { env.mod, "Control", "Shift" }, function(t) client.focus:toggle_tag(t)       end)
+		)
+	end
+
+	for i, k in ipairs(tagkeys) do
+		self.keys.root = awful.util.table.join(
+			self.keys.root,
+			awful.key({ env.mod },            k, function() tag_double_select(i + tcn, tcn) end),
+			awful.key({ env.mod, "Control" }, k, function() tag_toogle_by_index(i + tcn)    end)
 		)
 	end
 
 	-- make fake keys with description special for key helper widget
-	local numkeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+	local tags_control = { "1", "2", "3", "4", "5", "6", "q", "w", "e", "r", "t", "y" }
+	local tlabel = "1..6 q..y"
 
-	self.fake.numkeys = {
+	self.fake.tagkeys = {
 		{
-			{ env.mod }, "1..9", nil,
-			{ description = "Switch to tag", group = "Numeric keys", keyset = numkeys }
+			{ env.mod }, tlabel, nil,
+			{ description = "Switch to tag", group = "Tag Control", keyset = tags_control }
 		},
 		{
-			{ env.mod, "Control" }, "1..9", nil,
-			{ description = "Toggle tag", group = "Numeric keys", keyset = numkeys }
+			{ env.mod, "Control" }, tlabel, nil,
+			{ description = "Toggle tag", group = "Tag Control", keyset = tags_control }
 		},
-		{
-			{ env.mod, "Shift" }, "1..9", nil,
-			{ description = "Move focused client to tag", group = "Numeric keys", keyset = numkeys }
-		},
-		{
-			{ env.mod, "Control", "Shift" }, "1..9", nil,
-			{ description = "Toggle focused client on tag", group = "Numeric keys", keyset = numkeys }
-		},
+		--{
+		--	{ env.mod, "Shift" }, tlabel, nil,
+		--	{ description = "Move focused client to tag", group = "Numeric keys", keyset = tags_control }
+		--},
+		--{
+		--	{ env.mod, "Control", "Shift" }, tlabel, nil,
+		--	{ description = "Toggle focused client on tag", group = "Numeric keys", keyset = tags_control }
+		--},
 	}
 
 	-- Hotkeys helper setup
 	--------------------------------------------------------------------------------
-	redflat.float.hotkeys:set_pack("Main", awful.util.table.join(self.raw.root, self.raw.client, self.fake.numkeys), 2)
+	redflat.float.hotkeys:set_pack("Main", awful.util.table.join(self.raw.root, self.raw.client, self.fake.tagkeys), 2)
 
 	-- Mouse buttons
 	--------------------------------------------------------------------------------

@@ -197,6 +197,14 @@ theme.gauge.monitor.dash.width = 11
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.ruby
 
+
+-- Floating widgets
+-----------------------------------------------------------------------------------------------------------------------
+
+-- Set hotkey helper size according current fonts and keys scheme
+--------------------------------------------------------------------------------
+theme.float.appswitcher.keytip = { geometry = { width = 400, height = 320 }, exit = true }
+
 -- End
 -----------------------------------------------------------------------------------------------------------------------
 return theme
