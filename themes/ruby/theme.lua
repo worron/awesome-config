@@ -172,8 +172,9 @@ theme.widget.wrapper = {
 	ram         = { 2, 2, 7, 7 },
 	battery     = { 3, 9, 7, 7 },
 	network     = { 4, 4, 7, 7 },
+	upgrades    = { 5, 5, 6, 6 },
 	taglist     = { 4, 4, 5, 4 },
-	tasklist    = { 0, 72, 0, 0 }, -- centering tasklist widget
+	tasklist    = { 0, 32, 0, 0 }, -- centering tasklist widget
 }
 
 -- Various widgets style tuning
@@ -181,6 +182,9 @@ theme.widget.wrapper = {
 
 -- Dotcount
 --theme.gauge.graph.dots.dot_gap_h = 5
+
+-- System updates indicator
+theme.widget.upgrades.icon = theme.path .. "/widget/upgrades.svg"
 
 -- Audio
 theme.gauge.audio.blue.dash.plain = true

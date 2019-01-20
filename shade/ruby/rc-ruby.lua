@@ -166,6 +166,16 @@ mail.buttons = awful.util.table.join(
 	awful.button({ }, 2, function () redflat.widget.mail:update() end)
 )
 
+-- Software update indcator
+--------------------------------------------------------------------------------
+local upgrades = {}
+upgrades.widget = redflat.widget.upgrades({ command = env.upgrades })
+
+upgrades.buttons = awful.util.table.join(
+	awful.button({ }, 2, function () redflat.widget.upgrades:update(true) end)
+)
+
+
 -- System resource monitoring widgets
 --------------------------------------------------------------------------------
 local sysmon = { widget = {}, buttons = {} }
@@ -268,6 +278,8 @@ awful.screen.connect_for_each_screen(
 			{ -- right widgets
 				layout = wibox.layout.fixed.horizontal,
 
+				separator,
+				env.wrapper(upgrades.widget, "upgrades", upgrades.buttons),
 				separator,
 				env.wrapper(sysmon.widget.network, "network"),
 				separator,
