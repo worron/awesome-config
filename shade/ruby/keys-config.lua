@@ -91,9 +91,21 @@ local function tag_double_select(i, colnum)
 	end
 end
 
--- toggle tag
+-- tag managment by index
 local function tag_toogle_by_index(i)
 	awful.tag.viewtoggle(awful.screen.focused().tags[i])
+end
+
+local function client_move_by_index(i)
+	if client.focus then
+		client.focus:move_to_tag(awful.screen.focused().tags[i])
+	end
+end
+
+local function client_toggle_by_index(i)
+	if client.focus then
+		client.focus:toggle_tag(awful.screen.focused().tags[i])
+	end
 end
 
 -- switch tag line
@@ -112,18 +124,6 @@ local function tag_numkey(i, mod, action)
 			local screen = awful.screen.focused()
 			local tag = screen.tags[i]
 			if tag then action(tag) end
-		end
-	)
-end
-
-local function client_numkey(i, mod, action)
-	return awful.key(
-		mod, "#" .. i + 9,
-		function ()
-			if client.focus then
-				local tag = client.focus.screen.tags[i]
-				if tag then action(tag) end
-			end
 		end
 	)
 end
@@ -280,29 +280,28 @@ function hotkeys:init(args)
 
 	-- group
 	keyseq[3] = {
+		{ {}, "a", {}, {} }, -- wm managment group
 		{ {}, "k", {}, {} }, -- application kill group
-		{ {}, "c", {}, {} }, -- client managment group
-		{ {}, "r", {}, {} }, -- client managment group
-		{ {}, "n", {}, {} }, -- client managment group
-		{ {}, "g", {}, {} }, -- run or rise group
-		{ {}, "f", {}, {} }, -- launch application group
+		{ {}, "r", {}, {} }, -- client restore group
+		{ {}, "n", {}, {} }, -- client minimization group
+		{ {}, "f", {}, {} }, -- client moving group
+		{ {}, "s", {}, {} }, -- client switching group
 	}
 
-	-- quick launch key sequence actions
-	for i = 1, 9 do
-		local ik = tostring(i)
-		table.insert(keyseq[3][5][3], {
-			{}, ik, function() qlaunch:run_or_raise(ik) end,
-			{ description = "Run or rise application №" .. ik, group = "Run or Rise", keyset = { ik } }
-		})
-		table.insert(keyseq[3][6][3], {
-			{}, ik, function() qlaunch:run_or_raise(ik, true) end,
-			{ description = "Launch application №".. ik, group = "Quick Launch", keyset = { ik } }
-		})
-	end
+	-- wm managment sequence actions
+	keyseq[3][1][3] = {
+		{
+			{}, "p", function () toggle_placement(env) end,
+			{ description = "Switch master/slave window placement", group = "Awesome managment", keyset = { "p" } }
+		},
+		{
+			{}, "r", function () awesome.restart() end,
+			{ description = "Reload awesome", group = "Awesome managment", keyset = { "p" } }
+		},
+	}
 
 	-- application kill sequence actions
-	keyseq[3][1][3] = {
+	keyseq[3][2][3] = {
 		{
 			{}, "f", function() if client.focus then client.focus:kill() end end,
 			{ description = "Kill focused client", group = "Kill application", keyset = { "f" } }
@@ -313,14 +312,7 @@ function hotkeys:init(args)
 		},
 	}
 
-	-- client managment sequence actions
-	keyseq[3][2][3] = {
-		{
-			{}, "p", function () toggle_placement(env) end,
-			{ description = "Switch master/slave window placement", group = "Clients managment", keyset = { "p" } }
-		},
-	}
-
+	-- application restore sequence actions
 	keyseq[3][3][3] = {
 		{
 			{}, "f", restore_client,
@@ -332,6 +324,7 @@ function hotkeys:init(args)
 		},
 	}
 
+	-- application minimize sequence actions
 	keyseq[3][4][3] = {
 		{
 			{}, "f", function() if client.focus then client.focus.minimized = true end end,
@@ -346,6 +339,22 @@ function hotkeys:init(args)
 			{ description = "Minimized all clients except focused", group = "Clients managment", keyset = { "e" } }
 		},
 	}
+
+	-- add client tag sequence actions (without description)
+	local kk = { "1", "2", "3", "4", "5", "6", "q", "w", "e", "r", "t", "y" }
+	for i, k in ipairs(kk) do
+		table.insert(keyseq[3][5][3], { {}, k, function() client_move_by_index(i)   end, {} })
+		table.insert(keyseq[3][6][3], { {}, k, function() client_toggle_by_index(i) end, {} })
+	end
+
+	-- make fake keys with description special for key helper widget
+	local tl = "1..6 q..y"
+	table.insert(keyseq[3][5][3], {
+		{}, tl, nil, { description = "Move client to tag", group = "Client tagging", keyset = kk }
+	})
+	table.insert(keyseq[3][6][3], {
+		{}, tl, nil, { description = "Toggle client on tag", group = "Client tagging", keyset = kk }
+	})
 
 
 	-- Layouts
@@ -614,10 +623,6 @@ function hotkeys:init(args)
 			{ description = "Window control mode", group = "Main" }
 		},
 		{
-			{ env.mod, "Control" }, "r", awesome.restart,
-			{ description = "Reload awesome", group = "Main" }
-		},
-		{
 			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
 			{ description = "User key sequence", group = "Main" }
 		},
@@ -829,10 +834,8 @@ function hotkeys:init(args)
 	for i = 1, tcn do
 		self.keys.root = awful.util.table.join(
 			self.keys.root,
-			tag_numkey(i,    { env.mod },                     function(_) tag_double_select(i, tcn)        end),
-			tag_numkey(i,    { env.mod, "Control" },          function(t) awful.tag.viewtoggle(t)          end)
-			--client_numkey(i, { env.mod, "Shift" },            function(t) client.focus:move_to_tag(t)      end),
-			--client_numkey(i, { env.mod, "Control", "Shift" }, function(t) client.focus:toggle_tag(t)       end)
+			tag_numkey(i, { env.mod },            function(_) tag_double_select(i, tcn) end),
+			tag_numkey(i, { env.mod, "Control" }, function(t) awful.tag.viewtoggle(t)   end)
 		)
 	end
 
@@ -857,14 +860,6 @@ function hotkeys:init(args)
 			{ env.mod, "Control" }, tlabel, nil,
 			{ description = "Toggle tag", group = "Tag Control", keyset = tags_control }
 		},
-		--{
-		--	{ env.mod, "Shift" }, tlabel, nil,
-		--	{ description = "Move focused client to tag", group = "Numeric keys", keyset = tags_control }
-		--},
-		--{
-		--	{ env.mod, "Control", "Shift" }, tlabel, nil,
-		--	{ description = "Toggle focused client on tag", group = "Numeric keys", keyset = tags_control }
-		--},
 	}
 
 	-- Hotkeys helper setup
