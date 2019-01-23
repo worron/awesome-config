@@ -65,11 +65,17 @@ theme.wicon = {
 	brightness = theme.path .. "/widget/brightness.svg",
 	keyboard   = theme.path .. "/widget/keyboard.svg",
 	mail       = theme.path .. "/widget/mail.svg",
-	upgrades   = theme.path .. "/widget/upgrades.svg",
+	package    = theme.path .. "/widget/package.svg",
 	search     = theme.path .. "/widget/search.svg",
 	mute       = theme.path .. "/widget/mute.svg",
 	up         = theme.path .. "/widget/up.svg",
 	down       = theme.path .. "/widget/down.svg",
+	upgrades   = {
+		normal = theme.path .. "/widget/upgrades/normal.svg",
+		silent = theme.path .. "/widget/upgrades/silent.svg",
+		weekly = theme.path .. "/widget/upgrades/weekly.svg",
+		daily = theme.path .. "/widget/upgrades/daily.svg",
+	},
 }
 
 
@@ -136,7 +142,12 @@ function theme:update()
 
 	-- System updates indicator
 	------------------------------------------------------------
-	self.widget.upgrades.notify = { icon = self.wicon.upgrades }
+	self.widget.upgrades.notify = { icon = self.wicon.package }
+	self.widget.upgrades.wibox.icon.package = self.wicon.package
+	self.widget.upgrades.wibox.icon.normal = self.wicon.upgrades.normal
+	self.widget.upgrades.wibox.icon.silent = self.wicon.upgrades.silent
+	self.widget.upgrades.wibox.icon.weekly = self.wicon.upgrades.weekly
+	self.widget.upgrades.wibox.icon.daily = self.wicon.upgrades.daily
 
 	-- Layoutbox
 	------------------------------------------------------------

@@ -94,11 +94,6 @@ taglist.buttons = awful.util.table.join(
 local textclock = {}
 textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
 
--- Software update indcator
---------------------------------------------------------------------------------
-local upgrades = {}
-upgrades.widget = redflat.widget.upgrades({ command = env.upgrades })
-
 -- Layoutbox configure
 --------------------------------------------------------------------------------
 local layoutbox = {}
@@ -168,13 +163,15 @@ mail.buttons = awful.util.table.join(
 
 -- Software update indcator
 --------------------------------------------------------------------------------
+redflat.widget.upgrades:init({ command = env.upgrades })
+
 local upgrades = {}
-upgrades.widget = redflat.widget.upgrades({ command = env.upgrades })
+upgrades.widget = redflat.widget.upgrades()
 
 upgrades.buttons = awful.util.table.join(
+	awful.button({ }, 3, function () redflat.widget.upgrades:toggle() end),
 	awful.button({ }, 2, function () redflat.widget.upgrades:update(true) end)
 )
-
 
 -- System resource monitoring widgets
 --------------------------------------------------------------------------------

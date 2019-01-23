@@ -51,6 +51,7 @@ function env:init(args)
 
 		-- dirty fix to ignore forced geometry for critical preset
 		-- For the sake of laziness I prefer fix some parameters after inherit than write pure table without inherit
+		-- TODO: fix this in new themes
 		naughty.config.presets.critical.height, naughty.config.presets.critical.width = nil, nil
 	end
 end

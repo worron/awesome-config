@@ -563,6 +563,37 @@ function theme:init()
  		need_notify = true,              -- show notification on updates
 		firstrun    = false,             -- check updates on wm start/restart
 		color       = self.color,        -- colors (main used)
+
+		-- wibox style settings
+		wibox = {
+			geometry     = { width = 280, height = 162 }, -- widget size
+			border_width = 0,                             -- widget border width
+			title_font   = self.fonts.title,              -- widget title font
+			set_position = nil,                           -- set_position
+
+			-- wibox icons
+			icon         = {
+				package = self.icon.system,                                -- main wibox image
+				close   = self.base .. "/common/window_control/close.svg", -- close button
+				normal  = self.icon.system,                                -- regular notification
+				daily   = self.icon.system,                                -- defer notification for day
+				weekly  = self.icon.system,                                -- defer notification for 7 day
+				silent  = self.icon.system,                                -- disable notification
+			},
+
+			-- widget areas height
+			height = {
+				title = 32,  -- titlebar
+				state = 36,  -- control icon area
+			},
+
+			-- widget element margins
+			margin = {
+				close = { 0, 0, 8, 8 },         -- close button
+				title = { 16 + 2*8, 16, 4, 0 }, -- titlebar area
+				state = { 10, 10, 10, 16 },     -- control icon area
+			},
+		}
 	}
 
 	-- Layoutbox

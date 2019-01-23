@@ -172,9 +172,9 @@ theme.widget.wrapper = {
 	ram         = { 2, 2, 7, 7 },
 	battery     = { 3, 9, 7, 7 },
 	network     = { 4, 4, 7, 7 },
-	upgrades    = { 5, 5, 6, 6 },
+	upgrades    = { 6, 6, 6, 6 },
 	taglist     = { 4, 4, 5, 4 },
-	tasklist    = { 0, 32, 0, 0 }, -- centering tasklist widget
+	tasklist    = { 0, 30, 0, 0 }, -- centering tasklist widget
 }
 
 -- Various widgets style tuning
