@@ -29,6 +29,7 @@ theme.fonts = {
 	qlaunch  = "Play bold 14",   -- quick launch key label font
 	keychain = "Play bold 16",   -- key sequence tip font
 	title    = "Roboto bold 13", -- widget titles font
+	tiny     = "Roboto bold 10", -- smallest font for widgets
 	titlebar = "Roboto bold 13", -- client titlebar font
 	hotkeys  = {
 		main  = "Roboto 14",             -- hotkeys helper main font

@@ -61,6 +61,7 @@ theme.fonts = {
 	clock    = "sans bold 12", -- textclock widget font
 	qlaunch  = "sans bold 14", -- quick launch key label font
 	title    = "sans bold 12", -- widget titles font
+	tiny     = "sans bold 10", -- smallest font for widgets
 	keychain = "sans bold 14", -- key sequence tip font
 	titlebar = "sans bold 12", -- client titlebar font
 	hotkeys = {
@@ -566,9 +567,11 @@ function theme:init()
 
 		-- wibox style settings
 		wibox = {
-			geometry     = { width = 280, height = 162 }, -- widget size
+			geometry     = { width = 280, height = 192 }, -- widget size
 			border_width = 0,                             -- widget border width
 			title_font   = self.fonts.title,              -- widget title font
+			tip_font     = self.fonts.tiny,               -- widget state tip font
+			separator    = {},                            -- redflat separator style (see theme.gauge.separator)
 			set_position = nil,                           -- set_position
 
 			-- wibox icons
@@ -585,13 +588,15 @@ function theme:init()
 			height = {
 				title = 32,  -- titlebar
 				state = 36,  -- control icon area
+				tip   = 16,  -- state tip text area
 			},
 
 			-- widget element margins
 			margin = {
 				close = { 0, 0, 8, 8 },         -- close button
 				title = { 16 + 2*8, 16, 4, 0 }, -- titlebar area
-				state = { 10, 10, 10, 16 },     -- control icon area
+				state = { 6, 6, 14, 14 },       -- control icon area
+				image = { 0, 0, 0, 0 },         -- main wibox image area
 			},
 		}
 	}
