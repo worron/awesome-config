@@ -169,8 +169,9 @@ local upgrades = {}
 upgrades.widget = redflat.widget.upgrades()
 
 upgrades.buttons = awful.util.table.join(
-	awful.button({ }, 3, function () redflat.widget.upgrades:toggle() end),
-	awful.button({ }, 2, function () redflat.widget.upgrades:update(true) end)
+	awful.button({ }, 1, function () redflat.widget.upgrades:toggle() end),
+	awful.button({ }, 2, function () redflat.widget.upgrades:update(true) end),
+	awful.button({ }, 3, function () redflat.widget.upgrades:toggle() end)
 )
 
 -- System resource monitoring widgets

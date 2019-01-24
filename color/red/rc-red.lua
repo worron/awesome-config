@@ -84,12 +84,15 @@ textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat =
 
 -- Software update indcator
 --------------------------------------------------------------------------------
+redflat.widget.upgrades:init({ command = env.upgrades })
+
 local upgrades = {}
-upgrades.widget = redflat.widget.upgrades({ command = env.upgrades })
+upgrades.widget = redflat.widget.upgrades()
 
 upgrades.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () mymenu.mainmenu:toggle() end),
-	awful.button({ }, 2, function () redflat.widget.upgrades:update(true) end)
+	awful.button({ }, 2, function () redflat.widget.upgrades:update(true) end),
+	awful.button({ }, 3, function () redflat.widget.upgrades:toggle() end)
 )
 
 -- Layoutbox configure
