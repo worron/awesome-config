@@ -1313,15 +1313,26 @@ function theme:init()
 		font         = self.fonts.main,
 		bg           = self.color.wibox,
 		fg           = self.color.text,
-		height       = self.float.notify.geometry.height,
-		width        = self.float.notify.geometry.width,
+
 		border_width = 4,
 		border_color = self.color.wibox
 	}
 
-	self.naughty.normal = {}
-	self.naughty.critical = { timeout = 0, border_color = self.color.main }
-	self.naughty.low = { timeout = 5 }
+	self.naughty.normal = {
+		height = self.float.notify.geometry.height,
+		width = self.float.notify.geometry.width,
+	}
+
+	self.naughty.low = {
+		timeout = 5,
+		height = self.float.notify.geometry.height,
+		width = self.float.notify.geometry.width,
+	}
+
+	self.naughty.critical = {
+		timeout = 0,
+		border_color = self.color.main
+	}
 end
 
 -- End
