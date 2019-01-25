@@ -74,8 +74,9 @@ theme.desktop.speedmeter.compact.icon = {
 }
 theme.desktop.speedmeter.compact.height.chart = 46
 theme.desktop.speedmeter.compact.label.width = 72
+theme.desktop.speedmeter.compact.label.height = 15 -- manually set after font size
 theme.desktop.speedmeter.compact.label.font = { font = "Play", size = 22, face = 1, slant = 0 }
-theme.desktop.speedmeter.compact.margins.label = { 10, 10, 12, 12 } -- TODO: autocenter this
+theme.desktop.speedmeter.compact.margins.label = { 10, 10, 0, 0 }
 theme.desktop.speedmeter.compact.margins.chart = { 0, 0, 3, 3 }
 theme.desktop.speedmeter.compact.chart = { bar = { width = 6, gap = 3 }, height = nil, zero_height = 0 }
 theme.desktop.speedmeter.compact.progressbar = { chunk = { width = 6, gap = 3 }, height = 3 }
