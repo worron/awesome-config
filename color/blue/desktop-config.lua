@@ -101,12 +101,11 @@ function desktop:init()
 
 	disks.args = {
 		sensors  = {
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/home" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/opt" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/mnt/media" }
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "root", args = "/"          },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "home", args = "/home"      },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "misc", args = "/opt"       },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "data", args = "/mnt/media" },
 		},
-		names   = {"root", "home", "misc", "data"},  -- TODO: move this to styles
 		timeout = 300
 	}
 
@@ -132,11 +131,10 @@ function desktop:init()
 
 	thermal.args = {
 		sensors = {
-			{ meter_function = system.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
-			{ async_function = hdd_smart_check, maxm = 60, crit = 45 },
-			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
+			{ meter_function = system.lmsensors.get, args = "cpu", maxm = 100, crit = 75, name = "cpu" },
+			{ async_function = hdd_smart_check, maxm = 60, crit = 45, name = "hdd" },
+			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80, name = "gpu" }
 		},
-		names   = { "cpu", "hdd", "gpu" },
 		timeout = sensors_base_timeout,
 	}
 

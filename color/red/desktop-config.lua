@@ -103,12 +103,11 @@ function desktop:init(args)
 
 	disks.args = {
 		sensors  = {
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/home" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/opt" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/mnt/media" }
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "root", args = "/"          },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "home", args = "/home"      },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "misc", args = "/opt"       },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "data", args = "/mnt/media" },
 		},
-		names   = {"root", "home", "misc", "data"},
 		timeout = 300
 	}
 
@@ -137,12 +136,11 @@ function desktop:init(args)
 
 	thermalc.args = {
 		sensors = {
-			{ meter_function = system.lmsensors.get, args = "core1", maxm = 100, crit = 75 },
-			{ meter_function = system.lmsensors.get, args = "core2", maxm = 100, crit = 75 },
-			{ meter_function = system.lmsensors.get, args = "core3", maxm = 100, crit = 75 },
-			{ meter_function = system.lmsensors.get, args = "core4", maxm = 100, crit = 75 },
+			{ meter_function = system.lmsensors.get, args = "core1", maxm = 100, crit = 75, name = "core1" },
+			{ meter_function = system.lmsensors.get, args = "core2", maxm = 100, crit = 75, name = "core2" },
+			{ meter_function = system.lmsensors.get, args = "core3", maxm = 100, crit = 75, name = "core3" },
+			{ meter_function = system.lmsensors.get, args = "core4", maxm = 100, crit = 75, name = "core4" },
 		},
-		names   = { "core1", "core2", "core3", "core4" },
 		timeout = sensors_base_timeout,
 	}
 
@@ -153,8 +151,7 @@ function desktop:init(args)
 	local hdd_smart_check = system.simple_async("smartctl --attributes /dev/sda", "194.+%s(%d+)%s%(.+%)\r?\n")
 
 	thermald.args = {
-		sensors = { { async_function = hdd_smart_check, maxm = 60, crit = 45 } },
-		names   = { "hdd" },
+		sensors = { { async_function = hdd_smart_check, maxm = 60, crit = 45, name = "hdd" } },
 		timeout = 10,
 	}
 
@@ -163,8 +160,7 @@ function desktop:init(args)
 	-- gpu
 	local thermalg = { geometry = wgeometry(grid, places.thermalg, workarea) }
 	thermalg.args = {
-		sensors = { { async_function = system.thermal.nvoptimus, maxm = 105, crit = 80 } },
-		names   = { "gpu" },
+		sensors = { { async_function = system.thermal.nvoptimus, maxm = 105, crit = 80, name = "gpu" } },
 		timeout = 10,
 	}
 

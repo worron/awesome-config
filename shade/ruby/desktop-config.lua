@@ -107,12 +107,11 @@ function desktop:init()
 
 	disks.args = {
 		sensors  = {
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/home" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/opt" },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, args = "/mnt/media" },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "root",    args = "/"          },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "home",    args = "/home"      },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "storage", args = "/opt"       },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "media",   args = "/mnt/media" },
 		},
-		names   = { "root", "home", "storage", "media" },
 		timeout = 300
 	}
 
@@ -120,8 +119,8 @@ function desktop:init()
 
 	-- QEMU image (placed along with disks)
 	--------------------------------------------------------------------------------
-	local qemu_image1 = "/home/vmdrive/win10-gvt/win10-gvt-base.qcow2"
-	local qemu_image2 = "/home/vmdrive/win10-gvt/snap/win10-gvt-current.qcow2"
+	local qm1 = "/home/vmdrive/win10-gvt/win10-gvt-base.qcow2"
+	local qm2 = "/home/vmdrive/win10-gvt/snap/win10-gvt-current.qcow2"
 
 	local bms = beautiful.desktop.multimeter -- base multimeter style
 	local dy = disks_original_height - (bms.upright_height + bms.lines_height)
@@ -137,10 +136,9 @@ function desktop:init()
 	--setup
 	qemu.args = {
 		sensors  = {
-			{ meter_function = system.qemu_image_size, maxm = 100, crit = 90, args = qemu_image1 },
-			{ meter_function = system.qemu_image_size, maxm = 100, crit = 80, args = qemu_image2 },
+			{ meter_function = system.qemu_image_size, maxm = 100, crit = 90, name = "qemu-w10-base", args = qm1 },
+			{ meter_function = system.qemu_image_size, maxm = 100, crit = 80, name = "qemu-w10-snap", args = qm2 },
 		},
-		names   = { "qemu-w10gvt-base", "qemu-w10gvt-snap" },
 		timeout = 600
 	}
 
@@ -169,12 +167,10 @@ function desktop:init()
 
 	thermal_chips.args = {
 		sensors = {
-			--{ meter_function = system.lmsensors.get, args = "chip", maxm = 100, crit = 75 },
-			{ meter_function = system.lmsensors.get, args = "cpu", maxm = 100, crit = 75 },
-			{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75 },
-			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80 }
+			{ meter_function = system.lmsensors.get, args = "cpu",  maxm = 100, crit = 75, name = "cpu"  },
+			{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75, name = "wifi" },
+			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80, name = "gpu" }
 		},
-		names   = { "cpu", "wifi", "gpu" },
 		timeout = sensors_base_timeout,
 	}
 
@@ -189,11 +185,10 @@ function desktop:init()
 
 	thermal_storage.args = {
 		sensors = {
-			{ async_function = hdd_smart_check, maxm = 60, crit = 45 },
-			{ async_function = ssd_smart_check, maxm = 80, crit = 70 },
-			{ meter_function = system.lmsensors.get, args = "ram", maxm = 100, crit = 75 },
+			{ async_function = hdd_smart_check, maxm = 60, crit = 45, name = "hdd"},
+			{ async_function = ssd_smart_check, maxm = 80, crit = 70, name = "ssd" },
+			{ meter_function = system.lmsensors.get, args = "ram", maxm = 100, crit = 75, name = "ram" },
 		},
-		names   = { "hdd", "ssd", "ram" },
 		timeout = 3 * sensors_base_timeout,
 	}
 
@@ -203,8 +198,9 @@ function desktop:init()
 	--------------------------------------------------------------------------------
 	local cpu_fan = { geometry = wgeometry(grid, places.fan1, workarea) }
 	cpu_fan.args = {
-		sensors = { { meter_function = system.lmsensors.get, args = "cpu_fan", maxm = 5000, crit = 4000 } },
-		names   = { "fan" },
+		sensors = {
+			{ meter_function = system.lmsensors.get, args = "cpu_fan", maxm = 5000, crit = 4000, name = "fan" }
+		},
 		timeout = sensors_base_timeout,
 	}
 	cpu_fan.style = beautiful.desktop.individual.multiline.fan
@@ -213,8 +209,9 @@ function desktop:init()
 	--------------------------------------------------------------------------------
 	local video_fan = { geometry = wgeometry(grid, places.fan2, workarea) }
 	video_fan.args = {
-		sensors = { { meter_function = system.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000 } },
-		names   = { "fan" },
+		sensors = {
+			{ meter_function = system.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000, name = "fan" }
+		},
 		timeout = sensors_base_timeout,
 	}
 	video_fan.style = beautiful.desktop.individual.multiline.fan
