@@ -109,8 +109,7 @@ local volume_mute  = function() redflat.widget.pulse:mute() end
 
 -- brightness functions
 local brightness = function(args)
-	redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight utility
-	-- redflat.float.brightness:change_with_gsd(args) -- use gnome settings deamon
+	redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight utilitya
 end
 
 -- right bottom corner position

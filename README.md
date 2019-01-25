@@ -36,12 +36,12 @@ Advanced user config for Awesome WM, It consist of a bunch of new widgets, featu
 
 #### Widgets
 | widget                 | type          | utility                                     |
-| -------------          | ------------- | -------------                               |
+| -------------        | -------------| -------------                               |
 | new mail indicator     | panel         | curl/user scripts                           |
 | keyboard layout        | panel         | kbdd, dbus-send                             |
 | system upgrades        | panel         | apt-get                                     |
 | volume control         | panel         | pacmd                                       |
-| brightness control     | floating      | xbacklight/unity-settings-daemon, dbus-send |
+| brightness control     | floating      | xbacklight                                  |
 | mpris2 player          | floating      | dbus-send                                   |
 | CPU temperature        | desktop       | lm-sensors                                  |
 | HDD temperature        | desktop       | hddtemp, curl                               |
