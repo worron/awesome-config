@@ -189,7 +189,7 @@ function desktop:init(args)
 	local diskset = { blocks = { { timeout = 60 } }, height = 280 }
 	diskset.unit = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } }
 
-	local disks_points = { "/", "/home", "/opt", "/mnt/media" }
+	local disks_points = { "/", "/home", "/mnt/storage", "/mnt/media" }
 	local disk_sentences = {
 		"Turning to the topic of drives %s of data was found on your system partition " ..
 				"and %s%s percent of disk space remain free.",

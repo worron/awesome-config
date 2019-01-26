@@ -107,10 +107,10 @@ function desktop:init()
 
 	disks.args = {
 		sensors  = {
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "root",    args = "/"          },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "home",    args = "/home"      },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "storage", args = "/opt"       },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "media",   args = "/mnt/media" },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "root",    args = "/"            },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "home",    args = "/home"        },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "storage", args = "/mnt/storage" },
+			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "media",   args = "/mnt/media"   },
 		},
 		timeout = 300
 	}

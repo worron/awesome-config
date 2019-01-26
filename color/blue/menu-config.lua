@@ -56,8 +56,8 @@ function menu:init(args)
 		{ "Pictures",    env.fm .. " Pictures",  micon("folder-pictures")  },
 		{ "Videos",      env.fm .. " Videos",    micon("folder-videos")    },
 		separator,
-		{ "Media",       env.fm .. " /mnt/media", micon("folder-bookmarks") },
-		{ "Storage",     env.fm .. " /opt",       micon("folder-bookmarks") },
+		{ "Media",       env.fm .. " /mnt/media",   micon("folder-bookmarks") },
+		{ "Storage",     env.fm .. " /mnt/storage", micon("folder-bookmarks") },
 	}
 
 	-- Exit submenu
