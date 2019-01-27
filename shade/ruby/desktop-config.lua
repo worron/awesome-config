@@ -103,7 +103,7 @@ function desktop:init()
 	--------------------------------------------------------------------------------
 	local disks = { geometry = wgeometry(grid, places.disks, workarea) }
 	local disks_original_height = disks.geometry.height
-	disks.geometry.height = beautiful.desktop.multimeter.upright_height
+	disks.geometry.height = beautiful.desktop.multimeter.height.upright
 
 	disks.args = {
 		sensors  = {
@@ -123,7 +123,7 @@ function desktop:init()
 	local qm2 = "/home/vmdrive/win10-gvt/snap/win10-gvt-current.qcow2"
 
 	local bms = beautiful.desktop.multimeter -- base multimeter style
-	local dy = disks_original_height - (bms.upright_height + bms.lines_height)
+	local dy = disks_original_height - (bms.height.upright + bms.height.lines)
 
 	local qemu = { geometry = {} }
 
@@ -131,7 +131,7 @@ function desktop:init()
 	qemu.geometry.x      = disks.geometry.x
 	qemu.geometry.y      = disks.geometry.y + disks.geometry.height + dy
 	qemu.geometry.width  = disks.geometry.width
-	qemu.geometry.height = beautiful.desktop.multimeter.lines_height
+	qemu.geometry.height = beautiful.desktop.multimeter.height.lines
 
 	--setup
 	qemu.args = {

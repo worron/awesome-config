@@ -86,8 +86,8 @@ theme.desktop.individual.speedmeter.drive = {
 
 -- Multimeter (base widget)
 theme.desktop.multimeter.upbar          = { width = 34, chunk = { height = 17, num = 10, line = 5 } }
-theme.desktop.multimeter.lines_height   = 60
-theme.desktop.multimeter.upright_height = 98
+theme.desktop.multimeter.height.lines   = 60
+theme.desktop.multimeter.height.upright = 98
 theme.desktop.multimeter.icon.margin    = { 0, 20, 0, 0 }
 theme.desktop.multimeter.lines.show     = { label = false, tooltip = false, text = true }
 

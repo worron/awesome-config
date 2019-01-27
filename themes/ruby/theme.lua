@@ -91,8 +91,8 @@ theme.desktop.multimeter.upbar          = { width = 32, chunk = { num = 8, line 
 theme.desktop.multimeter.lines.show     = { label = false, tooltip = true, text = false }
 theme.desktop.multimeter.icon.full      = false
 theme.desktop.multimeter.icon.margin    = { 0, 8, 0, 0 }
-theme.desktop.multimeter.upright_height = 66
-theme.desktop.multimeter.lines_height   = 20
+theme.desktop.multimeter.height.upright = 66
+theme.desktop.multimeter.height.lines   = 20
 
 -- Multimeter cpu and ram (individual widget)
 theme.desktop.individual.multimeter.cpumem = {

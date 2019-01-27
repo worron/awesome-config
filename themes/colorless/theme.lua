@@ -1203,11 +1203,15 @@ function theme:init()
 	------------------------------------------------------------
 	self.desktop.multimeter = {
 		-- TODO: rename this
-		lines_height = 58,                 -- horizontal progressbar area height
-		upright_height = 80,               -- vertical progressbars height
 		digit_num    = 3,                  -- minimal number of digits for horizontal progressbar values
 		color        = self.desktop.color, -- color (desktop used)
 		labels       = {},                 -- list of optional labels for horizontal bars
+
+		-- area height
+		height = {
+			upright = 80,  -- vertical progressbars height
+			lines = 58,    -- horizontal progressbar area height
+		},
 
 		-- widget icon
 		icon = {
