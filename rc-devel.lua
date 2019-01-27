@@ -2,9 +2,10 @@
 --                                              Development setup                                                    --
 -----------------------------------------------------------------------------------------------------------------------
 
--- Disable autostart applications
-local timestamp = require("redflat.timestamp")
-timestamp.lock = true
+-- Disable some config parts
+lock = {} -- global
+lock.desktop = false
+lock.autostart = true
 
 -- DPI setup
 local beautiful = require("beautiful")

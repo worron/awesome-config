@@ -20,6 +20,9 @@ local redflat = require("redflat")
 -- global module
 timestamp = require("redflat.timestamp")
 
+-- debug locker
+local lock = lock or {}
+
 -- Error handling
 -----------------------------------------------------------------------------------------------------------------------
 require("colorless.ercheck-config") -- load file with error handling
@@ -276,9 +279,10 @@ awful.screen.connect_for_each_screen(
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-local desktop = require("color.blue.desktop-config") -- load file with desktop widgets configuration
-desktop:init({ env = env })
-
+if not lock.desktop then
+	local desktop = require("color.blue.desktop-config") -- load file with desktop widgets configuration
+	desktop:init({ env = env })
+end
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
@@ -314,8 +318,7 @@ signals:init({ env = env })
 
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
-local autostart = require("color.blue.autostart-config") -- load file with autostart application list
-
-if timestamp.is_startup() then
-	autostart.run()
+if not lock.autostart then
+	local autostart = require("color.blue.autostart-config") -- load file with autostart application list
+	if timestamp.is_startup() then autostart.run() end
 end
