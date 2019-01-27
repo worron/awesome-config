@@ -23,6 +23,7 @@ local grid = redflat.layout.grid
 local map = redflat.layout.map
 local redtitle = redflat.titlebar
 local qlaunch = redflat.float.qlaunch
+local numkeys = { "1", "2", "3", "4", "5", "6" }
 local tagkeys = { "q", "w", "e", "r", "t", "y" }
 
 -- Key support functions
@@ -73,6 +74,11 @@ local function kill_all()
 	end
 end
 
+-- window properties
+local function client_property(p)
+	if client.focus then client.focus[p] = not client.focus[p] end
+end
+
 -- new clients placement
 local function toggle_placement(env)
 	env.set_slave = not env.set_slave
@@ -114,6 +120,13 @@ local function tag_line_switch(colnum)
 	local i = screen.selected_tag.index
 	local tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
 	tag:view_only()
+end
+
+local function tag_line_jump(colnum, is_down)
+	local screen = awful.screen.focused()
+	local i = screen.selected_tag.index
+	local tag = is_down and screen.tags[i + colnum] or screen.tags[i - colnum]
+	if tag then tag:view_only() end
 end
 
 -- numeric keys function builders
@@ -231,11 +244,11 @@ function hotkeys:init(args)
 	------------------------------------------------------------
 	local appswitcher_keys = {
 		{
-			{ env.mod }, "Tab", function() appswitcher:switch() end,
+			{ env.mod }, "a", function() appswitcher:switch() end,
 			{ description = "Select next app", group = "Navigation" }
 		},
 		{
-			{ env.mod, "Shift" }, "Tab", function() appswitcher:switch() end,
+			{ env.mod, "Shift" }, "a", function() appswitcher:switch() end,
 			{} -- hidden key
 		},
 		{
@@ -284,6 +297,8 @@ function hotkeys:init(args)
 		{ {}, "n", {}, {} }, -- client minimization group
 		{ {}, "f", {}, {} }, -- client moving group
 		{ {}, "s", {}, {} }, -- client switching group
+		{ {}, "u", {}, {} }, -- update info group
+		{ {}, "p", {}, {} }, -- client properties group
 	}
 
 	-- wm managment sequence actions
@@ -294,7 +309,7 @@ function hotkeys:init(args)
 		},
 		{
 			{}, "r", function () awesome.restart() end,
-			{ description = "Reload awesome", group = "Awesome managment", keyset = { "p" } }
+			{ description = "Reload awesome", group = "Awesome managment", keyset = { "r" } }
 		},
 	}
 
@@ -339,20 +354,58 @@ function hotkeys:init(args)
 	}
 
 	-- add client tag sequence actions (without description)
-	local kk = { "1", "2", "3", "4", "5", "6", "q", "w", "e", "r", "t", "y" }
+	local kk = awful.util.table.join(numkeys, tagkeys)
 	for i, k in ipairs(kk) do
 		table.insert(keyseq[3][5][3], { {}, k, function() client_move_by_index(i)   end, {} })
 		table.insert(keyseq[3][6][3], { {}, k, function() client_toggle_by_index(i) end, {} })
 	end
 
 	-- make fake keys with description special for key helper widget
-	local tl = "1..6 q..y"
+	local grp = "Client tagging"
 	table.insert(keyseq[3][5][3], {
-		{}, tl, nil, { description = "Move client to tag", group = "Client tagging", keyset = kk }
+		{}, "1..6", nil, { description = "Move client to tag on 1st line", group = grp, keyset = numkeys }
 	})
 	table.insert(keyseq[3][6][3], {
-		{}, tl, nil, { description = "Toggle client on tag", group = "Client tagging", keyset = kk }
+		{}, "1..6", nil, { description = "Toggle client on tag on 1st line", group = grp, keyset = numkeys }
 	})
+	table.insert(keyseq[3][5][3], {
+		{}, "q..y", nil, { description = "Move client to tag on 2nd line", group = grp, keyset = tagkeys }
+	})
+	table.insert(keyseq[3][6][3], {
+		{}, "q..y", nil, { description = "Toggle client on tag on 2nd line", group = grp, keyset = tagkeys }
+	})
+
+	-- widget info update commands
+	keyseq[3][7][3] = {
+		{
+			{}, "u", function() redflat.widget.upgrades:update(true) end,
+			{ description = "Check available upgrades", group = "Update info", keyset = { "u" } }
+		},
+		{
+			{}, "m", function() redflat.widget.mail:update() end,
+			{ description = "Check new mail", group = "Update info", keyset = { "m" } }
+		},
+	}
+
+	-- client properties switch
+	keyseq[3][8][3] = {
+		{
+			{}, "s", function() client_property("sticky") end,
+			{ description = "Toggle sticky", group = "Client properties", keyset = { "s" } }
+		},
+		{
+			{}, "o", function() client_property("ontop") end,
+			{ description = "Toggle keep on top", group = "Client properties", keyset = { "o" } }
+		},
+		{
+			{}, "f", function() client_property("floating") end,
+			{ description = "Toggle floating", group = "Client properties", keyset = { "f" } }
+		},
+		{
+			{}, "b", function() client_property("below") end,
+			{ description = "Toggle below", group = "Client properties", keyset = { "b" } }
+		},
+	}
 
 
 	-- Layouts
@@ -655,7 +708,7 @@ function hotkeys:init(args)
 			{ description = "Go to urgent client", group = "Client focus" }
 		},
 		{
-			{ env.mod }, "z", focus_to_previous,
+			{ env.mod }, "Tab", focus_to_previous,
 			{ description = "Go to previos client", group = "Client focus" }
 		},
 
@@ -676,16 +729,8 @@ function hotkeys:init(args)
 			{ description = "Show the top process list", group = "Widgets" }
 		},
 		{
-			{ env.mod, "Control" }, "m", function() redflat.widget.mail:update() end,
-			{ description = "Check new mail", group = "Widgets" }
-		},
-		{
-			{ env.mod, "Control" }, "i", function() redflat.widget.minitray:toggle() end,
+			{ env.mod }, "'", function() redflat.widget.minitray:toggle() end,
 			{ description = "Show minitray", group = "Widgets" }
-		},
-		{
-			{ env.mod, "Control" }, "u", function() redflat.widget.upgrades:update(true) end,
-			{ description = "Check available upgrades", group = "Widgets" }
 		},
 		{
 			{ env.mod }, "F3", function() qlaunch:show() end,
@@ -705,16 +750,24 @@ function hotkeys:init(args)
 			{ description = "View previous tag", group = "Tag navigation" }
 		},
 		{
+			{ env.mod }, "Up", function() tag_line_jump(tcn) end,
+			{ description = "Switch to upper line", group = "Tag navigation" }
+		},
+		{
+			{ env.mod }, "Down", function() tag_line_jump(tcn, true) end,
+			{ description = "Switch to lower line", group = "Tag navigation" }
+		},
+		{
 			{ env.mod }, "space", function() tag_line_switch(tcn) end,
 			{ description = "Switch tag line", group = "Tag navigation" }
 		},
 
 		{
-			{ env.mod }, "Tab", nil, function() appswitcher:show({ filter = current }) end,
+			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
 			{ description = "Switch to next with current tag", group = "Application switcher" }
 		},
 		{
-			{ env.mod, "Shift" }, "Tab", nil, function() appswitcher:show({ filter = allscr }) end,
+			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
 			{ description = "Switch to next through all tags", group = "Application switcher" }
 		},
 
@@ -758,7 +811,7 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "v", function() redflat.float.player:show(rb_corner()) end,
+			{ env.mod }, ".", function() redflat.float.player:show(rb_corner()) end,
 			{ description = "Show/hide widget", group = "Audio player" }
 		},
 		{
@@ -779,11 +832,11 @@ function hotkeys:init(args)
 			{ description = "Show layout menu", group = "Layouts" }
 		},
 		{
-			{ env.mod}, "Up", function() awful.layout.inc(1) end,
+			{ env.mod}, "]", function() awful.layout.inc(1) end,
 			{ description = "Select next layout", group = "Layouts" }
 		},
 		{
-			{ env.mod }, "Down", function() awful.layout.inc(-1) end,
+			{ env.mod }, "[", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
 		},
 
@@ -803,14 +856,6 @@ function hotkeys:init(args)
 		{
 			{ env.mod }, "F4", function(c) c:kill() end,
 			{ description = "Close", group = "Client keys" }
-		},
-		{
-			{ env.mod, "Control" }, "f", awful.client.floating.toggle,
-			{ description = "Toggle floating", group = "Client keys" }
-		},
-		{
-			{ env.mod, "Control" }, "o", function(c) c.ontop = not c.ontop end,
-			{ description = "Toggle keep on top", group = "Client keys" }
 		},
 		{
 			{ env.mod }, "n", function(c) c.minimized = true end,
@@ -846,17 +891,22 @@ function hotkeys:init(args)
 	end
 
 	-- make fake keys with description special for key helper widget
-	local tags_control = { "1", "2", "3", "4", "5", "6", "q", "w", "e", "r", "t", "y" }
-	local tlabel = "1..6 q..y"
-
 	self.fake.tagkeys = {
 		{
-			{ env.mod }, tlabel, nil,
-			{ description = "Switch to tag", group = "Tag Control", keyset = tags_control }
+			{ env.mod }, "1..6", nil,
+			{ description = "Switch to tag on 1st line", group = "Tag Control", keyset = numkeys }
 		},
 		{
-			{ env.mod, "Control" }, tlabel, nil,
-			{ description = "Toggle tag", group = "Tag Control", keyset = tags_control }
+			{ env.mod, "Control" }, "1..6", nil,
+			{ description = "Toggle tag on 1st line", group = "Tag Control", keyset = numkeys }
+		},
+			{
+			{ env.mod }, "q..y", nil,
+			{ description = "Switch to tag on 2nd line", group = "Tag Control", keyset = tagkeys }
+		},
+		{
+			{ env.mod, "Control" }, "q..y", nil,
+			{ description = "Toggle tag on 2nd line", group = "Tag Control", keyset = tagkeys }
 		},
 	}
 
