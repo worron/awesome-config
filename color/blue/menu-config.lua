@@ -64,9 +64,11 @@ function menu:init(args)
 	------------------------------------------------------------
 	local exitmenu = {
 		{ "Reboot",          "reboot",                    micon("gnome-session-reboot")  },
+		{ "Shutdown",        "shutdown now",              micon("system-shutdown")       },
+		separator,
 		{ "Switch user",     "dm-tool switch-to-greeter", micon("gnome-session-switch")  },
 		{ "Suspend",         "systemctl suspend" ,        micon("gnome-session-suspend") },
-		{ "Log out",         awesome.quit,                micon("exit")                },
+		{ "Log out",         awesome.quit,                micon("exit")                  },
 	}
 
 	-- Main menu
@@ -77,12 +79,11 @@ function menu:init(args)
 			{ "Applications",  appmenu,     micon("distributor-logo") },
 			{ "Places",        placesmenu,  micon("folder_home"), key = "c" },
 			separator,
-			{ "Firefox", "firefox", micon("firefox") },
-			{ "Nemo",    "nemo",    micon("folder") },
-			{ "Emacs",   "emacs",   micon("emacs") },
+			{ "Terminal",      env.terminal, micon("terminal") },
+			{ "File Manager",  env.fm,       micon("folder"), key = "n" },
+			{ "Editor",        "emacs",      micon("emacs") },
 			separator,
-			{ "Exit",     exitmenu,       micon("exit") },
-			{ "Shutdown", "shutdown now", micon("system-shutdown") }
+			{ "Exit",          exitmenu,     micon("exit") },
 		}
 	})
 

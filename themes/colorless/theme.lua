@@ -685,7 +685,7 @@ function theme:init()
 			font = self.fonts.title, -- menu title height
 			height = 25              -- menu title font
 		},
-		stateline      = { height = 35 },              -- height of menu item with state icons
+		stateline      = { height = 30 },              -- height of menu item with state icons
 		state_iconsize = { width = 18, height = 18 },  -- size for state icons
 		layout_icon    = self.widget.layoutbox.icon,   -- list of layout icons
 		separator      = { marginh = { 3, 3, 5, 5 } }, -- redflat separator style (see theme.gauge.separator)
@@ -746,7 +746,7 @@ function theme:init()
 	self.float.clientmenu = {
 		actionline      = { height = 28 },             -- height of menu item with action icons
 		action_iconsize = { width = 18, height = 18 }, -- size for action icons
-		stateline       = { height = 35 },             -- height of menu item with state icons
+		stateline       = { height = 30 },             -- height of menu item with state icons
 		state_iconsize  = { width = 20, height = 20 }, -- size for state icons
 
 		-- redflat separator style(see theme.gauge.separator)
