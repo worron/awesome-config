@@ -129,7 +129,7 @@ theme.desktop.individual.multiline.images = {
 
 -- Multilines temperature (individual widget)
 theme.desktop.individual.multiline.thermal = {
-	digit_num = 1,
+	digits    = 1,
 	icon      = { image = theme.path .. "/desktop/thermometer.svg", margin = { 0, 8, 0, 0 } },
 	lines     = {
 		line        = { height = 13 },
@@ -144,7 +144,7 @@ theme.desktop.individual.multiline.thermal = {
 
 -- Multilines fan (individual widget)
 theme.desktop.individual.multiline.fan = {
-		digit_num = 1,
+		digits    = 1,
 		lines     = {
 			line        = { height = 15 },
 			text        = { width = 74, font = { font = "Play", size = 22, face = 1, slant = 0 } },

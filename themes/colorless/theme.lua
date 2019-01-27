@@ -1156,7 +1156,7 @@ function theme:init()
 	------------------------------------------------------------
 	self.desktop.speedmeter.normal = {
 		barvalue_height  = 32,                  -- height of the area with progressbar and text
-		digit_num        = 2,                   -- minimal number of digits for progressbar value
+		digits           = 2,                   -- minimal number of digits for progressbar value
 		fullchart_height = 80,                  -- height of the each area with progressbar, text and chart
 		image_gap        = 16,                  -- space between direction icon and progressbar/chart
 		color            = self.desktop.color,  -- color (desktop used)
@@ -1183,7 +1183,7 @@ function theme:init()
 	self.desktop.speedmeter.compact = {
 		margins      = { label = {}, chart = {} }, -- extra margins for some elements
 		height       = { chart = 50 },              -- height of the each area with progressbar, text and chart
-		digit_num    = 2,                          -- minimal number of digits for progressbar value
+		digits       = 2,                          -- minimal number of digits for progressbar value
 		color        = self.desktop.color,         -- color (desktop used)
 
 		-- direction icons
@@ -1203,7 +1203,7 @@ function theme:init()
 	------------------------------------------------------------
 	self.desktop.multimeter = {
 		-- TODO: rename this
-		digit_num    = 3,                  -- minimal number of digits for horizontal progressbar values
+		digits       = 3,                  -- minimal number of digits for horizontal progressbar values
 		color        = self.desktop.color, -- color (desktop used)
 		labels       = {},                 -- list of optional labels for horizontal bars
 
@@ -1231,8 +1231,8 @@ function theme:init()
 	-- Widget with multiple progress bars
 	------------------------------------------------------------
 	self.desktop.multiline = {
-		digit_num = 3,                  -- minimal number of digits for progressbar value
-		color     = self.desktop.color, -- color (desktop used)
+		digits = 3,                  -- minimal number of digits for progressbar value
+		color  = self.desktop.color, -- color (desktop used)
 
 		-- widget icon settings
 		icon = { image = nil, margin = { 0, 0, 0, 0 } },
@@ -1249,7 +1249,7 @@ function theme:init()
 	self.desktop.singleline = {
 		lbox      = { draw = "by_width", width = 50 }, -- label style (see theme.desktop.common.textbox)
 		rbox      = { draw = "by_edges", width = 60 }, -- value style (see theme.desktop.common.textbox)
-		digit_num = 2,                                 -- minimal number of digits for value
+		digits    = 2,                                 -- minimal number of digits for value
 		icon      = self.icon.system,                  -- group icon
 		iwidth    = 142,                               -- width for every text group
 		color     = self.desktop.color                 -- color (desktop used)
