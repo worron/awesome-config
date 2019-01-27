@@ -64,7 +64,7 @@ theme.desktop.individual.speedmeter.drive = {
 }
 
 -- Multimeter (base widget)
-theme.desktop.multimeter.lines = { show_label = false, show_tooltip = false, show_text = true }
+theme.desktop.multimeter.lines.show = { label = false, tooltip = false, text = true }
 
 -- Multimeter cpu and ram (individual widget)
 theme.desktop.individual.multimeter.cpumem = {
@@ -82,7 +82,7 @@ theme.desktop.individual.multimeter.transmission = {
 -- Multilines disks (individual widget)
 theme.desktop.individual.multiline.disks = {
 	unit  = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-	lines = { show_text = false },
+	lines = { show = { text = false } },
 }
 
 -- Singleline temperature (individual widget)

@@ -1127,18 +1127,18 @@ function theme:init()
 	-- Lines (group of progressbars with label in front and text value after it)
 	------------------------------------------------------------
 	self.desktop.common.pack.lines = {
-		-- TODO: rename this
-		label_style  = { width = 80, draw = "by_width" },  -- label style (see theme.desktop.common.textbox)
-		text_style   = { width = 92, draw = "by_edges" },  -- value style (see theme.desktop.common.textbox)
-		show_text    = true,                              -- show text value for progressbars
-		show_label   = true,                               -- show text name for progressbars
-		show_tooltip = false,                              -- show tooltip for progressbars
-		progressbar  = {},                                 -- progressbar style (see theme.desktop.common.bar.plain)
-		line_height  = self.desktop.line_height,           -- text/progressbar height
-		text_gap     = 22,                                 -- space between text and progressbar
-		label_gap    = 16,                                 -- space between label and progressbar
-		tooltip      = {},                                 -- redflat tooltip style (see theme.float.tooltip)
-		color        = self.desktop.color                  -- color (desktop used)
+		label        = { width = 80, draw = "by_width" },     -- label style (see theme.desktop.common.textbox)
+		text         = { width = 92, draw = "by_edges" },     -- value style (see theme.desktop.common.textbox)
+		progressbar  = {},                                    -- progressbar style (see theme.desktop.common.bar.plain)
+		line         = { height = self.desktop.line_height }, -- text/progressbar height
+		tooltip      = {},                                    -- redflat tooltip style (see theme.float.tooltip)
+		color        = self.desktop.color,                    -- color (desktop used)
+
+		-- show/hide line elements
+		show         = { text = true, label = true, tooltip = false },
+
+		-- space between label/text and progressbar
+		gap          = { text = 22, label = 16 },
 	}
 
 	-- Widgets

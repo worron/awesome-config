@@ -59,7 +59,7 @@ theme.desktop.places = {
 theme.desktop.individual = { speedmeter = {}, multimeter = {}, multiline = {} }
 
 -- Lines (common part)
-theme.desktop.common.pack.lines.line_height = 5
+theme.desktop.common.pack.lines.line.height = 5
 theme.desktop.common.pack.lines.progressbar.chunk = { gap = 6, width = 16 }
 theme.desktop.common.pack.lines.tooltip.set_position = function()
 	local coords = mouse.coords()
@@ -88,7 +88,7 @@ theme.desktop.individual.speedmeter.drive = {
 
 -- Multimeter (base widget)
 theme.desktop.multimeter.upbar          = { width = 32, chunk = { num = 8, line = 4 }, shape = "plain" }
-theme.desktop.multimeter.lines          = { show_label = false, show_tooltip = true, show_text = false }
+theme.desktop.multimeter.lines.show     = { label = false, tooltip = true, text = false }
 theme.desktop.multimeter.icon.full      = false
 theme.desktop.multimeter.icon.margin    = { 0, 8, 0, 0 }
 theme.desktop.multimeter.upright_height = 66
@@ -109,7 +109,7 @@ theme.desktop.individual.multimeter.transmission = {
 }
 
 -- Multilines (base widget)
-theme.desktop.multiline.lines          = { show_label = false, show_tooltip = true, show_text = false }
+theme.desktop.multiline.lines.show     = { label = false, tooltip = true, text = false }
 theme.desktop.multiline.icon.margin    = theme.desktop.multimeter.icon.margin
 
 -- Multilines storage (individual widget)
@@ -117,7 +117,7 @@ theme.desktop.individual.multiline.storage = {
 	unit      = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
 	icon      = { image = theme.path .. "/desktop/storage.svg" },
 	lines     = {
-		line_height = 10,
+		line        = { height = 10 },
 		progressbar = { chunk = { gap = 6, width = 4 } },
 	},
 }
@@ -132,12 +132,12 @@ theme.desktop.individual.multiline.thermal = {
 	digit_num = 1,
 	icon      = { image = theme.path .. "/desktop/thermometer.svg", margin = { 0, 8, 0, 0 } },
 	lines     = {
-		line_height = 13,
-		text_style = { font = { font = "Play", size = 18, face = 1, slant = 0 }, width = 44 },
-		text_gap   = 10,
-		label_style = { font = { font = "Play", size = 18, face = 1, slant = 0 } },
+		line        = { height = 13 },
+		text        = { font = { font = "Play", size = 18, face = 1, slant = 0 }, width = 44 },
+		gap         = { text = 10 },
+		label       = { font = { font = "Play", size = 18, face = 1, slant = 0 } },
 		progressbar = { chunk = { gap = 6, width = 4 } },
-		show_label = false, show_tooltip = true, show_text = true,
+		show        = { text = true, label = false, tooltip = true },
 	},
 	unit      = { { "°C", -1 } },
 }
@@ -146,13 +146,12 @@ theme.desktop.individual.multiline.thermal = {
 theme.desktop.individual.multiline.fan = {
 		digit_num = 1,
 		lines     = {
-			line_height = 15,
-			text_style  = { width = 74, font = { font = "Play", size = 22, face = 1, slant = 0 } },
-			text_gap    = 10,
-			label_style = { width = 46, font = { font = "Play", size = 22, face = 1, slant = 0 } },
-			label_gap   = 10,
+			line        = { height = 15 },
+			text        = { width = 74, font = { font = "Play", size = 22, face = 1, slant = 0 } },
+			label       = { width = 46, font = { font = "Play", size = 22, face = 1, slant = 0 } },
+			gap         = { text = 10, label = 10 },
 			progressbar = { chunk = { gap = 6, width = 4 } },
-			show_label  = true, show_tooltip = false, show_text = true,
+			show        = { text = true, label = true, tooltip = false },
 		},
 		unit      = { { "RPM", -1 }, { "R", 1 } },
 }

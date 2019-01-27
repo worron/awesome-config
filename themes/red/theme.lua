@@ -66,10 +66,9 @@ theme.desktop.individual = { speedmeter = {}, multimeter = {}, multiline = {} }
 
 
 -- Lines (common part)
-theme.desktop.common.pack.lines.label_style = { width = 88, draw = "by_width" }
-theme.desktop.common.pack.lines.text_style  = { width = 88, draw = "by_edges" }
-theme.desktop.common.pack.lines.text_gap    = 20
-theme.desktop.common.pack.lines.label_gap   = 20
+theme.desktop.common.pack.lines.label = { width = 88, draw = "by_width" }
+theme.desktop.common.pack.lines.text  = { width = 88, draw = "by_edges" }
+theme.desktop.common.pack.lines.gap   = { text = 20, label = 20 }
 
 -- Speedmeter (base widget)
 theme.desktop.speedmeter.normal.label            = { height = theme.desktop.line_height }
@@ -90,7 +89,7 @@ theme.desktop.multimeter.upbar          = { width = 34, chunk = { height = 17, n
 theme.desktop.multimeter.lines_height   = 60
 theme.desktop.multimeter.upright_height = 98
 theme.desktop.multimeter.icon.margin    = { 0, 20, 0, 0 }
-theme.desktop.multimeter.lines          = { show_label = false, show_tooltip = false, show_text = true }
+theme.desktop.multimeter.lines.show     = { label = false, tooltip = false, text = true }
 
 -- Multimeter cpu and ram (individual widget)
 theme.desktop.individual.multimeter.cpumem = {
@@ -108,12 +107,12 @@ theme.desktop.individual.multimeter.transmission = {
 -- Multilines disks (individual widget)
 theme.desktop.individual.multiline.disks = {
 	unit  = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-	lines = { show_text = true },
+	lines = { show = { text = true } },
 }
 
 -- Multilines temperature (individual widget)
 theme.desktop.individual.multiline.thermal = {
-	lines = { show_text = true },
+	lines = { show = { text = true } },
 	unit  = { { "°C", -1 } },
 }
 
