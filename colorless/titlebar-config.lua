@@ -137,6 +137,7 @@ function titlebar:init()
 			redtitle.add_layout(c, nil, thin,   style.thin.size)
 			redtitle.add_layout(c, nil, wide,   style.wide.size)
 			redtitle.add_layout(c, nil, iconic, style.iconic.size)
+			redtitle.switch(c, nil, redtitle._index)
 
 			-- hide titlebar when window maximized
 			if c.maximized_vertical or c.maximized then on_maximize(c) end
