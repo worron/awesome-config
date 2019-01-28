@@ -1202,7 +1202,6 @@ function theme:init()
 	-- Widget with multiple horizontal and vertical progress bars
 	------------------------------------------------------------
 	self.desktop.multimeter = {
-		-- TODO: rename this
 		digits       = 3,                  -- minimal number of digits for horizontal progressbar values
 		color        = self.desktop.color, -- color (desktop used)
 		labels       = {},                 -- list of optional labels for horizontal bars

@@ -382,7 +382,7 @@ function hotkeys:init(args)
 			{ description = "Check available upgrades", group = "Update info", keyset = { "u" } }
 		},
 		{
-			{}, "m", function() redflat.widget.mail:update() end,
+			{}, "m", function() redflat.widget.mail:update(true) end,
 			{ description = "Check new mail", group = "Update info", keyset = { "m" } }
 		},
 	}

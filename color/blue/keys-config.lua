@@ -652,7 +652,7 @@ function hotkeys:init(args)
 			{ description = "Show the top process list", group = "Widgets" }
 		},
 		{
-			{ env.mod, "Control" }, "m", function() redflat.widget.mail:update() end,
+			{ env.mod, "Control" }, "m", function() redflat.widget.mail:update(true) end,
 			{ description = "Check new mail", group = "Widgets" }
 		},
 		{

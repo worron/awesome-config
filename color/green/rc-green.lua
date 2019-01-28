@@ -142,12 +142,13 @@ pcall(function() my_mails = require("private.mail-config") end)
 
 -- widget setup
 local mail = {}
-mail.widget = redflat.widget.mail({ maillist = my_mails })
+redflat.widget.mail:init({ maillist = my_mails })
+mail.widget = redflat.widget.mail()
 
 -- buttons
 mail.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () awful.spawn.with_shell(env.mail) end),
-	awful.button({ }, 2, function () redflat.widget.mail:update() end)
+	awful.button({ }, 2, function () redflat.widget.mail:update(true) end)
 )
 
 -- System resource monitoring widgets
