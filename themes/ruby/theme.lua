@@ -35,7 +35,7 @@ theme:update()
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 440, 440 },
-	height = { 100, 100, 100, 66, 15 },
+	height = { 100, 100, 100, 66, 50 },
 	edge   = { width = { 100, 840 }, height = { 100, 100 } }
 }
 
@@ -48,8 +48,8 @@ theme.desktop.places = {
 	disks    = { 1, 3 },
 	thermal1 = { 1, 4 },
 	thermal2 = { 2, 4 },
-	fan1     = { 1, 5 },
-	fan2     = { 2, 5 },
+	fan      = { 2, 5 },
+	vnstat   = { 1, 5 },
 }
 
 -- Desktop widgets
@@ -134,8 +134,8 @@ theme.desktop.individual.multiline.thermal = {
 	lines     = {
 		line        = { height = 13 },
 		text        = { font = { font = "Play", size = 18, face = 1, slant = 0 }, width = 44 },
-		gap         = { text = 10 },
 		label       = { font = { font = "Play", size = 18, face = 1, slant = 0 } },
+		gap         = { text = 10 },
 		progressbar = { chunk = { gap = 6, width = 4 } },
 		show        = { text = true, label = false, tooltip = true },
 	},
@@ -145,15 +145,25 @@ theme.desktop.individual.multiline.thermal = {
 -- Multilines fan (individual widget)
 theme.desktop.individual.multiline.fan = {
 		digits    = 1,
+		icon      = { image = theme.path .. "/desktop/fan.svg", margin = { 8, 16, 0, 0 } },
 		lines     = {
-			line        = { height = 15 },
-			text        = { width = 74, font = { font = "Play", size = 22, face = 1, slant = 0 } },
-			label       = { width = 46, font = { font = "Play", size = 22, face = 1, slant = 0 } },
-			gap         = { text = 10, label = 10 },
+			line        = { height = 16 },
 			progressbar = { chunk = { gap = 6, width = 4 } },
-			show        = { text = true, label = true, tooltip = false },
+			show        = { text = false, label = false, tooltip = true },
 		},
 		unit      = { { "RPM", -1 }, { "R", 1 } },
+}
+
+-- Multilines traffic (individual widget)
+theme.desktop.individual.multiline.vnstat = {
+		digits    = 3,
+		icon      = { image = theme.path .. "/desktop/traffic.svg", margin = { 8, 16, 0, 0 } },
+		lines     = {
+			line        = { height = 16 },
+			progressbar = { chunk = { gap = 6, width = 4 } },
+			show        = { text = false, label = false, tooltip = true },
+		},
+		unit = { { "B", 1 }, { "KiB", 1024 }, { "MiB", 1024^2 }, { "GiB", 1024^3 } },
 }
 
 -- Panel widgets

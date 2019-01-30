@@ -185,7 +185,7 @@ function desktop:init()
 
 	thermal_storage.args = {
 		sensors = {
-			{ async_function = hdd_smart_check, maxm = 60, crit = 45, name = "hdd"},
+			{ async_function = hdd_smart_check, maxm = 60, crit = 45, name = "hdd" },
 			{ async_function = ssd_smart_check, maxm = 80, crit = 70, name = "ssd" },
 			{ meter_function = system.lmsensors.get, args = "ram", maxm = 100, crit = 75, name = "ram" },
 		},
@@ -194,27 +194,33 @@ function desktop:init()
 
 	thermal_storage.style = thermal_chips.style
 
-	-- Fan 1
+	-- Fans
 	--------------------------------------------------------------------------------
-	local cpu_fan = { geometry = wgeometry(grid, places.fan1, workarea) }
-	cpu_fan.args = {
+	local fan = { geometry = wgeometry(grid, places.fan, workarea) }
+	fan.args = {
 		sensors = {
-			{ meter_function = system.lmsensors.get, args = "cpu_fan", maxm = 5000, crit = 4000, name = "fan" }
+			{ meter_function = system.lmsensors.get, args = "cpu_fan",   maxm = 5000, crit = 4000, name = "fan1" },
+			{ meter_function = system.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000, name = "fan2" }
 		},
 		timeout = sensors_base_timeout,
 	}
-	cpu_fan.style = beautiful.desktop.individual.multiline.fan
+	fan.style = beautiful.desktop.individual.multiline.fan
 
-	-- Fan 2
+	-- traffic stat
 	--------------------------------------------------------------------------------
-	local video_fan = { geometry = wgeometry(grid, places.fan2, workarea) }
-	video_fan.args = {
+	local vnstat = { geometry = wgeometry(grid, places.vnstat, workarea) }
+
+	local vnstat_daily   = system.vnstat_check("-d")
+	local vnstat_monthly = system.vnstat_check("-m")
+
+	vnstat.args = {
 		sensors = {
-			{ meter_function = system.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000, name = "fan" }
+			{ async_function = vnstat_daily,   maxm = 2.5 * 1024^3, name = "daily" },
+			{ async_function = vnstat_monthly, maxm = 75 * 1024^3,  name = "monthly" },
 		},
-		timeout = sensors_base_timeout,
+		timeout = 900,
 	}
-	video_fan.style = beautiful.desktop.individual.multiline.fan
+	vnstat.style = beautiful.desktop.individual.multiline.vnstat
 
 	-- Calendar
 	--------------------------------------------------------------------------------
@@ -245,8 +251,8 @@ function desktop:init()
 		thermal_storage.args, thermal_storage.geometry, thermal_storage.style
 	)
 
-	cpu_fan.widget   = redflat.desktop.multiline(cpu_fan.args, cpu_fan.geometry, cpu_fan.style)
-	video_fan.widget = redflat.desktop.multiline(video_fan.args, video_fan.geometry, video_fan.style)
+	fan.widget   = redflat.desktop.multiline(fan.args, fan.geometry, fan.style)
+	vnstat.widget = redflat.desktop.multiline(vnstat.args, vnstat.geometry, vnstat.style)
 
 	calendar.widget = redflat.desktop.calendar(calendar.args, calendar.geometry)
 end
