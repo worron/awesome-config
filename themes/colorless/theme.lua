@@ -1231,6 +1231,7 @@ function theme:init()
 	------------------------------------------------------------
 	self.desktop.multiline = {
 		digits = 3,                  -- minimal number of digits for progressbar value
+		margin = { 0, 0, 0, 0 },     -- margin around progressbar list
 		color  = self.desktop.color, -- color (desktop used)
 
 		-- widget icon settings

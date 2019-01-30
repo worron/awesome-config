@@ -145,9 +145,10 @@ theme.desktop.individual.multiline.thermal = {
 -- Multilines fan (individual widget)
 theme.desktop.individual.multiline.fan = {
 		digits    = 1,
+		margin    = { 0, 0, 5, 5 },
 		icon      = { image = theme.path .. "/desktop/fan.svg", margin = { 8, 16, 0, 0 } },
 		lines     = {
-			line        = { height = 16 },
+			line        = { height = 13 },
 			progressbar = { chunk = { gap = 6, width = 4 } },
 			show        = { text = false, label = false, tooltip = true },
 		},
@@ -157,9 +158,10 @@ theme.desktop.individual.multiline.fan = {
 -- Multilines traffic (individual widget)
 theme.desktop.individual.multiline.vnstat = {
 		digits    = 3,
+		margin    = { 0, 0, 5, 5 },
 		icon      = { image = theme.path .. "/desktop/traffic.svg", margin = { 8, 16, 0, 0 } },
 		lines     = {
-			line        = { height = 16 },
+			line        = { height = 13 },
 			progressbar = { chunk = { gap = 6, width = 4 } },
 			show        = { text = false, label = false, tooltip = true },
 		},
