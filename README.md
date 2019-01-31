@@ -36,9 +36,8 @@ Advanced user config for Awesome WM, It consist of a bunch of new widgets, featu
 
 #### Widgets
 | widget                 | type          | utility                                     |
-| -------------        | -------------| -------------                               |
+| -------------        | -------------| -------------                            |
 | new mail indicator     | panel         | curl/user scripts                           |
-| keyboard layout        | panel         | kbdd, dbus-send                             |
 | system upgrades        | panel         | apt-get                                     |
 | volume control         | panel         | pacmd                                       |
 | brightness control     | floating      | xbacklight                                  |
