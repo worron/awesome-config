@@ -61,9 +61,9 @@ theme.desktop.individual = { speedmeter = {}, multimeter = {}, multiline = {} }
 -- Lines (common part)
 theme.desktop.common.pack.lines.line.height = 5
 theme.desktop.common.pack.lines.progressbar.chunk = { gap = 6, width = 16 }
-theme.desktop.common.pack.lines.tooltip.set_position = function()
-	local coords = mouse.coords()
-	return { x = coords.x, y = coords.y - 40 }
+theme.desktop.common.pack.lines.tooltip.set_position = function(wibox)
+	awful.placement.under_mouse(wibox)
+	wibox.y = wibox.y - 25
 end
 
 -- Speedmeter (base widget)

@@ -166,9 +166,10 @@ function theme:update()
 
 	-- Top processes
 	------------------------------------------------------------
-	self.float.top.set_position  = function()
-		return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
-		         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+	self.float.top.set_position  = function(wibox)
+		local geometry = { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
+		                   y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+		wibox:geometry(geometry)
 	end
 
 	-- Application runner

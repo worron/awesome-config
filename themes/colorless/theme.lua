@@ -519,9 +519,10 @@ function theme:init()
 		color        = { wibox = self.color.wibox, border = self.color.wibox },
 
 		-- function to define floating widget position when shown
-		set_position = function()
-			return { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
-			         y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+		set_position = function(wibox)
+			local geometry = { x = mouse.screen.workarea.x + mouse.screen.workarea.width,
+			                   y = mouse.screen.workarea.y + mouse.screen.workarea.height }
+			wibox:geometry(geometry)
 		end,
 	}
 
@@ -985,8 +986,8 @@ function theme:init()
 		progressbar     = {},                            -- redflat progressbar style (see theme.gauge.graph.bar)
 
 		-- placement function
-		set_position = function()
-			return { x = mouse.screen.workarea.x + mouse.screen.workarea.width, y = mouse.screen.workarea.y }
+		set_position = function(wibox)
+			wibox:geometry({ x = mouse.screen.workarea.x + mouse.screen.workarea.width, y = mouse.screen.workarea.y })
 		end,
 	}
 
