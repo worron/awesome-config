@@ -25,7 +25,6 @@ function autostart.run()
 	awful.spawn.with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
 	-- keyboard layouts
-	awful.spawn.with_shell("kbdd")
 	awful.spawn.with_shell("bash ~/scripts/env/kbdd-setup.sh")
 
 	-- apps
