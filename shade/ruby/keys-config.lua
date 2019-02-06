@@ -221,8 +221,8 @@ function hotkeys:init(args)
 		},
 	}
 
-	-- apprunner:set_keys(awful.util.table.join(apprunner.keys.move, apprunner_keys_move), "move")
-	apprunner:set_keys(apprunner_keys_move, "move")
+	 apprunner:set_keys(awful.util.table.join(apprunner.keys.move, apprunner_keys_move), "move")
+	--apprunner:set_keys(apprunner_keys_move, "move")
 
 	-- Menu widget
 	------------------------------------------------------------
@@ -245,8 +245,8 @@ function hotkeys:init(args)
 		},
 	}
 
-	-- redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys.move, menu_keys_move), "move")
-	redflat.menu:set_keys(menu_keys_move, "move")
+	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys.move, menu_keys_move), "move")
+	--redflat.menu:set_keys(menu_keys_move, "move")
 
 	-- Appswitcher widget
 	------------------------------------------------------------
