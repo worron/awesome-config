@@ -108,6 +108,14 @@ local function client_move_by_index(i)
 	end
 end
 
+local function client_move_and_go_by_index(i)
+	if client.focus then
+		local tag = awful.screen.focused().tags[i]
+		client.focus:move_to_tag(tag)
+		tag:view_only()
+	end
+end
+
 local function client_toggle_by_index(i)
 	if client.focus then
 		client.focus:toggle_tag(awful.screen.focused().tags[i])
@@ -297,6 +305,7 @@ function hotkeys:init(args)
 		{ {}, "n", {}, {} }, -- client minimization group
 		{ {}, "f", {}, {} }, -- client moving group
 		{ {}, "s", {}, {} }, -- client switching group
+		{ {}, "d", {}, {} }, -- client move and tag switch group
 		{ {}, "u", {}, {} }, -- update info group
 		{ {}, "p", {}, {} }, -- client properties group
 	}
@@ -358,6 +367,7 @@ function hotkeys:init(args)
 	for i, k in ipairs(kk) do
 		table.insert(keyseq[3][5][3], { {}, k, function() client_move_by_index(i)   end, {} })
 		table.insert(keyseq[3][6][3], { {}, k, function() client_toggle_by_index(i) end, {} })
+		table.insert(keyseq[3][7][3], { {}, k, function() client_move_and_go_by_index(i) end, {} })
 	end
 
 	-- make fake keys with description special for key helper widget
@@ -368,15 +378,21 @@ function hotkeys:init(args)
 	table.insert(keyseq[3][6][3], {
 		{}, "1..6", nil, { description = "Toggle client on tag on 1st line", group = grp, keyset = numkeys }
 	})
+	table.insert(keyseq[3][7][3], {
+		{}, "1..6", nil, { description = "Move client and show tag on 1st line", group = grp, keyset = numkeys }
+	})
 	table.insert(keyseq[3][5][3], {
 		{}, "q..y", nil, { description = "Move client to tag on 2nd line", group = grp, keyset = tagkeys }
 	})
 	table.insert(keyseq[3][6][3], {
 		{}, "q..y", nil, { description = "Toggle client on tag on 2nd line", group = grp, keyset = tagkeys }
 	})
+	table.insert(keyseq[3][7][3], {
+		{}, "q..y", nil, { description = "Move client and show tag on 2nd line", group = grp, keyset = tagkeys }
+	})
 
 	-- widget info update commands
-	keyseq[3][7][3] = {
+	keyseq[3][8][3] = {
 		{
 			{}, "u", function() redflat.widget.upgrades:update(true) end,
 			{ description = "Check available upgrades", group = "Update info", keyset = { "u" } }
@@ -388,7 +404,7 @@ function hotkeys:init(args)
 	}
 
 	-- client properties switch
-	keyseq[3][8][3] = {
+	keyseq[3][9][3] = {
 		{
 			{}, "s", function() client_property("sticky") end,
 			{ description = "Toggle sticky", group = "Client properties", keyset = { "s" } }

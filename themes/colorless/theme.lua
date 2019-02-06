@@ -1259,13 +1259,13 @@ function theme:init()
 	-- Calendar widget with lined up marks
 	------------------------------------------------------------
 	self.desktop.calendar = {
-		maxed_marks = true,               -- always draw 31 marks
-		color       = self.desktop.color, -- color (desktop used)
+		show_pointer = true,               -- show date under mouse
+		color        = self.desktop.color, -- color (desktop used)
 		-- TODO: check for better font
 		-- today label style
 		label = {
-			gap = 3,     -- space between label and pointer
-			sep = "-",   -- day/month separator
+			gap  = 8,   -- space between label and pointer
+			sep  = "-", -- day/month separator
 			font = { font = "Play", size = 16, face = 1, slant = 0 }, -- font
 		},
 
@@ -1275,14 +1275,6 @@ function theme:init()
 			width  = 25, -- mark width
 			dx     = 6,  -- pointer arrow width
 			line   = 2,  -- stroke line width for next month marks
-		},
-
-		-- today pointer style
-		pointer = {
-			height = 12, -- pointer height
-			width  = 4,  -- pointer width
-			dx     = 6,  -- pointer arrow width
-			gap    = 5,  -- space between pointer and mark
 		},
 	}
 

@@ -220,7 +220,7 @@ theme.widget.tasklist.task = theme.gauge.task.ruby
 -- Set hotkey helper size according current fonts and keys scheme
 --------------------------------------------------------------------------------
 theme.float.appswitcher.keytip = { geometry = { width = 400, height = 320 }, exit = true }
-theme.float.keychain.keytip = { geometry = { width = 1020, height = 510 }, column = 2 }
+theme.float.keychain.keytip = { geometry = { width = 1020, height = 525 }, column = 2 }
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------
