@@ -17,9 +17,6 @@ require("awful.autofocus")
 ------------------------------------------------------------
 local redflat = require("redflat")
 
--- global module
-timestamp = require("redflat.timestamp")
-
 -- debug locker
 local lock = lock or {}
 
@@ -321,6 +318,10 @@ signals:init({ env = env })
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
 if not lock.autostart then
-	local autostart = require("color.blue.autostart-config") -- load file with autostart application list
-	if timestamp.is_startup() then autostart.run() end
+	redflat.startup:activate()
+
+	if redflat.startup.is_startup() then
+		local autostart = require("color.blue.autostart-config") -- load file with autostart application list
+		autostart.run()
+	end
 end
