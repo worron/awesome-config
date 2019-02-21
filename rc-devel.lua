@@ -3,16 +3,13 @@
 -----------------------------------------------------------------------------------------------------------------------
 
 -- Disable some config parts
+--------------------------------------------------------------------------------
 lock = {} -- global
 lock.desktop = false
 lock.autostart = true
 
--- DPI setup
-local beautiful = require("beautiful")
-beautiful.xresources.set_dpi(96)
-
 -- Configuration file selection
------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 --local rc = "colorless.rc-colorless"
 
 --local rc = "color.red.rc-red"
@@ -23,3 +20,8 @@ beautiful.xresources.set_dpi(96)
 local rc = "shade.ruby.rc-ruby"
 
 require(rc)
+
+-- DPI setup
+--------------------------------------------------------------------------------
+local beautiful = require("beautiful")
+beautiful.xresources.set_dpi(96, 1)
