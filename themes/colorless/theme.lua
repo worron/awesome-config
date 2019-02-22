@@ -923,7 +923,7 @@ function theme:init()
 	------------------------------------------------------------
 	self.float.hotkeys = {
 		geometry      = { width = 1400, height = 600 }, -- widget size
-		border_margin = { 20, 20, 8, 10 },             -- margins around widget content
+		border_margin = { 20, 20, 8, 10 },              -- margins around widget content
 		border_width  = 0,                              -- widget border width
 		delim         = "   ",                          -- text separator between key and description
 		tspace        = 5,                              -- space between lines in widget title
@@ -933,6 +933,34 @@ function theme:init()
 		keyfont       = self.fonts.hotkeys.key,         -- keys font
 		titlefont     = self.fonts.hotkeys.title,       -- widget title font
 		color         = self.color                      -- colors (main used)
+	}
+
+	-- Titlebar helper
+	------------------------------------------------------------
+	self.float.bartip = {
+		geometry      = { width = 260, height = 40 }, -- widget size
+		border_margin = { 10, 10, 10, 10 },           -- margins around widget content
+		border_width  = 0,                            -- widget border widthj
+		font          = self.fonts.title,             -- widget font
+		set_position  = nil,                          -- placement function
+		names         = { "MINI", "PLAIN", "FULL" },  -- titlebar layout names
+		color         = self.color,                   -- colors (main used)
+
+		-- margin around widget elements
+		margin        = { icon = { title = { 10, 10, 8, 8 }, state = { 10, 10, 8, 8 } } },
+
+		-- widget icons
+		icon          = {
+			title     = self.base .. "/common/window_control/title.svg",
+			active    = self.base .. "/common/window_control/active.svg",
+			hidden    = self.base .. "/common/window_control/hidden.svg",
+			disabled  = self.base .. "/common/window_control/disabled.svg",
+			absent    = self.icon.warning,
+			unknown   = self.icon.unknown,
+		},
+
+		-- redflat key tip settings
+		keytip        = { geometry = { width = 540, height = 292 } },
 	}
 
 	-- Key sequence tip

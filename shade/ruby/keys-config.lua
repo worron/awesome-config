@@ -797,21 +797,25 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "b", function() redtitle.toggle(client.focus) end,
-			{ description = "Show/hide titlebar for focused client", group = "Titlebar" }
+			{ env.mod }, "b", function() redflat.float.bartip:show() end,
+			{ description = "Show titlebar managment tip", group = "Titlebar" }
 		},
-		{
-			{ env.mod, "Control" }, "b", function() redtitle.switch(client.focus) end,
-			{ description = "Switch titlebar view for focused client", group = "Titlebar" }
-		},
-		{
-			{ env.mod, "Shift" }, "b", function() redtitle.toggle_all() end,
-			{ description = "Show/hide titlebar for all clients", group = "Titlebar" }
-		},
-		{
-			{ env.mod, "Control", "Shift" }, "b", function() redtitle.global_switch() end,
-			{ description = "Switch titlebar view for all clients", group = "Titlebar" }
-		},
+		--{
+		--	{ env.mod }, "b", function() redtitle.toggle(client.focus) end,
+		--	{ description = "Show/hide titlebar for focused client", group = "Titlebar" }
+		--},
+		--{
+		--	{ env.mod, "Control" }, "b", function() redtitle.switch(client.focus) end,
+		--	{ description = "Switch titlebar view for focused client", group = "Titlebar" }
+		--},
+		--{
+		--	{ env.mod, "Shift" }, "b", function() redtitle.toggle_all() end,
+		--	{ description = "Show/hide titlebar for all clients", group = "Titlebar" }
+		--},
+		--{
+		--	{ env.mod, "Control", "Shift" }, "b", function() redtitle.global_switch() end,
+		--	{ description = "Switch titlebar view for all clients", group = "Titlebar" }
+		--},
 
 		{
 			{}, "XF86AudioRaiseVolume", volume_raise,
