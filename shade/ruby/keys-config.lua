@@ -745,6 +745,10 @@ function hotkeys:init(args)
 			{ description = "Show the top process list", group = "Widgets" }
 		},
 		{
+			{ env.mod }, ",", function() redflat.widget.upgrades:show() end,
+			{ description = "Show system updates info", group = "Widgets" }
+		},
+		{
 			{ env.mod }, "'", function() redflat.widget.minitray:toggle() end,
 			{ description = "Show minitray", group = "Widgets" }
 		},

@@ -566,9 +566,15 @@ function theme:init()
 		firstrun    = false,             -- check updates on wm start/restart
 		color       = self.color,        -- colors (main used)
 
+		-- redflat key tip settings
+		keytip      = { geometry = { width = 400, height = 340 } },
+
+		-- tooltips style
+		tooltip     = { base = {}, state = { timeout = 2 } },
+
 		-- wibox style settings
 		wibox = {
-			geometry     = { width = 280, height = 192 }, -- widget size
+			geometry     = { width = 250, height = 160 }, -- widget size
 			border_width = 0,                             -- widget border width
 			title_font   = self.fonts.title,              -- widget title font
 			tip_font     = self.fonts.tiny,               -- widget state tip font
@@ -587,17 +593,16 @@ function theme:init()
 
 			-- widget areas height
 			height = {
-				title = 32,  -- titlebar
-				state = 36,  -- control icon area
-				tip   = 16,  -- state tip text area
+				title = 28,  -- titlebar
+				state = 32,  -- control icon area
 			},
 
 			-- widget element margins
 			margin = {
-				close = { 0, 0, 8, 8 },         -- close button
-				title = { 16 + 2*8, 16, 4, 0 }, -- titlebar area
-				state = { 6, 6, 14, 14 },       -- control icon area
-				image = { 0, 0, 0, 0 },         -- main wibox image area
+				close = { 0, 0, 6, 6 },         -- close button
+				title = { 16 + 2*6, 16, 4, 0 }, -- titlebar area
+				state = { 4, 4, 4, 10 },       -- control icon area
+				image = { 0, 0, 2, 4 },         -- main wibox image area
 			},
 		}
 	}
