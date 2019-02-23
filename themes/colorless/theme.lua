@@ -594,14 +594,14 @@ function theme:init()
 			-- widget areas height
 			height = {
 				title = 28,  -- titlebar
-				state = 32,  -- control icon area
+				state = 34,  -- control icon area
 			},
 
 			-- widget element margins
 			margin = {
 				close = { 0, 0, 6, 6 },         -- close button
 				title = { 16 + 2*6, 16, 4, 0 }, -- titlebar area
-				state = { 4, 4, 4, 10 },       -- control icon area
+				state = { 4, 4, 4, 12 },       -- control icon area
 				image = { 0, 0, 2, 4 },         -- main wibox image area
 			},
 		}

@@ -679,19 +679,24 @@ function hotkeys:init(args)
 	self.raw.root = {
 		{
 			{ env.mod }, "F1", function() redtip:show() end,
-			{ description = "Show awesome hotkeys helper", group = "Main" }
+			{ description = "[Hold] Awesome hotkeys helper", group = "Help" }
 		},
 		{
 			{ env.mod, "Control" }, "F1", function() apphelper(appkeys) end,
-			{ description = "Show hotkeys helper for application", group = "Main" }
+			{ description = "[Hold] Hotkeys helper for application", group = "Help" }
 		},
+
 		{
 			{ env.mod }, "F2", function () redflat.service.navigator:run() end,
-			{ description = "Window control mode", group = "Main" }
+			{ description = "[Hold] Window control mode", group = "Environment" }
+		},
+		{
+			{ env.mod }, "b", function() redflat.float.bartip:show() end,
+			{ description = "[Hold] Titlebar managment helper", group = "Environment" }
 		},
 		{
 			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
-			{ description = "User key sequence", group = "Main" }
+			{ description = "User key sequence", group = "Environment" }
 		},
 
 		{
@@ -729,32 +734,25 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "s", function() mainmenu:show() end,
-			{ description = "Show main menu", group = "Widgets" }
-		},
-		{
-			{ env.mod }, "d", function() apprunner:show() end,
-			{ description = "Application launcher", group = "Widgets" }
-		},
-		{
-			{ env.mod }, "p", function() redflat.float.prompt:run() end,
-			{ description = "Show the prompt box", group = "Widgets" }
-		},
-		{
 			{ env.mod }, "/", function() redflat.float.top:show("cpu") end,
-			{ description = "Show the top process list", group = "Widgets" }
+			{ description = "Top process list", group = "Widgets" }
 		},
 		{
 			{ env.mod }, ",", function() redflat.widget.upgrades:show() end,
-			{ description = "Show system updates info", group = "Widgets" }
+			{ description = "System updates info", group = "Widgets" }
 		},
 		{
-			{ env.mod }, "'", function() redflat.widget.minitray:toggle() end,
-			{ description = "Show minitray", group = "Widgets" }
+			{ env.mod }, "`", function() redflat.widget.minitray:toggle() end,
+			{ description = "Minitray", group = "Widgets" }
+		},
+
+		{
+			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
+			{ description = "Switch to next with current tag", group = "Application switcher" }
 		},
 		{
-			{ env.mod }, "F3", function() qlaunch:show() end,
-			{ description = "Application quick launcher", group = "Widgets" }
+			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
+			{ description = "Switch to next through all tags", group = "Application switcher" }
 		},
 
 		{
@@ -783,43 +781,21 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,
-			{ description = "Switch to next with current tag", group = "Application switcher" }
+			{ env.mod }, "s", function() mainmenu:show() end,
+			{ description = "Main menu", group = "Launchers" }
 		},
 		{
-			{ env.mod, "Shift" }, "a", nil, function() appswitcher:show({ filter = allscr }) end,
-			{ description = "Switch to next through all tags", group = "Application switcher" }
-		},
-
-		{
-			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
-			{ description = "Increase brightness", group = "Brightness control" }
+			{ env.mod }, "d", function() apprunner:show() end,
+			{ description = "Application launcher", group = "Launchers" }
 		},
 		{
-			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
-			{ description = "Reduce brightness", group = "Brightness control" }
+			{ env.mod }, "p", function() redflat.float.prompt:run() end,
+			{ description = "Prompt box", group = "Launchers" }
 		},
-
 		{
-			{ env.mod }, "b", function() redflat.float.bartip:show() end,
-			{ description = "Show titlebar managment tip", group = "Titlebar" }
+			{ env.mod }, "F3", function() qlaunch:show() end,
+			{ description = "Application quick launcher", group = "Launchers" }
 		},
-		--{
-		--	{ env.mod }, "b", function() redtitle.toggle(client.focus) end,
-		--	{ description = "Show/hide titlebar for focused client", group = "Titlebar" }
-		--},
-		--{
-		--	{ env.mod, "Control" }, "b", function() redtitle.switch(client.focus) end,
-		--	{ description = "Switch titlebar view for focused client", group = "Titlebar" }
-		--},
-		--{
-		--	{ env.mod, "Shift" }, "b", function() redtitle.toggle_all() end,
-		--	{ description = "Show/hide titlebar for all clients", group = "Titlebar" }
-		--},
-		--{
-		--	{ env.mod, "Control", "Shift" }, "b", function() redtitle.global_switch() end,
-		--	{ description = "Switch titlebar view for all clients", group = "Titlebar" }
-		--},
 
 		{
 			{}, "XF86AudioRaiseVolume", volume_raise,
@@ -832,6 +808,15 @@ function hotkeys:init(args)
 		{
 			{}, "XF86AudioMute", volume_mute,
 			{ description = "Toggle mute", group = "Volume control" }
+		},
+
+		{
+			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
+			{ description = "Increase brightness", group = "Brightness control" }
+		},
+		{
+			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
+			{ description = "Reduce brightness", group = "Brightness control" }
 		},
 
 		{
@@ -852,7 +837,7 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "x", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
+			{ env.mod }, "v", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
 			{ description = "Show layout menu", group = "Layouts" }
 		},
 		{
