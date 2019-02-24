@@ -21,7 +21,6 @@ local redtip = redflat.float.hotkeys
 local laycom = redflat.layout.common
 local grid = redflat.layout.grid
 local map = redflat.layout.map
-local redtitle = redflat.titlebar
 local qlaunch = redflat.float.qlaunch
 local numkeys = { "1", "2", "3", "4", "5", "6" }
 local tagkeys = { "q", "w", "e", "r", "t", "y" }
@@ -247,6 +246,34 @@ function hotkeys:init(args)
 
 	redflat.menu:set_keys(awful.util.table.join(redflat.menu.keys.move, menu_keys_move), "move")
 	--redflat.menu:set_keys(menu_keys_move, "move")
+
+	-- Updates widget
+	------------------------------------------------------------
+	local updates_keys_action = {
+		{
+			{ env.mod }, ",", function() redflat.widget.upgrades:hide() end,
+			{ description = "Close updates widget", group = "Action" }
+		},
+	}
+
+	-- close widget by the same key as showing
+	redflat.widget.upgrades:set_keys(
+		awful.util.table.join(redflat.widget.upgrades.keys.action, updates_keys_action), "action"
+	)
+
+	-- Top process list
+	------------------------------------------------------------
+	local top_keys_action = {
+		{
+			{ env.mod }, "/", function() redflat.float.top:hide() end,
+			{ description = "Close top list widget", group = "Action" }
+		},
+	}
+
+	-- close widget by the same key as showing
+	redflat.float.top:set_keys(
+		awful.util.table.join(redflat.float.top.keys.action, top_keys_action), "action"
+	)
 
 	-- Appswitcher widget
 	------------------------------------------------------------

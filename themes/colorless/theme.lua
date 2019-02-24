@@ -826,7 +826,7 @@ function theme:init()
 		labels_width  = { num = 30, cpu = 70, mem = 120 },
 
 		-- redflat key tip settings
-		keytip        = { geometry = { width = 400, height = 300 } },
+		keytip        = { geometry = { width = 400, height = 320 } },
 
 		-- placement function
 		set_position  = nil,
