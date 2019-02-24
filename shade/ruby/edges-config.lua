@@ -21,6 +21,7 @@ function edges:init(args)
 	local args = args or {}
 	local ew = args.width or 1 -- edge width
 	local workarea = args.workarea or screen[mouse.screen].workarea
+	local tcn = args.tag_cols_num or 0
 
 	-- edge geometry
 	local egeometry = {
@@ -44,10 +45,22 @@ function edges:init(args)
 
 	-- Right
 	--------------------------------------------------------------------------------
-	local right = redflat.util.desktop.edge("vertical")
+	local right = redflat.util.desktop.edge("vertical", { ew, workarea.height - ew })
 	right.wibox:geometry(egeometry["right"])
 
-	right.layout:buttons(awful.util.table.join(
+	local function tag_line_switch(colnum)
+		local screen = awful.screen.focused()
+		local i = screen.selected_tag.index
+		local tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
+		tag:view_only()
+	end
+
+	right.area[1]:buttons(awful.util.table.join(
+		awful.button({}, 5, function() tag_line_switch(tcn) end),
+		awful.button({}, 4, function() tag_line_switch(tcn) end)
+	))
+
+	right.area[2]:buttons(awful.util.table.join(
 		awful.button({}, 5, function() awful.tag.viewnext(mouse.screen) end),
 		awful.button({}, 4, function() awful.tag.viewprev(mouse.screen) end)
 	))

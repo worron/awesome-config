@@ -306,13 +306,13 @@ end
 
 -- Active screen edges
 -----------------------------------------------------------------------------------------------------------------------
-local edges = require("color.blue.edges-config") -- load file with edges configuration
-edges:init()
+local edges = require("shade.ruby.edges-config") -- load file with edges configuration
+edges:init({ tag_cols_num = taglist.cols_num })
 
 
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
-local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheetb
+local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheet
 
 local hotkeys = require("shade.ruby.keys-config") -- load file with hotkeys configuration
 hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys, tag_cols_num = taglist.cols_num })
