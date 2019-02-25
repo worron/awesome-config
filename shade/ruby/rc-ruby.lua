@@ -132,6 +132,30 @@ volume.buttons = awful.util.table.join(
 	awful.button({}, 9, function() redflat.float.player:action("Next")                 end)
 )
 
+-- PA microphone
+--------------------------------------------------------------------------------
+local microphone = {}
+
+-- tricky custom style
+local microphone_style = {
+	widget = redflat.gauge.audio.blue.new,
+	audio = beautiful.individual and beautiful.individual.microphone_audio or {},
+}
+--microphone_style.audio.gauge = redflat.gauge.monitor.dash
+microphone_style.audio.gauge = false
+
+-- init widget
+microphone.widget = redflat.widget.pulse({ type = "source" }, microphone_style)
+local mw = microphone.widget
+
+microphone.buttons = awful.util.table.join(
+	awful.button({}, 2, function() redflat.widget.pulse:mute({ type = "source", sink = mw._sink }) end),
+	awful.button({}, 4, function() redflat.widget.pulse:change_volume({ type = "source", sink = mw._sink }) end),
+	awful.button({}, 5, function()
+		redflat.widget.pulse:change_volume({ type = "source", sink = mw._sink, down = true })
+	end)
+)
+
 -- Keyboard layout indicator
 --------------------------------------------------------------------------------
 local kbindicator = {}
@@ -282,6 +306,8 @@ awful.screen.connect_for_each_screen(
 				env.wrapper(upgrades.widget, "upgrades", upgrades.buttons),
 				separator,
 				env.wrapper(sysmon.widget.network, "network"),
+				separator,
+				env.wrapper(microphone.widget, "microphone", microphone.buttons),
 				separator,
 				env.wrapper(volume.widget, "volume", volume.buttons),
 				separator,

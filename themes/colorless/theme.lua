@@ -334,7 +334,7 @@ function theme:init()
 		-- colors
 		color = { icon = self.color.icon, mute = self.color.urgent },
 
-		-- dash style (see theme.gauge.graph.dash)
+		-- dash style
 		dash = { bar = { num = 5, width = 4 } },
 	}
 

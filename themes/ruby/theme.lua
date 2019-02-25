@@ -176,7 +176,8 @@ theme.desktop.individual.multiline.vnstat = {
 theme.widget.wrapper = {
 	layoutbox   = { 12, 9, 6, 6 },
 	textclock   = { 10, 10, 0, 0 },
-	volume      = { 6, 10, 3, 3 },
+	volume      = { 4, 9, 3, 3 },
+	microphone  = { 5, 6, 6, 6 },
 	keyboard    = { 9, 9, 3, 3 },
 	mail        = { 9, 9, 3, 3 },
 	tray        = { 8, 8, 7, 7 },
@@ -186,7 +187,7 @@ theme.widget.wrapper = {
 	network     = { 4, 4, 7, 7 },
 	upgrades    = { 6, 6, 6, 6 },
 	taglist     = { 4, 4, 5, 4 },
-	tasklist    = { 0, 30, 0, 0 }, -- centering tasklist widget
+	tasklist    = { 10, 0, 0, 0 }, -- centering tasklist widget
 }
 
 -- Various widgets style tuning
@@ -213,6 +214,17 @@ theme.gauge.monitor.dash.width = 11
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.ruby
 
+
+-- Individual styles
+------------------------------------------------------------
+theme.individual = {}
+theme.individual.microphone_audio = {
+	width   = 26,
+	--dmargin = { 4, 3, 1, 1 },
+	--dash    = { line = { num = 3, height = 5 } },
+	icon    = theme.path .. "/widget/microphone.svg",
+	color   = { icon = theme.color.main, mute = theme.color.icon }
+}
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
