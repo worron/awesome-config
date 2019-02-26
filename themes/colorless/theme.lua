@@ -998,7 +998,13 @@ function theme:init()
 		border_width = 0,                             -- widget border width
 		margin       = { 20, 20, 40, 40 },            -- margins around widget content
 		field        = nil,                           -- redflat text field style (see theme.float.decoration.field)
-		color        = self.color                     -- colors (main used)
+
+		-- colors
+		color        = {
+			border  = self.color.border,
+			wibox   = self.color.wibox,
+			naughty = self.color.urgent,
+		},
 	}
 
 	-- Notify (redflat notification widget)
@@ -1216,7 +1222,7 @@ function theme:init()
 
 	self.desktop.speedmeter.compact = {
 		margins      = { label = {}, chart = {} }, -- extra margins for some elements
-		height       = { chart = 50 },              -- height of the each area with progressbar, text and chart
+		height       = { chart = 50 },             -- height of the each area with progressbar, text and chart
 		digits       = 2,                          -- minimal number of digits for progressbar value
 		color        = self.desktop.color,         -- color (desktop used)
 

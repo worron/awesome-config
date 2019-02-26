@@ -73,7 +73,7 @@ theme.desktop.speedmeter.compact.icon = {
 	margin = { 0, 4, 0, 0}
 }
 theme.desktop.speedmeter.compact.height.chart = 46
-theme.desktop.speedmeter.compact.label.width = 72
+theme.desktop.speedmeter.compact.label.width = 76
 theme.desktop.speedmeter.compact.label.height = 15 -- manually set after font size
 theme.desktop.speedmeter.compact.label.font = { font = "Play", size = 22, face = 1, slant = 0 }
 theme.desktop.speedmeter.compact.margins.label = { 10, 10, 0, 0 }

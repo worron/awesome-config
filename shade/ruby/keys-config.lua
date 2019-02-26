@@ -96,7 +96,7 @@ local function tag_double_select(i, colnum)
 	end
 end
 
--- tag managment by index
+-- tag management by index
 local function tag_toogle_by_index(i)
 	awful.tag.viewtoggle(awful.screen.focused().tags[i])
 end
@@ -326,7 +326,7 @@ function hotkeys:init(args)
 
 	-- group
 	keyseq[3] = {
-		{ {}, "a", {}, {} }, -- wm managment group
+		{ {}, "a", {}, {} }, -- wm management group
 		{ {}, "k", {}, {} }, -- application kill group
 		{ {}, "r", {}, {} }, -- client restore group
 		{ {}, "n", {}, {} }, -- client minimization group
@@ -337,15 +337,15 @@ function hotkeys:init(args)
 		{ {}, "p", {}, {} }, -- client properties group
 	}
 
-	-- wm managment sequence actions
+	-- wm management sequence actions
 	keyseq[3][1][3] = {
 		{
 			{}, "p", function () toggle_placement(env) end,
-			{ description = "Switch master/slave window placement", group = "Awesome managment", keyset = { "p" } }
+			{ description = "Switch master/slave window placement", group = "Awesome management", keyset = { "p" } }
 		},
 		{
 			{}, "r", function () awesome.restart() end,
-			{ description = "Reload awesome", group = "Awesome managment", keyset = { "r" } }
+			{ description = "Reload awesome", group = "Awesome management", keyset = { "r" } }
 		},
 	}
 
@@ -365,11 +365,11 @@ function hotkeys:init(args)
 	keyseq[3][3][3] = {
 		{
 			{}, "f", restore_client,
-			{ description = "Restore minimized client", group = "Clients managment", keyset = { "f" } }
+			{ description = "Restore minimized client", group = "Clients management", keyset = { "f" } }
 		},
 		{
 			{}, "a", restore_all,
-			{ description = "Restore all clients with current tag", group = "Clients managment", keyset = { "a" } }
+			{ description = "Restore all clients with current tag", group = "Clients management", keyset = { "a" } }
 		},
 	}
 
@@ -377,15 +377,15 @@ function hotkeys:init(args)
 	keyseq[3][4][3] = {
 		{
 			{}, "f", function() if client.focus then client.focus.minimized = true end end,
-			{ description = "Minimized focused client", group = "Clients managment", keyset = { "f" } }
+			{ description = "Minimized focused client", group = "Clients management", keyset = { "f" } }
 		},
 		{
 			{}, "a", minimize_all,
-			{ description = "Minimized all clients with current tag", group = "Clients managment", keyset = { "a" } }
+			{ description = "Minimized all clients with current tag", group = "Clients management", keyset = { "a" } }
 		},
 		{
 			{}, "e", minimize_all_except_focused,
-			{ description = "Minimized all clients except focused", group = "Clients managment", keyset = { "e" } }
+			{ description = "Minimized all clients except focused", group = "Clients management", keyset = { "e" } }
 		},
 	}
 
@@ -719,7 +719,7 @@ function hotkeys:init(args)
 		},
 		{
 			{ env.mod }, "b", function() redflat.float.bartip:show() end,
-			{ description = "[Hold] Titlebar managment helper", group = "Environment" }
+			{ description = "[Hold] Titlebar helper", group = "Environment" }
 		},
 		{
 			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
@@ -784,7 +784,7 @@ function hotkeys:init(args)
 
 		{
 			{ env.mod }, "Escape", awful.tag.history.restore,
-			{ description = "Go previos tag", group = "Tag navigation" }
+			{ description = "Go to previos tag", group = "Tag navigation" }
 		},
 		{
 			{ env.mod }, "Right", awful.tag.viewnext,
@@ -834,7 +834,7 @@ function hotkeys:init(args)
 		},
 		{
 			{}, "XF86AudioMute", volume_mute,
-			{ description = "Toggle mute", group = "Volume control" }
+			{ description = "Mute volume", group = "Volume control" }
 		},
 
 		{
