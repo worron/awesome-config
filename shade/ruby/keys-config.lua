@@ -101,23 +101,25 @@ local function tag_toogle_by_index(i)
 	awful.tag.viewtoggle(awful.screen.focused().tags[i])
 end
 
-local function client_move_by_index(i)
-	if client.focus then
-		client.focus:move_to_tag(awful.screen.focused().tags[i])
+local function current_clients()
+	return awful.screen.focused().selected_tag:clients()
+end
+
+local function client_move_by_index(i, group)
+	for _, c in ipairs(group) do
+		c:move_to_tag(awful.screen.focused().tags[i])
 	end
 end
 
-local function client_move_and_go_by_index(i)
-	if client.focus then
-		local tag = awful.screen.focused().tags[i]
-		client.focus:move_to_tag(tag)
-		tag:view_only()
-	end
+local function client_move_and_go_by_index(i, group)
+	local tag = awful.screen.focused().tags[i]
+	for _, c in ipairs(group) do c:move_to_tag(tag) end
+	tag:view_only()
 end
 
-local function client_toggle_by_index(i)
-	if client.focus then
-		client.focus:toggle_tag(awful.screen.focused().tags[i])
+local function client_toggle_by_index(i, group)
+	for _, c in ipairs(group) do
+		c:toggle_tag(awful.screen.focused().tags[i])
 	end
 end
 
@@ -134,6 +136,20 @@ local function tag_line_jump(colnum, is_down)
 	local i = screen.selected_tag.index
 	local tag = is_down and screen.tags[i + colnum] or screen.tags[i - colnum]
 	if tag then tag:view_only() end
+end
+
+-- swap clients between tag lines
+local function clients_swap_by_line(colnum)
+	local screen = awful.screen.focused()
+	local i = screen.selected_tag.index
+
+	local current_tag = screen.selected_tag
+	local next_tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
+
+	local cc = current_tag:clients()
+	local nc = next_tag:clients()
+	for _, c in ipairs(cc) do c:move_to_tag(next_tag) end
+	for _, c in ipairs(nc) do c:move_to_tag(current_tag) end
 end
 
 -- numeric keys function builders
@@ -173,13 +189,18 @@ function hotkeys:init(args)
 	local env = args.env
 	local mainmenu = args.menu
 	local appkeys = args.appkeys or {}
+
 	local tcn = args.tag_cols_num or 0
+	local mic = args.mic or {}
 
 	self.mouse.root = (awful.util.table.join(
 		awful.button({ }, 3, function () mainmenu:toggle() end),
 		awful.button({ }, 4, awful.tag.viewnext),
 		awful.button({ }, 5, awful.tag.viewprev)
 	))
+
+	-- config depending commands
+	local microphone_mute = function() redflat.widget.pulse:mute({ type = "source", sink = mic._sink }) end
 
 	-- Init widgets
 	redflat.float.qlaunch:init()
@@ -326,15 +347,19 @@ function hotkeys:init(args)
 
 	-- group
 	keyseq[3] = {
-		{ {}, "a", {}, {} }, -- wm management group
-		{ {}, "k", {}, {} }, -- application kill group
-		{ {}, "r", {}, {} }, -- client restore group
-		{ {}, "n", {}, {} }, -- client minimization group
-		{ {}, "f", {}, {} }, -- client moving group
-		{ {}, "s", {}, {} }, -- client switching group
-		{ {}, "d", {}, {} }, -- client move and tag switch group
-		{ {}, "u", {}, {} }, -- update info group
-		{ {}, "p", {}, {} }, -- client properties group
+		{ {}, "a", {}, {} }, -- wm management
+		{ {}, "k", {}, {} }, -- application kill
+		{ {}, "r", {}, {} }, -- client restore
+		{ {}, "n", {}, {} }, -- client minimization
+		{ {}, "f", {}, {} }, -- client moving
+		{ {}, "s", {}, {} }, -- client switching
+		{ {}, "d", {}, {} }, -- client move and tag switch
+		{ {}, "u", {}, {} }, -- update info
+		{ {}, "p", {}, {} }, -- client properties
+
+		{ { "Shift" }, "f", {}, {} }, -- clients moving group
+		{ { "Shift" }, "s", {}, {} }, -- clients switching group
+		{ { "Shift" }, "d", {}, {} }, -- clients move and tag switch group
 	}
 
 	-- wm management sequence actions
@@ -392,9 +417,9 @@ function hotkeys:init(args)
 	-- add client tag sequence actions (without description)
 	local kk = awful.util.table.join(numkeys, tagkeys)
 	for i, k in ipairs(kk) do
-		table.insert(keyseq[3][5][3], { {}, k, function() client_move_by_index(i)   end, {} })
-		table.insert(keyseq[3][6][3], { {}, k, function() client_toggle_by_index(i) end, {} })
-		table.insert(keyseq[3][7][3], { {}, k, function() client_move_and_go_by_index(i) end, {} })
+		table.insert(keyseq[3][5][3], { {}, k, function() client_move_by_index(i, { client.focus })        end, {} })
+		table.insert(keyseq[3][6][3], { {}, k, function() client_toggle_by_index(i, { client.focus })      end, {} })
+		table.insert(keyseq[3][7][3], { {}, k, function() client_move_and_go_by_index(i, { client.focus }) end, {} })
 	end
 
 	-- make fake keys with description special for key helper widget
@@ -450,6 +475,13 @@ function hotkeys:init(args)
 		},
 	}
 
+	-- add groups of clients tag sequence actions (hidden keys)
+	local kk = awful.util.table.join(numkeys, tagkeys)
+	for i, k in ipairs(kk) do
+		table.insert(keyseq[3][10][3], { {}, k, function() client_move_by_index(i, current_clients())        end, {} })
+		table.insert(keyseq[3][11][3], { {}, k, function() client_toggle_by_index(i, current_clients())      end, {} })
+		table.insert(keyseq[3][12][3], { {}, k, function() client_move_and_go_by_index(i, current_clients()) end, {} })
+	end
 
 	-- Layouts
 	--------------------------------------------------------------------------------
@@ -756,7 +788,7 @@ function hotkeys:init(args)
 			{ description = "Go to urgent client", group = "Client focus" }
 		},
 		{
-			{ env.mod }, "Tab", focus_to_previous,
+			{ env.mod }, "z", focus_to_previous,
 			{ description = "Go to previos client", group = "Client focus" }
 		},
 
@@ -783,7 +815,7 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "Escape", awful.tag.history.restore,
+			{ env.mod }, "Tab", awful.tag.history.restore,
 			{ description = "Go to previos tag", group = "Tag navigation" }
 		},
 		{
@@ -806,6 +838,10 @@ function hotkeys:init(args)
 			{ env.mod }, "space", function() tag_line_switch(tcn) end,
 			{ description = "Switch tag line", group = "Tag navigation" }
 		},
+		{
+			{ env.mod, "Control" }, "space", function() clients_swap_by_line(tcn) end,
+			{ description = "Swap clients between lines", group = "Tag navigation" }
+		},
 
 		{
 			{ env.mod }, "s", function() mainmenu:show() end,
@@ -820,7 +856,7 @@ function hotkeys:init(args)
 			{ description = "Prompt box", group = "Launchers" }
 		},
 		{
-			{ env.mod }, "F3", function() qlaunch:show() end,
+			{ env.mod }, "g", function() qlaunch:show() end,
 			{ description = "Application quick launcher", group = "Launchers" }
 		},
 
@@ -834,7 +870,11 @@ function hotkeys:init(args)
 		},
 		{
 			{}, "XF86AudioMute", volume_mute,
-			{ description = "Mute volume", group = "Volume control" }
+			{ description = "Mute audio", group = "Volume control" }
+		},
+		{
+			{ "Control" }, "XF86AudioMute", microphone_mute,
+			{ description = "Mute microphone", group = "Volume control" }
 		},
 
 		{

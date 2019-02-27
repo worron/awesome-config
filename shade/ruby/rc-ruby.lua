@@ -341,7 +341,10 @@ edges:init({ tag_cols_num = taglist.cols_num })
 local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheet
 
 local hotkeys = require("shade.ruby.keys-config") -- load file with hotkeys configuration
-hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys, tag_cols_num = taglist.cols_num })
+hotkeys:init({
+	env = env, menu = mymenu.mainmenu, appkeys = appkeys, tag_cols_num = taglist.cols_num,
+	mic = microphone.widget,
+ })
 
 
 -- Rules
