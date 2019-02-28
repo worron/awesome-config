@@ -229,6 +229,8 @@ theme.individual.microphone_audio = {
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
 
+theme.float.bartip.names = { "Mini", "Compact", "Full" }
+
 -- Set hotkey helper size according current fonts and keys scheme
 --------------------------------------------------------------------------------
 theme.float.hotkeys.geometry   = { width = 1420, height = 950 }
@@ -238,6 +240,21 @@ theme.float.top.keytip         = { geometry = { width = 400, height = 340 } }
 theme.float.apprunner.keytip   = { geometry = { width = 400, height = 340 } }
 theme.widget.upgrades.keytip   = { geometry = { width = 400, height = 360 } }
 theme.menu.keytip              = { geometry = { width = 400, height = 470 } }
+
+-- Titlebar
+-----------------------------------------------------------------------------------------------------------------------
+theme.titlebar.icon_mini = {
+	focus_margin = { 0, 0, 0, 6 },
+	color        = { icon = theme.color.gray, main = theme.color.main, urgent = theme.color.main },
+	gap          = 8,
+	list         = {
+		maximized = theme.path .. "/titlebar/maximized.svg",
+		minimized = theme.path .. "/titlebar/minimize.svg",
+		close     = theme.path .. "/titlebar/close.svg",
+		menu      = theme.path .. "/titlebar/menu.svg",
+		unknown   = theme.icon.unknown,
+	}
+}
 
 -- End
 -----------------------------------------------------------------------------------------------------------------------

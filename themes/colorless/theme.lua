@@ -948,7 +948,7 @@ function theme:init()
 		border_width  = 0,                            -- widget border widthj
 		font          = self.fonts.title,             -- widget font
 		set_position  = nil,                          -- placement function
-		names         = { "MINI", "PLAIN", "FULL" },  -- titlebar layout names
+		names         = { "Mini", "Plain", "Full" },  -- titlebar layout names
 		color         = self.color,                   -- colors (main used)
 
 		-- margin around widget elements
@@ -1054,7 +1054,7 @@ function theme:init()
 	}
 
 	-- application state marks settings
-	self.titlebar.mark = {
+	self.titlebar.mark_mini = {
 		color = self.color, -- colors (main used)
 		size  = 30, -- mark size
 		gap   = 10, -- space between marks
@@ -1062,7 +1062,7 @@ function theme:init()
 	}
 
 	-- application control icon settings
-	self.titlebar.icon = {
+	self.titlebar.icon_full = {
 		color = self.color, -- colors (main used)
 		gap   = 10,         -- space between icons
 

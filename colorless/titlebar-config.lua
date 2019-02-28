@@ -63,9 +63,9 @@ function titlebar:init()
 	style.iconic = redutil.table.merge(style.base, { size = 28 })
 
 	-- titlebar elements styles
-	style.mark_mini = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark or { gap = 10 }
+	style.mark_mini = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark_mini or { gap = 10 }
 	style.mark_full = redutil.table.merge(style.mark_mini, { size = 25, gap = 0, angle = 0.5 })
-	style.icon      = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon or { gap = 10 }
+	style.icon      = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon_full or { gap = 10 }
 
 	-- titlebar setup for clients
 	client.connect_signal(

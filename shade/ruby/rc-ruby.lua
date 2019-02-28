@@ -355,7 +355,7 @@ rules:init({ env = env, hotkeys = hotkeys })
 
 -- Titlebar setup
 -----------------------------------------------------------------------------------------------------------------------
-local titlebar = require("colorless.titlebar-config") -- load file with titlebar configuration
+local titlebar = require("shade.ruby.titlebar-config") -- load file with titlebar configuration
 titlebar:init()
 
 
