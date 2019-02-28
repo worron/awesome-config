@@ -698,7 +698,7 @@ function theme:init()
 		color          = self.color,                   -- colors (main used)
 
 		-- main menu style (see theme.menu)
-		menu = { width = 220, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
+		menu = { width = 200, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
 
 		-- tag action submenu style (see theme.menu)
 		tagmenu = { width = 160, color = { right_icon = self.color.icon, left_icon = self.color.icon },

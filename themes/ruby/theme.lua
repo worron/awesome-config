@@ -229,6 +229,7 @@ theme.individual.microphone_audio = {
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
 
+-- Titlebar helper
 theme.float.bartip.names = { "Mini", "Compact", "Full" }
 
 -- Set hotkey helper size according current fonts and keys scheme
