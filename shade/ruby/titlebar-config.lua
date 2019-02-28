@@ -74,7 +74,7 @@ function titlebar:init()
 	-- titlebar schemes
 	style.base    = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.base or {}
 	style.compact = redutil.table.merge(style.base, { size = 16 })
-	style.iconic  = redutil.table.merge(style.base, { size = 28 })
+	style.iconic  = redutil.table.merge(style.base, { size = 24 })
 
 	-- titlebar elements styles
 	style.mark_mini = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark_mini or { gap = 10 }
@@ -82,7 +82,7 @@ function titlebar:init()
 	style.icon_full = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon_full or { gap = 10 }
 	style.icon_mini = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon_mini or { gap = 8 }
 
-	redtitle._index = 2
+	redtitle._index = 1 -- choose default titlebar model
 
 	-- titlebar setup for clients
 	client.connect_signal(
@@ -157,16 +157,27 @@ function titlebar:init()
 			})
 
 			-- build titlebar model with control buttons
-			local title = redtitle.label(c, style.iconic)
+			local title = redtitle.label(c, style.iconic, true)
 			title:buttons(move_buttons)
 
+			local menu = redtitle.button.base("menu", style.icon_full)
+			menu:buttons(menu_buttons)
+
 			local focus_icon = redtitle.button.focus(c, style.icon_full)
-			focus_icon:buttons(menu_buttons)
 
 			local iconic = wibox.widget({
 				{
-					focus_icon,
-					title,
+					{
+						focus_icon,
+						menu,
+						spacing = style.icon_full.gap,
+						layout  = wibox.layout.fixed.horizontal()
+					},
+					top = 2, bottom = 2, left = 4, right = 20 * 3 + style.icon_full.gap * 2,
+					widget = wibox.container.margin
+				},
+				title,
+				{
 					{
 						redtitle.button.property(c, "floating", style.icon_full),
 						redtitle.button.property(c, "sticky", style.icon_full),
@@ -176,10 +187,11 @@ function titlebar:init()
 						spacing = style.icon_full.gap,
 						layout  = wibox.layout.fixed.horizontal()
 					},
-					layout = wibox.layout.align.horizontal,
+					top = 2, bottom = 2, right = 4,
+					widget = wibox.container.margin
 				},
-				top = 2, bottom = 2, left = 4, right = 4,
-				widget = wibox.container.margin
+
+				layout = wibox.layout.align.horizontal,
 			})
 
 			-- Set both models to titlebar

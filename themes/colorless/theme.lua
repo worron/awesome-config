@@ -956,12 +956,12 @@ function theme:init()
 
 		-- widget icons
 		icon          = {
-			title     = self.base .. "/common/window_control/title.svg",
-			active    = self.base .. "/common/window_control/active.svg",
-			hidden    = self.base .. "/common/window_control/hidden.svg",
-			disabled  = self.base .. "/common/window_control/disabled.svg",
-			absent    = self.icon.warning,
-			unknown   = self.icon.unknown,
+			title    = self.base .. "/common/window_control/title.svg",
+			active   = self.base .. "/common/window_control/active.svg",
+			hidden   = self.base .. "/common/window_control/hidden.svg",
+			disabled = self.base .. "/common/window_control/disabled.svg",
+			absent   = self.icon.warning,
+			unknown  = self.icon.unknown,
 		},
 
 		-- redflat key tip settings
@@ -1076,8 +1076,9 @@ function theme:init()
 			maximized = self.base .. "/common/window_control/maximized.svg",
 			minimized = self.base .. "/common/window_control/minimize.svg",
 			close     = self.base .. "/common/window_control/close.svg",
+			menu      = self.base .. "/common/window_control/menu.svg",
 
-			unknown   = self.icon.unknown,  -- this one used as fallback
+			unknown   = self.icon.unknown, -- this one used as fallback
 		}
 	}
 
