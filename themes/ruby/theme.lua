@@ -66,6 +66,10 @@ theme.desktop.common.pack.lines.tooltip.set_position = function(wibox)
 	wibox.y = wibox.y - 25
 end
 
+-- Upright bar (common part)
+theme.desktop.common.bar.shaped.show.tooltip = true
+theme.desktop.common.bar.shaped.tooltip.set_position = theme.desktop.common.pack.lines.tooltip.set_position
+
 -- Speedmeter (base widget)
 theme.desktop.speedmeter.compact.icon = {
 	up = theme.path .. "/desktop/up.svg",

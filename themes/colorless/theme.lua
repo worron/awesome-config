@@ -1155,6 +1155,7 @@ function theme:init()
 		autoscale = true,                    -- normalize chart values
 		maxm      = 1,                       -- the maximum allowed value
 		shape     = "corner",                -- progressbar chunk shape
+		show      = { tooltip = false },      -- show tooltip
 		color     = self.desktop.color,      -- color (desktop used)
 
 		-- element style
@@ -1163,6 +1164,9 @@ function theme:init()
 			line = 5,   -- element line width
 			height = 10 -- element height
 		},
+
+		-- tooltip style
+		tooltip = {},
 	}
 
 	-- Lines (group of progressbars with label in front and text value after it)
