@@ -1041,7 +1041,6 @@ function theme:init()
 	self.titlebar = {}
 
 	self.titlebar.base = {
-		size          = 8,                   -- titlebar height
 		position      = "top",               -- titlebar position
 		font          = self.fonts.titlebar, -- titlebar font
 		border_margin = { 0, 0, 0, 4 },      -- margins around titlebar active area
@@ -1049,17 +1048,13 @@ function theme:init()
 	}
 
 	-- application state marks settings
-	self.titlebar.mark_mini = {
+	self.titlebar.mark = {
 		color = self.color, -- colors (main used)
-		size  = 30, -- mark size
-		gap   = 10, -- space between marks
-		angle = 0   -- marks pitch angle
 	}
 
 	-- application control icon settings
-	self.titlebar.icon_full = {
+	self.titlebar.icon = {
 		color = self.color, -- colors (main used)
-		gap   = 10,         -- space between icons
 
 		-- icons list
 		list = {

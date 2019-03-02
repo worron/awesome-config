@@ -72,17 +72,30 @@ function titlebar:init()
 	local style = {}
 
 	-- titlebar schemes
-	style.base    = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.base or {}
+	style.base    = redutil.table.merge(redutil.table.check(beautiful, "titlebar.base") or {}, { size = 8 })
 	style.compact = redutil.table.merge(style.base, { size = 16 })
 	style.iconic  = redutil.table.merge(style.base, { size = 24 })
 
 	-- titlebar elements styles
-	style.mark_mini = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark_mini or { gap = 10 }
-	style.mark_compact = redutil.table.merge(style.mark_mini, { size = 20, gap = 6, angle = 0.707 })
-	style.icon_full = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon_full or { gap = 10 }
-	style.icon_mini = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon_mini or { gap = 8 }
+	style.mark_mini = redutil.table.merge(
+		redutil.table.check(beautiful, "titlebar.mark") or {},
+		{ size = 30, gap = 10, angle = 0 }
+	)
+	style.mark_compact = redutil.table.merge(
+		style.mark_mini,
+		{ size = 20, gap = 6, angle = 0.707 }
+	)
+	style.icon_full = redutil.table.merge(
+		redutil.table.check(beautiful, "titlebar.icon") or {},
+		{ gap = 10 }
+	)
 
-	redtitle._index = 1 -- choose default titlebar model
+	style.icon_compact = redutil.table.merge(
+		redutil.table.check(beautiful, "titlebar.icon_compact") or style.icon_full,
+		{ gap = 8 }
+	)
+
+	redtitle._index    = 1 -- choose default titlebar model
 
 	-- titlebar setup for clients
 	client.connect_signal(
@@ -114,7 +127,7 @@ function titlebar:init()
 			})
 
 			-- build compact titlebar model
-			local menu = redtitle.button.base("menu", style.icon_mini)
+			local menu = redtitle.button.base("menu", style.icon_compact)
 			menu:buttons(menu_buttons)
 
 			local compact = wibox.widget({
@@ -138,14 +151,14 @@ function titlebar:init()
 
 							layout  = wibox.layout.align.horizontal
 						},
-						top = 3, bottom = 3, right = style.icon_mini.gap + 2, left = style.icon_mini.gap + 2,
+						top = 3, bottom = 3, right = style.icon_compact.gap + 2, left = style.icon_compact.gap + 2,
 						layout = wibox.container.margin,
 					},
 					{
-						redtitle.button.property(c, "minimized", style.icon_mini),
-						redtitle.button.property(c, "maximized", style.icon_mini),
-						redtitle.button.close(c, style.icon_mini),
-						spacing = style.icon_mini.gap,
+						redtitle.button.property(c, "minimized", style.icon_compact),
+						redtitle.button.property(c, "maximized", style.icon_compact),
+						redtitle.button.close(c, style.icon_compact),
+						spacing = style.icon_compact.gap,
 						layout  = wibox.layout.fixed.horizontal()
 					},
 					buttons = move_buttons,
@@ -163,24 +176,21 @@ function titlebar:init()
 			local menu = redtitle.button.base("menu", style.icon_full)
 			menu:buttons(menu_buttons)
 
-			local focus_icon = redtitle.button.focus(c, style.icon_full)
-
 			local iconic = wibox.widget({
 				{
 					{
-						focus_icon,
+						redtitle.button.property(c, "floating", style.icon_full),
+						redtitle.button.property(c, "sticky", style.icon_full),
 						menu,
 						spacing = style.icon_full.gap,
 						layout  = wibox.layout.fixed.horizontal()
 					},
-					top = 2, bottom = 2, left = 4, right = 20 * 3 + style.icon_full.gap * 2,
+					top = 2, bottom = 2, left = 4,
 					widget = wibox.container.margin
 				},
 				title,
 				{
 					{
-						redtitle.button.property(c, "floating", style.icon_full),
-						redtitle.button.property(c, "sticky", style.icon_full),
 						redtitle.button.property(c, "minimized", style.icon_full),
 						redtitle.button.property(c, "maximized", style.icon_full),
 						redtitle.button.close(c, style.icon_full),

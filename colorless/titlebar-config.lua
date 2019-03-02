@@ -55,17 +55,21 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 function titlebar:init()
 
-	local style     = {}
+	local style = {}
 
 	-- titlebar schemes
-	style.base   = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.base or {}
-	style.full   = redutil.table.merge(style.base, { size = 28 })
-	style.iconic = redutil.table.merge(style.base, { size = 28 })
+	style.base   = redutil.table.merge(redutil.table.check(beautiful, "titlebar.base") or {}, { size = 8 })
+	style.iconic = redutil.table.merge(style.base, { size = 24 })
 
 	-- titlebar elements styles
-	style.mark_mini = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.mark_mini or { gap = 10 }
-	style.mark_full = redutil.table.merge(style.mark_mini, { size = 25, gap = 0, angle = 0.5 })
-	style.icon      = redutil.table.check(beautiful, "titlebar") and beautiful.titlebar.icon_full or { gap = 10 }
+	style.mark_mini = redutil.table.merge(
+		redutil.table.check(beautiful, "titlebar.mark") or {},
+		{ size = 30, gap = 10, angle = 0 }
+	)
+	style.icon = redutil.table.merge(
+		redutil.table.check(beautiful, "titlebar.icon") or {},
+		{ gap = 10 }
+	)
 
 	-- titlebar setup for clients
 	client.connect_signal(
@@ -94,32 +98,24 @@ function titlebar:init()
 				layout  = wibox.layout.align.horizontal,
 			})
 
-			-- build full sized titlebar model
-			local full  = wibox.widget({
-				redtitle.mark.focus(c, style.mark_full),
-				redtitle.label(c, style.full),
-				{
-					redtitle.mark.property(c, "floating", style.mark_full),
-					redtitle.mark.property(c, "sticky", style.mark_full),
-					redtitle.mark.property(c, "ontop", style.mark_full),
-					spacing = style.mark_full.gap,
-					layout = wibox.layout.fixed.horizontal()
-				},
-				buttons = buttons,
-				layout  = wibox.layout.align.horizontal,
-			})
-
 			-- build titlebar model with control buttons
-			local title = redtitle.label(c, style.iconic)
+			local title = redtitle.label(c, style.iconic, true)
 			title:buttons(buttons)
-
-			local focus_icon = redtitle.button.focus(c, style.icon)
-			focus_icon:buttons(buttons)
 
 			local iconic = wibox.widget({
 				{
-					focus_icon,
-					title,
+					{
+						redtitle.button.focus(c, style.icon),
+						redtitle.button.property(c, "ontop", style.icon),
+						redtitle.button.property(c, "below", style.icon),
+						spacing = style.icon.gap,
+						layout = wibox.layout.fixed.horizontal()
+					},
+					top = 1, bottom = 1, left = 4, right = style.icon.gap + 2 * 18,
+					widget = wibox.container.margin
+				},
+				title,
+				{
 					{
 						redtitle.button.property(c, "floating", style.icon),
 						redtitle.button.property(c, "sticky", style.icon),
@@ -129,16 +125,14 @@ function titlebar:init()
 						spacing = style.icon.gap,
 						layout = wibox.layout.fixed.horizontal()
 					},
-					--buttons = buttons,
-					layout = wibox.layout.align.horizontal,
+					top = 1, bottom = 1, right = 4,
+					widget = wibox.container.margin
 				},
-				top = 2, bottom = 2, left = 4, right = 4,
-				widget = wibox.container.margin
+				layout = wibox.layout.align.horizontal,
 			})
 
 			-- Set both models to titlebar
 			redtitle.add_layout(c, nil, base, style.base.size)
-			redtitle.add_layout(c, nil, full, style.full.size)
 			redtitle.add_layout(c, nil, iconic, style.iconic.size)
 			redtitle.switch(c, nil, redtitle._index)
 

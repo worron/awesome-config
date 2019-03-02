@@ -248,10 +248,8 @@ theme.menu.keytip              = { geometry = { width = 400, height = 470 } }
 
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------
-theme.titlebar.icon_mini = {
-	focus_margin = { 0, 0, 0, 6 },
+theme.titlebar.icon_compact = {
 	color        = { icon = theme.color.gray, main = theme.color.main, urgent = theme.color.main },
-	gap          = 8,
 	list         = {
 		maximized = theme.path .. "/titlebar/maximized.svg",
 		minimized = theme.path .. "/titlebar/minimize.svg",
