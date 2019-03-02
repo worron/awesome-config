@@ -108,7 +108,7 @@ function titlebar:init()
 			redtitle(c, style.base)
 
 			-- build mini titlebar model
-			local base = wibox.widget({
+			local base  = wibox.widget({
 				nil,
 				{
 					right  = style.mark_mini.gap,
@@ -127,12 +127,12 @@ function titlebar:init()
 			})
 
 			-- build compact titlebar model
-			local menu = redtitle.button.base("menu", style.icon_compact)
-			menu:buttons(menu_buttons)
+			local focus = redtitle.button.focus(c, style.icon_compact)
+			focus:buttons(menu_buttons)
 
 			local compact = wibox.widget({
 				{
-					menu,
+					focus,
 					{
 						{
 							{

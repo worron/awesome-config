@@ -254,7 +254,7 @@ theme.titlebar.icon_compact = {
 		maximized = theme.path .. "/titlebar/maximized.svg",
 		minimized = theme.path .. "/titlebar/minimize.svg",
 		close     = theme.path .. "/titlebar/close.svg",
-		menu      = theme.path .. "/titlebar/menu.svg",
+		focus     = theme.path .. "/titlebar/focus.svg",
 		unknown   = theme.icon.unknown,
 	}
 }
