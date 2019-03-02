@@ -260,7 +260,7 @@ awful.screen.connect_for_each_screen(
 				"Spare", "Full2", "Test", "Back", "Misc2", "Free"
 			},
 			s,
-			{ al[5], al[6], al[6], al[4], al[3], al[3], al[4], al[6], al[6], al[4], al[3], al[1] }
+			{ al[5], al[6], al[6], al[4], al[3], al[3], al[5], al[6], al[6], al[4], al[3], al[1] }
 		)
 
 		-- layoutbox widget

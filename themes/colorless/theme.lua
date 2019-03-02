@@ -998,13 +998,8 @@ function theme:init()
 		border_width = 0,                             -- widget border width
 		margin       = { 20, 20, 40, 40 },            -- margins around widget content
 		field        = nil,                           -- redflat text field style (see theme.float.decoration.field)
-
-		-- colors
-		color        = {
-			border  = self.color.border,
-			wibox   = self.color.wibox,
-			naughty = self.color.urgent,
-		},
+		naughty      = {},                            -- awesome notification style
+		color        = self.color,                    -- colors (main used)
 	}
 
 	-- Notify (redflat notification widget)
