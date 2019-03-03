@@ -22,6 +22,7 @@ theme.path = awful.util.get_configuration_dir() .. "themes/ruby"
 --------------------------------------------------------------------------------
 theme.panel_height = 38 -- panel height
 theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
+theme.desktopbg    = theme.path .. "/wallpaper/transparent.png"
 
 -- Setup parent theme settings
 --------------------------------------------------------------------------------
@@ -63,7 +64,7 @@ theme.desktop.common.pack.lines.line.height = 5
 theme.desktop.common.pack.lines.progressbar.chunk = { gap = 6, width = 16 }
 theme.desktop.common.pack.lines.tooltip.set_position = function(wibox)
 	awful.placement.under_mouse(wibox)
-	wibox.y = wibox.y - 25
+	wibox.y = wibox.y - 30
 end
 
 -- Upright bar (common part)

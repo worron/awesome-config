@@ -30,6 +30,7 @@ function env:init(args)
 	self.fm = args.fm or "nautilus"
 	self.home = os.getenv("HOME")
 	self.themedir = awful.util.get_configuration_dir() .. "themes/" .. theme
+	self.desktop_autohide = args.desktop_autohide or false
 
 	self.sloppy_focus = false
 	self.color_border = false
@@ -55,7 +56,7 @@ end
 --------------------------------------------------------------------------------
 env.wallpaper = function(s)
 	if beautiful.wallpaper then
-		if awful.util.file_readable(beautiful.wallpaper) then
+		if not env.desktop_autohide and awful.util.file_readable(beautiful.wallpaper) then
 			gears.wallpaper.maximized(beautiful.wallpaper, s, true)
 		else
 			gears.wallpaper.set(beautiful.color.bg)

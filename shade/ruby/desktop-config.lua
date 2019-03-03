@@ -4,8 +4,10 @@
 
 -- Grab environment
 local beautiful = require("beautiful")
---local awful = require("awful")
+local awful = require("awful")
 local redflat = require("redflat")
+local wibox = require("wibox")
+local gears = require("gears")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -20,11 +22,12 @@ local wa = mouse.screen.workarea
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-function desktop:init()
+function desktop:init(args)
 	if not beautiful.desktop then return end
 
-	--local args = args or {}
-	--local env = args.env
+	local args = args or {}
+	local env = args.env or {}
+	local autohide = env.desktop_autohide or false
 
 	-- placement
 	local grid = beautiful.desktop.grid
@@ -255,6 +258,42 @@ function desktop:init()
 	vnstat.widget = redflat.desktop.multiline(vnstat.args, vnstat.geometry, vnstat.style)
 
 	calendar.widget = redflat.desktop.calendar(calendar.args, calendar.geometry)
+
+	-- Alternative desktop setup
+	--------------------------------------------------------------------------------
+	if autohide then
+		local dlayout = wibox.layout.manual()
+
+		for _, o in ipairs({
+			calendar, netspeed, hddspeed, ssdspeed, transm, cpumem,
+			disks, qemu, vnstat, fan, thermal_chips, thermal_storage
+		}) do
+			dlayout:add_at(o.widget.wibox.widget, o.geometry)
+			o.widget.wibox.visible = false
+			o.widget.wibox:setup()
+		end
+
+		local dwibox = wibox({ type = "desktop", visible = true, bg = "#00000000", bgimage = beautiful.desktopbg })
+		dwibox:geometry(wa)
+		dwibox:set_widget(dlayout)
+
+		local function update_desktop()
+			local clients  = awful.screen.focused():get_clients()
+			dwibox.visible = #clients == 0
+		end
+
+		-- better way to check visible clients?
+		local client_signals = {
+			"property::sticky", "property::minimized",
+			"property::screen", "property::hidden",
+			"tagged", "untagged", "list"
+		}
+
+		local tag_signals = { "property::selected", "property::activated" }
+
+		for _, sg in ipairs(client_signals) do client.connect_signal(sg, update_desktop) end
+		for _, sg in ipairs(tag_signals) do tag.connect_signal(sg, update_desktop) end
+	end
 end
 
 -- End

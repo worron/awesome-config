@@ -28,7 +28,7 @@ require("colorless.ercheck-config") -- load file with error handling
 -- Setup theme and environment vars
 -----------------------------------------------------------------------------------------------------------------------
 local env = require("color.blue.env-config") -- load file with environment
-env:init({ theme = "ruby" })
+env:init({ theme = "ruby", desktop_autohide = true })
 
 
 -- Layouts setup
