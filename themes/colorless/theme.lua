@@ -1312,6 +1312,9 @@ function theme:init()
 		},
 	}
 
+	-- Individual styles for certain widgets
+	--------------------------------------------------------------------------------
+	self.individual = { desktop = {} }
 
 	-- Default awesome theme vars
 	--------------------------------------------------------------------------------

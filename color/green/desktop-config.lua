@@ -54,7 +54,7 @@ function desktop:init(args)
 		label     = "SOLID DRIVE"
 	}
 
-	ssdspeed.style = beautiful.desktop.individual.speedmeter.drive
+	ssdspeed.style = beautiful.individual.desktop.speedmeter.drive
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ function desktop:init(args)
 		label = "HARD DRIVE"
 	}
 
-	hddspeed.style = beautiful.desktop.individual.speedmeter.drive
+	hddspeed.style = beautiful.individual.desktop.speedmeter.drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ function desktop:init(args)
 		timeout = 2
 	}
 
-	cpumem.style = beautiful.desktop.individual.multimeter.cpumem
+	cpumem.style = beautiful.individual.desktop.multimeter.cpumem
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ function desktop:init(args)
 		timeout    = 5,
 	}
 
-	transm.style = beautiful.desktop.individual.multimeter.transmission
+	transm.style = beautiful.individual.desktop.multimeter.transmission
 
 	-- Disks
 	--------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ function desktop:init(args)
 		timeout = 300
 	}
 
-	disks.style = beautiful.desktop.individual.multiline.disks
+	disks.style = beautiful.individual.desktop.multiline.disks
 
 	-- Sensors parser setup
 	--------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ function desktop:init(args)
 		timeout = sensors_base_timeout,
 	}
 
-	thermal.style = beautiful.desktop.individual.singleline.thermal
+	thermal.style = beautiful.individual.desktop.singleline.thermal
 
 
 	-- Initialize all desktop widgets

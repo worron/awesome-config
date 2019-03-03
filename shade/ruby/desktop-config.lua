@@ -58,7 +58,7 @@ function desktop:init(args)
 		label          = "SOLID DRIVE"
 	}
 
-	ssdspeed.style = beautiful.desktop.individual.speedmeter.drive
+	ssdspeed.style = beautiful.individual.desktop.speedmeter.drive
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ function desktop:init(args)
 		label          = "HARD DRIVE"
 	}
 
-	hddspeed.style = beautiful.desktop.individual.speedmeter.drive
+	hddspeed.style = beautiful.individual.desktop.speedmeter.drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ function desktop:init(args)
 		timeout = 5
 	}
 
-	cpumem.style = beautiful.desktop.individual.multimeter.cpumem
+	cpumem.style = beautiful.individual.desktop.multimeter.cpumem
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ function desktop:init(args)
 		timeout    = 10,
 	}
 
-	transm.style = beautiful.desktop.individual.multimeter.transmission
+	transm.style = beautiful.individual.desktop.multimeter.transmission
 
 	-- Disks
 	--------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ function desktop:init(args)
 		timeout = 300
 	}
 
-	disks.style = beautiful.desktop.individual.multiline.storage
+	disks.style = beautiful.individual.desktop.multiline.storage
 
 	-- QEMU image (placed along with disks)
 	--------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ function desktop:init(args)
 		timeout = 600
 	}
 
-	qemu.style = beautiful.desktop.individual.multiline.images
+	qemu.style = beautiful.individual.desktop.multiline.images
 
 	-- Sensors parser setup
 	--------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ function desktop:init(args)
 		timeout = sensors_base_timeout,
 	}
 
-	thermal_chips.style = beautiful.desktop.individual.multiline.thermal
+	thermal_chips.style = beautiful.individual.desktop.multiline.thermal
 
 	-- Temperature indicator for storage devices
 	--------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ function desktop:init(args)
 		},
 		timeout = sensors_base_timeout,
 	}
-	fan.style = beautiful.desktop.individual.multiline.fan
+	fan.style = beautiful.individual.desktop.multiline.fan
 
 	-- traffic stat
 	--------------------------------------------------------------------------------
@@ -221,7 +221,7 @@ function desktop:init(args)
 		},
 		timeout = 900,
 	}
-	vnstat.style = beautiful.desktop.individual.multiline.vnstat
+	vnstat.style = beautiful.individual.desktop.multiline.vnstat
 
 	-- Calendar
 	--------------------------------------------------------------------------------

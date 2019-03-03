@@ -53,7 +53,7 @@ theme.desktop.places = {
 --------------------------------------------------------------------------------
 -- individual widget settings doesn't used by redflat module
 -- but grab directly from rc-files to rewrite base style
-theme.desktop.individual = { speedmeter = {}, multimeter = {}, multiline = {}, singleline = {} }
+theme.individual.desktop = { speedmeter = {}, multimeter = {}, multiline = {}, singleline = {} }
 
 -- Lines (common part)
 theme.desktop.common.pack.lines.label = { width = 68, draw = "by_width" }
@@ -64,7 +64,7 @@ theme.desktop.common.pack.lines.gap   = { text = 14, label = 14 }
 theme.desktop.speedmeter.normal.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
 
 -- Speedmeter drive (individual widget)
-theme.desktop.individual.speedmeter.drive = {
+theme.individual.desktop.speedmeter.drive = {
 	unit   = { { "B", -1 }, { "KB", 2 }, { "MB", 2048 } },
 }
 
@@ -75,24 +75,24 @@ theme.desktop.multimeter.upbar          = { width = 32, chunk = { num = 10, line
 theme.desktop.multimeter.lines.show     = { label = true, tooltip = false, text = true }
 
 -- Multimeter cpu and ram (individual widget)
-theme.desktop.individual.multimeter.cpumem = {
+theme.individual.desktop.multimeter.cpumem = {
 	labels = { "RAM", "SWAP" },
 }
 
 -- Multimeter transmission info (individual widget)
-theme.desktop.individual.multimeter.transmission = {
+theme.individual.desktop.multimeter.transmission = {
 	labels = { "SEED", "DNLD" },
 	unit   = { { "KB", -1 }, { "MB", 1024^1 } },
 }
 
 -- Multilines disks (individual widget)
-theme.desktop.individual.multiline.disks = {
+theme.individual.desktop.multiline.disks = {
 	unit  = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
 	lines = { show = { text = false } },
 }
 
 -- Singleline temperature (individual widget)
-theme.desktop.individual.singleline.thermal = {
+theme.individual.desktop.singleline.thermal = {
 	icon = theme.path .. "/desktop/fire.svg",
 	unit = { { "°C", -1 } },
 }

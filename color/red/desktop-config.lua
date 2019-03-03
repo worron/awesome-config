@@ -54,7 +54,7 @@ function desktop:init(args)
 		label     = "SOLID DRIVE"
 	}
 
-	ssdspeed.style = beautiful.desktop.individual.speedmeter.drive
+	ssdspeed.style = beautiful.individual.desktop.speedmeter.drive
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ function desktop:init(args)
 		label = "HARD DRIVE"
 	}
 
-	hddspeed.style = beautiful.desktop.individual.speedmeter.drive
+	hddspeed.style = beautiful.individual.desktop.speedmeter.drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ function desktop:init(args)
 		timeout = 2
 	}
 
-	cpumem.style = beautiful.desktop.individual.multimeter.cpumem
+	cpumem.style = beautiful.individual.desktop.multimeter.cpumem
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ function desktop:init(args)
 		timeout    = 5,
 	}
 
-	transm.style = beautiful.desktop.individual.multimeter.transmission
+	transm.style = beautiful.individual.desktop.multimeter.transmission
 
 	-- Disks
 	--------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ function desktop:init(args)
 		timeout = 300
 	}
 
-	disks.style = beautiful.desktop.individual.multiline.disks
+	disks.style = beautiful.individual.desktop.multiline.disks
 
 	-- Sensors parser setup
 	--------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ function desktop:init(args)
 		timeout = sensors_base_timeout,
 	}
 
-	thermalc.style = beautiful.desktop.individual.multiline.thermal
+	thermalc.style = beautiful.individual.desktop.multiline.thermal
 
 	-- hdd
 	local thermald = { geometry = wgeometry(grid, places.thermald, workarea) }
@@ -154,7 +154,7 @@ function desktop:init(args)
 		timeout = 10,
 	}
 
-	thermald.style = beautiful.desktop.individual.multiline.thermal
+	thermald.style = beautiful.individual.desktop.multiline.thermal
 
 	-- gpu
 	local thermalg = { geometry = wgeometry(grid, places.thermalg, workarea) }
@@ -163,7 +163,7 @@ function desktop:init(args)
 		timeout = 10,
 	}
 
-	thermalg.style = beautiful.desktop.individual.multiline.thermal
+	thermalg.style = beautiful.individual.desktop.multiline.thermal
 
 
 	-- Initialize all desktop widgets
