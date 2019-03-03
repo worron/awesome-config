@@ -4,10 +4,8 @@
 
 -- Grab environment
 local beautiful = require("beautiful")
-local awful = require("awful")
+--local awful = require("awful")
 local redflat = require("redflat")
-local wibox = require("wibox")
-local gears = require("gears")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -239,60 +237,35 @@ function desktop:init(args)
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
-	netspeed.widget = redflat.desktop.speedmeter.compact(netspeed.args, netspeed.geometry, netspeed.style)
-	ssdspeed.widget = redflat.desktop.speedmeter.compact(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
-	hddspeed.widget = redflat.desktop.speedmeter.compact(hddspeed.args, hddspeed.geometry, hddspeed.style)
+	netspeed.body = redflat.desktop.speedmeter.compact(netspeed.args, netspeed.style)
+	ssdspeed.body = redflat.desktop.speedmeter.compact(ssdspeed.args, ssdspeed.style)
+	hddspeed.body = redflat.desktop.speedmeter.compact(hddspeed.args, hddspeed.style)
 
-	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
-	transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
+	cpumem.body = redflat.desktop.multimeter(cpumem.args, cpumem.style)
+	transm.body = redflat.desktop.multimeter(transm.args, transm.style)
 
-	disks.widget  = redflat.desktop.multiline(disks.args, disks.geometry, disks.style)
-	qemu.widget  = redflat.desktop.multiline(qemu.args, qemu.geometry, qemu.style)
+	disks.body  = redflat.desktop.multiline(disks.args, disks.style)
+	qemu.body  = redflat.desktop.multiline(qemu.args, qemu.style)
 
-	thermal_chips.widget = redflat.desktop.multiline(thermal_chips.args, thermal_chips.geometry, thermal_chips.style)
-	thermal_storage.widget = redflat.desktop.multiline(
-		thermal_storage.args, thermal_storage.geometry, thermal_storage.style
-	)
+	thermal_chips.body = redflat.desktop.multiline(thermal_chips.args, thermal_chips.style)
+	thermal_storage.body = redflat.desktop.multiline(thermal_storage.args, thermal_storage.style)
 
-	fan.widget   = redflat.desktop.multiline(fan.args, fan.geometry, fan.style)
-	vnstat.widget = redflat.desktop.multiline(vnstat.args, vnstat.geometry, vnstat.style)
+	fan.body   = redflat.desktop.multiline(fan.args, fan.style)
+	vnstat.body = redflat.desktop.multiline(vnstat.args, vnstat.style)
 
-	calendar.widget = redflat.desktop.calendar(calendar.args, calendar.geometry)
+	calendar.body = redflat.desktop.calendar(calendar.args, calendar.style)
 
-	-- Alternative desktop setup
+	-- Desktop setup
 	--------------------------------------------------------------------------------
-	if autohide then
-		local dlayout = wibox.layout.manual()
+	local desktop_objects = {
+		calendar, netspeed, hddspeed, ssdspeed, transm, cpumem,
+		disks, qemu, vnstat, fan, thermal_chips, thermal_storage
+	}
 
-		for _, o in ipairs({
-			calendar, netspeed, hddspeed, ssdspeed, transm, cpumem,
-			disks, qemu, vnstat, fan, thermal_chips, thermal_storage
-		}) do
-			dlayout:add_at(o.widget.wibox.widget, o.geometry)
-			o.widget.wibox.visible = false
-			o.widget.wibox:setup()
-		end
-
-		local dwibox = wibox({ type = "desktop", visible = true, bg = "#00000000", bgimage = beautiful.desktopbg })
-		dwibox:geometry(wa)
-		dwibox:set_widget(dlayout)
-
-		local function update_desktop()
-			local clients  = awful.screen.focused():get_clients()
-			dwibox.visible = #clients == 0
-		end
-
-		-- better way to check visible clients?
-		local client_signals = {
-			"property::sticky", "property::minimized",
-			"property::screen", "property::hidden",
-			"tagged", "untagged", "list"
-		}
-
-		local tag_signals = { "property::selected", "property::activated" }
-
-		for _, sg in ipairs(client_signals) do client.connect_signal(sg, update_desktop) end
-		for _, sg in ipairs(tag_signals) do tag.connect_signal(sg, update_desktop) end
+	if not autohide then
+		redflat.util.desktop.build.static(desktop_objects)
+	else
+		redflat.util.desktop.build.dynamic(desktop_objects, nil, beautiful.desktopbg, args.buttons)
 	end
 end
 

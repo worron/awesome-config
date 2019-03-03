@@ -38,9 +38,11 @@ function desktop:init(args)
 
 	local main_layout = wibox.layout.fixed.vertical()
 
-	-- hilight settings
-	local colset = { light = {}, base = {}, diskp = {}, diskpf = {}, tcpu = {}, tgpu = {}, thdd = {},
-					 sspeed = {}, hspeed = {}, tspeed = {}, cores = {}}
+	-- highlight settings
+	local colset = {
+		light = {}, base = {}, diskp = {}, diskpf = {}, tcpu = {}, tgpu = {}, thdd = {},
+		sspeed = {}, hspeed = {}, tspeed = {}, cores = {}
+	}
 
 	colset.base[0] = style.color.icon
 	colset.light[0] = style.color.main
@@ -283,8 +285,10 @@ function desktop:init(args)
 		local values = {}
 		for i, set in ipairs({colset.sspeed, colset.hspeed}) do
 			if data[i][1] > 1 or data[i][2] > 1 then
-				values[i] = { rs_txt .. form_value(data[i][1], set, {}, hardwareset.unit) .. " and",
-							  ws_txt .. form_value(data[i][2], colset.sspeed, {}, hardwareset.unit) }
+				values[i] = {
+					rs_txt .. form_value(data[i][1], set, {}, hardwareset.unit) .. " and",
+					ws_txt .. form_value(data[i][2], colset.sspeed, {}, hardwareset.unit)
+				}
 			else
 				values[i] = { no_act_txt[i], (i == 2 and values[1][2] == "") and " either" or "" }
 			end

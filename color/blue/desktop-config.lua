@@ -18,11 +18,12 @@ local system = redflat.system
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
-function desktop:init()
+function desktop:init(args)
 	if not beautiful.desktop then return end
 
-	--local args = args or {}
-	--local env = args.env
+	local args = args or {}
+	local env = args.env or {}
+	local autohide = env.desktop_autohide or false
 
 	-- placement
 	local grid = beautiful.desktop.grid
@@ -143,13 +144,23 @@ function desktop:init()
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
-	netspeed.widget = redflat.desktop.speedmeter.normal(netspeed.args, netspeed.geometry, netspeed.style)
-	ssdspeed.widget = redflat.desktop.speedmeter.normal(ssdspeed.args, ssdspeed.geometry, ssdspeed.style)
-	hddspeed.widget = redflat.desktop.speedmeter.normal(hddspeed.args, hddspeed.geometry, hddspeed.style)
-	cpumem.widget = redflat.desktop.multimeter(cpumem.args, cpumem.geometry, cpumem.style)
-	transm.widget = redflat.desktop.multimeter(transm.args, transm.geometry, transm.style)
-	disks.widget = redflat.desktop.multiline(disks.args, disks.geometry, disks.style)
-	thermal.widget = redflat.desktop.singleline(thermal.args, thermal.geometry, thermal.style)
+	netspeed.body = redflat.desktop.speedmeter.normal(netspeed.args, netspeed.style)
+	ssdspeed.body = redflat.desktop.speedmeter.normal(ssdspeed.args, ssdspeed.style)
+	hddspeed.body = redflat.desktop.speedmeter.normal(hddspeed.args, hddspeed.style)
+	cpumem.body   = redflat.desktop.multimeter(cpumem.args, cpumem.style)
+	transm.body   = redflat.desktop.multimeter(transm.args, transm.style)
+	disks.body    = redflat.desktop.multiline(disks.args, disks.style)
+	thermal.body  = redflat.desktop.singleline(thermal.args, thermal.style)
+
+	-- Desktop setup
+	--------------------------------------------------------------------------------
+	local desktop_objects = { netspeed, hddspeed, ssdspeed, transm, cpumem, disks, thermal }
+
+	if not autohide then
+		redflat.util.desktop.build.static(desktop_objects)
+	else
+		redflat.util.desktop.build.dynamic(desktop_objects, nil, beautiful.desktopbg, args.buttons)
+	end
 end
 
 -- End
