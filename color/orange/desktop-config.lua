@@ -23,7 +23,9 @@ function desktop:init(args)
 	if not beautiful.desktop then return end
 
 	local args = args or {}
+	local env = args.env or {}
 	local style = { color = beautiful.desktop.color }
+	local autohide = env.desktop_autohide or false
 
 	-- Setting and placement
 	--------------------------------------------------------------------------------
@@ -32,9 +34,6 @@ function desktop:init(args)
 		width  = workarea.width  - (gap.x[1] + gap.x[2]), x = workarea.x + gap.x[1],
 		height = workarea.height - (gap.y[1] + gap.y[2]), y = workarea.y + gap.y[1],
 	}
-
-	local desktopbox = wibox({ type = "desktop", visible = true, bg = style.color.wibox })
-	desktopbox:geometry(geometry)
 
 	local main_layout = wibox.layout.fixed.vertical()
 
@@ -331,8 +330,8 @@ function desktop:init(args)
 
 			local tlist = {}
 			for i, t in ipairs(data.bars) do
-				if tonumber(t) < 100 then
-					if i <= torrset.nactive then tlist[#tlist + 1] = string.format(" %s%%", t) end
+				if tonumber(t.value) < 100 then
+					if i <= torrset.nactive then tlist[#tlist + 1] = string.format(" %s%%", t.value) end
 				end
 			end
 			if #tlist > 0 then values[5] = { recolor(table.concat(tlist), style.color.main) } end
@@ -349,8 +348,15 @@ function desktop:init(args)
 		main_layout:add(field.box)
 	end
 
-	desktopbox:set_widget(main_layout)
-	if args.buttons then main_layout:buttons(args.buttons) end
+	if not autohide then
+		local desktopbox = wibox({ type = "desktop", visible = true, bg = style.color.wibox })
+		desktopbox:geometry(geometry)
+		desktopbox:set_widget(main_layout)
+		if args.buttons then main_layout:buttons(args.buttons) end
+	else
+		local object = { geometry = geometry, body = { area = main_layout} }
+		redflat.util.desktop.build.dynamic({ object }, nil, beautiful.desktopbg, args.buttons)
+	end
 end
 
 -- End
