@@ -179,9 +179,9 @@ function titlebar:init()
 			local iconic = wibox.widget({
 				{
 					{
+						menu,
 						redtitle.button.property(c, "floating", style.icon_full),
 						redtitle.button.property(c, "sticky", style.icon_full),
-						menu,
 						spacing = style.icon_full.gap,
 						layout  = wibox.layout.fixed.horizontal()
 					},

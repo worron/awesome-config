@@ -584,7 +584,7 @@ function theme:init()
 			-- wibox icons
 			icon         = {
 				package = self.icon.system,                                -- main wibox image
-				close   = self.base .. "/common/window_control/close.svg", -- close button
+				close   = self.base .. "/titlebar/close.svg", -- close button
 				normal  = self.icon.system,                                -- regular notification
 				daily   = self.icon.system,                                -- defer notification for day
 				weekly  = self.icon.system,                                -- defer notification for 7 day
@@ -711,15 +711,15 @@ function theme:init()
 
 	-- menu icons
 	self.widget.tasklist.winmenu.icon = {
-		floating             = self.base .. "/common/window_control/floating.svg",
-		sticky               = self.base .. "/common/window_control/pin.svg",
-		ontop                = self.base .. "/common/window_control/ontop.svg",
-		below                = self.base .. "/common/window_control/below.svg",
-		close                = self.base .. "/common/window_control/close.svg",
-		minimize             = self.base .. "/common/window_control/minimize.svg",
-		maximized            = self.base .. "/common/window_control/maximized.svg",
+		floating  = self.base .. "/titlebar/floating.svg",
+		sticky    = self.base .. "/titlebar/pin.svg",
+		ontop     = self.base .. "/titlebar/ontop.svg",
+		below     = self.base .. "/titlebar/below.svg",
+		close     = self.base .. "/titlebar/close.svg",
+		minimize  = self.base .. "/titlebar/minimize.svg",
+		maximized = self.base .. "/titlebar/maximized.svg",
 
-		unknown              = self.icon.unknown,  -- this one used as fallback
+		unknown   = self.icon.unknown, -- this one used as fallback
 	}
 
 	-- multiline task element tip
@@ -956,11 +956,11 @@ function theme:init()
 
 		-- widget icons
 		icon          = {
-			title    = self.base .. "/common/window_control/title.svg",
-			active   = self.base .. "/common/window_control/active.svg",
-			hidden   = self.base .. "/common/window_control/hidden.svg",
-			disabled = self.base .. "/common/window_control/disabled.svg",
-			absent   = self.icon.warning,
+			title    = self.base .. "/titlebar/title.svg",
+			active   = self.base .. "/titlebar/active.svg",
+			hidden   = self.base .. "/titlebar/hidden.svg",
+			disabled = self.base .. "/titlebar/disabled.svg",
+			absent   = self.base .. "/titlebar/absent.svg",
 			unknown  = self.icon.unknown,
 		},
 
@@ -1058,15 +1058,15 @@ function theme:init()
 
 		-- icons list
 		list = {
-			focus     = self.base .. "/common/window_control/focus.svg",
-			floating  = self.base .. "/common/window_control/floating.svg",
-			ontop     = self.base .. "/common/window_control/ontop.svg",
-			below     = self.base .. "/common/window_control/below.svg",
-			sticky    = self.base .. "/common/window_control/pin.svg",
-			maximized = self.base .. "/common/window_control/maximized.svg",
-			minimized = self.base .. "/common/window_control/minimize.svg",
-			close     = self.base .. "/common/window_control/close.svg",
-			menu      = self.base .. "/common/window_control/menu.svg",
+			focus     = self.base .. "/titlebar/focus.svg",
+			floating  = self.base .. "/titlebar/floating.svg",
+			ontop     = self.base .. "/titlebar/ontop.svg",
+			below     = self.base .. "/titlebar/below.svg",
+			sticky    = self.base .. "/titlebar/pin.svg",
+			maximized = self.base .. "/titlebar/maximized.svg",
+			minimized = self.base .. "/titlebar/minimize.svg",
+			close     = self.base .. "/titlebar/close.svg",
+			menu      = self.base .. "/titlebar/menu.svg",
 
 			unknown   = self.icon.unknown, -- this one used as fallback
 		}
