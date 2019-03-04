@@ -800,11 +800,11 @@ function theme:init()
 
 	-- widget icons
 	self.float.player.icon = {
-		cover   = self.base .. "/common/player/cover.svg",
-		next_tr = self.base .. "/common/player/next.svg",
-		prev_tr = self.base .. "/common/player/previous.svg",
-		play    = self.base .. "/common/player/play.svg",
-		pause   = self.base .. "/common/player/pause.svg"
+		cover   = self.base .. "/player/cover.svg",
+		next_tr = self.base .. "/player/next.svg",
+		prev_tr = self.base .. "/player/previous.svg",
+		play    = self.base .. "/player/play.svg",
+		pause   = self.base .. "/player/pause.svg"
 	}
 
 	-- Top processes
