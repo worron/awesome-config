@@ -6,6 +6,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 
+local redutil  = require("redflat.util")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -50,6 +51,11 @@ function signals:init(args)
 			   and not c.size_hints.program_position
 			then
 				awful.placement.no_offscreen(c)
+			end
+
+			-- put new floating windows to the center of screen
+			if env.set_center and c.floating then
+				redutil.placement.centered(c, nil, mouse.screen.workarea)
 			end
 		end
 	)

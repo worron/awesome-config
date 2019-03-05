@@ -30,11 +30,13 @@ function env:init(args)
 	self.fm = args.fm or "nautilus"
 	self.home = os.getenv("HOME")
 	self.themedir = awful.util.get_configuration_dir() .. "themes/" .. theme
-	self.desktop_autohide = args.desktop_autohide or false
 
-	self.sloppy_focus = false
-	self.color_border = false
-	self.set_slave = true
+	-- boolean defaults is pain
+	self.sloppy_focus = args.sloppy_focus or false
+	self.color_border_focus = args.color_border_focus or false
+	self.set_slave = args.set_slave == nil and true or false
+	self.desktop_autohide = args.desktop_autohide or false
+	self.set_center = args.set_center or false
 
 	-- theme setup
 	beautiful.init(env.themedir .. "/theme.lua")
@@ -77,7 +79,7 @@ end
 -- Panel widgets wrapper
 --------------------------------------------------------------------------------
 env.wrapper = function(widget, name, buttons)
-	local margin = redflat.util.table.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name]
+	local margin = redflat.util.table.check(beautiful, "widget.wrapper")
 	               and beautiful.widget.wrapper[name] or { 0, 0, 0, 0 }
 	if buttons then
 		widget:buttons(buttons)
