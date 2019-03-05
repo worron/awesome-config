@@ -570,7 +570,7 @@ function theme:init()
 		keytip      = { geometry = { width = 400, height = 340 } },
 
 		-- tooltips style
-		tooltip     = { base = {}, state = { timeout = 2 } },
+		tooltip     = { base = {}, state = { timeout = 1 } },
 
 		-- wibox style settings
 		wibox = {
@@ -583,12 +583,12 @@ function theme:init()
 
 			-- wibox icons
 			icon         = {
-				package = self.icon.system,                                -- main wibox image
+				package = self.icon.system,                   -- main wibox image
 				close   = self.base .. "/titlebar/close.svg", -- close button
-				normal  = self.icon.system,                                -- regular notification
-				daily   = self.icon.system,                                -- defer notification for day
-				weekly  = self.icon.system,                                -- defer notification for 7 day
-				silent  = self.icon.system,                                -- disable notification
+				normal  = self.icon.system,                   -- regular notification
+				daily   = self.icon.system,                   -- defer notification for day
+				weekly  = self.icon.system,                   -- defer notification for 7 day
+				silent  = self.icon.system,                   -- disable notification
 			},
 
 			-- widget areas height
@@ -601,7 +601,7 @@ function theme:init()
 			margin = {
 				close = { 0, 0, 6, 6 },         -- close button
 				title = { 16 + 2*6, 16, 4, 0 }, -- titlebar area
-				state = { 4, 4, 4, 12 },       -- control icon area
+				state = { 4, 4, 4, 12 },        -- control icon area
 				image = { 0, 0, 2, 4 },         -- main wibox image area
 			},
 		}

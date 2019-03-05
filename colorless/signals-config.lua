@@ -54,7 +54,7 @@ function signals:init(args)
 			end
 
 			-- put new floating windows to the center of screen
-			if env.set_center and c.floating then
+			if env.set_center and c.floating and not (c.maximized or c.fullscreen) then
 				redutil.placement.centered(c, nil, mouse.screen.workarea)
 			end
 		end
