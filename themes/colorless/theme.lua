@@ -208,6 +208,7 @@ function theme:init()
 		font         = self.fonts.menu,   -- menu font
 		submenu_icon = self.icon.submenu, -- icon for submenu items
 		keytip       = { geometry = { width = 400, height = 460 } }, -- hotkeys helper settings
+		shape        = nil, -- wibox shape
 		svg_scale    = { false, false }, -- use vector scaling for left, right icons in menu item
 	}
 
@@ -516,6 +517,7 @@ function theme:init()
 		border_width = 0,  -- floating widget border width
 		geometry     = { height = 40 }, -- floating widget size
 		screen_gap   = 2 * self.useless_gap, -- minimal space from screen edge on floating widget placement
+		shape        = nil, -- wibox shape
 		color        = { wibox = self.color.wibox, border = self.color.wibox },
 
 		-- function to define floating widget position when shown
@@ -579,6 +581,7 @@ function theme:init()
 			title_font   = self.fonts.title,              -- widget title font
 			tip_font     = self.fonts.tiny,               -- widget state tip font
 			separator    = {},                            -- redflat separator style (see theme.gauge.separator)
+			shape        = nil,                           -- wibox shape
 			set_position = nil,                           -- set_position
 
 			-- wibox icons
@@ -727,6 +730,7 @@ function theme:init()
 		border_width = 2,                -- tip border width
 		margin       = { 10, 10, 5, 5 }, -- margins around text in tip lines
 		timeout      = 0.5,              -- hide timeout
+		shape        = nil,              -- wibox shape
 		sl_highlight = false,            -- highlight application state when it's single line tip
 		color = self.color,              -- colors (main used)
 	}
@@ -789,6 +793,7 @@ function theme:init()
 		border_width    = 0,                             -- widget border width
 		timeout         = 1,                             -- widget update timeout
 		set_position    = nil,                           -- set_position
+		shape           = nil,                           -- wibox shape
 		color           = self.color,                    -- color (main used)
 
 		-- volume dash style (see theme.gauge.graph.dash)
@@ -820,6 +825,7 @@ function theme:init()
 		list_side_gap = 8,                             -- left/rigth borger margin for processes list
 		title_font    = self.fonts.title,              -- widget title font
 		timeout       = 2,                             -- widget update timeout
+		shape         = nil,                           -- wibox shape
 		color         = self.color,                    -- color (main used)
 
 		-- list columns width
@@ -845,6 +851,7 @@ function theme:init()
 		border_width  = 0,                                 -- widget border width
 		parser        = {},                                -- desktop file parser settings (see theme.service.dfparser)
 		field         = nil,                               -- redflat text field style(see theme.float.decoration.field)
+		shape         = nil,                               -- wibox shape
 		color         = self.color,                        -- colors (main used)
 
 		name_font     = self.fonts.title,     -- application title font
@@ -864,6 +871,7 @@ function theme:init()
 		title_height    = 40,  -- height of widget title line (application name and tag name)
 		icon_size       = 96,  -- size of the application icon in preview area
 		preview_gap     = 20,  -- gap between preview areas
+		shape           = nil, -- wibox shape
 		parser          = {},  -- desktop file parser settings (see theme.service.dfparser)
 
 		border_margin   = { 10, 10, 0, 10 },  -- margins around widget content
@@ -897,6 +905,7 @@ function theme:init()
 		border_margin = { 5, 5, 12, 15 },    -- margins around widget content
 		parser        = {},                  -- desktop file parser settings (see theme.service.dfparser)
 		notify        = {},                  -- redflat notify style (see theme.float.notify)
+		shape         = nil,                 -- wibox shape
 		recoloring    = false,               -- apply redflat recoloring feature on application icons
 		label_font    = self.fonts.qlaunch,  -- font of application mark(key)
 		color         = self.color,          -- colors (main used)
@@ -937,6 +946,7 @@ function theme:init()
 		font          = self.fonts.hotkeys.main,        -- keys description font
 		keyfont       = self.fonts.hotkeys.key,         -- keys font
 		titlefont     = self.fonts.hotkeys.title,       -- widget title font
+		shape         = nil,                            -- wibox shape
 		color         = self.color                      -- colors (main used)
 	}
 
@@ -948,6 +958,7 @@ function theme:init()
 		border_width  = 0,                            -- widget border widthj
 		font          = self.fonts.title,             -- widget font
 		set_position  = nil,                          -- placement function
+		shape         = nil,                          -- wibox shape
 		names         = { "Mini", "Plain", "Full" },  -- titlebar layout names
 		color         = self.color,                   -- colors (main used)
 
@@ -974,6 +985,7 @@ function theme:init()
 		geometry        = { width = 250, height = 56 }, -- default widget size
 		font            = self.fonts.keychain,          -- widget font
 		border_width    = 2,                            -- widget border width
+		shape           = nil,                          -- wibox shape
 		color           = self.color,                   -- colors (main used)
 
 		-- redflat key tip settings
@@ -985,6 +997,7 @@ function theme:init()
 	self.float.tooltip = {
 		margin       = { 6, 6, 3, 3 },     -- margins around widget content
 		timeout      = 0,                  -- show delay
+		shape        = nil,                -- wibox shapea
 		font         = self.fonts.tooltip, -- widget font
 		border_width = 2,                  -- widget border width
 		set_position = nil,                -- function to setup tooltip position when shown
@@ -998,6 +1011,7 @@ function theme:init()
 		border_width = 0,                             -- widget border width
 		margin       = { 20, 20, 40, 40 },            -- margins around widget content
 		field        = nil,                           -- redflat text field style (see theme.float.decoration.field)
+		shape        = nil,                           -- wibox shape
 		naughty      = {},                            -- awesome notification style
 		color        = self.color,                    -- colors (main used)
 	}
@@ -1013,6 +1027,7 @@ function theme:init()
 		icon            = self.icon.warning,             -- default widget icon
 		border_width    = 0,                             -- widget border width
 		timeout         = 5,                             -- hide timeout
+		shape           = nil,                           -- wibox shape
 		color           = self.color,                    -- colors (main used)
 
 		-- progressbar is optional element used for some notifications
