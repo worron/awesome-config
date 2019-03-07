@@ -190,7 +190,7 @@ theme.widget.wrapper = {
 	ram         = { 2, 2, 7, 7 },
 	battery     = { 3, 9, 7, 7 },
 	network     = { 4, 4, 7, 7 },
-	upgrades    = { 6, 6, 6, 6 },
+	updates    = { 6, 6, 6, 6 },
 	taglist     = { 4, 4, 5, 4 },
 	tasklist    = { 10, 0, 0, 0 }, -- centering tasklist widget
 }
@@ -202,7 +202,7 @@ theme.widget.wrapper = {
 --theme.gauge.graph.dots.dot_gap_h = 5
 
 -- System updates indicator
-theme.widget.upgrades.icon = theme.path .. "/widget/upgrades.svg"
+theme.widget.updates.icon = theme.path .. "/widget/updates.svg"
 
 -- Audio
 theme.gauge.audio.blue.dash.plain = true
@@ -243,7 +243,7 @@ theme.float.appswitcher.keytip = { geometry = { width = 400, height = 320 }, exi
 theme.float.keychain.keytip    = { geometry = { width = 1020, height = 525 }, column = 2 }
 theme.float.top.keytip         = { geometry = { width = 400, height = 340 } }
 theme.float.apprunner.keytip   = { geometry = { width = 400, height = 340 } }
-theme.widget.upgrades.keytip   = { geometry = { width = 400, height = 360 } }
+theme.widget.updates.keytip   = { geometry = { width = 400, height = 360 } }
 theme.menu.keytip              = { geometry = { width = 400, height = 470 } }
 
 -- Titlebar

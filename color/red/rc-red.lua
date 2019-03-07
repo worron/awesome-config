@@ -86,15 +86,15 @@ textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat =
 
 -- Software update indcator
 --------------------------------------------------------------------------------
-redflat.widget.upgrades:init({ command = env.upgrades })
+redflat.widget.updates:init({ command = env.updates })
 
-local upgrades = {}
-upgrades.widget = redflat.widget.upgrades()
+local updates = {}
+updates.widget = redflat.widget.updates()
 
-upgrades.buttons = awful.util.table.join(
+updates.buttons = awful.util.table.join(
 	awful.button({ }, 1, function () mymenu.mainmenu:toggle() end),
-	awful.button({ }, 2, function () redflat.widget.upgrades:update(true) end),
-	awful.button({ }, 3, function () redflat.widget.upgrades:toggle() end)
+	awful.button({ }, 2, function () redflat.widget.updates:update(true) end),
+	awful.button({ }, 3, function () redflat.widget.updates:toggle() end)
 )
 
 -- Layoutbox configure
@@ -237,7 +237,7 @@ awful.screen.connect_for_each_screen(
 
 				env.wrapper(taglist[s], "taglist"),
 				separator,
-				env.wrapper(upgrades.widget, "upgrades", upgrades.buttons),
+				env.wrapper(updates.widget, "updates", updates.buttons),
 				separator,
 				env.wrapper(kbindicator.widget, "keyboard", kbindicator.buttons),
 				separator,

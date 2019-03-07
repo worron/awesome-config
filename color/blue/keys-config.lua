@@ -660,8 +660,8 @@ function hotkeys:init(args)
 			{ description = "Show minitray", group = "Widgets" }
 		},
 		{
-			{ env.mod, "Control" }, "u", function() redflat.widget.upgrades:update(true) end,
-			{ description = "Check available upgrades", group = "Widgets" }
+			{ env.mod, "Control" }, "u", function() redflat.widget.updates:update(true) end,
+			{ description = "Check available updates", group = "Widgets" }
 		},
 		{
 			{ env.mod }, "F3", function() qlaunch:show() end,

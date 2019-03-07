@@ -561,7 +561,7 @@ function theme:init()
 
 	-- System updates indicator
 	------------------------------------------------------------
-	self.widget.upgrades = {
+	self.widget.updates = {
 		icon        = self.icon.system,  -- widget icon
 		notify      = {},                -- redflat notify style (see theme.float.notify)
  		need_notify = true,              -- show notification on updates

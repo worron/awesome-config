@@ -30,7 +30,7 @@ function env:init(args)
 	self.fm = args.fm or "nemo"
 	self.mail = args.mail or "thunderbird"
 	self.player = args.player or "exaile"
-	self.upgrades = args.upgrades or "bash -c 'pacman -Qu | grep -v ignored | wc -l'"
+	self.updates = args.updates or "bash -c 'pacman -Qu | grep -v ignored | wc -l'"
 	self.home = os.getenv("HOME")
 	self.themedir = awful.util.get_configuration_dir() .. "themes/" .. self.theme
 

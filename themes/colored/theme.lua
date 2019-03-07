@@ -71,11 +71,11 @@ theme.wicon = {
 	mute       = theme.path .. "/widget/mute.svg",
 	up         = theme.path .. "/widget/up.svg",
 	down       = theme.path .. "/widget/down.svg",
-	upgrades   = {
-		normal = theme.path .. "/widget/upgrades/normal.svg",
-		silent = theme.path .. "/widget/upgrades/silent.svg",
-		weekly = theme.path .. "/widget/upgrades/weekly.svg",
-		daily = theme.path .. "/widget/upgrades/daily.svg",
+	updates   = {
+		normal = theme.path .. "/widget/updates/normal.svg",
+		silent = theme.path .. "/widget/updates/silent.svg",
+		weekly = theme.path .. "/widget/updates/weekly.svg",
+		daily = theme.path .. "/widget/updates/daily.svg",
 	},
 }
 
@@ -143,12 +143,12 @@ function theme:update()
 
 	-- System updates indicator
 	------------------------------------------------------------
-	self.widget.upgrades.notify = { icon = self.wicon.package }
-	self.widget.upgrades.wibox.icon.package = self.wicon.package
-	self.widget.upgrades.wibox.icon.normal = self.wicon.upgrades.normal
-	self.widget.upgrades.wibox.icon.silent = self.wicon.upgrades.silent
-	self.widget.upgrades.wibox.icon.weekly = self.wicon.upgrades.weekly
-	self.widget.upgrades.wibox.icon.daily = self.wicon.upgrades.daily
+	self.widget.updates.notify = { icon = self.wicon.package }
+	self.widget.updates.wibox.icon.package = self.wicon.package
+	self.widget.updates.wibox.icon.normal = self.wicon.updates.normal
+	self.widget.updates.wibox.icon.silent = self.wicon.updates.silent
+	self.widget.updates.wibox.icon.weekly = self.wicon.updates.weekly
+	self.widget.updates.wibox.icon.daily = self.wicon.updates.daily
 
 	-- Layoutbox
 	------------------------------------------------------------

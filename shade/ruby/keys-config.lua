@@ -272,14 +272,14 @@ function hotkeys:init(args)
 	------------------------------------------------------------
 	local updates_keys_action = {
 		{
-			{ env.mod }, ",", function() redflat.widget.upgrades:hide() end,
+			{ env.mod }, ",", function() redflat.widget.updates:hide() end,
 			{ description = "Close updates widget", group = "Action" }
 		},
 	}
 
 	-- close widget by the same key as showing
-	redflat.widget.upgrades:set_keys(
-		awful.util.table.join(redflat.widget.upgrades.keys.action, updates_keys_action), "action"
+	redflat.widget.updates:set_keys(
+		awful.util.table.join(redflat.widget.updates.keys.action, updates_keys_action), "action"
 	)
 
 	-- Top process list
@@ -446,8 +446,8 @@ function hotkeys:init(args)
 	-- widget info update commands
 	keyseq[3][8][3] = {
 		{
-			{}, "u", function() redflat.widget.upgrades:update(true) end,
-			{ description = "Check available upgrades", group = "Update info", keyset = { "u" } }
+			{}, "u", function() redflat.widget.updates:update(true) end,
+			{ description = "Check available updates", group = "Update info", keyset = { "u" } }
 		},
 		{
 			{}, "m", function() redflat.widget.mail:update(true) end,
@@ -797,7 +797,7 @@ function hotkeys:init(args)
 			{ description = "Top process list", group = "Widgets" }
 		},
 		{
-			{ env.mod }, ",", function() redflat.widget.upgrades:show() end,
+			{ env.mod }, ",", function() redflat.widget.updates:show() end,
 			{ description = "System updates info", group = "Widgets" }
 		},
 		{

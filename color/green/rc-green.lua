@@ -86,7 +86,7 @@ textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat =
 
 -- Software update indcator
 --------------------------------------------------------------------------------
-redflat.widget.upgrades:init({ command = env.upgrades })
+redflat.widget.updates:init({ command = env.updates })
 
 -- Layoutbox configure
 --------------------------------------------------------------------------------

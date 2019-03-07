@@ -125,7 +125,7 @@ theme.widget.wrapper = {
 	textclock   = { 4, 20, 0, 0 },
 	layoutbox   = { 4, 4, 9, 9 },
 	volume      = { 4, 4, 5, 5 },
-	upgrades    = { 4, 4, 9, 9 },
+	updates    = { 4, 4, 9, 9 },
 	keyboard    = { 4, 4, 5, 5 },
 	mail        = { 4, 4, 5, 5 },
 	battery     = { 3, 3, 0, 0 },
@@ -193,7 +193,7 @@ theme.widget.tasklist.appnames["Mcomix"              ] = "CMX"
 theme.widget.tasklist.appnames["Claws-mail"          ] = "CML"
 
 -- System updates indicator
-theme.widget.upgrades.icon = theme.icon.awesome
+theme.widget.updates.icon = theme.icon.awesome
 
 -- Minitray
 theme.widget.minitray.geometry = { height = 50 }
