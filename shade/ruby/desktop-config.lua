@@ -267,6 +267,8 @@ function desktop:init(args)
 	else
 		redflat.util.desktop.build.dynamic(desktop_objects, nil, beautiful.desktopbg, args.buttons)
 	end
+
+	calendar.body:activate_wibox(calendar.wibox)
 end
 
 -- End
