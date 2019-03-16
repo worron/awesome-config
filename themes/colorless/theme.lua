@@ -238,10 +238,11 @@ function theme:init()
 	-- Plain monitor (label and progressbar below)
 	--------------------------------------------------------------
 	self.gauge.monitor.plain = {
-		width      = nil,                         -- widget width
+		width      = 50,                          -- widget width
 		font       = self.cairo_fonts.tag,        -- widget font
 		text_shift = 19,                          -- shift from upper border of widget to lower border of text
 		label      = "MON",                       -- widget text
+		step       = 0.05,                        -- progressbar painting step
 		line       = { height = 4, y = 27 },      -- progressbar style
 		color      = self.color                   -- colors (main used)
 	}
@@ -277,6 +278,7 @@ function theme:init()
 	self.gauge.icon.single = {
 		icon        = self.icon.system,  -- default icon
 		is_vertical = false,             -- use vertical gradient (horizontal if false)
+		step        = 0.02,              -- icon painting step
 		color       = self.color         -- colors (main used)
 	}
 
@@ -287,6 +289,7 @@ function theme:init()
 		icon2       = self.icon.system,  -- second icon
 		is_vertical = true,              -- use vertical gradient (horizontal if false)
 		igap        = 4,                 -- gap between icons
+		step        = 0.02,              -- icon painting step
 		color       = self.color         -- colors (main used)
 	}
 
@@ -341,6 +344,7 @@ function theme:init()
 
 	self.gauge.audio.red = {
 		icon  = { volume = self.icon.system, mute = self.icon.warning },                   -- icons
+		step  = 0.05,                                                                      -- icon painting step
 		color = { main = self.color.main, icon = self.color.icon, mute = self.color.gray } -- custom colors
 	}
 
@@ -361,6 +365,7 @@ function theme:init()
 		line_width   = 4,         -- width of circle
 		iradius      = 5,         -- radius for center point
 		radius       = 11,        -- circle radius
+		step        = 0.05,       -- circle painting step
 		color        = self.color -- colors (main used)
 	}
 
