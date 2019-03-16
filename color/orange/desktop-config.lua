@@ -43,22 +43,22 @@ function desktop:init(args)
 		sspeed = {}, hspeed = {}, tspeed = {}, cores = {}
 	}
 
-	colset.base[0] = style.color.icon
-	colset.light[0] = style.color.main
+	colset.base[-1] = style.color.icon
+	colset.light[-1] = style.color.main
 
-	colset.diskp[0] = style.color.icon
+	colset.diskp[-1] = style.color.icon
 	colset.diskp[75] = style.color.main
 
-	colset.diskpf[0] = style.color.main
+	colset.diskpf[-1] = style.color.main
 	colset.diskpf[25] = style.color.icon
 
-	colset.tcpu[0] = style.color.icon
+	colset.tcpu[-1] = style.color.icon
 	colset.tcpu[75] = style.color.main
 
-	colset.tgpu[0] = style.color.icon
+	colset.tgpu[-1] = style.color.icon
 	colset.tgpu[80] = style.color.main
 
-	colset.thdd[0] = style.color.icon
+	colset.thdd[-1] = style.color.icon
 	colset.thdd[40] = style.color.main
 
 	colset.sspeed[-1] = style.color.icon
@@ -71,7 +71,7 @@ function desktop:init(args)
 	colset.tspeed[2.5 * 1024] = style.color.main
 
 	--noinspection ArrayElementZero
-	colset.cores[0] = style.color.icon
+	colset.cores[-1] = style.color.icon
 	colset.cores[3] = style.color.main
 
 	-- Support functions
