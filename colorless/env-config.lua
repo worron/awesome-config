@@ -21,7 +21,7 @@ local env = {}
 function env:init(args)
 
 	-- init vars
-	local args = args or {}
+	args = args or {}
 	local theme = args.theme or "colorless"
 
 	-- environment vars

@@ -18,7 +18,7 @@ local allscreen   = redflat.widget.tasklist.filter.allscreen
 -----------------------------------------------------------------------------------------------------------------------
 function edges:init(args)
 
-	local args = args or {}
+	args = args or {}
 	local ew = args.width or 1 -- edge width
 	local workarea = args.workarea or screen[mouse.screen].workarea
 

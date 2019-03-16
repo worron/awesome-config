@@ -40,7 +40,7 @@ rules.maximized = {
 -----------------------------------------------------------------------------------------------------------------------
 function rules:init(args)
 
-	local args = args or {}
+	args = args or {}
 	self.base_properties.keys = args.hotkeys.keys.client
 	self.base_properties.buttons = args.hotkeys.mouse.client
 	self.env = args.env or {}

@@ -98,7 +98,7 @@ function hotkeys:init(args)
 
 	-- Init vars
 	------------------------------------------------------------
-	local args = args or {}
+	args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
 

@@ -23,7 +23,7 @@ local wa = mouse.screen.workarea
 function desktop:init(args)
 	if not beautiful.desktop then return end
 
-	local args = args or {}
+	args = args or {}
 	local env = args.env or {}
 	local autohide = env.desktop_autohide or false
 

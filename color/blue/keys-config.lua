@@ -123,7 +123,7 @@ end
 function hotkeys:init(args)
 
 	-- Init vars
-	local args = args or {}
+	args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
 	local appkeys = args.appkeys or {}
@@ -139,11 +139,11 @@ function hotkeys:init(args)
 
 	-- Application hotkeys helper
 	--------------------------------------------------------------------------------
-	local apphelper = function(appkeys)
+	local apphelper = function(keys)
 		if not client.focus then return end
 
 		local app = client.focus.class:lower()
-		for name, sheet in pairs(appkeys) do
+		for name, sheet in pairs(keys) do
 			if name == app then
 				redtip:set_pack(
 						client.focus.class, sheet.pack, sheet.style.column, sheet.style.geometry,

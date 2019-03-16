@@ -22,7 +22,7 @@ local system = redflat.system
 function desktop:init(args)
 	if not beautiful.desktop then return end
 
-	local args = args or {}
+	args = args or {}
 	local env = args.env or {}
 	local style = { color = beautiful.desktop.color }
 	local autohide = env.desktop_autohide or false
@@ -84,9 +84,9 @@ function desktop:init(args)
 	end
 
 	local function form_value(value, color_set, text_set, unit, dn)
-		local color_set = color_set or colset.base
-		local text_set = text_set or { "none" }
-		local dn = dn or 3
+		color_set = color_set or colset.base
+		text_set = text_set or { "none" }
+		dn = dn or 3
 
 		local hilight = style.color.gray
 		local co = get_order(color_set)

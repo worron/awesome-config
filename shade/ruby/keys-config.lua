@@ -185,7 +185,7 @@ end
 function hotkeys:init(args)
 
 	-- Init vars
-	local args = args or {}
+	args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
 	local appkeys = args.appkeys or {}
@@ -207,11 +207,11 @@ function hotkeys:init(args)
 
 	-- Application hotkeys helper
 	--------------------------------------------------------------------------------
-	local apphelper = function(appkeys)
+	local apphelper = function(keys)
 		if not client.focus then return end
 
 		local app = client.focus.class:lower()
-		for name, sheet in pairs(appkeys) do
+		for name, sheet in pairs(keys) do
 			if name == app then
 				redtip:set_pack(
 						client.focus.class, sheet.pack, sheet.style.column, sheet.style.geometry,
@@ -476,7 +476,6 @@ function hotkeys:init(args)
 	}
 
 	-- add groups of clients tag sequence actions (hidden keys)
-	local kk = awful.util.table.join(numkeys, tagkeys)
 	for i, k in ipairs(kk) do
 		table.insert(keyseq[3][10][3], { {}, k, function() client_move_by_index(i, current_clients())        end, {} })
 		table.insert(keyseq[3][11][3], { {}, k, function() client_toggle_by_index(i, current_clients())      end, {} })

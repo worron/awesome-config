@@ -35,7 +35,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 function signals:init(args)
 
-	local args = args or {}
+	args = args or {}
 	local env = args.env
 
 	-- actions on every application start
