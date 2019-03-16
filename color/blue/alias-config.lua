@@ -2,7 +2,7 @@
 --                                      Application aliases for tasklist widget                                      --
 -----------------------------------------------------------------------------------------------------------------------
 
-appnames = {}
+local appnames = {}
 
 appnames["Exaile"              ] = "EXAILE"
 appnames["Smplayer"            ] = "SMPL"

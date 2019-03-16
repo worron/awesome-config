@@ -1,9 +1,8 @@
 #!/bin/bash
 
-Xephyr :5 -ac -screen 1920x1080 &
+Xephyr :3 -ac -screen 1920x1080 &
 XEPHYR_PID=$!
-sleep 0.2
+sleep 0.5
 
-# DISPLAY=:5 awesome -c rc-colorless.lua
-DISPLAY=:5 awesome -c rc-devel.lua
-kill $XEPHYR_PID
+DISPLAY=:3 awesome -c rc-devel.lua
+kill ${XEPHYR_PID}

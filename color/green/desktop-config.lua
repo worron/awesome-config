@@ -4,7 +4,7 @@
 
 -- Grab environment
 local beautiful = require("beautiful")
-local awful = require("awful")
+--local awful = require("awful")
 local redflat = require("redflat")
 
 -- Initialize tables and vars for module
