@@ -183,7 +183,7 @@ function theme:update()
 
 	-- Quick launcher
 	------------------------------------------------------------
-	self.float.qlaunch.keytip = { geometry = { width = 600, height = 320 } }
+	self.float.qlaunch.keytip = { geometry = { width = 600, height = 340 } }
 
 	-- Hotkeys helper
 	------------------------------------------------------------

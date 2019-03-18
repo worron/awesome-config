@@ -907,7 +907,6 @@ function theme:init()
 
 		border_width  = 0,                   -- widget border width
 		border_margin = { 5, 5, 12, 15 },    -- margins around widget content
-		parser        = {},                  -- desktop file parser settings (see theme.service.dfparser)
 		notify        = {},                  -- redflat notify style (see theme.float.notify)
 		shape         = nil,                 -- wibox shape
 		recoloring    = false,               -- apply redflat recoloring feature on application icons
@@ -915,6 +914,14 @@ function theme:init()
 		color         = self.color,          -- colors (main used)
 		df_icon       = self.icon.system,    -- fallback application icon
 		no_icon       = self.icon.unknown,   -- icon for unused application slot
+
+		-- desktop file parser settings (see theme.service.dfparser)
+		parser = {
+			desktop_file_dirs = awful.util.table.join(
+				self.service.dfparser.desktop_file_dirs,
+				{ '~/.local/share/applications-fake' }
+			)
+		},
 
 		appline       = {
 			iwidth = 140,           -- application item width
@@ -930,7 +937,7 @@ function theme:init()
 		},
 
 		-- redflat key tip settings
-		keytip        = { geometry = { width = 600, height = 260 } },
+		keytip        = { geometry = { width = 600, height = 280 } },
 
 		-- file to store widget data
 		-- this widget is rare one which need to keep settings between sessions
