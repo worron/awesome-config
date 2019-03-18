@@ -559,7 +559,7 @@ function theme:init()
 	self.widget.mail = {
 		icon        = self.icon.system,  -- widget icon
 		notify      = {},                -- redflat notify style (see theme.float.notify)
- 		need_notify = true,              -- show notification on new mail
+		need_notify = true,              -- show notification on new mail
 		firstrun    = false,             -- check mail on wm start/restart
 		color       = self.color,        -- colors (main used)
 	}
@@ -569,7 +569,7 @@ function theme:init()
 	self.widget.updates = {
 		icon        = self.icon.system,  -- widget icon
 		notify      = {},                -- redflat notify style (see theme.float.notify)
- 		need_notify = true,              -- show notification on updates
+		need_notify = true,              -- show notification on updates
 		firstrun    = false,             -- check updates on wm start/restart
 		color       = self.color,        -- colors (main used)
 
@@ -686,7 +686,7 @@ function theme:init()
 		widget      = nil,   -- task gauge widget (usually setted by rc file)
 		width       = 40,    -- width of task element in tasklist
 		char_digit  = 4,     -- number of characters in task element text
- 		need_group  = true,  -- group application instances into one task element
+		need_group  = true,  -- group application instances into one task element
 		parser      = {},    -- redlat desktop file parser settings (see theme.service.dfparser)
 		task_margin = { 5, 5, 0, 0 },      -- margins around task element
 		task        = self.gauge.task.blue -- style for task gauge widget
@@ -762,7 +762,6 @@ function theme:init()
 		actionline      = { height = 28 },             -- height of menu item with action icons
 		action_iconsize = { width = 18, height = 18 }, -- size for action icons
 		stateline       = { height = 30 },             -- height of menu item with state icons
-		state_iconsize  = { width = 20, height = 20 }, -- size for state icons
 
 		-- redflat separator style(see theme.gauge.separator)
 		separator       = { marginh = { 3, 3, 5, 5 }, marginv = { 3, 3, 3, 3 } },
