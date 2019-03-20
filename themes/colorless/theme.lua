@@ -867,7 +867,7 @@ function theme:init()
 		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip settings
 	}
 
-	-- Application switcher
+	-- Application swit`cher
 	------------------------------------------------------------
 	self.float.appswitcher = {
 		wibox_height    = 240, -- widget height
@@ -876,7 +876,14 @@ function theme:init()
 		icon_size       = 96,  -- size of the application icon in preview area
 		preview_gap     = 20,  -- gap between preview areas
 		shape           = nil, -- wibox shape
-		parser          = {},  -- desktop file parser settings (see theme.service.dfparser)
+
+		-- desktop file parser settings (see theme.service.dfparser)
+		parser = {
+			desktop_file_dirs = awful.util.table.join(
+				self.service.dfparser.desktop_file_dirs,
+				{ '~/.local/share/applications-fake' }
+			)
+		},
 
 		border_margin   = { 10, 10, 0, 10 },  -- margins around widget content
 		preview_margin  = { 15, 15, 15, 15 }, -- margins around application preview
