@@ -4,6 +4,7 @@
 
 -- Grab environment
 local table = table
+local unpack = unpack or table.unpack
 local awful = require("awful")
 local redflat = require("redflat")
 
@@ -22,8 +23,8 @@ local laycom = redflat.layout.common
 local grid = redflat.layout.grid
 local map = redflat.layout.map
 local qlaunch = redflat.float.qlaunch
-local numkeys = { "1", "2", "3", "4", "5", "6" }
-local tagkeys = { "q", "w", "e", "r", "t", "y" }
+local numkeys_line = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+local tagkeys_line = { "q", "w", "e", "r", "t", "y", "u", "i", "o" }
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
@@ -192,6 +193,9 @@ function hotkeys:init(args)
 
 	local tcn = args.tag_cols_num or 0
 	local mic = args.mic or {}
+
+	local numkeys = { unpack(numkeys_line, 1, tcn) }
+	local tagkeys = { unpack(tagkeys_line, 1, tcn) }
 
 	self.mouse.root = (awful.util.table.join(
 		awful.button({ }, 3, function () mainmenu:toggle() end),
@@ -424,23 +428,26 @@ function hotkeys:init(args)
 
 	-- make fake keys with description special for key helper widget
 	local grp = "Client tagging"
+	local line1_symb = string.format("%s..%s", numkeys[1], numkeys[#numkeys])
+	local line2_symb = string.format("%s..%s", tagkeys[1], tagkeys[#tagkeys])
+
 	table.insert(keyseq[3][5][3], {
-		{}, "1..6", nil, { description = "Move client to tag on 1st line", group = grp, keyset = numkeys }
+		{}, line1_symb, nil, { description = "Move client to tag on 1st line", group = grp, keyset = numkeys }
 	})
 	table.insert(keyseq[3][6][3], {
-		{}, "1..6", nil, { description = "Toggle client on tag on 1st line", group = grp, keyset = numkeys }
+		{}, line1_symb, nil, { description = "Toggle client on tag on 1st line", group = grp, keyset = numkeys }
 	})
 	table.insert(keyseq[3][7][3], {
-		{}, "1..6", nil, { description = "Move client and show tag on 1st line", group = grp, keyset = numkeys }
+		{}, line1_symb, nil, { description = "Move client and show tag on 1st line", group = grp, keyset = numkeys }
 	})
 	table.insert(keyseq[3][5][3], {
-		{}, "q..y", nil, { description = "Move client to tag on 2nd line", group = grp, keyset = tagkeys }
+		{}, line2_symb, nil, { description = "Move client to tag on 2nd line", group = grp, keyset = tagkeys }
 	})
 	table.insert(keyseq[3][6][3], {
-		{}, "q..y", nil, { description = "Toggle client on tag on 2nd line", group = grp, keyset = tagkeys }
+		{}, line2_symb, nil, { description = "Toggle client on tag on 2nd line", group = grp, keyset = tagkeys }
 	})
 	table.insert(keyseq[3][7][3], {
-		{}, "q..y", nil, { description = "Move client and show tag on 2nd line", group = grp, keyset = tagkeys }
+		{}, line2_symb, nil, { description = "Move client and show tag on 2nd line", group = grp, keyset = tagkeys }
 	})
 
 	-- widget info update commands
@@ -968,19 +975,19 @@ function hotkeys:init(args)
 	-- make fake keys with description special for key helper widget
 	self.fake.tagkeys = {
 		{
-			{ env.mod }, "1..6", nil,
+			{ env.mod }, line1_symb, nil,
 			{ description = "Switch to tag on 1st line", group = "Tag Control", keyset = numkeys }
 		},
 		{
-			{ env.mod, "Control" }, "1..6", nil,
+			{ env.mod, "Control" }, line1_symb, nil,
 			{ description = "Toggle tag on 1st line", group = "Tag Control", keyset = numkeys }
 		},
 			{
-			{ env.mod }, "q..y", nil,
+			{ env.mod }, line2_symb, nil,
 			{ description = "Switch to tag on 2nd line", group = "Tag Control", keyset = tagkeys }
 		},
 		{
-			{ env.mod, "Control" }, "q..y", nil,
+			{ env.mod, "Control" }, line2_symb, nil,
 			{ description = "Toggle tag on 2nd line", group = "Tag Control", keyset = tagkeys }
 		},
 	}

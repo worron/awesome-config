@@ -72,15 +72,19 @@ tasklist.buttons = awful.util.table.join(
 local taglist = {}
 
 taglist.style = { widget = redflat.gauge.tag.ruby.new, show_tip = true }
+
+-- double line taglist
 taglist.cols_num = 6
+taglist.rows_num = 2
 
 taglist.layout = wibox.widget {
 	expand          = true,
-	forced_num_rows = 2,
+	forced_num_rows = taglist.rows_num,
 	forced_num_cols = taglist.cols_num,
     layout          = wibox.layout.grid,
 }
 
+-- buttons
 taglist.buttons = awful.util.table.join(
 	awful.button({         }, 1, function(t) t:view_only() end),
 	awful.button({ env.mod }, 1, function(t) if client.focus then client.focus:move_to_tag(t) end end),
@@ -90,6 +94,18 @@ taglist.buttons = awful.util.table.join(
 	awful.button({         }, 4, function(t) awful.tag.viewnext(t.screen) end),
 	awful.button({         }, 5, function(t) awful.tag.viewprev(t.screen) end)
 )
+
+-- some tag settings which indirectky depends on row and columns number of taglist
+taglist.names = {
+	"Prime", "Full1", "Code", "Edit", "Misc1", "Game",
+	"Spare", "Full2", "Test", "Back", "Misc2", "Free"
+}
+
+local al = awful.layout.layouts
+taglist.layouts = {
+	al[5], al[6], al[6], al[4], al[3], al[3],
+	al[5], al[6], al[6], al[4], al[3], al[1]
+}
 
 -- Textclock widget
 --------------------------------------------------------------------------------
@@ -246,9 +262,6 @@ sysmon.buttons.ram = awful.util.table.join(
 -- Screen setup
 -----------------------------------------------------------------------------------------------------------------------
 
--- aliases for setup
-local al = awful.layout.layouts
-
 -- setup
 awful.screen.connect_for_each_screen(
 	function(s)
@@ -256,14 +269,7 @@ awful.screen.connect_for_each_screen(
 		env.wallpaper(s)
 
 		-- tags
-		awful.tag(
-			{
-				"Prime", "Full1", "Code", "Edit", "Misc1", "Game",
-				"Spare", "Full2", "Test", "Back", "Misc2", "Free"
-			},
-			s,
-			{ al[5], al[6], al[6], al[4], al[3], al[3], al[5], al[6], al[6], al[4], al[3], al[1] }
-		)
+		awful.tag(taglist.names, s, taglist.layouts)
 
 		-- layoutbox widget
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
