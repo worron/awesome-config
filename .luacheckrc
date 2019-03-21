@@ -1,5 +1,5 @@
 -- Only allow symbols available in all Lua versions
---std = "min"
+std = "min"
 
 -- Get rid of "unused argument self" - warnings
 self = false
@@ -13,6 +13,7 @@ exclude_files = {
 
 -- Global objects defined by the C code
 read_globals = {
+    -- awesome API
     "awesome",
     "button",
     "dbus",
@@ -25,8 +26,10 @@ read_globals = {
     "selection",
     "tag",
     "window",
+
+    -- lua unpack
     "table.unpack",
-    "math.atan2",
+    "unpack"
 }
 
 -- Not read-only globals.
