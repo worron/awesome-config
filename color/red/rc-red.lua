@@ -176,9 +176,14 @@ sysmon.widget.battery = redflat.widget.sysmon(
 )
 
 -- network speed
+
+-- use self-drawn rectange image as indicator icon
+local img = redflat.util.base.image(7, 40, { x = 1, y = 0, width = 5, height = 40 })
+
 sysmon.widget.network = redflat.widget.net(
 	{ interface = "wlp60s0", speed = { up = 6 * 1024^2, down = 6 * 1024^2 }, autoscale = false },
-	{ timeout = 2 }
+	-- custom style
+	{ timeout = 2, widget = redflat.gauge.icon.double, monitor = { step = 0.1, icon1 = img, icon2 = img, igap = 3 } }
 )
 
 -- CPU usage

@@ -132,7 +132,7 @@ theme.widget.wrapper = {
 	ram         = { 3, 3, 0, 0 },
 	cpu         = { 3, 3, 0, 0 },
 	tray        = { 1, 1, 8, 8 },
-	network     = { 1, 1, 8, 8 },
+	network     = { 0, 0, 8, 8 },
 	taglist     = { 12, 0, 0, 0 },
 	tasklist    = { 4, 4, 0, 0 },
 }
@@ -149,6 +149,9 @@ theme.gauge.graph.dots.column_num   = { 2, 3 }
 theme.gauge.graph.dots.row_num      = 4
 theme.gauge.graph.dots.dot_size     = 5
 theme.gauge.graph.dots.dot_gap_h    = 5
+
+-- Double image monitor
+theme.gauge.icon.double.color = { main = theme.color.main, icon = theme.color.gray }
 
 -- Tag
 theme.gauge.tag.red.width        = 100

@@ -260,19 +260,6 @@ function theme:init()
 		},
 	}
 
-
-	-- Doublebar monitor (double vertical progressbar)
-	------------------------------------------------------------
-	self.gauge.graph.doublebar = {
-		color = self.color, -- colors (main used)
-
-		--progressbars style
-		line  = {
-			width = 4, -- progressbar width
-			gap = 5    -- gap between two progressbars
-		},
-	}
-
 	-- Icon indicator (decoration in some panel widgets)
 	------------------------------------------------------------
 	self.gauge.icon.single = {
