@@ -154,7 +154,7 @@ function desktop:init(args)
 		timeout = 10,
 	}
 
-	thermald.style = beautiful.individual.desktop.multiline.thermal
+	thermald.style = beautiful.individual.desktop.multiline.thermal_second
 
 	-- gpu
 	local thermalg = { geometry = wgeometry(grid, places.thermalg, workarea) }
@@ -163,7 +163,7 @@ function desktop:init(args)
 		timeout = 10,
 	}
 
-	thermalg.style = beautiful.individual.desktop.multiline.thermal
+	thermalg.style = beautiful.individual.desktop.multiline.thermal_second
 
 
 	-- Initialize all desktop widgets

@@ -28,7 +28,8 @@ theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
 
 -- Fonts
 ------------------------------------------------------------
-theme.cairo_fonts.tag = { font = "Play", size = 20, face = 1 } -- taglist widget
+theme.cairo_fonts.tag = { font = "Play", size = 20, face = 1 }
+theme.cairo_fonts.desktop.textbox = { font = "Gunplay", size = 22, face = 0 }
 
 -- Setup parent theme settings
 --------------------------------------------------------------------------------
@@ -42,8 +43,8 @@ theme:update()
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 520, 520, 520 },
-	height = { 190, 188, 144, 18 },
-	edge   = { width = { 80, 80 }, height = { 80, 60 } }
+	height = { 180, 176, 132, 17 },
+	edge   = { width = { 80, 80 }, height = { 90, 90 } }
 }
 
 theme.desktop.places = {
@@ -64,11 +65,13 @@ theme.desktop.places = {
 -- but grab directly from rc-files to rewrite base style
 theme.individual.desktop = { speedmeter = {}, multimeter = {}, multiline = {} }
 
+theme.desktop.line_height = 17
 
 -- Lines (common part)
 theme.desktop.common.pack.lines.label = { width = 88, draw = "by_width" }
 theme.desktop.common.pack.lines.text  = { width = 88, draw = "by_edges" }
 theme.desktop.common.pack.lines.gap   = { text = 20, label = 20 }
+theme.desktop.common.pack.lines.line  = { height = theme.desktop.line_height }
 
 -- Speedmeter (base widget)
 theme.desktop.speedmeter.normal.label            = { height = theme.desktop.line_height }
@@ -86,7 +89,7 @@ theme.individual.desktop.speedmeter.drive = {
 
 -- Multimeter (base widget)
 theme.desktop.multimeter.upbar          = { width = 34, chunk = { height = 17, num = 10, line = 5 } }
-theme.desktop.multimeter.height.lines   = 60
+theme.desktop.multimeter.height.lines   = 54
 theme.desktop.multimeter.height.upright = 98
 theme.desktop.multimeter.icon.margin    = { 0, 20, 0, 0 }
 theme.desktop.multimeter.lines.show     = { label = false, tooltip = false, text = true }
@@ -106,14 +109,36 @@ theme.individual.desktop.multimeter.transmission = {
 
 -- Multilines disks (individual widget)
 theme.individual.desktop.multiline.disks = {
+	lines  = {
+		show  = { text = true },
+		label = { width = 62, draw = "by_width" },
+		gap   = { text = 15, label = 15 },
+	},
 	unit  = { { "KB", 1 }, { "MB", 1024^1 }, { "GB", 1024^2 } },
-	lines = { show = { text = true } },
 }
 
 -- Multilines temperature (individual widget)
 theme.individual.desktop.multiline.thermal = {
-	lines = { show = { text = true } },
-	unit  = { { "°C", -1 } },
+	lines  = {
+		show  = { text = true },
+		label = { width = 76, draw = "by_width" },
+		text  = { width = 54, draw = "by_edges" },
+		gap   = { text = 15, label = 15 },
+	},
+	digits = 2,
+	unit   = { { "°C", -1 } },
+}
+
+-- Multilines temperature (individual widget)
+theme.individual.desktop.multiline.thermal_second = {
+	lines  = {
+		show  = { text = true },
+		label = { width = 48, draw = "by_width" },
+		text  = { width = 54, draw = "by_edges" },
+		gap   = { text = 15, label = 15 },
+	},
+	digits = 2,
+	unit   = { { "°C", -1 } },
 }
 
 -- Panel widgets
