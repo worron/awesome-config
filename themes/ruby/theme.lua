@@ -219,6 +219,11 @@ theme.gauge.monitor.dash.width = 11
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.ruby
 
+-- KB layout indicator
+theme.widget.keyboard.icon = theme.path .. "/widget/keyboard.svg"
+
+-- Mail
+theme.widget.mail.icon = theme.path .. "/widget/mail.svg"
 
 -- Individual styles
 ------------------------------------------------------------
