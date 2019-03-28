@@ -10,8 +10,8 @@ local theme = require("themes/colored/theme")
 
 -- Color scheme
 -----------------------------------------------------------------------------------------------------------------------
-theme.color.main   = "#b20d1d"
-theme.color.urgent = "#087465"
+theme.color.main   = "#A30817"
+theme.color.urgent = "#016B84"
 
 
 -- Common
@@ -190,7 +190,7 @@ theme.widget.wrapper = {
 	ram         = { 2, 2, 7, 7 },
 	battery     = { 3, 9, 7, 7 },
 	network     = { 4, 4, 7, 7 },
-	updates    = { 6, 6, 6, 6 },
+	updates     = { 6, 6, 6, 6 },
 	taglist     = { 4, 4, 5, 4 },
 	tasklist    = { 10, 0, 0, 0 }, -- centering tasklist widget
 }
