@@ -8,7 +8,7 @@ This config is compatible with AwesomeWM version 4.0 and newer.
 <p align="center"><a href="https://youtu.be/OoSts990-lY">Video Demo</a></p>
 
 ## Description
-Advanced user config for Awesome WM consist of a bunch of new widgets, 
+Advanced user config for `awesome` consist of a bunch of new widgets, 
 features, tiling schemes, and some reworked standard widgets. 
 This repository provide only config examples and themes. 
 Main code base can be found in `redflat` submodule.
@@ -69,7 +69,7 @@ Colored are my personal configs.
 It's full featured setup filled with widgets
 preconfigured for certain software and hardware environment.
 Should be carefully edited and adapted before using.
-This way suitable mostly to experienced Awesome WM users.
+This way suitable mostly to experienced `awesome` users.
 Some things to pay attention:
 
 * Better to disable desktop section from the start.
@@ -93,10 +93,10 @@ Some widgets was designed with this pack in mind.
 
 There are lot shared parts between configs and themes, pay attention to `require` directives.
 
-[Xephyr](https://freedesktop.org/wiki/Software/Xephyr/) is excellent tool for Awesome WM deep customization.
+[Xephyr](https://freedesktop.org/wiki/Software/Xephyr/) is excellent tool for `awesome` deep customization.
 
 ## Themes
-This config isn't compatible with standard Awesome WM themes
+This config isn't compatible with standard `awesome` themes
 and its themes not compatible with default config.
 
 #### Structure
@@ -112,3 +112,11 @@ colorless theme and overwrites some values. Doesn't used directly from configs.
 
 Color specified themes (e.g. `themes/blue/theme.lua` for `rc-blue.lua`)
 are inherit all data from colored and overwrite config specific values. 
+
+## Statement
+All code provided as is without any warranties.
+
+The project started as custom personal config. Later was reconstructed as `awesome`
+extension module and it has a lot flaws and things to fix. Some parts of `redflat`
+were designed for early versions of `awesome` and simply outdated by today.
+So `redflat` project open to any code improvement and fixes.
