@@ -547,7 +547,7 @@ function theme:init()
 		icon        = self.icon.system,  -- widget icon
 		notify      = {},                -- redflat notify style (see theme.float.notify)
 		need_notify = true,              -- show notification on new mail
-		firstrun    = false,             -- check mail on wm start/restart
+		firstrun    = true,              -- check mail on wm start/restart
 		color       = self.color,        -- colors (main used)
 	}
 
@@ -557,7 +557,7 @@ function theme:init()
 		icon        = self.icon.system,  -- widget icon
 		notify      = {},                -- redflat notify style (see theme.float.notify)
 		need_notify = true,              -- show notification on updates
-		firstrun    = false,             -- check updates on wm start/restart
+		firstrun    = true,              -- check updates on wm start/restart
 		color       = self.color,        -- colors (main used)
 
 		-- redflat key tip settings

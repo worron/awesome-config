@@ -17,10 +17,12 @@ require("awful.autofocus")
 ------------------------------------------------------------
 local redflat = require("redflat")
 
-redflat.startup:activate()
-
 -- debug locker
 local lock = lock or {}
+
+redflat.startup.locked = lock.autostart
+redflat.startup:activate()
+
 
 -- Error handling
 -----------------------------------------------------------------------------------------------------------------------
@@ -380,9 +382,7 @@ signals:init({ env = env })
 
 -- Autostart user applications
 -----------------------------------------------------------------------------------------------------------------------
-if not lock.autostart then
-	if redflat.startup.is_startup then
-		local autostart = require("color.blue.autostart-config") -- load file with autostart application list
-		autostart.run()
-	end
+if redflat.startup.is_startup then
+	local autostart = require("color.blue.autostart-config") -- load file with autostart application list
+	autostart.run()
 end

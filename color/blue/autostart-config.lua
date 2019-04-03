@@ -12,20 +12,21 @@ local autostart = {}
 -- Application list function
 --------------------------------------------------------------------------------
 function autostart.run()
-	-- utils
-	awful.spawn.with_shell("compton")
-	awful.spawn.with_shell("nm-applet")
-	awful.spawn.with_shell("bash ~/scripts/env/pa-setup.sh")
-	awful.spawn.with_shell("bash ~/scripts/env/color-profile-setup.sh")
-
-	awful.spawn.with_shell("sleep 1 && bash ~/scripts/firefox/ff-sync.sh")
+	-- environment
+	awful.spawn.with_shell("python ~/scripts/env/pa-setup.py")
+	awful.spawn.with_shell("python ~/scripts/env/color-profile-setup.py")
+	awful.spawn.with_shell("python ~/scripts/env/kbd-setup.py")
 
 	-- gnome environment
 	awful.spawn.with_shell("/lib/gsd-xsettings")
 	awful.spawn.with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
-	-- keyboard layouts
-	awful.spawn.with_shell("bash ~/scripts/env/kbdd-setup.sh")
+	-- firefox sync
+	awful.spawn.with_shell("sleep 1 && bash ~/scripts/firefox/ff-sync.sh")
+
+	-- utils
+	awful.spawn.with_shell("compton")
+	awful.spawn.with_shell("nm-applet")
 
 	-- apps
 	awful.spawn.with_shell("clipflap")
