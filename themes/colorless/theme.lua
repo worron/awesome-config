@@ -502,6 +502,16 @@ function theme:init()
 		color   = { text = self.color.icon } -- colors
 	}
 
+	-- Battery indicator
+	------------------------------------------------------------
+	self.widget.battery = {
+		timeout = 30,   -- update timeout
+		notify  = {},   -- redflat notify style (see theme.float.notify)
+
+		-- notification levels
+		levels  = { 0.05, 0.1, 0.15 }
+	}
+
 	-- Minitray
 	------------------------------------------------------------
 	self.widget.minitray = {

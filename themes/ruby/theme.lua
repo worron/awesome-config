@@ -225,6 +225,10 @@ theme.widget.keyboard.icon = theme.path .. "/widget/keyboard.svg"
 -- Mail
 theme.widget.mail.icon = theme.path .. "/widget/mail.svg"
 
+-- Battery
+theme.widget.battery.notify = { icon = theme.path .. "/widget/battery.svg", color = theme.color.main }
+theme.widget.battery.levels = { 0.05, 0.1, 0.15, 0.2, 0.25 }
+
 -- Individual styles
 ------------------------------------------------------------
 theme.individual.microphone_audio = {
