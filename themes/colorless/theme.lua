@@ -1010,13 +1010,15 @@ function theme:init()
 	-- Tooltip
 	------------------------------------------------------------
 	self.float.tooltip = {
-		margin       = { 6, 6, 3, 3 },     -- margins around widget content
 		timeout      = 0,                  -- show delay
 		shape        = nil,                -- wibox shapea
 		font         = self.fonts.tooltip, -- widget font
 		border_width = 2,                  -- widget border width
 		set_position = nil,                -- function to setup tooltip position when shown
-		color        = self.color          -- colors (main used)
+		color        = self.color,         -- colors (main used)
+
+		-- padding around widget content
+		padding      = { vertical = 3, horizontal = 6 },
 	}
 
 	-- Floating prompt
