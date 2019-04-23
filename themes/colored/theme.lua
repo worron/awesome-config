@@ -92,16 +92,16 @@ function theme:update()
 
 	-- Set hotkey helper size according current fonts and keys scheme
 	--------------------------------------------------------------------------------
-	self.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 440 }, exit = true }
+	self.service.navigator.keytip["fairv"] = { geometry = { width = 600 }, exit = true }
 	self.service.navigator.keytip["fairh"] = self.service.navigator.keytip["fairv"]
 
-	self.service.navigator.keytip["tile"]       = { geometry = { width = 600, height = 660 }, exit = true }
+	self.service.navigator.keytip["tile"]       = { geometry = { width = 600 }, exit = true }
 	self.service.navigator.keytip["tileleft"]   = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tiletop"]    = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tilebottom"] = self.service.navigator.keytip["tile"]
 
-	self.service.navigator.keytip["grid"]    = { geometry = { width = 1400, height = 520 }, column = 2, exit = true }
-	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 580 }, column = 2, exit = true }
+	self.service.navigator.keytip["grid"]    = { geometry = { width = 1400 }, column = 2, exit = true }
+	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400 }, column = 2, exit = true }
 
 	-- Desktop file parser
 	--------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ function theme:update()
 	-- Menu config
 	--------------------------------------------------------------------------------
 	self.menu.icon_margin  = { 4, 7, 7, 8 }
-	self.menu.keytip       = { geometry = { width = 400, height = 380 } }
+	self.menu.keytip       = { geometry = { width = 400 } }
 
 	-- Panel widgets
 	--------------------------------------------------------------------------------
@@ -175,24 +175,25 @@ function theme:update()
 	-- Application runner
 	------------------------------------------------------------
 	self.float.apprunner.title_icon = self.wicon.search
-	self.float.apprunner.keytip = { geometry = { width = 400, height = 250 } }
+	self.float.apprunner.keytip = { geometry = { width = 400 } }
 
 	-- Application switcher
 	------------------------------------------------------------
-	self.float.appswitcher.keytip = { geometry = { width = 400, height = 360 }, exit = true }
+	self.float.appswitcher.keytip = { geometry = { width = 400 }, exit = true }
 
 	-- Quick launcher
 	------------------------------------------------------------
-	self.float.qlaunch.keytip = { geometry = { width = 600, height = 340 } }
+	self.float.qlaunch.keytip = { geometry = { width = 600 } }
 
 	-- Hotkeys helper
 	------------------------------------------------------------
-	self.float.hotkeys.geometry = { width = 1800, height = 1000 }
+	self.float.hotkeys.geometry = { width = 1800 }
+	self.float.hotkeys.heights = { key = 26, title = 32 }
 
 	-- Key sequence tip
 	------------------------------------------------------------
 	self.float.keychain.border_width = 0
-	self.float.keychain.keytip = { geometry = { width = 1200, height = 580 }, column = 2 }
+	self.float.keychain.keytip = { geometry = { width = 1200 }, column = 2 }
 
 	-- Brightness control
 	------------------------------------------------------------

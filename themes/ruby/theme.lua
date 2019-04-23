@@ -247,13 +247,13 @@ theme.float.bartip.names = { "Mini", "Compact", "Full" }
 
 -- Set hotkey helper size according current fonts and keys scheme
 --------------------------------------------------------------------------------
-theme.float.hotkeys.geometry   = { width = 1420, height = 950 }
-theme.float.appswitcher.keytip = { geometry = { width = 400, height = 320 }, exit = true }
-theme.float.keychain.keytip    = { geometry = { width = 1020, height = 525 }, column = 2 }
-theme.float.top.keytip         = { geometry = { width = 400, height = 340 } }
-theme.float.apprunner.keytip   = { geometry = { width = 400, height = 340 } }
-theme.widget.updates.keytip   = { geometry = { width = 400, height = 360 } }
-theme.menu.keytip              = { geometry = { width = 400, height = 470 } }
+theme.float.hotkeys.geometry   = { width = 1420 }
+theme.float.appswitcher.keytip = { geometry = { width = 400 }, exit = true }
+theme.float.keychain.keytip    = { geometry = { width = 1020 }, column = 2 }
+theme.float.top.keytip         = { geometry = { width = 400 } }
+theme.float.apprunner.keytip   = { geometry = { width = 400 } }
+theme.widget.updates.keytip    = { geometry = { width = 400 } }
+theme.menu.keytip              = { geometry = { width = 400 } }
 
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------

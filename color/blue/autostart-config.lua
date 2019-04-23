@@ -22,7 +22,7 @@ function autostart.run()
 	awful.spawn.with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
 	-- firefox sync
-	awful.spawn.with_shell("sleep 1 && bash ~/scripts/firefox/ff-sync.sh")
+	awful.spawn.with_shell("python ~/scripts/firefox/ff-sync.py")
 
 	-- utils
 	awful.spawn.with_shell("compton")

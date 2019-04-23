@@ -147,28 +147,28 @@ function theme:init()
 	self.service.navigator.keytip = {}
 
 	-- this one used as fallback when style for certain layout missed
-	self.service.navigator.keytip["base"] = { geometry = { width = 600, height = 600 }, exit = true }
+	self.service.navigator.keytip["base"] = { geometry = { width = 600 }, exit = true }
 
 	-- styles for certain layouts
-	self.service.navigator.keytip["fairv"] = { geometry = { width = 600, height = 360 }, exit = true }
+	self.service.navigator.keytip["fairv"] = { geometry = { width = 600}, exit = true }
 	self.service.navigator.keytip["fairh"] = self.service.navigator.keytip["fairv"]
 	self.service.navigator.keytip["spiral"] = self.service.navigator.keytip["fairv"]
 	self.service.navigator.keytip["dwindle"] = self.service.navigator.keytip["fairv"]
 
-	self.service.navigator.keytip["tile"] = { geometry = { width = 600, height = 480 }, exit = true }
+	self.service.navigator.keytip["tile"] = { geometry = { width = 600 }, exit = true }
 	self.service.navigator.keytip["tileleft"]   = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tiletop"]    = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tilebottom"] = self.service.navigator.keytip["tile"]
 
-	self.service.navigator.keytip["cornernw"] = { geometry = { width = 600, height = 440 }, exit = true }
+	self.service.navigator.keytip["cornernw"] = { geometry = { width = 600 }, exit = true }
 	self.service.navigator.keytip["cornerne"] = self.service.navigator.keytip["cornernw"]
 	self.service.navigator.keytip["cornerse"] = self.service.navigator.keytip["cornernw"]
 	self.service.navigator.keytip["cornersw"] = self.service.navigator.keytip["cornernw"]
 
-	self.service.navigator.keytip["magnifier"] = { geometry = { width = 600, height = 360 }, exit = true }
+	self.service.navigator.keytip["magnifier"] = { geometry = { width = 600}, exit = true }
 
-	self.service.navigator.keytip["grid"] = { geometry = { width = 1400, height = 440 }, column = 2, exit = true }
-	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400, height = 480 }, column = 2, exit = true }
+	self.service.navigator.keytip["grid"] = { geometry = { width = 1400 }, column = 2, exit = true }
+	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400 }, column = 2, exit = true }
 
 	-- Desktop file parser
 	--------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ function theme:init()
 		hide_timeout = 1,     -- auto hide timeout (auto hide disables if this set to 0)
 		font         = self.fonts.menu,   -- menu font
 		submenu_icon = self.icon.submenu, -- icon for submenu items
-		keytip       = { geometry = { width = 400, height = 460 } }, -- hotkeys helper settings
+		keytip       = { geometry = { width = 400 } }, -- hotkeys helper settings
 		shape        = nil, -- wibox shape
 		svg_scale    = { false, false }, -- use vector scaling for left, right icons in menu item
 	}
@@ -571,7 +571,7 @@ function theme:init()
 		color       = self.color,        -- colors (main used)
 
 		-- redflat key tip settings
-		keytip      = { geometry = { width = 400, height = 340 } },
+		keytip      = { geometry = { width = 400 } },
 
 		-- tooltips style
 		tooltip     = { base = {}, state = { timeout = 1 } },
@@ -833,7 +833,7 @@ function theme:init()
 		labels_width  = { num = 30, cpu = 70, mem = 120 },
 
 		-- redflat key tip settings
-		keytip        = { geometry = { width = 400, height = 320 } },
+		keytip        = { geometry = { width = 400 } },
 
 		-- placement function
 		set_position  = nil,
@@ -861,7 +861,7 @@ function theme:init()
 		list_icon_margin = { 6, 12, 6, 6 },   -- margins around applications icons
 		dimage           = self.icon.unknown, -- fallback icon for applications
 
-		keytip        = { geometry = { width = 400, height = 260 } }, -- redflat key tip settings
+		keytip        = { geometry = { width = 400 } }, -- redflat key tip settings
 	}
 
 	-- Application swit`cher
@@ -894,7 +894,7 @@ function theme:init()
 		font            = self.cairo_fonts.appswitcher, -- font of application mark(key)
 
 		-- redflat key tip settings
-		keytip         = { geometry = { width = 400, height = 320 }, exit = true },
+		keytip         = { geometry = { width = 400 }, exit = true },
 	}
 
 	-- additional color
@@ -941,7 +941,7 @@ function theme:init()
 		},
 
 		-- redflat key tip settings
-		keytip        = { geometry = { width = 600, height = 280 } },
+		keytip        = { geometry = { width = 600 } },
 
 		-- file to store widget data
 		-- this widget is rare one which need to keep settings between sessions
@@ -951,7 +951,7 @@ function theme:init()
 	-- Hotkeys helper
 	------------------------------------------------------------
 	self.float.hotkeys = {
-		geometry      = { width = 1400, height = 600 }, -- widget size
+		geometry      = { width = 1400 }, -- widget size
 		border_margin = { 20, 20, 8, 10 },              -- margins around widget content
 		border_width  = 0,                              -- widget border width
 		delim         = "   ",                          -- text separator between key and description
@@ -962,7 +962,14 @@ function theme:init()
 		keyfont       = self.fonts.hotkeys.key,         -- keys font
 		titlefont     = self.fonts.hotkeys.title,       -- widget title font
 		shape         = nil,                            -- wibox shape
-		color         = self.color                      -- colors (main used)
+		color         = self.color,                     -- colors (main used)
+
+		-- manual setup for expected text line heights
+		-- used for auto adjust widget height
+		heights       = {
+			key   = 20, -- hotkey tip line height
+			title = 22  -- group title height
+		},
 	}
 
 	-- Titlebar helper
@@ -991,7 +998,7 @@ function theme:init()
 		},
 
 		-- redflat key tip settings
-		keytip        = { geometry = { width = 540, height = 292 } },
+		keytip        = { geometry = { width = 540 } },
 	}
 
 	-- Key sequence tip
@@ -1004,7 +1011,7 @@ function theme:init()
 		color           = self.color,                   -- colors (main used)
 
 		-- redflat key tip settings
-		keytip          = { geometry = { width = 600, height = 400 }, column = 1 },
+		keytip          = { geometry = { width = 600 }, column = 1 },
 	}
 
 	-- Tooltip
