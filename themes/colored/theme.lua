@@ -71,7 +71,13 @@ theme.wicon = {
 	mute       = theme.path .. "/widget/mute.svg",
 	up         = theme.path .. "/widget/up.svg",
 	down       = theme.path .. "/widget/down.svg",
-	updates   = {
+	onscreen   = theme.path .. "/widget/onscreen.svg",
+	resize     = {
+		full       = theme.path .. "/widget/resize/full.svg",
+		horizontal = theme.path .. "/widget/resize/horizontal.svg",
+		vertical   = theme.path .. "/widget/resize/vertical.svg",
+	},
+	updates    = {
 		normal = theme.path .. "/widget/updates/normal.svg",
 		silent = theme.path .. "/widget/updates/silent.svg",
 		weekly = theme.path .. "/widget/updates/weekly.svg",
@@ -198,6 +204,17 @@ function theme:update()
 	-- Brightness control
 	------------------------------------------------------------
 	self.float.brightness.notify = { icon = self.wicon.brightness }
+
+	-- Floating window control helper
+	------------------------------------------------------------
+	self.float.control.icon = {
+		onscreen = self.wicon.onscreen,
+		resize = {
+			self.wicon.resize.full,
+			self.wicon.resize.horizontal,
+			self.wicon.resize.vertical,
+		},
+	}
 
 	-- Default awesome theme vars
 	--------------------------------------------------------------------------------

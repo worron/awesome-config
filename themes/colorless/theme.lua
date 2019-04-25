@@ -1001,6 +1001,33 @@ function theme:init()
 		keytip        = { geometry = { width = 540 } },
 	}
 
+	-- Floating window control helper
+	------------------------------------------------------------
+	self.float.control = {
+		geometry      = { width = 260, height = 48 }, -- widget size
+		border_margin = { 10, 10, 10, 10 },           -- margins around widget content
+		border_width  = 0,                            -- widget border widthj
+		font          = self.fonts.title,             -- widget font
+		steps         = { 1, 10, 25, 50, 200 },       -- move/resize step
+		default_step  = 3,                            -- select default step by index
+		onscreen      = true,                         -- no off screen for window placement
+		set_position  = nil,                          -- widget placement function
+		shape         = nil,                          -- wibox shape
+		color         = self.color,                   -- colors (main used)
+
+		-- margin around widget elements
+		margin = { icon = { onscreen = { 10, 10, 8, 8 }, mode = { 10, 10, 8, 8 } } },
+
+		-- widget icons
+		icon = {
+			onscreen = self.icon.system,
+			resize   = {},
+		},
+
+		-- redflat key tip settings
+		keytip = { geometry = { width = 540 } },
+	}
+
 	-- Key sequence tip
 	------------------------------------------------------------
 	self.float.keychain = {
