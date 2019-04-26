@@ -582,32 +582,37 @@ function hotkeys:init(args)
 	self.raw.root = {
 		{
 			{ env.mod }, "F1", function() redtip:show() end,
-			{ description = "Show awesome hotkeys helper", group = "Main" }
+			{ description = "[Hold] Show awesome hotkeys helper", group = "Main" }
 		},
 		{
 			{ env.mod, "Control" }, "F1", function() apphelper(appkeys) end,
-			{ description = "Show hotkeys helper for application", group = "Main" }
-		},
-		{
-			{ env.mod }, "F2", function () redflat.service.navigator:run() end,
-			{ description = "Window control mode", group = "Main" }
-		},
-		{
-			{ env.mod, "Control" }, "r", awesome.restart,
-			{ description = "Reload awesome", group = "Main" }
+			{ description = "[Hold] Show hotkeys helper for application", group = "Main" }
 		},
 		{
 			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
-			{ description = "User key sequence", group = "Main" }
+			{ description = "[Hold] User key sequence", group = "Main" }
+		},
+
+		{
+			{ env.mod }, "F2", function () redflat.service.navigator:run() end,
+			{ description = "[Hold] Tiling window control mode", group = "Window control" }
+		},
+		{
+			{ env.mod }, "h", function() redflat.float.control:show() end,
+			{ description = "[Hold] Floating window control mode", group = "Window control" }
 		},
 
 		{
 			{ env.mod }, "Return", function() awful.spawn(env.terminal) end,
-			{ description = "Open a terminal", group = "Applications" }
+			{ description = "Open a terminal", group = "Actions" }
 		},
 		{
 			{ env.mod, "Mod1" }, "space", function() awful.spawn("clipflap --show") end,
-			{ description = "Clipboard manager", group = "Applications" }
+			{ description = "Clipboard manager", group = "Actions" }
+		},
+		{
+			{ env.mod, "Control" }, "r", awesome.restart,
+			{ description = "Reload WM", group = "Actions" }
 		},
 
 		{
@@ -669,16 +674,16 @@ function hotkeys:init(args)
 		},
 
 		{
-			{ env.mod }, "Escape", awful.tag.history.restore,
-			{ description = "Go previos tag", group = "Tag navigation" }
+			{ env.mod }, "y", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
+			{ description = "Show layout menu", group = "Layouts" }
 		},
 		{
-			{ env.mod }, "Right", awful.tag.viewnext,
-			{ description = "View next tag", group = "Tag navigation" }
+			{ env.mod}, "Up", function() awful.layout.inc(1) end,
+			{ description = "Select next layout", group = "Layouts" }
 		},
 		{
-			{ env.mod }, "Left", awful.tag.viewprev,
-			{ description = "View previous tag", group = "Tag navigation" }
+			{ env.mod }, "Down", function() awful.layout.inc(-1) end,
+			{ description = "Select previous layout", group = "Layouts" }
 		},
 
 		{
@@ -699,22 +704,26 @@ function hotkeys:init(args)
 		},
 
 		{
-			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
-			{ description = "Increase brightness", group = "Brightness control" }
+			{ env.mod }, "Escape", awful.tag.history.restore,
+			{ description = "Go previos tag", group = "Tag navigation" }
 		},
 		{
-			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
-			{ description = "Reduce brightness", group = "Brightness control" }
+			{ env.mod }, "Right", awful.tag.viewnext,
+			{ description = "View next tag", group = "Tag navigation" }
+		},
+		{
+			{ env.mod }, "Left", awful.tag.viewprev,
+			{ description = "View previous tag", group = "Tag navigation" }
 		},
 
 		{
 			{ env.mod }, "t", function() redtitle.toggle(client.focus) end,
 			{ description = "Show/hide titlebar for focused client", group = "Titlebar" }
 		},
-		{
-			{ env.mod, "Control" }, "t", function() redtitle.switch(client.focus) end,
-			{ description = "Switch titlebar view for focused client", group = "Titlebar" }
-		},
+		--{
+		--	{ env.mod, "Control" }, "t", function() redtitle.switch(client.focus) end,
+		--	{ description = "Switch titlebar view for focused client", group = "Titlebar" }
+		--},
 		{
 			{ env.mod, "Shift" }, "t", function() redtitle.toggle_all() end,
 			{ description = "Show/hide titlebar for all clients", group = "Titlebar" }
@@ -722,19 +731,6 @@ function hotkeys:init(args)
 		{
 			{ env.mod, "Control", "Shift" }, "t", function() redtitle.global_switch() end,
 			{ description = "Switch titlebar view for all clients", group = "Titlebar" }
-		},
-
-		{
-			{}, "XF86AudioRaiseVolume", volume_raise,
-			{ description = "Increase volume", group = "Volume control" }
-		},
-		{
-			{}, "XF86AudioLowerVolume", volume_lower,
-			{ description = "Reduce volume", group = "Volume control" }
-		},
-		{
-			{ env.mod }, "v", volume_mute,
-			{ description = "Toggle mute", group = "Volume control" }
 		},
 
 		{
@@ -752,19 +748,6 @@ function hotkeys:init(args)
 		{
 			{}, "XF86AudioPrev", function() redflat.float.player:action("Previous") end,
 			{ description = "Previous track", group = "Audio player" }
-		},
-
-		{
-			{ env.mod }, "y", function() laybox:toggle_menu(mouse.screen.selected_tag) end,
-			{ description = "Show layout menu", group = "Layouts" }
-		},
-		{
-			{ env.mod}, "Up", function() awful.layout.inc(1) end,
-			{ description = "Select next layout", group = "Layouts" }
-		},
-		{
-			{ env.mod }, "Down", function() awful.layout.inc(-1) end,
-			{ description = "Select previous layout", group = "Layouts" }
 		},
 
 		{

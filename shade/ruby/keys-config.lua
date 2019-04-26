@@ -753,19 +753,15 @@ function hotkeys:init(args)
 
 		{
 			{ env.mod }, "F2", function () redflat.service.navigator:run() end,
-			{ description = "[Hold] Tiling window control mode", group = "Environment" }
+			{ description = "[Hold] Tiling window control mode", group = "Window control" }
 		},
 		{
 			{ env.mod }, "b", function() redflat.float.bartip:show() end,
-			{ description = "[Hold] Titlebar helper", group = "Environment" }
-		},
-		{
-			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
-			{ description = "User key sequence", group = "Environment" }
+			{ description = "[Hold] Titlebar control", group = "Window control" }
 		},
 		{
 			{ env.mod }, "h", function() redflat.float.control:show() end,
-			{ description = "[Hold] Floating window control mode", group = "Environment" }
+			{ description = "[Hold] Floating window control mode", group = "Window control" }
 		},
 
 		{
@@ -797,10 +793,10 @@ function hotkeys:init(args)
 			{ env.mod }, "u", awful.client.urgent.jumpto,
 			{ description = "Go to urgent client", group = "Client focus" }
 		},
-		{
-			{ env.mod }, "z", focus_to_previous,
-			{ description = "Go to previos client", group = "Client focus" }
-		},
+		--{
+		--	{ env.mod }, "z", focus_to_previous,
+		--	{ description = "Go to previos client", group = "Client focus" }
+		--},
 
 		{
 			{ env.mod }, "/", function() redflat.float.top:show("cpu") end,
@@ -813,6 +809,10 @@ function hotkeys:init(args)
 		{
 			{ env.mod }, "`", function() redflat.widget.minitray:toggle() end,
 			{ description = "Minitray", group = "Widgets" }
+		},
+		{
+			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
+			{ description = "User key sequence", group = "Widgets" }
 		},
 
 		{
@@ -926,10 +926,10 @@ function hotkeys:init(args)
 			{ description = "Select previous layout", group = "Layouts" }
 		},
 
-		{
-			{ env.mod, "Control" }, "s", function() for s in screen do env.wallpaper(s) end end,
-			{} -- hidden key
-		}
+		--{
+		--	{ env.mod, "Control" }, "s", function() for s in screen do env.wallpaper(s) end end,
+		--	{} -- hidden key
+		--}
 	}
 
 	-- Client keys
