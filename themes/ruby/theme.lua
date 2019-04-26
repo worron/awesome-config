@@ -227,7 +227,7 @@ theme.widget.mail.icon = theme.path .. "/widget/mail.svg"
 
 -- Battery
 theme.widget.battery.notify = { icon = theme.path .. "/widget/battery.svg", color = theme.color.main }
-theme.widget.battery.levels = { 0.05, 0.1, 0.15, 0.2, 0.25 }
+theme.widget.battery.levels = { 0.05, 0.1, 0.15, 0.2, 0.25, 0.30 }
 
 -- Individual styles
 ------------------------------------------------------------

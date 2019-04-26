@@ -753,7 +753,7 @@ function hotkeys:init(args)
 
 		{
 			{ env.mod }, "F2", function () redflat.service.navigator:run() end,
-			{ description = "[Hold] Window control mode", group = "Environment" }
+			{ description = "[Hold] Tiling window control mode", group = "Environment" }
 		},
 		{
 			{ env.mod }, "b", function() redflat.float.bartip:show() end,
@@ -762,6 +762,10 @@ function hotkeys:init(args)
 		{
 			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
 			{ description = "User key sequence", group = "Environment" }
+		},
+		{
+			{ env.mod }, "h", function() redflat.float.control:show() end,
+			{ description = "[Hold] Floating window control mode", group = "Environment" }
 		},
 
 		{
