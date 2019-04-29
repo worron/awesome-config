@@ -371,102 +371,102 @@ function hotkeys:init(args)
 	-- grid layout keys
 	local layout_grid_move = {
 		{
-			{ "Mod4" }, "KP_Up", function() grid.move_to("up") end,
+			{ env.mod }, "KP_Up", function() grid.move_to("up") end,
 			{ description = "Move window up", group = "Movement" }
 		},
 		{
-			{ "Mod4" }, "KP_Down", function() grid.move_to("down") end,
+			{ env.mod }, "KP_Down", function() grid.move_to("down") end,
 			{ description = "Move window down", group = "Movement" }
 		},
 		{
-			{ "Mod4" }, "KP_Left", function() grid.move_to("left") end,
+			{ env.mod }, "KP_Left", function() grid.move_to("left") end,
 			{ description = "Move window left", group = "Movement" }
 		},
 		{
-			{ "Mod4" }, "KP_right", function() grid.move_to("right") end,
+			{ env.mod }, "KP_right", function() grid.move_to("right") end,
 			{ description = "Move window right", group = "Movement" }
 		},
 		{
-			{ "Mod4", "Control" }, "KP_Up", function() grid.move_to("up", true) end,
+			{ env.mod, "Control" }, "KP_Up", function() grid.move_to("up", true) end,
 			{ description = "Move window up by bound", group = "Movement" }
 		},
 		{
-			{ "Mod4", "Control" }, "KP_Down", function() grid.move_to("down", true) end,
+			{ env.mod, "Control" }, "KP_Down", function() grid.move_to("down", true) end,
 			{ description = "Move window down by bound", group = "Movement" }
 		},
 		{
-			{ "Mod4", "Control" }, "KP_Left", function() grid.move_to("left", true) end,
+			{ env.mod, "Control" }, "KP_Left", function() grid.move_to("left", true) end,
 			{ description = "Move window left by bound", group = "Movement" }
 		},
 		{
-			{ "Mod4", "Control" }, "KP_Right", function() grid.move_to("right", true) end,
+			{ env.mod, "Control" }, "KP_Right", function() grid.move_to("right", true) end,
 			{ description = "Move window right by bound", group = "Movement" }
 		},
 	}
 
 	local layout_grid_resize = {
 		{
-			{ "Mod4" }, "i", function() grid.resize_to("up") end,
+			{ env.mod }, "i", function() grid.resize_to("up") end,
 			{ description = "Inrease window size to the up", group = "Resize" }
 		},
 		{
-			{ "Mod4" }, "k", function() grid.resize_to("down") end,
+			{ env.mod }, "k", function() grid.resize_to("down") end,
 			{ description = "Inrease window size to the down", group = "Resize" }
 		},
 		{
-			{ "Mod4" }, "j", function() grid.resize_to("left") end,
+			{ env.mod }, "j", function() grid.resize_to("left") end,
 			{ description = "Inrease window size to the left", group = "Resize" }
 		},
 		{
-			{ "Mod4" }, "l", function() grid.resize_to("right") end,
+			{ env.mod }, "l", function() grid.resize_to("right") end,
 			{ description = "Inrease window size to the right", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Shift" }, "i", function() grid.resize_to("up", nil, true) end,
+			{ env.mod, "Shift" }, "i", function() grid.resize_to("up", nil, true) end,
 			{ description = "Decrease window size from the up", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Shift" }, "k", function() grid.resize_to("down", nil, true) end,
+			{ env.mod, "Shift" }, "k", function() grid.resize_to("down", nil, true) end,
 			{ description = "Decrease window size from the down", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Shift" }, "j", function() grid.resize_to("left", nil, true) end,
+			{ env.mod, "Shift" }, "j", function() grid.resize_to("left", nil, true) end,
 			{ description = "Decrease window size from the left", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Shift" }, "l", function() grid.resize_to("right", nil, true) end,
+			{ env.mod, "Shift" }, "l", function() grid.resize_to("right", nil, true) end,
 			{ description = "Decrease window size from the right", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "i", function() grid.resize_to("up", true) end,
+			{ env.mod, "Control" }, "i", function() grid.resize_to("up", true) end,
 			{ description = "Increase window size to the up by bound", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "k", function() grid.resize_to("down", true) end,
+			{ env.mod, "Control" }, "k", function() grid.resize_to("down", true) end,
 			{ description = "Increase window size to the down by bound", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "j", function() grid.resize_to("left", true) end,
+			{ env.mod, "Control" }, "j", function() grid.resize_to("left", true) end,
 			{ description = "Increase window size to the left by bound", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "l", function() grid.resize_to("right", true) end,
+			{ env.mod, "Control" }, "l", function() grid.resize_to("right", true) end,
 			{ description = "Increase window size to the right by bound", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control", "Shift" }, "i", function() grid.resize_to("up", true, true) end,
+			{ env.mod, "Control", "Shift" }, "i", function() grid.resize_to("up", true, true) end,
 			{ description = "Decrease window size from the up by bound ", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control", "Shift" }, "k", function() grid.resize_to("down", true, true) end,
+			{ env.mod, "Control", "Shift" }, "k", function() grid.resize_to("down", true, true) end,
 			{ description = "Decrease window size from the down by bound ", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control", "Shift" }, "j", function() grid.resize_to("left", true, true) end,
+			{ env.mod, "Control", "Shift" }, "j", function() grid.resize_to("left", true, true) end,
 			{ description = "Decrease window size from the left by bound ", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control", "Shift" }, "l", function() grid.resize_to("right", true, true) end,
+			{ env.mod, "Control", "Shift" }, "l", function() grid.resize_to("right", true, true) end,
 			{ description = "Decrease window size from the right by bound ", group = "Resize" }
 		},
 	}
@@ -477,98 +477,98 @@ function hotkeys:init(args)
 	-- user map layout keys
 	local layout_map_layout = {
 		{
-			{ "Mod4" }, "s", function() map.swap_group() end,
+			{ env.mod }, "s", function() map.swap_group() end,
 			{ description = "Change placement direction for group", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "v", function() map.new_group(true) end,
+			{ env.mod }, "v", function() map.new_group(true) end,
 			{ description = "Create new vertical group", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "h", function() map.new_group(false) end,
+			{ env.mod }, "h", function() map.new_group(false) end,
 			{ description = "Create new horizontal group", group = "Layout" }
 		},
 		{
-			{ "Mod4", "Control" }, "v", function() map.insert_group(true) end,
+			{ env.mod, "Control" }, "v", function() map.insert_group(true) end,
 			{ description = "Insert new vertical group before active", group = "Layout" }
 		},
 		{
-			{ "Mod4", "Control" }, "h", function() map.insert_group(false) end,
+			{ env.mod, "Control" }, "h", function() map.insert_group(false) end,
 			{ description = "Insert new horizontal group before active", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "d", function() map.delete_group() end,
+			{ env.mod }, "d", function() map.delete_group() end,
 			{ description = "Destroy group", group = "Layout" }
 		},
 		{
-			{ "Mod4", "Control" }, "d", function() map.clean_groups() end,
+			{ env.mod, "Control" }, "d", function() map.clean_groups() end,
 			{ description = "Destroy all empty groups", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "f", function() map.set_active() end,
+			{ env.mod }, "f", function() map.set_active() end,
 			{ description = "Set active group", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "g", function() map.move_to_active() end,
+			{ env.mod }, "g", function() map.move_to_active() end,
 			{ description = "Move focused client to active group", group = "Layout" }
 		},
 		{
-			{ "Mod4", "Control" }, "f", function() map.hilight_active() end,
+			{ env.mod, "Control" }, "f", function() map.hilight_active() end,
 			{ description = "Hilight active group", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "a", function() map.switch_active(1) end,
+			{ env.mod }, "a", function() map.switch_active(1) end,
 			{ description = "Activate next group", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "q", function() map.switch_active(-1) end,
+			{ env.mod }, "q", function() map.switch_active(-1) end,
 			{ description = "Activate previous group", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "]", function() map.move_group(1) end,
+			{ env.mod }, "]", function() map.move_group(1) end,
 			{ description = "Move active group to the top", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "[", function() map.move_group(-1) end,
+			{ env.mod }, "[", function() map.move_group(-1) end,
 			{ description = "Move active group to the bottom", group = "Layout" }
 		},
 		{
-			{ "Mod4" }, "r", function() map.reset_tree() end,
+			{ env.mod }, "r", function() map.reset_tree() end,
 			{ description = "Reset layout structure", group = "Layout" }
 		},
 	}
 
 	local layout_map_resize = {
 		{
-			{ "Mod4" }, "j", function() map.incfactor(nil, 0.1, false) end,
+			{ env.mod }, "j", function() map.incfactor(nil, 0.1, false) end,
 			{ description = "Increase window horizontal size factor", group = "Resize" }
 		},
 		{
-			{ "Mod4" }, "l", function() map.incfactor(nil, -0.1, false) end,
+			{ env.mod }, "l", function() map.incfactor(nil, -0.1, false) end,
 			{ description = "Decrease window horizontal size factor", group = "Resize" }
 		},
 		{
-			{ "Mod4" }, "i", function() map.incfactor(nil, 0.1, true) end,
+			{ env.mod }, "i", function() map.incfactor(nil, 0.1, true) end,
 			{ description = "Increase window vertical size factor", group = "Resize" }
 		},
 		{
-			{ "Mod4" }, "k", function() map.incfactor(nil, -0.1, true) end,
+			{ env.mod }, "k", function() map.incfactor(nil, -0.1, true) end,
 			{ description = "Decrease window vertical size factor", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "j", function() map.incfactor(nil, 0.1, false, true) end,
+			{ env.mod, "Control" }, "j", function() map.incfactor(nil, 0.1, false, true) end,
 			{ description = "Increase group horizontal size factor", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "l", function() map.incfactor(nil, -0.1, false, true) end,
+			{ env.mod, "Control" }, "l", function() map.incfactor(nil, -0.1, false, true) end,
 			{ description = "Decrease group horizontal size factor", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "i", function() map.incfactor(nil, 0.1, true, true) end,
+			{ env.mod, "Control" }, "i", function() map.incfactor(nil, 0.1, true, true) end,
 			{ description = "Increase group vertical size factor", group = "Resize" }
 		},
 		{
-			{ "Mod4", "Control" }, "k", function() map.incfactor(nil, -0.1, true, true) end,
+			{ env.mod, "Control" }, "k", function() map.incfactor(nil, -0.1, true, true) end,
 			{ description = "Decrease group vertical size factor", group = "Resize" }
 		},
 	}
