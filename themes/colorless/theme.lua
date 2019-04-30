@@ -376,7 +376,7 @@ function theme:init()
 		-- tag state mark
 		base = {
 			pad = 6,       -- left/right padding
-			height = 9,   -- mark height
+			height = 9,    -- mark height
 			thickness = 2  -- mark lines thickness
 		},
 
