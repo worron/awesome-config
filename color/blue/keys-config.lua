@@ -109,7 +109,7 @@ local volume_mute  = function() redflat.widget.pulse:mute() end
 
 -- brightness functions
 local brightness = function(args)
-	redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight utilitya
+	redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight
 end
 
 -- right bottom corner position
@@ -684,6 +684,28 @@ function hotkeys:init(args)
 		{
 			{ env.mod }, "Down", function() awful.layout.inc(-1) end,
 			{ description = "Select previous layout", group = "Layouts" }
+		},
+
+		{
+			{}, "XF86MonBrightnessUp", function() brightness({ step = 2 }) end,
+			{ description = "Increase brightness", group = "Brightness control" }
+		},
+		{
+			{}, "XF86MonBrightnessDown", function() brightness({ step = 2, down = true }) end,
+			{ description = "Reduce brightness", group = "Brightness control" }
+		},
+
+		{
+			{}, "XF86AudioRaiseVolume", volume_raise,
+			{ description = "Increase volume", group = "Volume control" }
+		},
+		{
+			{}, "XF86AudioLowerVolume", volume_lower,
+			{ description = "Reduce volume", group = "Volume control" }
+		},
+		{
+			{}, "XF86AudioMute", volume_mute,
+			{ description = "Mute audio", group = "Volume control" }
 		},
 
 		{

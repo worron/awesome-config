@@ -30,10 +30,10 @@ local tagkeys_line = { "q", "w", "e", "r", "t", "y", "u", "i", "o" }
 -----------------------------------------------------------------------------------------------------------------------
 
 -- change window focus by history
-local function focus_to_previous()
-	awful.client.focus.history.previous()
-	if client.focus then client.focus:raise() end
-end
+--loc function focus_to_previous()
+--	awful.client.focus.history.previous()
+--	if client.focus then client.focus:raise() end
+--end
 
 -- change window focus by direction
 local focus_switch_byd = function(dir)
