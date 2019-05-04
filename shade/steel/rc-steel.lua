@@ -92,9 +92,18 @@ taglist.buttons = awful.util.table.join(
 local binclock = {}
 binclock.widget = redflat.widget.binclock({ timeout = 1, dateformat = "%H:%M:%S  %d-%m" })
 
--- Software update indcator
+-- Software update indcator and menu button in one
 --------------------------------------------------------------------------------
 redflat.widget.updates:init({ command = env.updates })
+
+local updates = {}
+updates.widget = redflat.widget.updates()
+
+updates.buttons = awful.util.table.join(
+	awful.button({ }, 1, function () mymenu.mainmenu:toggle() end),
+	awful.button({ }, 2, function () redflat.widget.updates:update(true) end),
+	awful.button({ }, 3, function () redflat.widget.updates:toggle() end)
+)
 
 -- Tray widget
 --------------------------------------------------------------------------------
@@ -194,6 +203,9 @@ awful.screen.connect_for_each_screen(
 			layout = wibox.layout.align.horizontal,
 			{ -- left widgets
 				layout = wibox.layout.fixed.horizontal,
+
+				env.wrapper(updates.widget, "updates", updates.buttons),
+				separator,
 				env.wrapper(taglist[s], "taglist"),
 				separator,
 			},

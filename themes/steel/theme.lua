@@ -50,7 +50,8 @@ theme.widget.wrapper = {
 	ram         = { 2, 2, 7, 7 },
 	battery     = { 3, 9, 7, 7 },
 	network     = { 4, 4, 7, 7 },
-	taglist     = { 6, 6, 0, 0 },
+	updates     = { 10, 10, 7, 7 },
+	taglist     = { 4, 4, 0, 0 },
 	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
 }
 
@@ -59,6 +60,9 @@ theme.widget.wrapper = {
 
 -- Dotcount
 theme.gauge.graph.dots.dot_gap_h = 5
+
+-- System updates indicator
+theme.widget.updates.icon = theme.icon.awesome
 
 -- Audio
 theme.gauge.audio.blue.dash.plain = true
