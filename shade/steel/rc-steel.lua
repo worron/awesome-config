@@ -89,8 +89,8 @@ taglist.buttons = awful.util.table.join(
 
 -- Textclock widget
 --------------------------------------------------------------------------------
-local textclock = {}
-textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
+local binclock = {}
+binclock.widget = redflat.widget.binclock({ timeout = 1, dateformat = "%H:%M:%S  %d-%m" })
 
 -- Software update indcator
 --------------------------------------------------------------------------------
@@ -216,7 +216,7 @@ awful.screen.connect_for_each_screen(
 				env.wrapper(sysmon.widget.ram, "ram", sysmon.buttons.ram),
 				env.wrapper(sysmon.widget.battery, "battery"),
 				separator,
-				env.wrapper(textclock.widget, "textclock"),
+				env.wrapper(binclock.widget, "binclock"),
 				separator,
 				env.wrapper(tray.widget, "tray", tray.buttons),
 			},

@@ -43,9 +43,9 @@ theme:update()
 -- individual margins for panel widgets
 --------------------------------------------------------------------------------
 theme.widget.wrapper = {
-	textclock   = { 10, 10, 0, 0 },
+	binclock    = { 10, 10, 7, 7 },
 	volume      = { 4, 9, 3, 3 },
-	tray        = { 8, 8, 8, 8 },
+	tray        = { 8, 8, 7, 7 },
 	cpu         = { 9, 3, 7, 7 },
 	ram         = { 2, 2, 7, 7 },
 	battery     = { 3, 9, 7, 7 },
@@ -56,6 +56,9 @@ theme.widget.wrapper = {
 
 -- Various widgets style tuning
 ------------------------------------------------------------
+
+-- Dotcount
+theme.gauge.graph.dots.dot_gap_h = 5
 
 -- Audio
 theme.gauge.audio.blue.dash.plain = true

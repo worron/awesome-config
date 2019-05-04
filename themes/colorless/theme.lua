@@ -502,6 +502,15 @@ function theme:init()
 		color   = { text = self.color.icon } -- colors
 	}
 
+	-- Binary clock
+	------------------------------------------------------------
+	self.widget.binclock = {
+		width   = 52,           -- widget width
+		tooltip = {},           -- redflat tooltip style (see theme.float.tooltip)
+		dot     = { size = 5 }, -- mark size
+		color   = self.color,   -- colors (main used)
+	}
+
 	-- Battery indicator
 	------------------------------------------------------------
 	self.widget.battery = {
