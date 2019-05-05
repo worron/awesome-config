@@ -52,7 +52,7 @@ theme.widget.wrapper = {
 	network     = { 4, 4, 7, 7 },
 	updates     = { 10, 10, 7, 7 },
 	taglist     = { 4, 4, 0, 0 },
-	tasklist    = { 4, 0, 0, 0 }, -- centering tasklist widget
+	tasklist    = { 0, 9, 0, 0 }, -- centering tasklist widget
 }
 
 -- Various widgets style tuning

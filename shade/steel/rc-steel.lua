@@ -187,7 +187,10 @@ awful.screen.connect_for_each_screen(
 		env.wallpaper(s)
 
 		-- tags
-		awful.tag({ "Main", "Full", "Code", "Edit", "Media", "Free" }, s, { al[5], al[6], al[4], al[4], al[3], al[3] })
+		awful.tag(
+			{ "Main", "Full", "Code", "Edit", "Media", "Game", "Free" }, s,
+			{ al[5], al[6], al[4], al[4], al[3], al[3], al[5] }
+		)
 
 		-- taglist widget
 		taglist[s] = redflat.widget.taglist({ screen = s, buttons = taglist.buttons, hint = env.tagtip }, taglist.style)
