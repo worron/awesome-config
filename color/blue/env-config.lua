@@ -65,7 +65,7 @@ env.wallpaper = function(s)
 		if not env.desktop_autohide and awful.util.file_readable(beautiful.wallpaper) then
 			gears.wallpaper.maximized(beautiful.wallpaper, s, true)
 		else
-			gears.wallpaper.set(beautiful.color.bg)
+			gears.wallpaper.set(beautiful.color and beautiful.color.bg)
 		end
 	end
 end

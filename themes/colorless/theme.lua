@@ -376,7 +376,7 @@ function theme:init()
 		-- tag state mark
 		base = {
 			pad = 6,       -- left/right padding
-			height = 9,   -- mark height
+			height = 9,    -- mark height
 			thickness = 2  -- mark lines thickness
 		},
 
@@ -500,6 +500,15 @@ function theme:init()
 		font    = self.fonts.clock,          -- font
 		tooltip = {},                        -- redflat tooltip style (see theme.float.tooltip)
 		color   = { text = self.color.icon } -- colors
+	}
+
+	-- Binary clock
+	------------------------------------------------------------
+	self.widget.binclock = {
+		width   = 52,           -- widget width
+		tooltip = {},           -- redflat tooltip style (see theme.float.tooltip)
+		dot     = { size = 5 }, -- mark size
+		color   = self.color,   -- colors (main used)
 	}
 
 	-- Battery indicator
