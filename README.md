@@ -34,7 +34,7 @@ Main code base can be found in `redflat` submodule.
 #### Widgets
 | widget                 | type          | utility             |
 | -------------          |---------------| -------------       |
-| new mail indicator     | panel         | curl/user scripts   |
+| unread mail indicator  | panel         | curl/user scripts   |
 | system updates         | panel         | apt-get*            |
 | volume control         | panel         | pacmd               |
 | brightness control     | floating      | xbacklight          |
@@ -65,7 +65,7 @@ fonts, hotkeys and then start porting wanted widgets from colored configs.
 It's the most safe and reliable way to use this config.
 
 #### Start with Colors
-Colored are my personal configs.
+Colored are author's personal configs.
 It's full featured setup filled with widgets
 preconfigured for certain software and hardware environment.
 Should be carefully edited and adapted before using.
@@ -78,6 +78,9 @@ There a lot of hardware specific widgets which can be configured later.
 * Carefully check "Panel widgets" section, reconfigure or disable widgets there.
 Do not forget remove disabled panel widgets from `awful.screen.connect_for_each_screen` function.
 * Rules and hotkeys are another parts of config which definitely need revising.  
+
+#### Start with Shades
+The same as colors but may have some experimental or unpolished features.
 
 #### Tips
 Hotkeys helper bound to `Mod4`+`F1` (with holding modkey) by default,
@@ -111,12 +114,17 @@ shared settings (e.g. fonts) for different color configs. It inherits all data f
 colorless theme and overwrites some values. Doesn't used directly from configs.
 
 Color specified themes (e.g. `themes/blue/theme.lua` for `rc-blue.lua`)
-are inherit all data from colored and overwrite config specific values. 
+are inherit all data from colored and overwrite config specific values.
+So to find some widget style for blue theme you shuold check theme files
+order blue -> colored -> colorless. 
+
+#### Adding new theme
+Easiest way to make a copy of colorless theme file and edit it.
 
 ## Statement
 All code provided as is without any warranties.
 
 The project started as custom personal config. Later was reconstructed as `awesome`
-extension module and it has a lot flaws and things to fix. Some parts of `redflat`
-were designed for early versions of `awesome` and simply outdated by today.
-So `redflat` project open to any code improvement and fixes.
+extension module but still has a lot things to fix. Some parts of `redflat`
+were designed for early versions of `awesome` and need refactoring now.
+Project always open to any code improvement and fixes.
