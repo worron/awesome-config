@@ -216,7 +216,7 @@ function desktop:init(args)
 
 	vnstat.args = {
 		sensors = {
-			{ async_function = vnstat_daily,   maxm = 2.5 * 1024^3, name = "daily" },
+			{ async_function = vnstat_daily,   maxm = 5 * 1024^3, name = "daily" },
 			{ async_function = vnstat_monthly, maxm = 75 * 1024^3,  name = "monthly" },
 		},
 		timeout = 900,

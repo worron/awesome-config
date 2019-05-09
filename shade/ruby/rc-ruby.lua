@@ -99,8 +99,8 @@ taglist.buttons = awful.util.table.join(
 
 -- some tag settings which indirectky depends on row and columns number of taglist
 taglist.names = {
-	"Prime", "Full1", "Code", "Edit", "Misc1", "Game",
-	"Spare", "Full2", "Test", "Back", "Misc2", "Free"
+	"Prime", "Full", "Code", "Edit", "Misc", "Game",
+	"Spare", "Back", "Test", "Qemu", "Data", "Free"
 }
 
 local al = awful.layout.layouts

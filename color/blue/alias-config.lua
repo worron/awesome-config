@@ -23,6 +23,7 @@ appnames["keepassxc"           ] = "KPASS"
 appnames["Evince"              ] = "EVINCE"
 appnames["Thunderbird"         ] = "TBIRD"
 appnames["jetbrains-pycharm-ce"] = "PYCRM"
+appnames["jetbrains-clion"     ] = "CLION"
 appnames["Qemu-system-x86_64"  ] = "QEMU"
 
 return appnames
