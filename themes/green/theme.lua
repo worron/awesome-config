@@ -23,6 +23,11 @@ theme.path = awful.util.get_configuration_dir() .. "themes/green"
 theme.panel_height = 40 -- panel height
 theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
 
+-- Fonts
+------------------------------------------------------------
+theme.cairo_fonts.desktop.textbox = { font = "Germania One", size = 24, face = 0 }
+
+
 -- Setup parent theme settings
 --------------------------------------------------------------------------------
 theme:update()
@@ -35,7 +40,7 @@ theme:update()
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
 	width  = { 480, 480, 480 },
-	height = { 180, 150, 150, 138, 18 },
+	height = { 180, 146, 146, 132, 17 },
 	edge   = { width = { 80, 80 }, height = { 50, 50 } }
 }
 
@@ -55,12 +60,16 @@ theme.desktop.places = {
 -- but grab directly from rc-files to rewrite base style
 theme.individual.desktop = { speedmeter = {}, multimeter = {}, multiline = {}, singleline = {} }
 
+theme.desktop.line_height = 17
+
 -- Lines (common part)
-theme.desktop.common.pack.lines.label = { width = 68, draw = "by_width" }
-theme.desktop.common.pack.lines.text  = { width = 94, draw = "by_edges" }
+theme.desktop.common.pack.lines.label = { width = 60, draw = "by_width" }
+theme.desktop.common.pack.lines.text  = { width = 80, draw = "by_edges" }
 theme.desktop.common.pack.lines.gap   = { text = 14, label = 14 }
+theme.desktop.common.pack.lines.line  = { height = theme.desktop.line_height }
 
 -- Speedmeter (base widget)
+--theme.desktop.speedmeter.normal.label = { height = theme.desktop.line_height }
 theme.desktop.speedmeter.normal.images = { theme.path .. "/desktop/up.svg", theme.path .. "/desktop/down.svg" }
 
 -- Speedmeter drive (individual widget)
@@ -70,6 +79,7 @@ theme.individual.desktop.speedmeter.drive = {
 
 -- Multimeter (base widget)
 theme.desktop.multimeter.icon           = { image = false }
+theme.desktop.multimeter.height.lines   = 54
 theme.desktop.multimeter.height.upright = 70
 theme.desktop.multimeter.upbar          = { width = 32, chunk = { num = 10, line = 3 }, shape = "plain" }
 theme.desktop.multimeter.lines.show     = { label = true, tooltip = false, text = true }
@@ -93,10 +103,12 @@ theme.individual.desktop.multiline.disks = {
 
 -- Singleline temperature (individual widget)
 theme.individual.desktop.singleline.thermal = {
+	lbox = { draw = "by_width", width = 45 },
+	rbox = { draw = "by_edges", width = 52 },
+	iwidth = 125,
 	icon = theme.path .. "/desktop/fire.svg",
 	unit = { { "°C", -1 } },
 }
-
 
 -- Panel widgets
 -----------------------------------------------------------------------------------------------------------------------

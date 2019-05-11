@@ -32,8 +32,6 @@ theme:update()
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop.textset = {
 	font  = "Belligerent Madness 22",
-	-- font  = "Idolwild 22",
-	-- font  = "Palitoon 26",
 	spacing = 10,
 	color = theme.desktop.color
 }
