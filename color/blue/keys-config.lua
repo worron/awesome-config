@@ -669,7 +669,7 @@ function hotkeys:init(args)
 			{ description = "Check available updates", group = "Widgets" }
 		},
 		{
-			{ env.mod }, "F3", function() qlaunch:show() end,
+			{ env.mod }, "g", function() qlaunch:show() end,
 			{ description = "Application quick launcher", group = "Widgets" }
 		},
 

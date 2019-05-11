@@ -826,7 +826,7 @@ function hotkeys:init(args)
 
 		{
 			{ env.mod }, "Tab", awful.tag.history.restore,
-			{ description = "Go to previos tag", group = "Tag navigation" }
+			{ description = "Swith to previos tag by history", group = "Tag navigation" }
 		},
 		{
 			{ env.mod }, "Right", awful.tag.viewnext,
