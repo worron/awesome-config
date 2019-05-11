@@ -518,7 +518,7 @@ function theme:init()
 		notify  = {},   -- redflat notify style (see theme.float.notify)
 
 		-- notification levels
-		levels  = { 0.05, 0.1, 0.15 }
+		levels  = { 0.05, 0.1, 0.15, 0.20, 0.25 }
 	}
 
 	-- Minitray
@@ -1158,10 +1158,11 @@ function theme:init()
 		main       = self.color.main,
 		gray       = self.color.desktop_gray,
 		icon       = self.color.desktop_icon,
+		urgent     = self.color.urgent,
 		wibox = self.color.bg .. "00"
 	}
 
-	-- Common (various elements that used as component for desktop widgets)
+	-- Common (various elem, 0.20, 0.25ents that used as component for desktop widgets)
 	--------------------------------------------------------------------------------
 
 	-- Textbox

@@ -147,7 +147,7 @@ function titlebar:init()
 							redtitle.mark.property(c, "ontop", style.mark_mini),
 							redtitle.mark.property(c, "below", style.mark_mini),
 							spacing = style.mark_mini.gap,
-							layout  = wibox.layout.fixed.horizontal()
+							layout  = wibox.layout.fixed.horizontal
 						},
 						top = 4, bottom = 4, left = 20, right = 20,
 						widget = wibox.container.margin,

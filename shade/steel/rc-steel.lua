@@ -242,6 +242,13 @@ awful.screen.connect_for_each_screen(
 
 -- Desktop widgets
 -----------------------------------------------------------------------------------------------------------------------
+if not lock.desktop then
+	local desktop = require("shade.steel.desktop-config") -- load file with desktop widgets configuration
+	desktop:init({
+		env = env,
+		buttons = awful.util.table.join(awful.button({}, 3, function () mymenu.mainmenu:toggle() end))
+	})
+end
 
 
 -- Active screen edges
