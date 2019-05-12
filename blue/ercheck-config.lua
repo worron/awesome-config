@@ -1,1 +1,0 @@
-../colorless/ercheck-config.lua

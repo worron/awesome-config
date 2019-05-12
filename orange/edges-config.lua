@@ -1,1 +1,0 @@
-../blue/edges-config.lua

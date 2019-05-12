@@ -10,6 +10,8 @@ local naughty = require("naughty")
 
 local redflat = require("redflat")
 
+local unpack = unpack or table.unpack
+
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
 local env = {}
@@ -19,7 +21,7 @@ local env = {}
 function env:init(args)
 
 	-- init vars
-	local args = args or {}
+	args = args or {}
 	local theme = args.theme or "colorless"
 
 	-- environment vars
@@ -29,9 +31,12 @@ function env:init(args)
 	self.home = os.getenv("HOME")
 	self.themedir = awful.util.get_configuration_dir() .. "themes/" .. theme
 
-	self.sloppy_focus = false
-	self.color_border = false
-	self.set_slave = true
+	-- boolean defaults is pain
+	self.sloppy_focus = args.sloppy_focus or false
+	self.color_border_focus = args.color_border_focus or false
+	self.set_slave = args.set_slave == nil and true or false
+	self.desktop_autohide = args.desktop_autohide or false
+	self.set_center = args.set_center or false
 
 	-- theme setup
 	beautiful.init(env.themedir .. "/theme.lua")
@@ -43,10 +48,6 @@ function env:init(args)
 		naughty.config.presets.normal   = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.normal)
 		naughty.config.presets.critical = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.critical)
 		naughty.config.presets.low      = redflat.util.table.merge(beautiful.naughty.base, beautiful.naughty.low)
-
-		-- dirty fix to ignore forced geometry for critical preset
-		-- For the sake of laziness I prefer fix some parameters after inherit than write pure table without inherit
-		naughty.config.presets.critical.height, naughty.config.presets.critical.width = nil, nil
 	end
 end
 
@@ -57,7 +58,7 @@ end
 --------------------------------------------------------------------------------
 env.wallpaper = function(s)
 	if beautiful.wallpaper then
-		if awful.util.file_readable(beautiful.wallpaper) then
+		if not env.desktop_autohide and awful.util.file_readable(beautiful.wallpaper) then
 			gears.wallpaper.maximized(beautiful.wallpaper, s, true)
 		else
 			gears.wallpaper.set(beautiful.color.bg)
@@ -78,7 +79,7 @@ end
 -- Panel widgets wrapper
 --------------------------------------------------------------------------------
 env.wrapper = function(widget, name, buttons)
-	local margin = redflat.util.table.check(beautiful, "widget.wrapper") and beautiful.widget.wrapper[name]
+	local margin = redflat.util.table.check(beautiful, "widget.wrapper")
 	               and beautiful.widget.wrapper[name] or { 0, 0, 0, 0 }
 	if buttons then
 		widget:buttons(buttons)

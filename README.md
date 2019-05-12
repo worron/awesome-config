@@ -1,22 +1,20 @@
 # Red Flat Awesome WM config
 Custom config for [Awesome WM](http://awesome.naquadah.org).
 
-This config is compatible with AwesomeWM 4 only, check `v356` branch for older (v3.5.6 - v3.5.9) version.
+This config is compatible with AwesomeWM version 4.0 and newer.
 
-## Screenshots
-![](https://github.com/worron/awesome-config/wiki/images/v400/red.png)
----
-![](https://github.com/worron/awesome-config/wiki/images/v400/blue.png)
----
-![](https://github.com/worron/awesome-config/wiki/images/v400/orange.png)
----
-![](https://github.com/worron/awesome-config/wiki/images/v400/green.png)
+## Screenshot
+![](https://github.com/worron/awesome-config/wiki/images/v400/ruby.png)
+<p align="center"><a href="https://github.com/worron/awesome-config/wiki">Gallery</a></p>
 <p align="center"><a href="https://youtu.be/OoSts990-lY">Video Demo</a></p>
 
 ## Description
-Advanced user config for Awesome WM, It consist of a bunch of new widgets, features, tiling schemes, and some reworked standard widgets. This repository provide only config examples and themes. Main code base can be found in `redflat` submodule. Should be mentioned, that originally this scripts was created for Awesome v3.5.6 and then roughly ported to latest version, thereby some part of code may seem too messed and outdated.  So code improvement fixes are welcomed.
+Advanced user config for `awesome` consist of a bunch of new widgets, 
+features, tiling schemes, and some reworked standard widgets. 
+This repository provide only config examples and themes. 
+Main code base can be found in `redflat` submodule.
 
-#### General Feature List
+#### Core Features
 * Full color control, including widget icons;
 * True vector scaling for widget icons (gdkpixbuf required);
 * New unique panel widgets and some reworked from standard lib;
@@ -25,7 +23,7 @@ Advanced user config for Awesome WM, It consist of a bunch of new widgets, featu
 * Several minor improvements for menu widget;
 * Alternative titlebars with several visual schemes;
 * Active screen edges;
-* Emacs-like key sequences;
+* Keys sequences;
 * Advanced hotkeys helper;
 * Special window control mode which allow use individual hotkeys for different layouts;
 * New tiling layout to build your placement scheme manually;
@@ -35,45 +33,99 @@ Advanced user config for Awesome WM, It consist of a bunch of new widgets, featu
 * Awesome WM 4.0+
 
 #### Widgets
-| widget                 | type          | utility                                     |
-| -------------          | ------------- | -------------                               |
-| new mail indicator     | panel         | curl/user scripts                           |
-| keyboard layout        | panel         | kbdd, dbus-send                             |
-| system upgrades        | panel         | apt-get                                     |
-| volume control         | panel         | pacmd                                       |
-| brightness control     | floating      | xbacklight/unity-settings-daemon, dbus-send |
-| mpris2 player          | floating      | dbus-send                                   |
-| CPU temperature        | desktop       | lm-sensors                                  |
-| HDD temperature        | desktop       | hddtemp, curl                               |
-| Nvidia GPU temperature | desktop       | nvidia-smi                                  |
-| torrent info           | desktop       | transmission-remote                         |
+| widget                 | type          | utility             |
+| -------------          |---------------| -------------       |
+| unread mail indicator  | panel         | curl/user scripts   |
+| system updates         | panel         | apt-get*            |
+| volume control         | panel         | pacmd               |
+| brightness control     | floating      | xbacklight          |
+| mpris2 player          | floating      | dbus-send           |
+| CPU temperature        | desktop       | lm-sensors          |
+| HDD temperature        | desktop       | smartctl**          |
+| Nvidia GPU temperature | desktop       | nvidia-smi/optirun  |
+| torrent info           | desktop       | transmission-remote |
+
+\* Actually any one-liner written for your package manager.  
+\*\* Should be configured to run from user.
 
 ## Installation and Usage
 
 #### Installation
-Copy all scripts to you setting folder
+Copy scripts to WM setting folder. 
+Simple way to do so with `git`
 ```shell
 $ git clone https://github.com/worron/awesome-config.git ~/.config/awesome --recursive
 ```
-and then edit `rc.lua` to select wanted config.
+Then edit `rc.lua` to select wanted config.
 
 #### Start with Colorless
-Config `rc-colorless.lua` is some kind of basic config, it consist only general features and should work without any additional editing.  You can set colorless config, set you own colors, fonts, hotkeys and then port any widget you want from colored configs.
+Config `rc-colorless.lua` is basic setup. 
+It provide general features only and should work without any additional editing.
+After installing colorless config you can set you own colors,
+fonts, hotkeys and then start porting wanted widgets from colored configs.
+It's the most safe and reliable way to use this config.
 
 #### Start with Colors
-Colored configs is full featured setup designed to demonstrate all the power of `redflat` extension module. It contains some personal setting, so if you want to use colored config you should carefully edit "Panel widgets", "Desktop widgets", "Autostart user applications" sections, hotkeys and environment vars first.
+Colored are author's personal configs.
+It's full featured setup filled with widgets
+preconfigured for certain software and hardware environment.
+Should be carefully edited and adapted before using.
+This way suitable mostly to experienced `awesome` users.
+Some things to pay attention:
+
+* Better to disable desktop section from the start.
+There a lot of hardware specific widgets which can be configured later.
+* Third party user applications set in environment and autostart sections.
+* Carefully check "Panel widgets" section, reconfigure or disable widgets there.
+Do not forget remove disabled panel widgets from `awful.screen.connect_for_each_screen` function.
+* Rules and hotkeys are another parts of config which definitely need revising.  
+
+#### Start with Shades
+The same as colors but may have some experimental or unpolished features.
 
 #### Tips
-Hotkeys helper bound to `Mod4`+`F1` (with holding modkey) by default, It will show you all hotkeys available at the current moment.
+Hotkeys helper bound to `Mod4`+`F1` (with holding modkey) by default,
+It will show you all hotkeys available at the current moment.
 
-Theme files is very valuable part of config. Some widgets appearance can be changed dramatically with themes.
+Theme files is very valuable part of config.
+Some widgets appearance can be changed dramatically with themes.
 
 This config was designed to work with composite manager (e.g. compton).
 
-[ACYLS](https://github.com/worron/ACYLS) icon pack is very good complement for this configs. Some widgets was designed with this pack in mind.
+[ACYLS](https://github.com/worron/ACYLS) icon pack is very good complement for this configs.
+Some widgets was designed with this pack in mind.
+
+There are lot shared parts between configs and themes, pay attention to `require` directives.
+
+[Xephyr](https://freedesktop.org/wiki/Software/Xephyr/) is excellent tool for `awesome` deep customization.
 
 ## Themes
-Several icon packs were used to create custom WM themes:
-* Any Color You Like Simple
-* Open Iconic
-* Android Vector Icons
+This config isn't compatible with standard `awesome` themes
+and its themes not compatible with default config.
+
+#### Structure
+There is some inheritance and code sharing between theme files.
+
+Colorless `themes/colorless/theme.lua` is base and only one self-sufficient theme.
+It contains list of all appearance variables for `redflat` widgets with
+commentaries. Also it directly define style for `rc-colorless` config.
+
+Colored `themes/colored/theme.lua` is theme which contain some
+shared settings (e.g. fonts) for different color configs. It inherits all data from
+colorless theme and overwrites some values. Doesn't used directly from configs.
+
+Color specified themes (e.g. `themes/blue/theme.lua` for `rc-blue.lua`)
+are inherit all data from colored and overwrite config specific values.
+So to find some widget style for blue theme you shuold check theme files
+order blue -> colored -> colorless. 
+
+#### Adding new theme
+Easiest way to make a copy of colorless theme file and edit it.
+
+## Statement
+All code provided as is without any warranties.
+
+The project started as custom personal config. Later was reconstructed as `awesome`
+extension module but still has a lot things to fix. Some parts of `redflat`
+were designed for early versions of `awesome` and need refactoring now.
+Project always open to any code improvement and fixes.

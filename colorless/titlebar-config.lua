@@ -5,9 +5,11 @@
 -- Grab environment
 local awful = require("awful")
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 
 -- local redflat = require("redflat")
 local redtitle = require("redflat.titlebar")
+local redutil = require("redflat.util")
 local clientmenu = require("redflat.float.clientmenu")
 
 -- Initialize tables and vars for module
@@ -51,58 +53,88 @@ end
 
 -- Connect titlebar building signal
 -----------------------------------------------------------------------------------------------------------------------
-function titlebar:init(args)
+function titlebar:init()
 
-	local args = args or {}
 	local style = {}
 
-	style.light = args.light or redtitle.get_style()
-	style.full = args.full or { size = 28, icon = { size = 25, gap = 0, angle = 0.5 } }
+	-- titlebar schemes
+	style.base   = redutil.table.merge(redutil.table.check(beautiful, "titlebar.base") or {}, { size = 8 })
+	style.iconic = redutil.table.merge(style.base, { size = 24 })
 
+	-- titlebar elements styles
+	style.mark_mini = redutil.table.merge(
+		redutil.table.check(beautiful, "titlebar.mark") or {},
+		{ size = 30, gap = 10, angle = 0 }
+	)
+	style.icon = redutil.table.merge(
+		redutil.table.check(beautiful, "titlebar.icon") or {},
+		{ gap = 10 }
+	)
+
+	-- titlebar setup for clients
 	client.connect_signal(
 		"request::titlebars",
 		function(c)
 			-- build titlebar and mouse buttons for it
 			local buttons = title_buttons(c)
-			redtitle(c)
+			redtitle(c, style.base)
 
-			-- build light titlebar model
-			local light = wibox.widget({
+			-- build mini titlebar model
+			local base  = wibox.widget({
 				nil,
 				{
-					right = style.light.icon.gap,
-					redtitle.icon.focus(c),
+					right = style.mark_mini.gap,
+					redtitle.mark.focus(c, style.mark_mini),
 					layout = wibox.container.margin,
 				},
 				{
-					redtitle.icon.property(c, "floating"),
-					redtitle.icon.property(c, "sticky"),
-					redtitle.icon.property(c, "ontop"),
-					spacing = style.light.icon.gap,
+					redtitle.mark.property(c, "floating", style.mark_mini),
+					redtitle.mark.property(c, "sticky", style.mark_mini),
+					redtitle.mark.property(c, "ontop", style.mark_mini),
+					spacing = style.mark_mini.gap,
 					layout = wibox.layout.fixed.horizontal()
 				},
 				buttons = buttons,
 				layout  = wibox.layout.align.horizontal,
 			})
 
-			-- build full titlebar model
-			local full = wibox.widget({
-				redtitle.icon.focus(c, style.full),
-				redtitle.icon.label(c, style.full),
+			-- build titlebar model with control buttons
+			local title = redtitle.label(c, style.iconic, true)
+			title:buttons(buttons)
+
+			local iconic = wibox.widget({
 				{
-					redtitle.icon.property(c, "floating", style.full),
-					redtitle.icon.property(c, "sticky", style.full),
-					redtitle.icon.property(c, "ontop", style.full),
-					spacing = style.full.icon.gap,
-					layout = wibox.layout.fixed.horizontal()
+					{
+						redtitle.button.focus(c, style.icon),
+						redtitle.button.property(c, "ontop", style.icon),
+						redtitle.button.property(c, "below", style.icon),
+						spacing = style.icon.gap,
+						layout = wibox.layout.fixed.horizontal()
+					},
+					top = 1, bottom = 1, left = 4, right = style.icon.gap + 2 * 18,
+					widget = wibox.container.margin
 				},
-				buttons = buttons,
-				layout  = wibox.layout.align.horizontal,
+				title,
+				{
+					{
+						redtitle.button.property(c, "floating", style.icon),
+						redtitle.button.property(c, "sticky", style.icon),
+						redtitle.button.property(c, "minimized", style.icon),
+						redtitle.button.property(c, "maximized", style.icon),
+						redtitle.button.close(c, style.icon),
+						spacing = style.icon.gap,
+						layout = wibox.layout.fixed.horizontal()
+					},
+					top = 1, bottom = 1, right = 4,
+					widget = wibox.container.margin
+				},
+				layout = wibox.layout.align.horizontal,
 			})
 
 			-- Set both models to titlebar
-			redtitle.add_layout(c, nil, light)
-			redtitle.add_layout(c, nil, full, style.full.size)
+			redtitle.add_layout(c, nil, base, style.base.size)
+			redtitle.add_layout(c, nil, iconic, style.iconic.size)
+			redtitle.switch(c, nil, redtitle._index)
 
 			-- hide titlebar when window maximized
 			if c.maximized_vertical or c.maximized then on_maximize(c) end

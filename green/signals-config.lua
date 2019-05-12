@@ -1,1 +1,0 @@
-../colorless/signals-config.lua

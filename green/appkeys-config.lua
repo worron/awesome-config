@@ -1,1 +1,0 @@
-../blue/appkeys-config.lua

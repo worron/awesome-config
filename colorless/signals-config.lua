@@ -6,6 +6,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 
+local redutil  = require("redflat.util")
 
 -- Initialize tables and vars for module
 -----------------------------------------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 function signals:init(args)
 
-	local args = args or {}
+	args = args or {}
 	local env = args.env
 
 	-- actions on every application start
@@ -50,6 +51,11 @@ function signals:init(args)
 			   and not c.size_hints.program_position
 			then
 				awful.placement.no_offscreen(c)
+			end
+
+			-- put new floating windows to the center of screen
+			if env.set_center and c.floating and not (c.maximized or c.fullscreen) then
+				redutil.placement.centered(c, nil, mouse.screen.workarea)
 			end
 		end
 	)
@@ -85,10 +91,10 @@ function signals:init(args)
 	screen.connect_signal("property::geometry", env.wallpaper)
 
 	-- Awesome v4.0 introduce screen handling without restart.
-	-- Since I'm using single monitor setup and I'm too lazy to rework my panel widgets for this new feature,
-	-- simple adding signal to restart wm on new monitor pluging.
-	-- For reference, screen-dependent widgets are
-	-- redflat.widget.layoutbox, redflat.widget.taglist, redflat.widget.tasklist
+	-- All redflat panel widgets was designed in old fashioned way and doesn't support this fature properly.
+	-- Since I'm using single monitor setup I have no will to rework panel widgets by now,
+	-- so restart signal added here is simple and dirty workaround.
+	-- You can disable it on your own risk.
 	screen.connect_signal("list", awesome.restart)
 end
 

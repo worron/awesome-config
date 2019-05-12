@@ -1,1 +1,0 @@
-../blue/mail-example.lua
