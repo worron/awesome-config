@@ -6,7 +6,7 @@ This config is compatible with AwesomeWM version 4.0 and newer.
 ## Screenshot
 ![](https://github.com/worron/awesome-config/wiki/images/v400/ruby.png)
 <p align="center"><a href="https://github.com/worron/awesome-config/wiki">Gallery</a></p>
-<p align="center"><a href="https://youtu.be/OoSts990-lY">Video Demo</a></p>
+<p align="center"><a href="https://youtu.be/_1M1Wv64JGA">Video Demo</a></p>
 
 ## Description
 Advanced user config for `awesome` consist of a bunch of new widgets, 
