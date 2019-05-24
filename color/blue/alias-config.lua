@@ -5,12 +5,14 @@
 local appnames = {}
 
 appnames["Exaile"              ] = "EXAILE"
+appnames["Pragha"              ] = "PRAG"
 appnames["Smplayer"            ] = "SMPL"
 appnames["Firefox"             ] = "FIFOX"
 appnames["Gnome-terminal"      ] = "GTERM"
 appnames["Gnome-system-monitor"] = "SYSMN"
 appnames["Gthumb"              ] = "THUMB"
 appnames["Gimp-2.8"            ] = "GIMP"
+appnames["Gimp-2.10"           ] = "GIMP"
 appnames["Goldendict"          ] = "GDIC"
 appnames["Easytag"             ] = "ETAG"
 appnames["Mcomix"              ] = "COMIX"
