@@ -117,7 +117,7 @@ function desktop:init(args)
 
 	boxes.storage.root = storage_check("system storage", "/")
 	boxes.storage.home = storage_check("user storage", "/home")
-	boxes.storage.misk = storage_check("application storage", "/opt")
+	boxes.storage.misk = storage_check("application storage", "/mnt/storage")
 	boxes.storage.media = storage_check("content storage", "/mnt/media")
 
 	-- construct layout
