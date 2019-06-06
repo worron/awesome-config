@@ -165,11 +165,6 @@ local function tag_numkey(i, mod, action)
 	)
 end
 
--- volume functions
-local volume_raise = function() redflat.widget.pulse:change_volume({ show_notify = true })              end
-local volume_lower = function() redflat.widget.pulse:change_volume({ show_notify = true, down = true }) end
-local volume_mute  = function() redflat.widget.pulse:mute() end
-
 -- brightness functions
 local brightness = function(args)
 	redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight utility
@@ -189,10 +184,11 @@ function hotkeys:init(args)
 	args = args or {}
 	local env = args.env
 	local mainmenu = args.menu
+	local volume = args.volume
+	local microphone = args.microphone
 	local appkeys = args.appkeys or {}
 
 	local tcn = args.tag_cols_num or 0
-	local mic = args.mic or {}
 
 	local numkeys = { unpack(numkeys_line, 1, tcn) }
 	local tagkeys = { unpack(tagkeys_line, 1, tcn) }
@@ -203,8 +199,10 @@ function hotkeys:init(args)
 		awful.button({ }, 5, awful.tag.viewprev)
 	))
 
-	-- config depending commands
-	local microphone_mute = function() redflat.widget.pulse:mute({ type = "source", sink = mic._sink }) end
+	-- volume functions
+	local volume_raise = function() volume:change_volume({ show_notify = true }) end
+	local volume_lower = function() volume:change_volume({ show_notify = true, down = true }) end
+	local volume_mute  = function() volume:mute() end
 
 	-- Init widgets
 	redflat.float.qlaunch:init()
@@ -883,7 +881,7 @@ function hotkeys:init(args)
 			{ description = "Mute audio", group = "Volume control" }
 		},
 		{
-			{ "Control" }, "XF86AudioMute", microphone_mute,
+			{ "Control" }, "XF86AudioMute", function () microphone:mute() end,
 			{ description = "Mute microphone", group = "Volume control" }
 		},
 

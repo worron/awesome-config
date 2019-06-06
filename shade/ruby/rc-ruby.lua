@@ -143,13 +143,13 @@ volume.widget = redflat.widget.pulse(nil, { widget = redflat.gauge.audio.blue.ne
 redflat.float.player:init({ name = env.player })
 
 volume.buttons = awful.util.table.join(
-	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
-	awful.button({}, 5, function() redflat.widget.pulse:change_volume({ down = true }) end),
-	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end),
-	awful.button({}, 3, function() redflat.float.player:show()                         end),
-	awful.button({}, 1, function() redflat.float.player:action("PlayPause")            end),
-	awful.button({}, 8, function() redflat.float.player:action("Previous")             end),
-	awful.button({}, 9, function() redflat.float.player:action("Next")                 end)
+	awful.button({}, 4, function() volume.widget:change_volume()                end),
+	awful.button({}, 5, function() volume.widget:change_volume({ down = true }) end),
+	awful.button({}, 2, function() volume.widget:mute()                         end),
+	awful.button({}, 3, function() redflat.float.player:show()                  end),
+	awful.button({}, 1, function() redflat.float.player:action("PlayPause")     end),
+	awful.button({}, 8, function() redflat.float.player:action("Previous")      end),
+	awful.button({}, 9, function() redflat.float.player:action("Next")          end)
 )
 
 -- PA microphone
@@ -166,14 +166,11 @@ microphone_style.audio.gauge = false
 
 -- init widget
 microphone.widget = redflat.widget.pulse({ type = "source" }, microphone_style)
-local mw = microphone.widget
 
 microphone.buttons = awful.util.table.join(
-	awful.button({}, 2, function() redflat.widget.pulse:mute({ type = "source", sink = mw._sink }) end),
-	awful.button({}, 4, function() redflat.widget.pulse:change_volume({ type = "source", sink = mw._sink }) end),
-	awful.button({}, 5, function()
-		redflat.widget.pulse:change_volume({ type = "source", sink = mw._sink, down = true })
-	end)
+	awful.button({}, 2, function() microphone.widget:mute() end),
+	awful.button({}, 4, function() microphone.widget:change_volume() end),
+	awful.button({}, 5, function() microphone.widget:change_volume({ down = true }) end)
 )
 
 -- Keyboard layout indicator
@@ -358,7 +355,7 @@ local appkeys = require("color.blue.appkeys-config") -- load file with applicati
 local hotkeys = require("shade.ruby.keys-config") -- load file with hotkeys configuration
 hotkeys:init({
 	env = env, menu = mymenu.mainmenu, appkeys = appkeys, tag_cols_num = taglist.cols_num,
-	mic = microphone.widget,
+	microphone = microphone.widget, volume = volume.widget
  })
 
 

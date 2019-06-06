@@ -102,11 +102,6 @@ local function client_numkey(i, mod, action)
 	)
 end
 
--- volume functions
-local volume_raise = function() redflat.widget.pulse:change_volume({ show_notify = true })              end
-local volume_lower = function() redflat.widget.pulse:change_volume({ show_notify = true, down = true }) end
-local volume_mute  = function() redflat.widget.pulse:mute() end
-
 -- brightness functions
 local brightness = function(args)
 	redflat.float.brightness:change_with_xbacklight(args) -- use xbacklight
@@ -125,6 +120,7 @@ function hotkeys:init(args)
 	-- Init vars
 	args = args or {}
 	local env = args.env
+	local volume = args.volume
 	local mainmenu = args.menu
 	local appkeys = args.appkeys or {}
 
@@ -133,6 +129,11 @@ function hotkeys:init(args)
 		awful.button({ }, 4, awful.tag.viewnext),
 		awful.button({ }, 5, awful.tag.viewprev)
 	))
+
+	-- volume functions
+	local volume_raise = function() volume:change_volume({ show_notify = true })              end
+	local volume_lower = function() volume:change_volume({ show_notify = true, down = true }) end
+	local volume_mute  = function() volume:mute() end
 
 	-- Init widgets
 	redflat.float.qlaunch:init()

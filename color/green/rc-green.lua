@@ -112,13 +112,13 @@ volume.widget = redflat.widget.pulse(nil, { widget = redflat.gauge.audio.red.new
 redflat.float.player:init({ name = env.player })
 
 volume.buttons = awful.util.table.join(
-	awful.button({}, 4, function() redflat.widget.pulse:change_volume()                end),
-	awful.button({}, 5, function() redflat.widget.pulse:change_volume({ down = true }) end),
-	awful.button({}, 2, function() redflat.widget.pulse:mute()                         end),
-	awful.button({}, 3, function() redflat.float.player:show()                         end),
-	awful.button({}, 1, function() redflat.float.player:action("PlayPause")            end),
-	awful.button({}, 8, function() redflat.float.player:action("Previous")             end),
-	awful.button({}, 9, function() redflat.float.player:action("Next")                 end)
+	awful.button({}, 4, function() volume.widget:change_volume()                end),
+	awful.button({}, 5, function() volume.widget:change_volume({ down = true }) end),
+	awful.button({}, 2, function() volume.widget:mute()                         end),
+	awful.button({}, 3, function() redflat.float.player:show()                  end),
+	awful.button({}, 1, function() redflat.float.player:action("PlayPause")     end),
+	awful.button({}, 8, function() redflat.float.player:action("Previous")      end),
+	awful.button({}, 9, function() redflat.float.player:action("Next")          end)
 )
 
 -- Keyboard layout indicator
@@ -280,7 +280,7 @@ edges:init()
 local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheet
 
 local hotkeys = require("color.blue.keys-config") -- load file with hotkeys configuration
-hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys })
+hotkeys:init({ env = env, menu = mymenu.mainmenu, appkeys = appkeys, volume = volume.widget })
 
 
 -- Rules
