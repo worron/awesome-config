@@ -204,6 +204,11 @@ function hotkeys:init(args)
 	local volume_lower = function() volume:change_volume({ show_notify = true, down = true }) end
 	local volume_mute  = function() volume:mute() end
 
+    -- microphone functions
+    local microphone_raise = function() microphone:change_volume({ show_notify = true }) end
+    local microphone_lower = function() microphone:change_volume({ show_notify = true, down = true }) end
+    local microphone_mute  = function() microphone:mute() end 
+
 	-- Init widgets
 	redflat.float.qlaunch:init()
 
@@ -880,8 +885,16 @@ function hotkeys:init(args)
 			{}, "XF86AudioMute", volume_mute,
 			{ description = "Mute audio", group = "Volume control" }
 		},
+        {
+            { "Control" }, "XF86AudioRaiseVolume", microphone_raise,
+            { description = "Increase microphone volume", group = "Volume control" }
+        },
+        {
+            { "Control" }, "XF86AudioLowerVolume", microphone_lower,
+            { description = "Reduce microphone volume", group = "Volume control" }
+        },
 		{
-			{ "Control" }, "XF86AudioMute", function () microphone:mute() end,
+			{ "Control" }, "XF86AudioMute", microphone_mute,
 			{ description = "Mute microphone", group = "Volume control" }
 		},
 
