@@ -238,6 +238,9 @@ theme.individual.microphone_audio = {
 	icon    = theme.path .. "/widget/microphone.svg",
 	color   = { icon = theme.color.main, mute = theme.color.icon }
 }
+theme.individual.volume_audio = {
+    color   = { icon = theme.color.main, mute = theme.color.icon }
+}
 
 -- Floating widgets
 -----------------------------------------------------------------------------------------------------------------------
