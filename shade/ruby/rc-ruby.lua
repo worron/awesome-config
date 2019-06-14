@@ -195,7 +195,7 @@ pcall(function() my_mails = require("private.mail-config") end)
 
 -- widget setup
 local mail = {}
-redflat.widget.mail:init({ maillist = my_mails })
+redflat.widget.mail:init({ maillist = my_mails, update_timeout = 15 * 60 })
 mail.widget = redflat.widget.mail()
 
 -- buttons

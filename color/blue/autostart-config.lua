@@ -18,7 +18,6 @@ function autostart.run()
 	awful.spawn.with_shell("python ~/scripts/env/kbd-setup.py")
 
 	-- gnome environment
-	awful.spawn.with_shell("/lib/gsd-xsettings")
 	awful.spawn.with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
 	-- firefox sync
