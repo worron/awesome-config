@@ -7,7 +7,7 @@ local awful =require("awful")
 local beautiful = require("beautiful")
 local redtitle = require("redflat.titlebar")
 
--- Initialize tables and vars for module
+-- Initialize tables and vars for the module
 -----------------------------------------------------------------------------------------------------------------------
 local rules = {}
 
@@ -28,7 +28,7 @@ rules.floating_any = {
 	type = { "dialog" }
 }
 
-rules.titlebar_exeptions = {
+rules.titlebar_exceptions = {
 	class = { "Cavalcade", "Clipflap", "Steam", "Qemu-system-x86_64" }
 }
 
@@ -67,7 +67,7 @@ function rules:init(args)
 		},
 		{
 			rule_any   = { type = { "normal", "dialog" }},
-			except_any = self.titlebar_exeptions,
+			except_any = self.titlebar_exceptions,
 			properties = { titlebars_enabled = true }
 		},
 		{
@@ -81,26 +81,11 @@ function rules:init(args)
 			properties = { tag = self.env.theme == "ruby" and "Test" or "Free", fullscreen = true }
 		},
 
-		-- Jetbrains (java) dirty focus trick assuming separate tag used for IDE
+		-- Jetbrains splash screen fix
 		{
-			rule = { class = "jetbrains-%w+", type = "normal" },
-			callback = function(jetbrain)
-				local initial_tag = jetbrain.first_tag -- remember tag for unmanaged
-				jetbrain:connect_signal("focus", function(c)
-					for _, win in ipairs(c.first_tag:clients()) do
-						if win.name ~= c.name and win.type == "normal" then win.minimized = true end
-					end
-				end)
-				jetbrain:connect_signal("unmanage", function(c)
-					for _, win in ipairs(initial_tag:clients()) do
-						if win.name ~= c.name and win.type == "normal" then
-							win.minimized = false
-							client.focus = win
-							win:raise()
-							return
-						end
-					end
-				end)
+			rule_any = { class = { "jetbrains-%w+", "java-lang-Thread" } },
+			callback = function(jetbrains)
+				if jetbrains.skip_taskbar then jetbrains.floating = true end
 			end
 		}
 	}
