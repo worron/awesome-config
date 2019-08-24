@@ -33,7 +33,7 @@ end
 redflat.layout.map.notification = false
 
 
--- connect alternatve moving handler to allow using custom handler per layout
+-- connect alternative moving handler to allow using custom handler per layout
 -- by now custom handler provided for 'redflat.layout.grid' only
 -- feel free to remove if you don't use this one
 client.disconnect_signal("request::geometry", awful.layout.move_handler)
