@@ -366,6 +366,8 @@ function theme:init()
 		cgap         = 0.314,                                -- gap between arcs in radians
 		min_sections = 1,                                    -- minimal amount of arcs
 		show_min     = false,                                -- indicate minimized apps by color
+		text         = false,                                -- replace middle circle by text
+		font         = self.cairo_fonts.tag,                 -- font for text
 		color        = self.color                            -- colors (main used)
 	}
 
