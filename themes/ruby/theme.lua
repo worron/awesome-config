@@ -218,6 +218,7 @@ theme.gauge.monitor.dash.width = 11
 -- Tasklist
 theme.widget.tasklist.char_digit = 5
 theme.widget.tasklist.task = theme.gauge.task.ruby
+theme.widget.tasklist.tasktip.max_width = 1200
 
 -- KB layout indicator
 theme.widget.keyboard.icon = theme.path .. "/widget/keyboard.svg"

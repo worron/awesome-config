@@ -28,7 +28,7 @@ function autostart.run()
 	awful.spawn.with_shell("nm-applet")
 
 	-- apps
-	awful.spawn.with_shell("clipflap")
+	awful.spawn.with_shell("gpaste-client start")
 	awful.spawn.with_shell("transmission-gtk -m")
 	awful.spawn.with_shell("pragha --toggle_view")
 end
