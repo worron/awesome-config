@@ -153,7 +153,7 @@ function desktop:init(args)
 	system.lmsensors.patterns = {
 		cpu       = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
 		ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
-		wifi      = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		wifi      = { match = "iwlwifi_1%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 		--chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 		cpu_fan   = { match = "Processor%sFan:%s+(%d+)%sRPM" },
 		video_fan = { match = "Video%sFan:%s+(%d+)%sRPM" },
@@ -211,8 +211,8 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local vnstat = { geometry = wgeometry(grid, places.vnstat, workarea) }
 
-	local vnstat_daily   = system.vnstat_check("-d")
-	local vnstat_monthly = system.vnstat_check("-m")
+	local vnstat_daily   = system.vnstat_check({ options = '-d', traffic = 'rx' })
+	local vnstat_monthly = system.vnstat_check({ options = '-m', traffic = 'rx' })
 
 	vnstat.args = {
 		sensors = {
