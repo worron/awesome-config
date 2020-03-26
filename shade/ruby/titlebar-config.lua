@@ -72,27 +72,27 @@ function titlebar:init()
 	local style = {}
 
 	-- titlebar schemes
-	style.base    = redutil.table.merge(redutil.table.check(beautiful, "titlebar.base") or {}, { size = 8 })
-	style.compact = redutil.table.merge(style.base, { size = 16 })
-	style.iconic  = redutil.table.merge(style.base, { size = 24 })
+	style.base    = redutil.table.merge(redutil.table.check(beautiful, "titlebar.base") or {}, { size = 12 })
+	style.compact = redutil.table.merge(style.base, { size = 24 })
+	style.iconic  = redutil.table.merge(style.base, { size = 36 })
 
 	-- titlebar elements styles
 	style.mark_mini = redutil.table.merge(
 		redutil.table.check(beautiful, "titlebar.mark") or {},
-		{ size = 30, gap = 10, angle = 0 }
+		{ size = 42, gap = 13, angle = 0 }
 	)
 	style.mark_compact = redutil.table.merge(
 		style.mark_mini,
-		{ size = 20, gap = 6, angle = 0.707 }
+		{ size = 30, gap = 8, angle = 0.707 }
 	)
 	style.icon_full = redutil.table.merge(
 		redutil.table.check(beautiful, "titlebar.icon") or {},
-		{ gap = 10 }
+		{ gap = 18 }
 	)
 
 	style.icon_compact = redutil.table.merge(
 		redutil.table.check(beautiful, "titlebar.icon_compact") or style.icon_full,
-		{ gap = 8 }
+		{ gap = 12 }
 	)
 
 	redtitle._index    = 1 -- choose default titlebar model

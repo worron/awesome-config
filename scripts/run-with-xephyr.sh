@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Xephyr :3 -ac -screen 1920x1080 &
+Xephyr :3 -ac -screen 3840x2160 &
 XEPHYR_PID=$!
 sleep 0.5
 

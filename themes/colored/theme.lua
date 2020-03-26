@@ -15,39 +15,39 @@ theme.path = awful.util.get_configuration_dir() .. "themes/colored"
 -- Main config
 ------------------------------------------------------------
 theme.panel_height        = 36 -- panel height
-theme.border_width        = 4  -- window border width
-theme.useless_gap         = 4  -- useless gap
+theme.border_width        = 6  -- window border width
+theme.useless_gap         = 6  -- useless gap
 
 -- Fonts
 ------------------------------------------------------------
 theme.fonts = {
-	main     = "Roboto 13",      -- main font
-	menu     = "Roboto 13",      -- main menu font
-	tooltip  = "Roboto 13",      -- tooltip font
-	notify   = "Play bold 14",   -- redflat notify popup font
-	clock    = "Play bold 12",   -- textclock widget font
-	qlaunch  = "Play bold 14",   -- quick launch key label font
-	keychain = "Play bold 16",   -- key sequence tip font
-	title    = "Roboto bold 13", -- widget titles font
+	main     = "Roboto 22",      -- main font
+	menu     = "Roboto 22",      -- main menu font
+	tooltip  = "Roboto 22",      -- tooltip font
+	notify   = "Play bold 22",   -- redflat notify popup font
+	clock    = "Play bold 22",   -- textclock widget font
+	qlaunch  = "Play bold 22",   -- quick launch key label font
+	keychain = "Play bold 28",   -- key sequence tip font
+	title    = "Roboto bold 22", -- widget titles font
 	tiny     = "Roboto bold 10", -- smallest font for widgets
-	titlebar = "Roboto bold 13", -- client titlebar font
+	titlebar = "Roboto bold 22", -- client titlebar font
 	hotkeys  = {
-		main  = "Roboto 14",             -- hotkeys helper main font
-		key   = "Iosevka Term Light 14", -- hotkeys helper key font (use monospace for align)
-		title = "Roboto bold 16",        -- hotkeys helper group title font
+		main  = "Roboto 22",             -- hotkeys helper main font
+		key   = "Iosevka Term Light 22", -- hotkeys helper key font (use monospace for align)
+		title = "Roboto bold 24",        -- hotkeys helper group title font
 	},
 	player   = {
-		main = "Play bold 13", -- player widget main font
-		time = "Play bold 15", -- player widget current time font
+		main = "Play bold 22", -- player widget main font
+		time = "Play bold 26", -- player widget current time font
 	},
 }
 
 theme.cairo_fonts = {
-	tag         = { font = "Play", size = 16, face = 1 }, -- tag widget font
-	appswitcher = { font = "Play", size = 20, face = 1 }, -- appswitcher widget font
+	tag         = { font = "Play", size = 28, face = 1 }, -- tag widget font
+	appswitcher = { font = "Play", size = 32, face = 1 }, -- appswitcher widget font
 	navigator   = {
-		title = { font = "Play", size = 28, face = 1, slant = 0 }, -- window navigation title font
-		main  = { font = "Play", size = 22, face = 1, slant = 0 }  -- window navigation  main font
+		title = { font = "Play", size = 40, face = 1, slant = 0 }, -- window navigation title font
+		main  = { font = "Play", size = 32, face = 1, slant = 0 }  -- window navigation  main font
 	},
 
 	desktop = {
@@ -98,16 +98,16 @@ function theme:update()
 
 	-- Set hotkey helper size according current fonts and keys scheme
 	--------------------------------------------------------------------------------
-	self.service.navigator.keytip["fairv"] = { geometry = { width = 600 }, exit = true }
+	self.service.navigator.keytip["fairv"] = { geometry = { width = 860 }, exit = true }
 	self.service.navigator.keytip["fairh"] = self.service.navigator.keytip["fairv"]
 
-	self.service.navigator.keytip["tile"]       = { geometry = { width = 600 }, exit = true }
+	self.service.navigator.keytip["tile"]       = { geometry = { width = 860 }, exit = true }
 	self.service.navigator.keytip["tileleft"]   = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tiletop"]    = self.service.navigator.keytip["tile"]
 	self.service.navigator.keytip["tilebottom"] = self.service.navigator.keytip["tile"]
 
-	self.service.navigator.keytip["grid"]    = { geometry = { width = 1400 }, column = 2, exit = true }
-	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400 }, column = 2, exit = true }
+	self.service.navigator.keytip["grid"]    = { geometry = { width = 2000 }, column = 2, exit = true }
+	self.service.navigator.keytip["usermap"] = { geometry = { width = 1800 }, column = 2, exit = true }
 
 	-- Desktop file parser
 	--------------------------------------------------------------------------------
@@ -117,8 +117,8 @@ function theme:update()
 
 	-- Menu config
 	--------------------------------------------------------------------------------
-	self.menu.icon_margin  = { 4, 7, 7, 8 }
-	self.menu.keytip       = { geometry = { width = 400 } }
+	self.menu.icon_margin  = { 10, 10, 10, 10 }
+	self.menu.keytip       = { geometry = { width = 560 } }
 
 	-- Panel widgets
 	--------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ function theme:update()
 	------------------------------------------------------------
 	self.gauge.icon.double.icon1 = self.wicon.down
 	self.gauge.icon.double.icon2 = self.wicon.up
-	self.gauge.icon.double.igap  = -6
+	self.gauge.icon.double.igap  = -10
 
 	-- Volume control
 	------------------------------------------------------------
@@ -158,14 +158,14 @@ function theme:update()
 
 	-- Layoutbox
 	------------------------------------------------------------
-	self.widget.layoutbox.menu.icon_margin  = { 8, 12, 9, 9 }
-	self.widget.layoutbox.menu.width = 200
+	self.widget.layoutbox.menu.icon_margin  = { 12, 20, 12, 12 }
+	self.widget.layoutbox.menu.width = 320
 
 	-- Tasklist
 	------------------------------------------------------------
 	self.widget.tasklist.winmenu.hide_action = { min = false, move = false }
-	self.widget.tasklist.tasktip.margin = { 8, 8, 4, 4 }
-	self.widget.tasklist.winmenu.tagmenu.width = 150
+	self.widget.tasklist.tasktip.margin = { 12, 12, 6, 6 }
+	self.widget.tasklist.winmenu.tagmenu.width = 220
 
 	-- Floating widgets
 	--------------------------------------------------------------------------------
@@ -181,11 +181,11 @@ function theme:update()
 	-- Application runner
 	------------------------------------------------------------
 	self.float.apprunner.title_icon = self.wicon.search
-	self.float.apprunner.keytip = { geometry = { width = 400 } }
+	self.float.apprunner.keytip = { geometry = { width = 600 } }
 
 	-- Application switcher
 	------------------------------------------------------------
-	self.float.appswitcher.keytip = { geometry = { width = 400 }, exit = true }
+	self.float.appswitcher.keytip = { geometry = { width = 600 }, exit = true }
 
 	-- Quick launcher
 	------------------------------------------------------------
@@ -193,8 +193,8 @@ function theme:update()
 
 	-- Hotkeys helper
 	------------------------------------------------------------
-	self.float.hotkeys.geometry = { width = 1800 }
-	self.float.hotkeys.heights = { key = 26, title = 32 }
+	self.float.hotkeys.geometry = { width = 2600 }
+	self.float.hotkeys.heights = { key = 40, title = 46 }
 
 	-- Key sequence tip
 	------------------------------------------------------------

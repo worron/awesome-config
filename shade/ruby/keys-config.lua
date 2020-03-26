@@ -767,7 +767,7 @@ function hotkeys:init(args)
 			{ description = "Open a terminal", group = "Applications" }
 		},
 		{
-			{ env.mod, "Mod1" }, "space", function() awful.spawn("clipflap --show") end,
+			{ env.mod, "Mod1" }, "space", function() awful.spawn("gpaste-client ui") end,
 			{ description = "Clipboard manager", group = "Applications" }
 		},
 
@@ -869,19 +869,19 @@ function hotkeys:init(args)
 		},
 
 		{
-			{}, "XF86AudioRaiseVolume", volume_raise,
+			{ env.mod }, "F6", volume_raise,
 			{ description = "Increase volume", group = "Volume control" }
 		},
 		{
-			{}, "XF86AudioLowerVolume", volume_lower,
+			{ env.mod }, "F5", volume_lower,
 			{ description = "Reduce volume", group = "Volume control" }
 		},
 		{
-			{}, "XF86AudioMute", volume_mute,
+			{ env.mod }, "F7", volume_mute,
 			{ description = "Mute audio", group = "Volume control" }
 		},
 		{
-			{ "Control" }, "XF86AudioMute", function () microphone:mute() end,
+			{ env.mod }, "F8", function () microphone:mute() end,
 			{ description = "Mute microphone", group = "Volume control" }
 		},
 

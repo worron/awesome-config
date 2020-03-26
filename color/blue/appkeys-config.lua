@@ -8,7 +8,7 @@
 local appkeys = {}
 
 appkeys["urxvt"] = {
-	style = { column = 2, geometry = { width = 1200, height = 660 } },
+	style = { column = 2, geometry = { width = 1960 } },
 	pack = {
 		{
 			{ "Control" }, "l", nil,
@@ -162,7 +162,7 @@ appkeys["urxvt"] = {
 
 
 appkeys["mpv"] = {
-	style = { column = 3, geometry = { width = 1600, height = 720 } },
+	style = { column = 3, geometry = { width = 2400 } },
 	pack = {
 		{
 			{}, "f", nil,

@@ -222,15 +222,15 @@ updates.buttons = awful.util.table.join(
 local sysmon = { widget = {}, buttons = {} }
 
 -- battery
-sysmon.widget.battery = redflat.widget.battery(
-	{ func = redflat.system.pformatted.bat(25), arg = "BAT0" },
-	{ timeout = 60, widget = redflat.gauge.monitor.dash }
-)
+--sysmon.widget.battery = redflat.widget.battery(
+--	{ func = redflat.system.pformatted.bat(25), arg = "BAT0" },
+--	{ timeout = 60, widget = redflat.gauge.monitor.dash }
+--)
 
 -- network speed
 sysmon.widget.network = redflat.widget.net(
 	{
-		interface = "wlp60s0",
+		interface = "eno1",
 		speed = { up = 6 * 1024^2, down = 6 * 1024^2 },
 		autoscale = false
 	},
@@ -320,7 +320,7 @@ awful.screen.connect_for_each_screen(
 				separator,
 				env.wrapper(sysmon.widget.cpu, "cpu", sysmon.buttons.cpu),
 				env.wrapper(sysmon.widget.ram, "ram", sysmon.buttons.ram),
-				env.wrapper(sysmon.widget.battery, "battery"),
+				--env.wrapper(sysmon.widget.battery, "battery"),
 				separator,
 				env.wrapper(textclock.widget, "textclock"),
 				separator,
