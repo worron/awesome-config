@@ -189,7 +189,7 @@ function theme:update()
 
 	-- Quick launcher
 	------------------------------------------------------------
-	self.float.qlaunch.keytip = { geometry = { width = 600 } }
+	self.float.qlaunch.keytip = { geometry = { width = 880 } }
 
 	-- Hotkeys helper
 	------------------------------------------------------------
