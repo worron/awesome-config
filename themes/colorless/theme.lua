@@ -194,22 +194,24 @@ function theme:init()
 	-- Menu config
 	--------------------------------------------------------------------------------
 	self.menu = {
-		border_width = 4, -- menu border width
-		screen_gap   = self.useless_gap + self.border_width, -- minimal space from screen edge on placement
-		height       = 32,  -- menu item height
-		width        = 250, -- menu item width
-		icon_margin  = { 8, 8, 8, 8 }, -- space around left icon in menu item
-		ricon_margin = { 9, 9, 9, 9 }, -- space around right icon in menu item
-		nohide       = false, -- do not hide menu after item activation
-		auto_expand  = true,  -- show submenu on item selection (without item activation)
-		auto_hotkey  = false, -- automatically set hotkeys for all menu items
-		select_first = true,  -- auto select first item when menu shown
-		hide_timeout = 1,     -- auto hide timeout (auto hide disables if this set to 0)
-		font         = self.fonts.menu,   -- menu font
-		submenu_icon = self.icon.submenu, -- icon for submenu items
-		keytip       = { geometry = { width = 400 } }, -- hotkeys helper settings
-		shape        = nil, -- wibox shape
-		svg_scale    = { false, false }, -- use vector scaling for left, right icons in menu item
+		border_width      = 4, -- menu border width
+		screen_gap        = self.useless_gap + self.border_width, -- minimal space from screen edge on placement
+		height            = 32,  -- menu item height
+		width             = 250, -- menu item width
+		icon_margin       = { 8, 8, 8, 8 }, -- space around left icon in menu item
+		ricon_margin      = { 9, 9, 9, 9 }, -- space around right icon in menu item
+		nohide            = false, -- do not hide menu after item activation
+		auto_expand       = true,  -- show submenu on item selection (without item activation)
+		auto_hotkey       = false, -- automatically set hotkeys for all menu items
+		select_first      = true,  -- auto select first item when menu shown
+		hide_timeout      = 1,     -- auto hide timeout (auto hide disables if this set to 0)
+		font              = self.fonts.menu,   -- menu font
+		submenu_icon      = self.icon.submenu, -- icon for submenu items
+		keytip            = { geometry = { width = 400 } }, -- hotkeys helper settings
+		shape             = nil, -- wibox shape
+		shape             = nil, -- wibox shape
+		action_on_release = false, -- active menu item on mouse release instead of press
+		svg_scale         = { false, false }, -- use vector scaling for left, right icons in menu item
 	}
 
 	self.menu.color = {
