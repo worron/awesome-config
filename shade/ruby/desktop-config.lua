@@ -120,8 +120,8 @@ function desktop:init(args)
 
 	-- QEMU image (placed along with disks)
 	--------------------------------------------------------------------------------
-	local qm1 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-base.qcow2"
-	local qm2 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-current.qcow2"
+	local qm1 = "/mnt/storage/vmdrive/win10-gvt/win10-work-base.qcow2"
+	local qm2 = "/mnt/storage/vmdrive/win10-gvt/win10-work-current.qcow2"
 
 	local bms = beautiful.desktop.multimeter -- base multimeter style
 	local dy = disks_original_height - (bms.height.upright + bms.height.lines)

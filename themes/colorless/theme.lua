@@ -209,7 +209,6 @@ function theme:init()
 		submenu_icon      = self.icon.submenu, -- icon for submenu items
 		keytip            = { geometry = { width = 400 } }, -- hotkeys helper settings
 		shape             = nil, -- wibox shape
-		shape             = nil, -- wibox shape
 		action_on_release = false, -- active menu item on mouse release instead of press
 		svg_scale         = { false, false }, -- use vector scaling for left, right icons in menu item
 	}
