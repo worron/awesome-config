@@ -114,6 +114,10 @@ taglist.layouts = {
 local textclock = {}
 textclock.widget = redflat.widget.textclock({ timeformat = "%H:%M", dateformat = "%b  %d  %a" })
 
+textclock.buttons = awful.util.table.join(
+	awful.button({}, 1, function() redflat.float.calendar:show() end)
+)
+
 -- Layoutbox configure
 --------------------------------------------------------------------------------
 local layoutbox = {}
@@ -322,7 +326,7 @@ awful.screen.connect_for_each_screen(
 				env.wrapper(sysmon.widget.ram, "ram", sysmon.buttons.ram),
 				env.wrapper(sysmon.widget.battery, "battery"),
 				separator,
-				env.wrapper(textclock.widget, "textclock"),
+				env.wrapper(textclock.widget, "textclock", textclock.buttons),
 				separator,
 				env.wrapper(tray.widget, "tray", tray.buttons),
 			},

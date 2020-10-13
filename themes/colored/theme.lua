@@ -40,6 +40,11 @@ theme.fonts = {
 		main = "Play bold 13", -- player widget main font
 		time = "Play bold 15", -- player widget current time font
 	},
+	-- very custom calendar fonts
+	calendar = {
+		clock = "Play bold 28", date = "Play 16", week_numbers = "Play 12", weekdays_header = "Play 12",
+		days  = "Play 14", default = "Play 14", focus = "Play 12 Bold", controls = "Play bold 16"
+	},
 }
 
 theme.cairo_fonts = {
@@ -204,6 +209,26 @@ function theme:update()
 	-- Brightness control
 	------------------------------------------------------------
 	self.float.brightness.notify = { icon = self.wicon.brightness }
+
+	-- Floating calendar
+	------------------------------------------------------------
+	self.float.calendar.geometry = { width = 364, height = 460 }
+	self.float.calendar.border_width = 0
+	self.float.calendar.show_week_numbers = false
+	self.float.calendar.calendar_item_margin = { 4, 8, 2, 2 }
+	self.float.calendar.spacing = { separator = 26, datetime = 5, controls = 5, calendar = 12 }
+	self.float.calendar.separator = { marginh = { 0, 0, 12, 12 } }
+
+	-- dirty colors correction
+	self.float.calendar.color = {
+		border    = self.color.border,
+		wibox     = self.color.wibox,
+		icon      = self.color.icon,
+		main      = "transparent",
+		highlight = self.color.main,
+		gray      = self.color.gray,
+		text      = self.color.text,
+	}
 
 	-- Floating window control helper
 	------------------------------------------------------------

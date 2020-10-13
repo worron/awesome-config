@@ -73,6 +73,11 @@ theme.fonts = {
 		main = "sans bold 12", -- player widget main font
 		time = "sans bold 14", -- player widget current time font
 	},
+	-- very custom calendar fonts
+	calendar = {
+		clock = "Sans 24", date = "Sans 15", week_numbers = "Sans 12", weekdays_header = "Sans 11",
+		days  = "Sans 12", default = "Sans 10", focus = "Sans 14 Bold", controls = "Sans 13"
+	},
 }
 
 theme.cairo_fonts = {
@@ -97,6 +102,8 @@ theme.icon = {
 	warning  = theme.path .. "/common/warning.svg",
 	awesome  = theme.path .. "/common/awesome.svg",
 	system   = theme.path .. "/common/system.svg",
+	left     = theme.path .. "/common/arrow_left.svg",
+	right    = theme.path .. "/common/arrow_right.svg",
 	unknown  = theme.path .. "/common/unknown.svg",
 }
 
@@ -1077,6 +1084,42 @@ function theme:init()
 		shape        = nil,                           -- wibox shape
 		naughty      = {},                            -- awesome notification style
 		color        = self.color,                    -- colors (main used)
+	}
+
+	-- Floating calendar
+	------------------------------------------------------------
+	self.float.calendar = {
+		geometry                  = { width = 340, height = 420 },
+		margin                    = { 20, 20, 20, 15 },
+		controls_margin           = { 0, 0, 5, 0 },
+		calendar_item_margin      = { 2, 5, 2, 2 },
+		spacing                   = { separator = 28, datetime = 5, controls = 5, calendar = 8 },
+		controls_icon_size        = { width = 18, height = 18 },
+		separator                 = {},
+		border_width              = 2,
+		days                      = {
+			weeknumber = { fg = self.color.gray, bg = "transparent" },
+			weekday    = { fg = self.color.gray, bg = "transparent" },
+			weekend    = { fg = self.color.highlight, bg = self.color.gray },
+			today      = { fg = self.color.highlight, bg = self.color.main },
+			day        = { fg = self.color.text, bg = "transparent" },
+			default    = { fg = "white", bg = "transparent" }
+		},
+		fonts                     = self.fonts.calendar,
+		icon                      = { next = self.icon.right, prev = self.icon.left },
+		clock_format              = "%H:%M",
+		date_format               = "%A, %d. %B",
+		clock_refresh_seconds     = 60,
+		weeks_start_sunday        = false,
+		show_week_numbers         = true,
+		show_weekday_header       = true,
+		long_weekdays             = false,
+		weekday_name_replacements = {},
+		screen_gap                = 0,
+		set_position              = nil,
+		shape                     = nil,
+		screen_gap                = 2 * self.useless_gap, -- screen edges gap on placement
+		color                     = self.color,           -- colors (main used)
 	}
 
 	-- Notify (redflat notification widget)

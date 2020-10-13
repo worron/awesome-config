@@ -33,7 +33,7 @@ function autostart.run()
 	awful.spawn.with_shell("pragha --toggle_view")
 end
 
--- Read and commads from file and spawn them
+-- Read and commands from file and spawn them
 --------------------------------------------------------------------------------
 function autostart.run_from_file(file_)
 	local f = io.open(file_)
