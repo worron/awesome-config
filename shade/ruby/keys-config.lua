@@ -819,6 +819,10 @@ function hotkeys:init(args)
 			{ env.mod }, "c", function() redflat.float.keychain:activate(keyseq, "User") end,
 			{ description = "User key sequence", group = "Widgets" }
 		},
+		{
+			{ env.mod }, "z", function() redflat.service.logout:show() end,
+			{ description = "Log out screen", group = "Widgets" }
+		},
 
 		{
 			{ env.mod }, "a", nil, function() appswitcher:show({ filter = current }) end,

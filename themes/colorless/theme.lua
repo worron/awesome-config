@@ -60,10 +60,15 @@ theme.fonts = {
 	notify   = "sans bold 14", -- redflat notify popup font
 	clock    = "sans bold 12", -- textclock widget font
 	qlaunch  = "sans bold 14", -- quick launch key label font
+	logout   = "sans bold 14", -- logout screen labels
 	title    = "sans bold 12", -- widget titles font
 	tiny     = "sans bold 10", -- smallest font for widgets
 	keychain = "sans bold 14", -- key sequence tip font
 	titlebar = "sans bold 12", -- client titlebar font
+	logout   = {
+		label   = "sans bold 14", -- logout option labels
+		counter = "sans bold 24", -- logout counter
+	},
 	hotkeys = {
 		main  = "sans 12",      -- hotkeys helper main font
 		key   = "mono 12",      -- hotkeys helper key font (use monospace for align)
@@ -176,6 +181,25 @@ function theme:init()
 
 	self.service.navigator.keytip["grid"] = { geometry = { width = 1400 }, column = 2, exit = true }
 	self.service.navigator.keytip["usermap"] = { geometry = { width = 1400 }, column = 2, exit = true }
+
+	-- Log out screen
+	--------------------------------------------------------------------------------
+	self.service.logout = {
+		button_size               = { width = 128, height = 128 },
+		icon_margin               = 22,
+		text_margin               = 18,
+		button_spacing            = 64,
+		counter_top_margin        = 800,
+		label_font                = self.fonts.logout.label,
+		counter_font              = self.fonts.logout.counter,
+		keytip                    = { geometry = { width = 400 } },
+		graceful_shutdown         = true,
+		double_key_activation     = true,
+		client_kill_timeout       = 5,
+		icons                     = {},
+		color                     = self.color, -- colors (main used)
+	}
+
 
 	-- Desktop file parser
 	--------------------------------------------------------------------------------

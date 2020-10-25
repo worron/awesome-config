@@ -673,6 +673,10 @@ function hotkeys:init(args)
 			{ env.mod }, "g", function() qlaunch:show() end,
 			{ description = "Application quick launcher", group = "Widgets" }
 		},
+		{
+			{ env.mod }, "z", function() redflat.service.logout:show() end,
+			{ description = "Log out screen", group = "Widgets" }
+		},
 
 		{
 			{ env.mod }, "y", function() laybox:toggle_menu(mouse.screen.selected_tag) end,

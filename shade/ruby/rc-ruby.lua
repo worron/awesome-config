@@ -352,6 +352,12 @@ local edges = require("shade.ruby.edges-config") -- load file with edges configu
 edges:init({ tag_cols_num = taglist.cols_num })
 
 
+-- Log out screen
+-----------------------------------------------------------------------------------------------------------------------
+local logout = require("color.blue.logout-config")
+logout:init()
+
+
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
 local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheet

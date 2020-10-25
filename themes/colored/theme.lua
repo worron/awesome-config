@@ -27,10 +27,15 @@ theme.fonts = {
 	notify   = "Play bold 14",   -- redflat notify popup font
 	clock    = "Play bold 12",   -- textclock widget font
 	qlaunch  = "Play bold 14",   -- quick launch key label font
+	logout   = "Play bold 14",   -- logout screen labels
 	keychain = "Play bold 16",   -- key sequence tip font
 	title    = "Roboto bold 13", -- widget titles font
 	tiny     = "Roboto bold 10", -- smallest font for widgets
 	titlebar = "Roboto bold 13", -- client titlebar font
+	logout   = {
+		label   = "Play bold 14", -- logout option labels
+		counter = "Play bold 24", -- logout counter
+	},
 	hotkeys  = {
 		main  = "Roboto 14",             -- hotkeys helper main font
 		key   = "Iosevka Term Light 14", -- hotkeys helper key font (use monospace for align)
@@ -86,7 +91,14 @@ theme.wicon = {
 		normal = theme.path .. "/widget/updates/normal.svg",
 		silent = theme.path .. "/widget/updates/silent.svg",
 		weekly = theme.path .. "/widget/updates/weekly.svg",
-		daily = theme.path .. "/widget/updates/daily.svg",
+		daily = theme.path .. "/widget/updates/daily.svg", },
+	logout = {
+		logout = theme.path .. "/widget/logout/logout.svg",
+		lock = theme.path .. "/widget/logout/lock.svg",
+		poweroff = theme.path .. "/widget/logout/poweroff.svg",
+		suspend = theme.path .. "/widget/logout/suspend.svg",
+		reboot = theme.path .. "/widget/logout/reboot.svg",
+		switch = theme.path .. "/widget/logout/switch.svg",
 	},
 }
 
@@ -119,6 +131,15 @@ function theme:update()
 	self.service.dfparser.icons.theme         = self.homedir .. "/.icons/ACYLS"
 	self.service.dfparser.icons.custom_only   = true
 	self.service.dfparser.icons.scalable_only = true
+
+	-- Log out screen
+	--------------------------------------------------------------------------------
+	self.service.logout.icons.logout = self.wicon.logout.logout
+	self.service.logout.icons.lock = self.wicon.logout.lock
+	self.service.logout.icons.poweroff = self.wicon.logout.poweroff
+	self.service.logout.icons.suspend = self.wicon.logout.suspend
+	self.service.logout.icons.reboot = self.wicon.logout.reboot
+	self.service.logout.icons.switch = self.wicon.logout.switch
 
 	-- Menu config
 	--------------------------------------------------------------------------------

@@ -287,6 +287,18 @@ local edges = require("color.blue.edges-config") -- load file with edges configu
 edges:init()
 
 
+-- Log out screen
+-----------------------------------------------------------------------------------------------------------------------
+local logout = require("color.blue.logout-config")
+logout:init()
+
+
+-- Log out screen
+-----------------------------------------------------------------------------------------------------------------------
+local logout = require("color.blue.logout-config")
+logout:init()
+
+
 -- Key bindings
 -----------------------------------------------------------------------------------------------------------------------
 local appkeys = require("color.blue.appkeys-config") -- load file with application keys sheetb
