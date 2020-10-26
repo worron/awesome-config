@@ -22,6 +22,7 @@ local redtip = redflat.float.hotkeys
 local laycom = redflat.layout.common
 local grid = redflat.layout.grid
 local map = redflat.layout.map
+local logout = redflat.service.logout
 local qlaunch = redflat.float.qlaunch
 local numkeys_line = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 local tagkeys_line = { "q", "w", "e", "r", "t", "y", "u", "i", "o" }
@@ -252,6 +253,21 @@ function hotkeys:init(args)
 
 	 apprunner:set_keys(awful.util.table.join(apprunner.keys.move, apprunner_keys_move), "move")
 	--apprunner:set_keys(apprunner_keys_move, "move")
+
+	-- Log out screen
+	------------------------------------------------------------
+	local logout_extra_keys = {
+		{
+			{}, "j", logout.action.select_prev,
+			{ description = "Select previous option", group = "Selection" }
+		},
+		{
+			{}, "l", logout.action.select_next,
+			{ description = "Select next option", group = "Selection" }
+		},
+	}
+
+	logout:set_keys(awful.util.table.join(logout.keys, logout_extra_keys))
 
 	-- Menu widget
 	------------------------------------------------------------
