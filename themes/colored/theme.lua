@@ -192,9 +192,17 @@ function theme:update()
 	self.widget.tasklist.winmenu.hide_action = { min = false, move = false }
 	self.widget.tasklist.tasktip.margin = { 8, 8, 4, 4 }
 	self.widget.tasklist.winmenu.tagmenu.width = 150
+	self.widget.tasklist.winmenu.enable_tagline = true
+	self.widget.tasklist.winmenu.tagline = { height = 30 }
+	self.widget.tasklist.winmenu.tag_iconsize = { width = 16, height = 16 }
 
 	-- Floating widgets
 	--------------------------------------------------------------------------------
+
+	-- Client menu
+	------------------------------------------------------------
+	self.float.clientmenu.enable_tagline = true
+	self.float.clientmenu.hide_action = { min = false, move = false }
 
 	-- Top processes
 	------------------------------------------------------------

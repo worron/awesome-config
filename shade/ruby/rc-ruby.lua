@@ -54,21 +54,6 @@ mymenu:init({ env = env })
 --------------------------------------------------------------------------------
 local separator = redflat.gauge.separator.vertical()
 
--- Tasklist
---------------------------------------------------------------------------------
-local tasklist = {}
-
--- load list of app name aliases from files and set it as part of tasklist theme
-tasklist.style = { appnames = require("color.blue.alias-config"),  widget = redflat.gauge.task.ruby.new }
-
-tasklist.buttons = awful.util.table.join(
-	awful.button({}, 1, redflat.widget.tasklist.action.select),
-	awful.button({}, 2, redflat.widget.tasklist.action.close),
-	awful.button({}, 3, redflat.widget.tasklist.action.menu),
-	awful.button({}, 4, redflat.widget.tasklist.action.switch_next),
-	awful.button({}, 5, redflat.widget.tasklist.action.switch_prev)
-)
-
 -- Taglist widget
 --------------------------------------------------------------------------------
 local taglist = {}
@@ -108,6 +93,31 @@ taglist.layouts = {
 	al[5], al[6], al[6], al[4], al[3], al[3],
 	al[5], al[6], al[6], al[4], al[3], al[1]
 }
+
+-- Tasklist
+--------------------------------------------------------------------------------
+local tasklist = {}
+
+-- dirty double tag line setup for tasklist client menu
+local tagline_style = { tagline = { height = 40, rows = taglist.rows_num, spacing = 4 } }
+
+-- load list of app name aliases from files and set it as part of tasklist theme
+tasklist.style = {
+	appnames = require("color.blue.alias-config"),  widget = redflat.gauge.task.ruby.new,
+	winmenu = tagline_style
+}
+
+tasklist.buttons = awful.util.table.join(
+	awful.button({}, 1, redflat.widget.tasklist.action.select),
+	awful.button({}, 2, redflat.widget.tasklist.action.close),
+	awful.button({}, 3, redflat.widget.tasklist.action.menu),
+	awful.button({}, 4, redflat.widget.tasklist.action.switch_next),
+	awful.button({}, 5, redflat.widget.tasklist.action.switch_prev)
+)
+
+-- double tag line setup for main client menu
+redflat.float.clientmenu:set_style(tagline_style)
+
 
 -- Textclock widget
 --------------------------------------------------------------------------------

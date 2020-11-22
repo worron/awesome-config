@@ -107,6 +107,7 @@ theme.icon = {
 	warning  = theme.path .. "/common/warning.svg",
 	awesome  = theme.path .. "/common/awesome.svg",
 	system   = theme.path .. "/common/system.svg",
+	mark     = theme.path .. "/common/mark.svg",
 	left     = theme.path .. "/common/arrow_left.svg",
 	right    = theme.path .. "/common/arrow_right.svg",
 	unknown  = theme.path .. "/common/unknown.svg",
@@ -739,11 +740,15 @@ function theme:init()
 			font = self.fonts.title, -- menu title height
 			height = 25              -- menu title font
 		},
-		stateline      = { height = 30 },              -- height of menu item with state icons
-		state_iconsize = { width = 18, height = 18 },  -- size for state icons
-		layout_icon    = self.widget.layoutbox.icon,   -- list of layout icons
-		separator      = { marginh = { 3, 3, 5, 5 } }, -- redflat separator style (see theme.gauge.separator)
-		color          = self.color,                   -- colors (main used)
+		tagline              = { height = 30 },              -- tag line height
+		tag_iconsize         = { width = 16, height = 16 },  -- tag line marks size
+		enable_screen_switch = false,                        -- screen option in menu
+		enable_tagline       = false,                        -- tag marks instead of menu options
+		stateline            = { height = 30 },              -- height of menu item with state icons
+		state_iconsize       = { width = 18, height = 18 },  -- size for state icons
+		layout_icon          = self.widget.layoutbox.icon,   -- list of layout icons
+		separator            = { marginh = { 3, 3, 5, 5 } }, -- redflat separator style (see theme.gauge.separator)
+		color                = self.color,                   -- colors (main used)
 
 		-- main menu style (see theme.menu)
 		menu = { width = 200, color = { right_icon = self.color.icon }, ricon_margin = { 9, 9, 9, 9 } },
@@ -767,6 +772,7 @@ function theme:init()
 		minimize  = self.base .. "/titlebar/minimize.svg",
 		maximized = self.base .. "/titlebar/maximized.svg",
 
+		tag       = self.icon.mark,    -- tag line mark
 		unknown   = self.icon.unknown, -- this one used as fallback
 	}
 
@@ -803,18 +809,23 @@ function theme:init()
 		action_iconsize = { width = 18, height = 18 }, -- size for action icons
 		stateline       = { height = 30 },             -- height of menu item with state icons
 
+		tagline      = { height = 30 },             -- tag line height
+		tag_iconsize = { width = 16, height = 16 }, -- tag line marks size
+
 		-- redflat separator style(see theme.gauge.separator)
 		separator       = { marginh = { 3, 3, 5, 5 }, marginv = { 3, 3, 3, 3 } },
 
 		-- same elements as for task list menu
-		icon            = self.widget.tasklist.winmenu.icon,
-		micon           = self.widget.tasklist.winmenu.micon,
-		layout_icon     = self.widget.layoutbox.icon,
-		menu            = self.widget.tasklist.winmenu.menu,
-		state_iconsize  = self.widget.tasklist.winmenu.state_iconsize,
-		tagmenu         = self.widget.tasklist.winmenu.tagmenu,
-		hide_action     = self.widget.tasklist.winmenu.hide_action,
-		color           = self.color,
+		icon                 = self.widget.tasklist.winmenu.icon,
+		micon                = self.widget.tasklist.winmenu.micon,
+		layout_icon          = self.widget.layoutbox.icon,
+		menu                 = self.widget.tasklist.winmenu.menu,
+		state_iconsize       = self.widget.tasklist.winmenu.state_iconsize,
+		tagmenu              = self.widget.tasklist.winmenu.tagmenu,
+		hide_action          = self.widget.tasklist.winmenu.hide_action,
+		enable_screen_switch = false,
+		enable_tagline       = false,
+		color                = self.color,
 	}
 
 	-- Audio player

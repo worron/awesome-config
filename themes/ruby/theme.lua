@@ -246,6 +246,14 @@ theme.individual.microphone_audio = {
 -- Titlebar helper
 theme.float.bartip.names = { "Mini", "Compact", "Full" }
 
+-- client menu tag line
+theme.widget.tasklist.winmenu.enable_tagline = false
+theme.widget.tasklist.winmenu.icon.tag = theme.path .. "/widget/mark.svg"
+
+theme.float.clientmenu.enable_tagline = false
+theme.float.clientmenu.icon.tag = theme.widget.tasklist.winmenu.icon.tag
+
+
 -- Set hotkey helper size according current fonts and keys scheme
 --------------------------------------------------------------------------------
 theme.float.hotkeys.geometry   = { width = 1420 }
