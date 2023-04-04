@@ -1,0 +1,9 @@
+key=8;app=;run=;icon=nil;
+key=9;app=;run=;icon=nil;
+key=1;app=code;run=/opt/visual-studio-code/code --unity-launch --enable-crashpad ;icon=code;
+key=2;app=yandex-browser;run=/opt/yandex/browser/yandex_browser ;icon=yandex-browser;
+key=3;app=telegramdesktop;run=telegram-desktop -startintray ;icon=telegram;
+key=4;app=;run=;icon=nil;
+key=5;app=;run=;icon=nil;
+key=6;app=;run=;icon=nil;
+key=7;app=;run=;icon=nil;

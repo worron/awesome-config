@@ -20,7 +20,7 @@ theme.path = awful.util.get_configuration_dir() .. "themes/ruby"
 
 -- Main config
 --------------------------------------------------------------------------------
-theme.panel_height = 38 -- panel height
+theme.panel_height = 24 -- panel height
 theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
 theme.desktopbg    = theme.path .. "/wallpaper/transparent.png"
 
@@ -35,8 +35,8 @@ theme:update()
 -- Desktop widgets placement
 --------------------------------------------------------------------------------
 theme.desktop.grid = {
-	width  = { 440, 440 },
-	height = { 100, 100, 100, 66, 50 },
+	width  = { 220, 220 },
+	height = { 50, 50, 50, 33, 25 },
 	edge   = { width = { 100, 840 }, height = { 100, 100 } }
 }
 
@@ -79,8 +79,8 @@ theme.desktop.speedmeter.compact.icon = {
 }
 theme.desktop.speedmeter.compact.height.chart = 46
 theme.desktop.speedmeter.compact.label.width = 76
-theme.desktop.speedmeter.compact.label.height = 15 -- manually set after font size
-theme.desktop.speedmeter.compact.label.font = { font = "Play", size = 22, face = 1, slant = 0 }
+theme.desktop.speedmeter.compact.label.height = 10 -- manually set after font size
+theme.desktop.speedmeter.compact.label.font = { font = "Noto Sans Mono Regular", size = 10, face = 1, slant = 0 }
 theme.desktop.speedmeter.compact.margins.label = { 10, 10, 0, 0 }
 theme.desktop.speedmeter.compact.margins.chart = { 0, 0, 3, 3 }
 theme.desktop.speedmeter.compact.chart = { bar = { width = 6, gap = 3 }, height = nil, zero_height = 0 }
@@ -138,8 +138,8 @@ theme.individual.desktop.multiline.thermal = {
 	icon      = { image = theme.path .. "/desktop/thermometer.svg", margin = { 0, 8, 0, 0 } },
 	lines     = {
 		line        = { height = 13 },
-		text        = { font = { font = "Play", size = 18, face = 1, slant = 0 }, width = 44 },
-		label       = { font = { font = "Play", size = 18, face = 1, slant = 0 } },
+		text        = { font = { font = "Noto Sans Mono Regular", size = 9, face = 1, slant = 0 }, width = 44 },
+		label       = { font = { font = "Noto Sans Mono Regular", size = 9, face = 1, slant = 0 } },
 		gap         = { text = 10 },
 		progressbar = { chunk = { gap = 6, width = 4 } },
 		show        = { text = true, label = false, tooltip = true },
@@ -256,13 +256,13 @@ theme.float.clientmenu.icon.tag = theme.widget.tasklist.winmenu.icon.tag
 
 -- Set hotkey helper size according current fonts and keys scheme
 --------------------------------------------------------------------------------
-theme.float.hotkeys.geometry   = { width = 1420 }
-theme.float.appswitcher.keytip = { geometry = { width = 400 }, exit = true }
+theme.float.hotkeys.geometry   = { width = 1024 }
+theme.float.appswitcher.keytip = { geometry = { width = 200 }, exit = true }
 theme.float.keychain.keytip    = { geometry = { width = 1020 }, column = 2 }
-theme.float.top.keytip         = { geometry = { width = 400 } }
-theme.float.apprunner.keytip   = { geometry = { width = 400 } }
-theme.widget.updates.keytip    = { geometry = { width = 400 } }
-theme.menu.keytip              = { geometry = { width = 400 } }
+theme.float.top.keytip         = { geometry = { width = 200 } }
+theme.float.apprunner.keytip   = { geometry = { width = 200 } }
+theme.widget.updates.keytip    = { geometry = { width = 200 } }
+theme.menu.keytip              = { geometry = { width = 200 } }
 
 -- Titlebar
 -----------------------------------------------------------------------------------------------------------------------
