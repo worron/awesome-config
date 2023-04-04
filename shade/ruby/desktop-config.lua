@@ -37,7 +37,7 @@ function desktop:init(args)
 
 	netspeed.args = {
 		meter_function = system.net_speed,
-		interface      = "wlp60s0",
+		interface      = "wlo1",
 		maxspeed       = { up = 6*1024^2, down = 6*1024^2 },
 		crit           = { up = 6*1024^2, down = 6*1024^2 },
 		timeout        = 2,

@@ -31,7 +31,7 @@ theme:update()
 -- Desktop config
 -----------------------------------------------------------------------------------------------------------------------
 theme.desktop.textset = {
-	font  = "Belligerent Madness 22",
+	font  = "Belligerent Madness 10",
 	spacing = 10,
 	color = theme.desktop.color
 }

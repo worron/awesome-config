@@ -1,3 +1,5 @@
 [submodule "redflat"]
 	path = redflat
-	url = https://github.com/worron/redflat.git
+	url = https://github.com/mrscrew/redflat.git
+	user.name = mr_screw@mail.ru
+	
